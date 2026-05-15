@@ -198,8 +198,138 @@
   <p class="page-desc">Diagnósticos interactivos y marcos construidos para profesionales de la comunicación y líderes empresariales en entornos complejos. Comienza con lo que está activo — más herramientas en desarrollo.</p>
 </section>
 
+<!-- HERRAMIENTA 01: EVALUACIÓN DE ESCENARIOS -->
 <section class="tool-section">
-<div class="tool-header">
+  <div class="tool-header">
+    <div>
+      <p class="tool-num">01 · Activo</p>
+      <h2 class="tool-name">Evaluación de Escenarios de Crisis</h2>
+      <p class="tool-sub">Mapa de riesgos</p>
+      <p class="tool-desc">Tres preguntas sobre la realidad actual de México. No es adivinación — es preparación. Conoce tu exposición a los riesgos que ya están en movimiento.</p>
+      <div class="tool-tags">
+        <span class="tag">Risk assessment</span>
+        <span class="tag">Crisis scenarios</span>
+        <span class="tag">Strategic planning</span>
+      </div>
+    </div>
+    <div style="align-self: center;">
+      <p style="font-size: 13px; color: var(--mist); line-height: 1.7;">3 minutos · Evaluación inmediata de exposición a riesgos macro en México: Ormuz, bilateral EE.UU.-México, desaceleración económica.</p>
+    </div>
+  </div>
+
+  <div class="diag-wrap">
+    <div class="step active" id="step-0">
+      <div class="step-label">Pregunta 1 de 4</div>
+      <div class="step-question">¿En qué sector opera principalmente tu organización?</div>
+      <div class="progress-bar"><div class="progress-fill" id="progress" style="width: 0%"></div></div>
+      <div class="options-grid">
+        <button class="option-btn" onclick="select(0, 0)">
+          <div class="opt-title">Manufactura / Exportación</div>
+          <div class="opt-desc">Producción, maquila, cadena global</div>
+        </button>
+        <button class="option-btn" onclick="select(0, 1)">
+          <div class="opt-title">Servicios / Consumo</div>
+          <div class="opt-desc">Retail, finanzas, tecnología</div>
+        </button>
+        <button class="option-btn" onclick="select(0, 2)">
+          <div class="opt-title">Infraestructura / Energía</div>
+          <div class="opt-desc">Construcción, utilities, recursos</div>
+        </button>
+        <button class="option-btn" onclick="select(0, 3)">
+          <div class="opt-title">Sector Público / Regulado</div>
+          <div class="opt-desc">Gobierno, salud, educación</div>
+        </button>
+      </div>
+      <button class="next-btn" id="next-0" onclick="nextStep(1)" disabled>Siguiente →</button>
+    </div>
+
+    <div class="step" id="step-1">
+      <div class="step-label">Pregunta 2 de 4</div>
+      <div class="step-question">¿Qué tan dependiente es tu operación de logística internacional?</div>
+      <div class="progress-bar"><div class="progress-fill" style="width: 25%"></div></div>
+      <div class="options-grid">
+        <button class="option-btn" onclick="select(1, 0)">
+          <div class="opt-title">Crítica</div>
+          <div class="opt-desc">Import/export diario, rutas marítimas</div>
+        </button>
+        <button class="option-btn" onclick="select(1, 1)">
+          <div class="opt-title">Alta</div>
+          <div class="opt-desc">Insumos clave, componentes</div>
+        </button>
+        <button class="option-btn" onclick="select(1, 2)">
+          <div class="opt-title">Moderada</div>
+          <div class="opt-desc">Algunos proveedores externos</div>
+        </button>
+        <button class="option-btn" onclick="select(1, 3)">
+          <div class="opt-title">Baja</div>
+          <div class="opt-desc">Operación principalmente local</div>
+        </button>
+      </div>
+      <button class="next-btn" id="next-1" onclick="nextStep(2)" disabled>Siguiente →</button>
+    </div>
+
+    <div class="step" id="step-2">
+      <div class="step-label">Pregunta 3 de 4</div>
+      <div class="step-question">¿Cuál es tu relación con el gobierno mexicano?</div>
+      <div class="progress-bar"><div class="progress-fill" style="width: 50%"></div></div>
+      <div class="options-grid">
+        <button class="option-btn" onclick="select(2, 0)">
+          <div class="opt-title">Contratista directo</div>
+          <div class="opt-desc">Obras, servicios, licitaciones</div>
+        </button>
+        <button class="option-btn" onclick="select(2, 1)">
+          <div class="opt-title">Regulado estrechamente</div>
+          <div class="opt-desc">Permisos, concesiones, supervisión</div>
+        </button>
+        <button class="option-btn" onclick="select(2, 2)">
+          <div class="opt-title">Cliente / Proveedor</div>
+          <div class="opt-desc">Vendes a gobierno o dependes de él</div>
+        </button>
+        <button class="option-btn" onclick="select(2, 3)">
+          <div class="opt-title">Independiente</div>
+          <div class="opt-desc">Mínima interacción directa</div>
+        </button>
+      </div>
+      <button class="next-btn" id="next-2" onclick="nextStep(3)" disabled>Siguiente →</button>
+    </div>
+
+    <div class="step" id="step-3">
+      <div class="step-label">Pregunta 4 de 4</div>
+      <div class="step-question">¿Cómo te afectaría una contracción económica en México?</div>
+      <div class="progress-bar"><div class="progress-fill" style="width: 75%"></div></div>
+      <div class="options-grid">
+        <button class="option-btn" onclick="select(3, 0)">
+          <div class="opt-title">Severa</div>
+          <div class="opt-desc">Demanda cae inmediatamente</div>
+        </button>
+        <button class="option-btn" onclick="select(3, 1)">
+          <div class="opt-title">Alta</div>
+          <div class="opt-desc">Presupuesto público se reduce</div>
+        </button>
+        <button class="option-btn" onclick="select(3, 2)">
+          <div class="opt-title">Moderada</div>
+          <div class="opt-desc">Clientes posponen decisiones</div>
+        </button>
+        <button class="option-btn" onclick="select(3, 3)">
+          <div class="opt-title">Baja</div>
+          <div class="opt-desc">Modelo resistente o internacional</div>
+        </button>
+      </div>
+      <button class="next-btn" id="next-3" onclick="showResult()" disabled>Ver Resultado →</button>
+    </div>
+
+    <div class="step" id="step-result">
+      <div class="result-header">Tu mapa de exposición</div>
+      <div class="result-sub" id="result-intro"></div>
+      <div id="results-container"></div>
+      <button class="restart-btn" onclick="restart()">← Empezar de nuevo</button>
+    </div>
+  </div>
+</section>
+
+<!-- HERRAMIENTA 02: NARRATIVE AUDIT -->
+<section class="tool-section">
+  <div class="tool-header">
     <div>
       <p class="tool-num">02 · Activo</p>
       <h2 class="tool-name">Narrative Audit</h2>
@@ -243,7 +373,6 @@
 
     <div id="audit-results" style="display:none;margin-top:2.5rem;padding-top:2.5rem;border-top:0.5px solid rgba(255,255,255,0.08);"></div>
   </div>
-  </section>
  
 <section class="coming-soon">
   <p class="cs-label">En desarrollo</p>
