@@ -135,7 +135,7 @@
       <p class="tool-num">01 · Live</p>
       <h2 class="tool-name">Crisis & Risk Diagnostic</h2>
       <p class="tool-sub">LATAM · May 2026</p>
-      <p class="tool-desc">Three global crises are reshaping the operating environment for organizations in LATAM right now. Most executives see them as political or economic context. This tool helps you understand your real exposure — and what communications actions to take before someone else defines the narrative for you.</p>
+      <p class="tool-desc">Three forces are reshaping the operating environment for organizations in LATAM right now: an ongoing conflict in the Strait of Hormuz, Mexico's economic slowdown, and growing US pressure on Mexico over drug trafficking and security. This tool helps you understand your real exposure — and what communications actions to take before someone else defines the narrative for you.</p>
       <div class="tool-tags">
         <span class="tag">Risk assessment</span>
         <span class="tag">Crisis preparedness</span>
@@ -177,12 +177,12 @@
 
     <div class="step" id="step-2">
       <div class="step-label">Question 3 of 4</div>
-      <div class="step-question">Does your organization have operations, suppliers, clients, or partners in northern or northwestern Mexico?</div>
+      <div class="step-question">Does your organization have direct ties to the public sector or depend on government decisions to operate?</div>
       <div class="options-grid">
-        <button class="option-btn" onclick="select(2,0)"><div class="opt-title">Yes, we operate there</div><div class="opt-desc">Offices, plants, distribution or staff in that region</div></button>
-        <button class="option-btn" onclick="select(2,1)"><div class="opt-title">We have suppliers there</div><div class="opt-desc">We buy inputs or services from companies in that area</div></button>
-        <button class="option-btn" onclick="select(2,2)"><div class="opt-title">We have clients there</div><div class="opt-desc">We sell or distribute to that region</div></button>
-        <button class="option-btn" onclick="select(2,3)"><div class="opt-title">No direct links</div><div class="opt-desc">Our operation has no contact with that area</div></button>
+        <button class="option-btn" onclick="select(2,0)"><div class="opt-title">Yes, we work with government</div><div class="opt-desc">Contracts, projects or services with federal or state institutions</div></button>
+        <button class="option-btn" onclick="select(2,1)"><div class="opt-title">We depend on permits or regulation</div><div class="opt-desc">Government decisions directly affect our ability to operate</div></button>
+        <button class="option-btn" onclick="select(2,2)"><div class="opt-title">Indirect exposure</div><div class="opt-desc">Clients or suppliers linked to government, but not us directly</div></button>
+        <button class="option-btn" onclick="select(2,3)"><div class="opt-title">No ties to the public sector</div><div class="opt-desc">Our operation is fully private and independent</div></button>
       </div>
       <button class="next-btn" id="next-2" disabled onclick="nextStep(3)">Next →</button>
     </div>
@@ -264,19 +264,19 @@
 const answers = [null, null, null, null];
 const riskData = {
   ormuz: {
-    high: { desc: "Dependes directamente de rutas de comercio internacional que están bajo presión por el conflicto en el Estrecho de Ormuz. El alza en precios del petróleo y las disrupciones logísticas ya están afectando tus operaciones.", action: "Activa tu protocolo de comunicación con proveedores y clientes sobre posibles retrasos o alzas de precio. Prepara un mensaje institucional que anticipe la situación antes de que te pregunten." },
-    medium: { desc: "Tienes exposición indirecta al conflicto en Ormuz. Aunque no dependes completamente de rutas internacionales, el alza en energía y costos de insumos te afecta.", action: "Evalúa tu cadena de suministro en los próximos 30 días. Comunica proactivamente a clientes clave si anticipas cambios en precios o tiempos de entrega." },
-    low: { desc: "Tu exposición directa al Estrecho de Ormuz es limitada, pero el alza en precios de energía y logística ya está afectando costos operativos en toda la cadena.", action: "Monitorea el precio del combustible y anticipa conversaciones con stakeholders sobre márgenes. Prepara mensajes para clientes si los costos suben." }
+    high: { desc: "Your organization depends directly on international trade routes under pressure from the ongoing conflict in the Strait of Hormuz. Rising oil prices and logistics disruptions are already affecting your operations.", action: "Activate your communications protocol with suppliers and clients about potential delays or price increases. Prepare an institutional message that anticipates the situation before anyone asks." },
+    medium: { desc: "You have indirect exposure to the Ormuz conflict. You don't depend entirely on international routes, but rising energy and input costs are hitting you.", action: "Review your supply chain over the next 30 days. Proactively communicate to key clients if you anticipate changes in prices or delivery times." },
+    low: { desc: "Your direct exposure to the Strait of Hormuz is limited, but rising energy and logistics prices are already affecting operating costs across the entire chain.", action: "Monitor fuel prices and anticipate conversations with stakeholders about margins. Prepare messages for clients if costs rise." }
   },
-  rocha: {
-    high: { desc: "Tienes vínculos directos con la región de Sinaloa. La inestabilidad institucional y la atención mediática sobre el norte de México puede afectar tu reputación por asociación geográfica, aunque no tengas nada que ver con el caso.", action: "Prepara una posición institucional clara sobre tu operación en la región. Refuerza mensajes de transparencia y cumplimiento normativo hacia clientes, inversionistas y medios. No esperes a que te pregunten." },
-    medium: { desc: "La crisis política en Sinaloa y la tensión con EE.UU. puede afectar la percepción de estabilidad institucional en tu entorno de negocio o con tus clientes en la región.", action: "Revisa tu narrativa de confianza institucional. Si tienes clientes en la zona, considera comunicación proactiva que refuerce seguridad y continuidad operativa." },
-    low: { desc: "Tu exposición directa al caso Rocha Moya es limitada, pero la tensión bilateral México-EE.UU. que genera puede afectar el clima de inversión y la percepción de seguridad institucional en tu sector.", action: "Monitorea cómo evoluciona la narrativa bilateral. Si tienes socios o clientes estadounidenses, prepara mensajes que refuercen tu posición institucional y transparencia." }
+  bilateral: {
+    high: { desc: "Your organization works directly with federal or state government. The growing pressure from the United States on Mexico over drug trafficking and security is generating international scrutiny of public institutions and their private sector partners. The reputational risk is not hypothetical — it materializes through association, investigation, or media coverage that doesn't distinguish between principals and contractors.", action: "This is not a crisis to wait for. Conduct an immediate audit of your reputational exposure: contracts, public statements, spokespeople. Prepare a clear institutional position that separates your organization's integrity from the political noise around you." },
+    medium: { desc: "You depend on government permits, regulations, or public policy to operate. You're not directly linked to the conflict, but regulatory decisions — and the perception of those decisions — can affect your timeline, costs, and credibility with international partners.", action: "Map which government decisions affect your operation and who makes them. Prepare messages for international clients or investors that reinforce your compliance posture and institutional independence." },
+    low: { desc: "You have indirect exposure through clients or suppliers linked to government. The risk is reputational by proximity — not by direct action, but by association in a media and regulatory environment that is increasingly less forgiving.", action: "Review your public positioning. Make sure your communications clearly reflect your organization's values and compliance standards, independent of who your clients or partners are." }
   },
   economia: {
-    high: { desc: "El PIB de México cayó 0.8% en el primer trimestre de 2026. Tu dependencia del consumo interno o la inversión privada te coloca como uno de los principales afectados. Menor gasto, mayor cautela y costos operativos altos.", action: "Es momento de construir narrativa de resiliencia, no de optimismo vacío. Comunica con claridad tu posición financiera, tu visión de mediano plazo y tu plan ante el entorno. Los stakeholders necesitan certeza antes de que aparezca la incertidumbre." },
-    medium: { desc: "La desaceleración económica afecta el presupuesto público y puede retrasar licitaciones o contratos. La confianza institucional en México está bajo presión.", action: "Refuerza tus relaciones con tomadores de decisión en el sector público. La comunicación proactiva sobre el valor de tu propuesta es clave en entornos de recorte." },
-    low: { desc: "Tu modelo tiene cierto blindaje ante la contracción económica interna. Sin embargo, el entorno de estanflación y baja confianza empresarial afecta el ecosistema donde operas.", action: "Ajusta tu narrativa hacia propuestas de valor claras y tangibles. En entornos de incertidumbre, las empresas que comunican certeza y solidez ganan reputación." }
+    high: { desc: "Mexico's GDP contracted in early 2026. Your dependence on domestic consumption or private investment places you among the most exposed. Less spending, more caution, higher operating costs.", action: "Build a resilience narrative, not empty optimism. Communicate clearly your financial position, your medium-term vision, and your plan for the current environment. Stakeholders need certainty before uncertainty appears." },
+    medium: { desc: "The economic slowdown is affecting the public budget and may delay tenders or contracts. Institutional confidence in Mexico is under pressure.", action: "Strengthen your relationships with public sector decision-makers. Proactive communication about the value of your proposal is key in a cost-cutting environment." },
+    low: { desc: "Your model has some insulation from the internal economic contraction. However, the stagflation environment and low business confidence affects the ecosystem you operate in.", action: "Adjust your narrative toward clear, tangible value propositions. In uncertain environments, organizations that communicate certainty and solidity gain reputation." }
   }
 };
 
@@ -294,9 +294,9 @@ function nextStep(n) {
 }
 
 function getLevel(key) {
-  const [sector, logistica, sinaloa, economia] = answers;
+  const [sector, logistica, gobierno, economia] = answers;
   if (key === 'ormuz') { if (logistica === 0) return 'high'; if (logistica === 1 || sector === 0 || sector === 1) return 'medium'; return 'low'; }
-  if (key === 'rocha') { if (sinaloa === 0 || sinaloa === 1) return 'high'; if (sinaloa === 2 || sector === 3) return 'medium'; return 'low'; }
+  if (key === 'bilateral') { if (gobierno === 0) return 'high'; if (gobierno === 1 || gobierno === 2 || sector === 3) return 'medium'; return 'low'; }
   if (key === 'economia') { if (economia === 0 || economia === 1) return 'high'; if (economia === 2) return 'medium'; return 'low'; }
 }
 
@@ -304,13 +304,13 @@ function showResult() {
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
   document.getElementById('step-result').classList.add('active');
   document.getElementById('progress').style.width = '100%';
-  const titles = { ormuz: 'Crisis en el Estrecho de Ormuz', rocha: 'Caso Rocha Moya y tensión bilateral México-EE.UU.', economia: 'Desaceleración económica en México' };
+  const titles = { ormuz: 'Strait of Hormuz conflict', bilateral: 'US-Mexico bilateral pressure & drug trafficking', economia: 'Mexico economic slowdown' };
   const levelOrder = { high: 0, medium: 1, low: 2 };
-  const risks = ['ormuz', 'rocha', 'economia'].map(k => { const level = getLevel(k); return { key: k, title: titles[k], level, ...riskData[k][level] }; }).sort((a, b) => levelOrder[a.level] - levelOrder[b.level]);
+  const risks = ['ormuz', 'bilateral', 'economia'].map(k => { const level = getLevel(k); return { key: k, title: titles[k], level, ...riskData[k][level] }; }).sort((a, b) => levelOrder[a.level] - levelOrder[b.level]);
   const highCount = risks.filter(r => r.level === 'high').length;
-  document.getElementById('result-intro').textContent = highCount === 0 ? 'Tu exposición directa es moderada, pero ninguna empresa opera en una burbuja. Estos son los riesgos que debes monitorear:' : highCount === 1 ? 'Tienes un riesgo de alta prioridad que requiere atención inmediata en comunicación y reputación:' : 'Tu empresa tiene exposición alta en múltiples frentes. La gestión de narrativa no puede esperar:';
-  const levelLabel = { high: 'Riesgo alto', medium: 'Riesgo medio', low: 'Riesgo bajo' };
-  document.getElementById('results-container').innerHTML = risks.map(r => `<div class="result-card ${r.level}"><div class="result-level">${levelLabel[r.level]}</div><div class="result-title">${r.title}</div><div class="result-desc">${r.desc}</div><div class="result-action"><strong>¿Qué hacer?</strong> ${r.action}</div></div>`).join('');
+  document.getElementById('result-intro').textContent = highCount === 0 ? 'Your direct exposure is moderate, but no organization operates in a bubble. These are the risks you need to monitor:' : highCount === 1 ? 'You have one high-priority risk that requires immediate attention in communications and reputation:' : 'Your organization has high exposure on multiple fronts. Narrative management cannot wait:';
+  const levelLabel = { high: 'High risk', medium: 'Medium risk', low: 'Low risk' };
+  document.getElementById('results-container').innerHTML = risks.map(r => `<div class="result-card ${r.level}"><div class="result-level">${levelLabel[r.level]}</div><div class="result-title">${r.title}</div><div class="result-desc">${r.desc}</div><div class="result-action"><strong>What to do:</strong> ${r.action}</div></div>`).join('');
 }
 
 function restart() {
