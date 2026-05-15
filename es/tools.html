@@ -278,6 +278,15 @@
       <div class="result-header">Tu auditoría narrativa</div>
       <div class="result-sub" id="audit-result-intro">Análisis completado sobre tu texto.</div>
       <div id="audit-results-container"></div>
+      <div style="margin-top: 2rem; padding-top: 2rem; border-top: 0.5px solid rgba(255,255,255,0.08);">
+  <button type="button" id="refine-toggle" style="background: transparent; border: 0.5px solid rgba(255,255,255,0.15); border-radius: 2px; padding: 10px 20px; font-size: 12px; color: var(--mist); cursor: pointer; letter-spacing: 0.08em; text-transform: uppercase;">Refinar comparadores →</button>
+  
+  <div id="refine-panel" style="display: none; margin-top: 1.5rem; background: #0a1210; border: 0.5px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 1.5rem;">
+    <p style="font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 1rem;">Dime qué empresas agregar o quitar de la comparación:</p>
+    <input type="text" id="refine-input" placeholder="Ej: Quita Cemex, agrega Bimbo y FEMSA" style="width: 100%; background: rgba(255,255,255,0.03); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 2px; padding: 10px 12px; color: var(--white); font-family: var(--font-body); font-size: 13px; margin-bottom: 1rem;">
+    <button type="button" id="refine-submit" style="background: var(--teal); color: var(--ink); border: none; border-radius: 2px; padding: 10px 24px; font-size: 12px; font-weight: 500; cursor: pointer; letter-spacing: 0.05em;">Re-auditar con cambios →</button>
+  </div>
+</div>
       <button class="restart-btn" id="audit-restart">← Auditar otro texto</button>
     </div>
   </div>
@@ -507,6 +516,32 @@ function restartAudit() {
   auditCharCount.textContent = '0 caracteres';
   auditCharCount.classList.add('invalid');
   auditBtn.disabled = true;
+}
+  const refineToggle = document.getElementById('refine-toggle');
+const refinePanel = document.getElementById('refine-panel');
+const refineSubmit = document.getElementById('refine-submit');
+
+if (refineToggle) {
+  refineToggle.addEventListener('click', () => {
+    const isOpen = refinePanel.style.display === 'block';
+    refinePanel.style.display = isOpen ? 'none' : 'block';
+    refineToggle.textContent = isOpen ? 'Refinar comparadores →' : 'Cerrar refinamiento ↑';
+  });
+
+  refineSubmit.addEventListener('click', () => {
+    const refinement = document.getElementById('refine-input').value.trim();
+    if (!refinement) return;
+    
+    // Aquí después conectas tu API real con el refinement
+    // Por ahora solo recarga con mensaje
+    refinePanel.style.display = 'none';
+    document.getElementById('audit-results-container').innerHTML = `
+      <div class="result-card medium">
+        <div class="result-level">Re-auditando...</div>
+        <div class="result-title">Aplicando: ${refinement}</div>
+        <div class="result-desc">Aquí conectarías tu backend para re-correr el análisis con los nuevos competidores.</div>
+      </div>`;
+  });
 }
 </script>
 </body>
