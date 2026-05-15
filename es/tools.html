@@ -102,6 +102,14 @@
     .cs-grid { grid-template-columns: 1fr; }
     footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
   }
+/* === NARRATIVE AUDIT - HERRAMIENTA 02 === */
+.audit-label { font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; display: block; }
+.audit-textarea { width: 100%; min-height: 200px; background: rgba(255,255,255,0.03); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 1rem 1.25rem; color: var(--white); font-family: var(--font-body); font-size: 14px; resize: vertical; line-height: 1.7; }
+.audit-textarea:focus { outline: none; border-color: var(--teal); background: rgba(255,255,255,0.05); }
+.audit-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; margin-bottom: 2rem; }
+.char-count { font-size: 12px; color: var(--mist); }
+.char-count.invalid { color: #ef4444; }
+.error-msg { font-size: 12px; color: #ef4444; margin-top: 0.5rem; }
 </style>
 </head>
 <body>
@@ -201,6 +209,47 @@
   </div>
 </section>
 
+<section class="tool-section" id="tool-audit">
+  <div class="tool-header">
+    <div>
+      <p class="tool-num">02 · Activo</p>
+      <h2 class="tool-name">Narrative Audit</h2>
+      <p class="tool-sub">Análisis de mensajes</p>
+      <p class="tool-desc">Analiza la coherencia, diferenciación y resonancia de tus mensajes frente a los temas clave de tu industria. Identifica gaps narrativos antes de que se conviertan en vulnerabilidades reputacionales.</p>
+      <div class="tool-tags">
+        <span class="tag">Message testing</span>
+        <span class="tag">Narrative coherence</span>
+        <span class="tag">Differentiation</span>
+        <span class="tag">Stakeholder resonance</span>
+      </div>
+    </div>
+    <div style="align-self: center;">
+      <p style="font-size: 13px; color: var(--mist); line-height: 1.7;">Pega tu texto · 30 segundos · Análisis de coherencia, diferenciación y riesgo narrativo.</p>
+    </div>
+  </div>
+
+  <div class="diag-wrap">
+    <div class="step active" id="audit-step-input">
+      <div class="step-label">Paso 1 de 1</div>
+      <div class="step-question">¿Qué mensaje quieres auditar?</div>
+      <label class="audit-label" for="audit-content-input">Pega tu texto aquí (mín. 100 caracteres)</label>
+      <textarea id="audit-content-input" class="audit-textarea" placeholder="Escribe o pega el contenido que deseas auditar: comunicado, post, speech, página web..."></textarea>
+      <div class="audit-controls">
+        <span id="audit-char-count" class="char-count">0 caracteres</span>
+        <button type="button" id="audit-btn" class="next-btn" disabled>Iniciar Auditoría →</button>
+      </div>
+      <p id="audit-error-msg" class="error-msg" style="display:none;">Por favor, ingresa al menos 100 caracteres.</p>
+    </div>
+
+    <div class="step" id="audit-step-result">
+      <div class="result-header">Tu auditoría narrativa</div>
+      <div class="result-sub" id="audit-result-intro">Análisis completado sobre tu texto.</div>
+      <div id="audit-results-container"></div>
+      <button class="restart-btn" id="audit-restart">← Auditar otro texto</button>
+    </div>
+  </div>
+</section>
+  
 <section class="coming-soon">
   <p class="cs-label">En desarrollo</p>
   <h2 class="cs-title">Más herramientas <em>próximamente.</em></h2>
@@ -352,6 +401,79 @@ function restart() {
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
   document.getElementById('step-0').classList.add('active');
   document.getElementById('progress').style.width = '0%';
+}
+  // ========== HERRAMIENTA 02: NARRATIVE AUDIT ==========
+const auditTextarea = document.getElementById('audit-content-input');
+const auditCharCount = document.getElementById('audit-char-count');
+const auditBtn = document.getElementById('audit-btn');
+const auditErrorMsg = document.getElementById('audit-error-msg');
+
+if (auditTextarea) {
+  auditTextarea.addEventListener('input', () => {
+    const length = auditTextarea.value.length;
+    auditCharCount.textContent = `${length} caracteres`;
+    
+    if (length < 100) {
+      auditCharCount.classList.add('invalid');
+      auditBtn.disabled = true;
+    } else {
+      auditCharCount.classList.remove('invalid');
+      auditBtn.disabled = false;
+      auditErrorMsg.style.display = 'none';
+    }
+  });
+
+  auditBtn.addEventListener('click', runAudit);
+  document.getElementById('audit-restart').addEventListener('click', restartAudit);
+}
+
+function runAudit() {
+  const content = auditTextarea.value.trim();
+  const resultsDiv = document.getElementById('audit-step-result');
+  const inputDiv = document.getElementById('audit-step-input');
+
+  if (content.length < 100) {
+    auditErrorMsg.style.display = 'block';
+    return;
+  }
+  
+  auditBtn.disabled = true;
+  auditBtn.textContent = 'Analizando...';
+  auditErrorMsg.style.display = 'none';
+
+  // SIMULACIÓN - reemplaza esto con tu API real después
+  setTimeout(() => {
+    auditBtn.disabled = false;
+    auditBtn.textContent = 'Iniciar Auditoría →';
+    
+    inputDiv.classList.remove('active');
+    resultsDiv.classList.add('active');
+    
+    document.getElementById('audit-result-intro').textContent = `Analizamos ${content.length} caracteres de tu mensaje.`;
+    document.getElementById('audit-results-container').innerHTML = `
+      <div class="result-card medium">
+        <div class="result-level">Score: 72/100</div>
+        <div class="result-title">Coherencia Narrativa Media</div>
+        <div class="result-desc">Tu texto comunica crecimiento y expansión de forma clara. Sin embargo, falta diferenciación vs competidores y el tono es demasiado institucional. Detectamos 3 oportunidades de mejora.</div>
+        <div class="result-action"><strong>¿Qué hacer?</strong> 1) Agrega un dato único que solo tu organización pueda reclamar. 2) Humaniza con una cita de cliente o socio. 3) Cambia "fortalecemos presencia" por un verbo más activo y específico.</div>
+      </div>
+      <div class="result-card low">
+        <div class="result-level">Riesgo bajo</div>
+        <div class="result-title">Sin riesgos reputacionales detectados</div>
+        <div class="result-desc">El mensaje no contiene afirmaciones que puedan generar backlash o malinterpretación en el contexto actual LATAM.</div>
+        <div class="result-action"><strong>¿Qué hacer?</strong> Mantén este nivel de cuidado. Antes de publicar, valida los datos cuantitativos que mencionas.</div>
+      </div>`;
+    resultsDiv.scrollIntoView({ behavior: 'smooth' });
+  }, 1500);
+}
+
+function restartAudit() {
+  document.getElementById('audit-step-result').classList.remove('active');
+  document.getElementById('audit-step-input').classList.add('active');
+  auditTextarea.value = '';
+  auditCharCount.textContent = '0 caracteres';
+  auditCharCount.classList.add('invalid');
+  auditBtn.disabled = true;
 }
 </script>
 </body>
