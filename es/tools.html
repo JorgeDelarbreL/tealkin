@@ -143,6 +143,41 @@
     color: rgba(255,255,255,0.3);
     cursor: not-allowed;
   }
+  /* === FIX NARRATIVE AUDIT === */
+#content-input { 
+  width: 100%; 
+  min-height: 180px; 
+  background: #0a1210; 
+  border: 0.5px solid rgba(255,255,255,0.15); 
+  border-radius: 2px; 
+  padding: 1rem; 
+  color: var(--white); 
+  font-family: var(--font-body); 
+  font-size: 14px; 
+  resize: vertical;
+  position: relative;
+  z-index: 10;
+}
+#content-input:focus { 
+  outline: none; 
+  border-color: var(--teal); 
+}
+#audit-btn {
+  background: var(--teal); 
+  color: var(--ink); 
+  border: none; 
+  border-radius: 2px; 
+  padding: 12px 28px; 
+  font-size: 13px; 
+  font-weight: 500; 
+  cursor: pointer;
+}
+#audit-btn:disabled {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.3);
+  cursor: not-allowed;
+}
+</style>
 </style>
 </head>
 <body>
@@ -166,81 +201,49 @@
 <section class="tool-section">
   <div class="tool-header">
     <div>
-      <p class="tool-num">01 · Activo</p>
-      <h2 class="tool-name">Diagnóstico de Crisis y Riesgo</h2>
-      <p class="tool-sub">LATAM · Mayo 2026</p>
-      <p class="tool-desc">Tres fuerzas están redefiniendo el entorno operativo de las organizaciones en LATAM: el conflicto en el Estrecho de Ormuz, la desaceleración económica en México y la creciente presión de EE.UU. sobre México por el narcotráfico y la seguridad. Esta herramienta te ayuda a entender tu exposición real — y qué acciones de comunicación tomar antes de que alguien más defina la narrativa por ti.</p>
+      <p class="tool-num">02 · Activo</p>
+      <h2 class="tool-name">Narrative Audit</h2>
+      <p class="tool-sub">Análisis de mensajes</p>
+      <p class="tool-desc">Analiza la coherencia, diferenciación y resonancia de tus mensajes frente a los temas clave de tu industria. Identifica gaps narrativos antes de que se conviertan en vulnerabilidades reputacionales.</p>
       <div class="tool-tags">
-        <span class="tag">Risk assessment</span>
-        <span class="tag">Crisis preparedness</span>
-        <span class="tag">Stakeholder communications</span>
-        <span class="tag">LATAM context</span>
+        <span class="tag">Message testing</span>
+        <span class="tag">Narrative coherence</span>
+        <span class="tag">Differentiation</span>
+        <span class="tag">Stakeholder resonance</span>
       </div>
     </div>
     <div style="align-self: center;">
-      <p style="font-size: 13px; color: var(--mist); line-height: 1.7;">Cuatro preguntas · Dos minutos · Diagnóstico personalizado según modelo de negocio y exposición sectorial.</p>
+      <p style="font-size: 13px; color: var(--mist); line-height: 1.7;">Pega tu texto · 30 segundos · Análisis de coherencia, diferenciación y riesgo narrativo.</p>
     </div>
   </div>
 
   <div class="diag-wrap">
-    <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+    <div class="step active" id="audit-step-input">
+      <div class="step-label">Paso 1 de 1</div>
+      <div class="step-question">¿Qué mensaje quieres auditar?</div>
+      <label class="audit-label" for="content-input" style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mist);margin-bottom:1rem;display:block;">Pega tu texto aquí (mín. 100 caracteres)</label>
+      <textarea id="content-input" placeholder="Escribe o pega el contenido que deseas auditar..."></textarea>
 
-    <div class="step active" id="step-0">
-      <div class="step-label">Pregunta 1 de 4</div>
-      <div class="step-question">¿Cómo describirías mejor el modelo de negocio de tu organización?</div>
-      <div class="options-grid">
-        <button class="option-btn" onclick="select(0,0)"><div class="opt-title">Manufactura o industria</div><div class="opt-desc">Producción, ensamble, insumos importados o exportaciones</div></button>
-        <button class="option-btn" onclick="select(0,1)"><div class="opt-title">Comercio o retail</div><div class="opt-desc">Ventas al consumidor, cadenas de suministro</div></button>
-        <button class="option-btn" onclick="select(0,2)"><div class="opt-title">Servicios o consultoría</div><div class="opt-desc">Servicios profesionales, tecnología, finanzas, salud</div></button>
-        <button class="option-btn" onclick="select(0,3)"><div class="opt-title">Gobierno o sector público</div><div class="opt-desc">Instituciones, dependencias, organismos regulatorios</div></button>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;">
+        <span id="char-count" style="font-size:12px;color:var(--mist);">0 caracteres</span>
+        <button type="button" id="audit-btn" disabled>Iniciar Auditoría</button>
       </div>
-      <button class="next-btn" id="next-0" disabled onclick="nextStep(1)">Next →</button>
+      <p id="audit-error-msg" style="font-size:12px;color:#ef4444;margin-top:0.75rem;display:none;">Por favor, ingresa al menos 100 caracteres.</p>
     </div>
 
-    <div class="step" id="step-1">
-      <div class="step-label">Pregunta 2 de 4</div>
-      <div class="step-question">¿Tu organización depende de logística internacional, importaciones o exportaciones para operar?</div>
-      <div class="options-grid">
-        <button class="option-btn" onclick="select(1,0)"><div class="opt-title">Sí, es central</div><div class="opt-desc">Sin importaciones o exportaciones, el negocio se detiene</div></button>
-        <button class="option-btn" onclick="select(1,1)"><div class="opt-title">Parcialmente</div><div class="opt-desc">Algunos insumos o clientes son internacionales, pero no todos</div></button>
-        <button class="option-btn" onclick="select(1,2)"><div class="opt-title">Apenas</div><div class="opt-desc">Operamos principalmente con proveedores y clientes locales</div></button>
-        <button class="option-btn" onclick="select(1,3)"><div class="opt-title">No aplica</div><div class="opt-desc">Nuestro modelo no implica movimiento de bienes físicos</div></button>
+    <div id="loading-phase" style="display:none;padding:3rem 0;">
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div id="ls-1" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);"><div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>Reading your narrative</div>
+        <div id="ls-2" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);"><div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>Identifying your sector and positioning</div>
+        <div id="ls-3" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);"><div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>Finding comparable organizations</div>
+        <div id="ls-4" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);"><div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>Analyzing patterns and similarities</div>
+        <div id="ls-5" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);"><div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>Building your report</div>
       </div>
-      <button class="next-btn" id="next-1" disabled onclick="nextStep(2)">Next →</button>
     </div>
 
-    <div class="step" id="step-2">
-      <div class="step-label">Pregunta 3 de 4</div>
-      <div class="step-question">¿Tu organización tiene vínculos directos con el sector público o depende de decisiones de gobierno para operar?</div>
-      <div class="options-grid">
-        <button class="option-btn" onclick="select(2,0)"><div class="opt-title">Sí, trabajamos con gobierno</div><div class="opt-desc">Contratos, proyectos o servicios con instituciones federales o estatales</div></button>
-        <button class="option-btn" onclick="select(2,1)"><div class="opt-title">Dependemos de permisos o regulación</div><div class="opt-desc">Las decisiones de gobierno afectan directamente nuestra capacidad de operar</div></button>
-        <button class="option-btn" onclick="select(2,2)"><div class="opt-title">Exposición indirecta</div><div class="opt-desc">Clientes o proveedores vinculados al gobierno, pero no nosotros directamente</div></button>
-        <button class="option-btn" onclick="select(2,3)"><div class="opt-title">Sin vínculos con el sector público</div><div class="opt-desc">Nuestra operación es completamente privada e independiente</div></button>
-      </div>
-      <button class="next-btn" id="next-2" disabled onclick="nextStep(3)">Next →</button>
-    </div>
-
-    <div class="step" id="step-3">
-      <div class="step-label">Pregunta 4 de 4</div>
-      <div class="step-question">¿Tu organización depende del consumo interno, la inversión privada o el gasto público para generar ingresos?</div>
-      <div class="options-grid">
-        <button class="option-btn" onclick="select(3,0)"><div class="opt-title">Consumo interno</div><div class="opt-desc">Nuestros ingresos dependen de que la gente compre más</div></button>
-        <button class="option-btn" onclick="select(3,1)"><div class="opt-title">Inversión privada</div><div class="opt-desc">Dependemos de que otras empresas inviertan o contraten</div></button>
-        <button class="option-btn" onclick="select(3,2)"><div class="opt-title">Gasto público</div><div class="opt-desc">Los contratos, licitaciones o programas públicos son clave</div></button>
-        <button class="option-btn" onclick="select(3,3)"><div class="opt-title">Exportaciones</div><div class="opt-desc">Nuestros ingresos principales provienen de clientes fuera de México</div></button>
-      </div>
-      <button class="next-btn" id="next-3" disabled onclick="showResult()">Ver mi diagnóstico →</button>
-    </div>
-
-    <div class="step" id="step-result">
-      <div class="result-header">Tu diagnóstico de riesgo reputacional</div>
-      <div class="result-sub" id="result-intro"></div>
-      <div id="results-container"></div>
-      <button class="restart-btn" onclick="restart()">← Comenzar de nuevo</button>
-    </div>
+    <div id="audit-results" style="display:none;margin-top:2.5rem;padding-top:2.5rem;border-top:0.5px solid rgba(255,255,255,0.08);"></div>
   </div>
-</section>
+  </section>
 
 <section class="tool-section" id="tool-audit">
   <div class="tool-header">
@@ -267,31 +270,48 @@
       <div class="step-question">¿Qué mensaje quieres auditar?</div>
       <label class="audit-label" for="audit-content-input">Pega tu texto aquí (mín. 100 caracteres)</label>
       <textarea id="audit-content-input" class="audit-textarea" placeholder="Escribe o pega el contenido que deseas auditar: comunicado, post, speech, página web..."></textarea>
-      <div class="audit-controls">
-        <span id="audit-char-count" class="char-count">0 caracteres</span>
-        <button type="button" id="audit-btn" class="next-btn" disabled>Iniciar Auditoría →</button>
-      </div>
-      <p id="audit-error-msg" class="error-msg" style="display:none;">Por favor, ingresa al menos 100 caracteres.</p>
-    </div>
+      <div class="audit-card">
+  <label class="audit-label" for="content-input">Pega tu texto aquí (mín. 100 caracteres)</label>
+  <textarea id="content-input" placeholder="Escribe o pega el contenido que deseas auditar..."></textarea>
+  
+  <div class="audit-controls">
+    <span id="char-count" class="char-count">0 caracteres</span>
+    <button type="button" id="audit-btn" class="audit-main-btn" disabled>Iniciar Auditoría</button>
+  </div>
+  <p id="audit-error-msg" class="error-msg" style="display:none;">Por favor, ingresa al menos 100 caracteres.</p>
 
-    <div class="step" id="audit-step-result">
-      <div class="result-header">Tu auditoría narrativa</div>
-      <div class="result-sub" id="audit-result-intro">Análisis completado sobre tu texto.</div>
-      <div id="audit-results-container"></div>
-      <div style="margin-top: 2rem; padding-top: 2rem; border-top: 0.5px solid rgba(255,255,255,0.08);">
-  <button type="button" id="refine-toggle" style="background: transparent; border: 0.5px solid rgba(255,255,255,0.15); border-radius: 2px; padding: 10px 20px; font-size: 12px; color: var(--mist); cursor: pointer; letter-spacing: 0.08em; text-transform: uppercase;">Refinar comparadores →</button>
-  
-  <div id="refine-panel" style="display: none; margin-top: 1.5rem; background: #0a1210; border: 0.5px solid rgba(255,255,255,0.1); border-radius: 4px; padding: 1.5rem;">
-    <p style="font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 1rem;">Dime qué empresas agregar o quitar de la comparación:</p>
-    <input type="text" id="refine-input" placeholder="Ej: Quita Cemex, agrega Bimbo y FEMSA" style="width: 100%; background: rgba(255,255,255,0.03); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 2px; padding: 10px 12px; color: var(--white); font-family: var(--font-body); font-size: 13px; margin-bottom: 1rem;">
-    <button type="button" id="refine-submit" style="background: var(--teal); color: var(--ink); border: none; border-radius: 2px; padding: 10px 24px; font-size: 12px; font-weight: 500; cursor: pointer; letter-spacing: 0.05em;">Re-auditar con cambios →</button>
-  </div>
-</div>
-      <button class="restart-btn" id="audit-restart">← Auditar otro texto</button>
+  <!-- LOADING PHASE -->
+  <div id="loading-phase" style="display:none; padding: 3rem 0;">
+    <div style="display: flex; flex-direction: column; gap: 1rem;">
+      <div class="loading-step" id="ls-1" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);">
+        <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>
+        Reading your narrative
+      </div>
+      <div class="loading-step" id="ls-2" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);">
+        <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>
+        Identifying your sector and positioning
+      </div>
+      <div class="loading-step" id="ls-3" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);">
+        <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>
+        Finding comparable organizations
+      </div>
+      <div class="loading-step" id="ls-4" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);">
+        <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>
+        Analyzing patterns and similarities
+      </div>
+      <div class="loading-step" id="ls-5" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);">
+        <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>
+        Building your report
+      </div>
     </div>
   </div>
+
+  <!-- RESULTS -->
+  <div id="audit-results" style="display:none; margin-top: 2.5rem; padding-top: 2.5rem; border-top: 0.5px solid rgba(255,255,255,0.08);"></div>
+</div>
+    
 </section>
-  
+ 
 <section class="coming-soon">
   <p class="cs-label">En desarrollo</p>
   <h2 class="cs-title">Más herramientas <em>próximamente.</em></h2>
@@ -543,6 +563,124 @@ if (refineToggle) {
       </div>`;
   });
 }
+    (function() {
+    const contentInput = document.getElementById('content-input');
+    const charCount = document.getElementById('char-count');
+    const auditBtn = document.getElementById('audit-btn');
+    const errorMsg = document.getElementById('audit-error-msg');
+    const loadingPhase = document.getElementById('loading-phase');
+    const resultsDiv = document.getElementById('audit-results');
+    const inputStep = document.getElementById('audit-step-input');
+
+    if (!contentInput) return;
+
+    contentInput.addEventListener('input', () => {
+      const length = contentInput.value.length;
+      charCount.textContent = `${length} caracteres`;
+      if (length < 100) {
+        charCount.style.color = '#ef4444';
+        auditBtn.disabled = true;
+      } else {
+        charCount.style.color = 'var(--mist)';
+        auditBtn.disabled = false;
+        errorMsg.style.display = 'none';
+      }
+    });
+
+    async function animateLoading() {
+      const steps = ['ls-1','ls-2','ls-3','ls-4','ls-5'];
+      for (let i = 0; i < steps.length; i++) {
+        const el = document.getElementById(steps[i]);
+        if (i > 0) {
+          const prev = document.getElementById(steps[i-1]);
+          prev.style.color = 'var(--teal-light)';
+          prev.querySelector('div').style.background = 'var(--teal-light)';
+        }
+        el.style.color = 'var(--white)';
+        el.querySelector('div').style.background = 'var(--white)';
+        el.querySelector('div').style.animation = 'pulse 1s infinite';
+        await new Promise(r => setTimeout(r, 900));
+      }
+    }
+
+    auditBtn.addEventListener('click', async () => {
+      const content = contentInput.value.trim();
+      if (content.length < 100) {
+        errorMsg.style.display = 'block';
+        return;
+      }
+
+      auditBtn.disabled = true;
+      auditBtn.textContent = 'Analizando...';
+      errorMsg.style.display = 'none';
+      resultsDiv.style.display = 'none';
+      inputStep.style.display = 'none';
+      loadingPhase.style.display = 'block';
+
+      ['ls-1','ls-2','ls-3','ls-4','ls-5'].forEach(id => {
+        const el = document.getElementById(id);
+        el.style.color = 'rgba(255,255,255,0.4)';
+        el.querySelector('div').style.background = 'rgba(255,255,255,0.15)';
+        el.querySelector('div').style.animation = 'none';
+      });
+
+      await animateLoading();
+
+      setTimeout(() => {
+        loadingPhase.style.display = 'none';
+        auditBtn.disabled = false;
+        auditBtn.textContent = 'Iniciar Auditoría';
+        inputStep.style.display = 'none';
+
+        resultsDiv.style.display = 'block';
+        resultsDiv.innerHTML = `
+          <div class="result-card medium">
+            <div class="result-level">SCORE: 72/100</div>
+            <div class="result-title">Coherencia Narrativa Media</div>
+            <div class="result-desc">Tu texto comunica crecimiento y expansión de forma clara. Sin embargo, falta diferenciación vs competidores y el tono es demasiado institucional. Detectamos 3 oportunidades de mejora.</div>
+            <div class="result-action"><strong>¿Qué hacer?</strong> 1) Agrega un dato único que solo tu organización pueda reclamar. 2) Humaniza con una cita de cliente o socio. 3) Cambia "fortalecemos presencia" por un verbo más activo y específico.</div>
+          </div>
+          <div class="result-card low">
+            <div class="result-level">RIESGO BAJO</div>
+            <div class="result-title">Sin riesgos reputacionales detectados</div>
+            <div class="result-desc">El mensaje no contiene afirmaciones que puedan generar backlash o malinterpretación en el contexto actual LATAM.</div>
+            <div class="result-action"><strong>¿Qué hacer?</strong> Mantén este nivel de cuidado. Antes de publicar, valida los datos cuantitativos que mencionas.</div>
+          </div>
+          <div style="margin-top: 2rem; padding-top: 2rem; border-top: 0.5px solid rgba(255,255,255,0.08);">
+            <p style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mist);margin-bottom:1.5rem;">COMPARED AGAINST</p>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
+                <div>
+                  <div style="font-size:14px;color:var(--white);font-weight:400;">Telcel</div>
+                  <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Mismo sector, tono institucional similar</div>
+                </div>
+                <div style="font-size:12px;color:var(--mist);">Similarity <strong style="color:var(--teal-light);">68%</strong></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
+                <div>
+                  <div style="font-size:14px;color:var(--white);font-weight:400;">AT&T México</div>
+                  <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Mensajes de expansión y cobertura</div>
+                </div>
+                <div style="font-size:12px;color:var(--mist);">Similarity <strong style="color:var(--teal-light);">61%</strong></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
+                <div>
+                  <div style="font-size:14px;color:var(--white);font-weight:400;">Movistar</div>
+                  <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Enfoque en experiencia del cliente</div>
+                </div>
+                <div style="font-size:12px;color:var(--mist);">Similarity <strong style="color:var(--teal-light);">54%</strong></div>
+              </div>
+            </div>
+            <button type="button" onclick="location.reload()" style="background:transparent;border:0.5px solid rgba(255,255,255,0.15);border-radius:2px;padding:10px 20px;font-size:12px;color:var(--mist);cursor:pointer;margin-top:1.5rem;">← Auditar otro texto</button>
+          </div>`;
+        resultsDiv.scrollIntoView({ behavior: 'smooth' });
+      }, 500);
+    });
+  })();
+
+  const style = document.createElement('style');
+  style.textContent = '@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }';
+  document.head.appendChild(style);
 </script>
 </body>
 </html>
