@@ -379,5 +379,34 @@ function restart() {
   document.getElementById('progress').style.width = '0%';
 }
 </script>
+
+<script>
+async function runAudit() {
+  const content = document.getElementById('content-input').value.trim();
+  const btn = document.getElementById('audit-btn');
+  const resultsDiv = document.getElementById('audit-results');
+
+  if (content.length < 100) {
+    alert("Por favor, ingresa al menos 100 caracteres.");
+    return;
+  }
+  
+  btn.disabled = true;
+  btn.textContent = 'Analizando...';
+
+  // Simulación de proceso
+  setTimeout(() => {
+    btn.disabled = false;
+    btn.textContent = 'Iniciar Auditoría';
+    resultsDiv.style.display = 'block';
+    resultsDiv.innerHTML = `
+      <div class="result-card" style="border: 1px solid var(--teal); padding: 20px;">
+        <h3>Auditoría Completada</h3>
+        <p>Análisis listo para el texto proporcionado.</p>
+      </div>`;
+    resultsDiv.scrollIntoView({ behavior: 'smooth' });
+  }, 1500);
+}
+</script>
 </body>
 </html>
