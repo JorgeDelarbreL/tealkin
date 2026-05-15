@@ -532,7 +532,7 @@ function restart() {
   document.getElementById('step-0').classList.add('active');
   document.getElementById('progress').style.width = '0%';
 }
-  // ========== HERRAMIENTA 02: NARRATIVE AUDIT ==========
+// ========== HERRAMIENTA 02: NARRATIVE AUDIT ==========
 document.addEventListener('DOMContentLoaded', function() {
   const contentInput = document.getElementById('content-input');
   const charCount = document.getElementById('char-count');
@@ -546,7 +546,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const refinePanel = document.getElementById('refine-panel');
   const refineSubmit = document.getElementById('refine-submit');
 
-  if (!contentInput) return;
+  if (!contentInput || !auditBtn) {
+    console.error('Faltan elementos: content-input o audit-btn');
+    return;
+  }
 
   // Contador de caracteres + habilita botón
   contentInput.addEventListener('input', () => {
@@ -665,57 +668,51 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Refine submit - versión que sí parsea lo que escribes
-const refineSubmit = document.getElementById('refine-submit');
-if (refineSubmit) {
-  refineSubmit.addEventListener('click', () => {
-    const refinement = document.getElementById('refine-input').value.trim();
-    const refinePanel = document.getElementById('refine-panel');
-    const refineToggle = document.getElementById('refine-toggle');
+  // Refine submit - parsea empresas
+  if (refineSubmit) {
+    refineSubmit.addEventListener('click', () => {
+      const refinement = document.getElementById('refine-input').value.trim();
+      if (!refinement) return;
 
-    if (!refinement) return;
+      let clean = refinement
+        .replace(/quita|agrega|compara con|vs|versus|pon|incluye|empresas?|competidores?/gi, '')
+        .replace(/:,/g, ',')
+        .trim();
 
-    // Extrae nombres de empresas del texto
-    // Detecta: "agrega X, Y y Z" o "compara con X, Y" o solo "X, Y, Z"
-    let empresas = [];
-    const lower = refinement.toLowerCase();
+      let empresas = clean.split(/,| y | e /i)
+        .map(e => e.trim())
+        .filter(e => e.length > 2);
 
-    // Quita palabras clave
-    let clean = refinement
-     .replace(/quita|agrega|compara con|vs|versus|pon|incluye|empresas?|competidores?/gi, '')
-     .replace(/:,/g, ',')
-     .trim();
+      if (empresas.length === 0) empresas = [refinement];
 
-    // Divide por comas, "y", "e"
-    empresas = clean.split(/,| y | e /i)
-     .map(e => e.trim())
-     .filter(e => e.length > 2); // Ignora palabras sueltas
-
-    // Si no detectó nada, usa el texto completo como 1 empresa
-    if (empresas.length === 0) empresas = [refinement];
-
-    // Genera HTML para cada empresa
-    const competitorsList = document.getElementById('competitors-list');
-    if (competitorsList) {
-      competitorsList.innerHTML = empresas.map((emp, i) => {
-        const similarity = 75 - (i * 8); // Mock: 75%, 67%, 59%...
-        return `
-          <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
-            <div>
-              <div style="font-size:14px;color:var(--white);font-weight:400;">${emp}</div>
-              <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Re-analizado con tu instrucción</div>
+      const competitorsList = document.getElementById('competitors-list');
+      if (competitorsList) {
+        competitorsList.innerHTML = empresas.map((emp, i) => {
+          const similarity = 75 - (i * 8);
+          return `
+            <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
+              <div>
+                <div style="font-size:14px;color:var(--white);font-weight:400;">${emp}</div>
+                <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Re-analizado con tu instrucción</div>
+              </div>
+              <div style="font-size:12px;color:var(--mist);">Similarity <strong style="color:var(--teal-light);">${similarity}%</strong></div>
             </div>
-            <div style="font-size:12px;color:var(--mist);">Similarity <strong style="color:var(--teal-light);">${similarity}%</strong></div>
-          </div>
-        `;
-      }).join('');
-    }
+          `;
+        }).join('');
+      }
 
-    refinePanel.style.display = 'none';
-    refineToggle.textContent = 'Refinar comparadores →';
-    document.getElementById('refine-input').value = '';
-  });
-}
+      refinePanel.style.display = 'none';
+      refineToggle.textContent = 'Refinar comparadores →';
+      document.getElementById('refine-input').value = '';
+    });
+  }
+});
+
+
+
+
+
+  
 
 </script>
 </body>
