@@ -311,7 +311,119 @@
 
 <script>
 // ========== HERRAMIENTA 01: DIAGNÓSTICO DE CRISIS ==========
-const crisisAnswers = [null, null, null, null];
+
+<section class="tool-section">
+  <div class="tool-header">
+    <div>
+      <p class="tool-num">01 · Activo</p>
+      <h2 class="tool-name">Diagnóstico de Crisis y Riesgo</h2>
+      <p class="tool-sub">LATAM · Mayo 2026</p>
+      <p class="tool-desc">Tres fuerzas están redefiniendo el entorno operativo de las organizaciones en LATAM: el conflicto en el Estrecho de Ormuz, la desaceleración económica en México y la creciente presión de EE.UU. sobre México por el narcotráfico y la seguridad. Esta herramienta te ayuda a entender tu exposición real — y qué acciones de comunicación tomar antes de que alguien más defina la narrativa por ti.</p>
+      <div class="tool-tags">
+        <span class="tag">Risk assessment</span>
+        <span class="tag">Crisis preparedness</span>
+        <span class="tag">Stakeholder communications</span>
+        <span class="tag">LATAM context</span>
+      </div>
+    </div>
+    <div style="align-self: center;">
+      <p style="font-size: 13px; color: var(--mist); line-height: 1.7;">Cuatro preguntas · Dos minutos · Diagnóstico personalizado según modelo de negocio y exposición sectorial.</p>
+    </div>
+  </div>
+
+  <div class="diag-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+
+    <div class="step active" id="step-0">
+      <div class="step-label">Pregunta 1 de 4</div>
+      <div class="step-question">¿Cómo describirías mejor el modelo de negocio de tu organización?</div>
+      <div class="options-grid">
+        <button class="option-btn" onclick="select(0,0)"><div class="opt-title">Manufactura o industria</div><div class="opt-desc">Producción, ensamble, insumos importados o exportaciones</div></button>
+        <button class="option-btn" onclick="select(0,1)"><div class="opt-title">Comercio o retail</div><div class="opt-desc">Ventas al consumidor, cadenas de suministro</div></button>
+        <button class="option-btn" onclick="select(0,2)"><div class="opt-title">Servicios o consultoría</div><div class="opt-desc">Servicios profesionales, tecnología, finanzas, salud</div></button>
+        <button class="option-btn" onclick="select(0,3)"><div class="opt-title">Gobierno o sector público</div><div class="opt-desc">Instituciones, dependencias, organismos regulatorios</div></button>
+      </div>
+      <button class="next-btn" id="next-0" disabled onclick="nextStep(1)">Next →</button>
+    </div>
+
+    <div class="step" id="step-1">
+      <div class="step-label">Pregunta 2 de 4</div>
+      <div class="step-question">¿Tu organización depende de logística internacional, importaciones o exportaciones para operar?</div>
+      <div class="options-grid">
+        <button class="option-btn" onclick="select(1,0)"><div class="opt-title">Sí, es central</div><div class="opt-desc">Sin importaciones o exportaciones, el negocio se detiene</div></button>
+        <button class="option-btn" onclick="select(1,1)"><div class="opt-title">Parcialmente</div><div class="opt-desc">Algunos insumos o clientes son internacionales, pero no todos</div></button>
+        <button class="option-btn" onclick="select(1,2)"><div class="opt-title">Apenas</div><div class="opt-desc">Operamos principalmente con proveedores y clientes locales</div></button>
+        <button class="option-btn" onclick="select(1,3)"><div class="opt-title">No aplica</div><div class="opt-desc">Nuestro modelo no implica movimiento de bienes físicos</div></button>
+      </div>
+      <button class="next-btn" id="next-1" disabled onclick="nextStep(2)">Next →</button>
+    </div>
+
+    <div class="step" id="step-2">
+      <div class="step-label">Pregunta 3 de 4</div>
+      <div class="step-question">¿Tu organización tiene vínculos directos con el sector público o depende de decisiones de gobierno para operar?</div>
+      <div class="options-grid">
+        <button class="option-btn" onclick="select(2,0)"><div class="opt-title">Sí, trabajamos con gobierno</div><div class="opt-desc">Contratos, proyectos o servicios con instituciones federales o estatales</div></button>
+        <button class="option-btn" onclick="select(2,1)"><div class="opt-title">Dependemos de permisos o regulación</div><div class="opt-desc">Las decisiones de gobierno afectan directamente nuestra capacidad de operar</div></button>
+        <button class="option-btn" onclick="select(2,2)"><div class="opt-title">Exposición indirecta</div><div class="opt-desc">Clientes o proveedores vinculados al gobierno, pero no nosotros directamente</div></button>
+        <button class="option-btn" onclick="select(2,3)"><div class="opt-title">Sin vínculos con el sector público</div><div class="opt-desc">Nuestra operación es completamente privada e independiente</div></button>
+      </div>
+      <button class="next-btn" id="next-2" disabled onclick="nextStep(3)">Next →</button>
+    </div>
+
+    <div class="step" id="step-3">
+      <div class="step-label">Pregunta 4 de 4</div>
+      <div class="step-question">¿Tu organización depende del consumo interno, la inversión privada o el gasto público para generar ingresos?</div>
+      <div class="options-grid">
+        <button class="option-btn" onclick="select(3,0)"><div class="opt-title">Consumo interno</div><div class="opt-desc">Nuestros ingresos dependen de que la gente compre más</div></button>
+        <button class="option-btn" onclick="select(3,1)"><div class="opt-title">Inversión privada</div><div class="opt-desc">Dependemos de que otras empresas inviertan o contraten</div></button>
+        <button class="option-btn" onclick="select(3,2)"><div class="opt-title">Gasto público</div><div class="opt-desc">Los contratos, licitaciones o programas públicos son clave</div></button>
+        <button class="option-btn" onclick="select(3,3)"><div class="opt-title">Exportaciones</div><div class="opt-desc">Nuestros ingresos principales provienen de clientes fuera de México</div></button>
+      </div>
+      <button class="next-btn" id="next-3" disabled onclick="showResult()">Ver mi diagnóstico →</button>
+    </div>
+
+    <div class="step" id="step-result">
+      <div class="result-header">Tu diagnóstico de riesgo reputacional</div>
+      <div class="result-sub" id="result-intro"></div>
+      <div id="results-container"></div>
+      <button class="restart-btn" onclick="restart()">← Comenzar de nuevo</button>
+    </div>
+  </div>
+</section>
+
+<section class="coming-soon">
+  <p class="cs-label">En desarrollo</p>
+  <h2 class="cs-title">Más herramientas <em>próximamente.</em></h2>
+  <div class="cs-grid">
+    <div class="cs-card">
+      <p class="cs-num">02</p>
+      <p class="cs-name">Evaluación de Preparación para Crisis</p>
+      <p class="cs-desc">¿Qué tan preparada está tu organización para comunicar cuando llega una crisis? Cinco preguntas, diagnóstico inmediato.</p>
+      <span class="cs-badge">Próximamente</span>
+    </div>
+    <div class="cs-card">
+      <p class="cs-num">03</p>
+      <p class="cs-name">Auditoría de Diferenciación de Marca</p>
+      <p class="cs-desc">¿Sabes realmente qué hace diferente a tu marca? Esta herramienta te lo dirá — antes de que lo haga la competencia.</p>
+      <span class="cs-badge">Próximamente</span>
+    </div>
+    <div class="cs-card">
+      <p class="cs-num">04</p>
+      <p class="cs-name">Preparación del Vocero</p>
+      <p class="cs-desc">¿Tu ejecutivo está listo para enfrentar a los medios? Un diagnóstico para líderes que se preparan para momentos de alta exposición.</p>
+      <span class="cs-badge">Próximamente</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="index.html" class="footer-logo">Teal<span>Kin</span></a>
+  <p class="footer-copy">© 2026 TealKin. Tulum, Riviera Maya.</p>
+  <p class="footer-tagline">Dzon — palabra maya para cenote · Kin — sol</p>
+</footer>
+
+<script>
+const answers = [null, null, null, null];
 
 const riskData = {
   ormuz: {
@@ -358,26 +470,79 @@ const riskData = {
   }
 };
 
-// Event listeners para Tool 1
-document.querySelectorAll('#tool-crisis.option-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const step = parseInt(btn.dataset.step);
-    const opt = parseInt(btn.dataset.opt);
-    selectCrisis(step, opt);
-  });
-});
+function select(step, opt) {
+  document.querySelectorAll('#step-' + step + ' .option-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('#step-' + step + ' .option-btn')[opt].classList.add('selected');
+  answers[step] = opt;
+  document.getElementById('next-' + step).disabled = false;
+}
 
-document.querySelectorAll('#tool-crisis.next-btn').forEach((btn, idx) => {
-  btn.addEventListener('click', () => {
-    if(idx < 3) nextCrisisStep(idx + 1);
-    else showCrisisResult();
-  });
-});
+function nextStep(n) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-' + n).classList.add('active');
+  document.getElementById('progress').style.width = (n * 25) + '%';
+}
 
-document.getElementById('crisis-restart').addEventListener('click', restartCrisis);
+function getLevel(key) {
+  const [sector, logistica, gobierno, economia] = answers;
+  if (key === 'ormuz') {
+    if (logistica === 0) return 'high';
+    if (logistica === 1 || sector === 0 || sector === 1) return 'medium';
+    return 'low';
+  }
+  if (key === 'bilateral') {
+    if (gobierno === 0) return 'high';
+    if (gobierno === 1 || gobierno === 2 || sector === 3) return 'medium';
+    return 'low';
+  }
+  if (key === 'economia') {
+    if (economia === 0 || economia === 1) return 'high';
+    if (economia === 2) return 'medium';
+    return 'low';
+  }
+}
 
-function selectCrisis(step, opt) {
-  document.querySelectorAll(`#crisis-step-${step}.option-btn`).forEach(b => b.classList.remove('selected'));
-  document.querySelectorAll(`#crisis-step-${step}.option-btn`)[opt].classList.add('selected');
-  crisisAnswers[step] = opt;
-  document.getElementById(`crisis-next-${
+function showResult() {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-result').classList.add('active');
+  document.getElementById('progress').style.width = '100%';
+
+  const titles = {
+    ormuz: 'Conflicto en el Estrecho de Ormuz',
+    bilateral: 'Presión bilateral EE.UU.-México y narcotráfico',
+    economia: 'Desaceleración económica en México'
+  };
+  const levelOrder = { high: 0, medium: 1, low: 2 };
+  const risks = ['ormuz', 'bilateral', 'economia']
+    .map(k => { const level = getLevel(k); return { key: k, title: titles[k], level, ...riskData[k][level] }; })
+    .sort((a, b) => levelOrder[a.level] - levelOrder[b.level]);
+
+  const highCount = risks.filter(r => r.level === 'high').length;
+  document.getElementById('result-intro').textContent = highCount === 0
+    ? 'Tu exposición directa es moderada, pero ninguna organización opera en una burbuja. Estos son los riesgos que debes monitorear:'
+    : highCount === 1
+    ? 'Tienes un riesgo de alta prioridad que requiere atención inmediata en comunicación y reputación:'
+    : 'Tu organización tiene alta exposición en múltiples frentes. La gestión de narrativa no puede esperar:';
+
+  const levelLabel = { high: 'Riesgo alto', medium: 'Riesgo medio', low: 'Riesgo bajo' };
+  document.getElementById('results-container').innerHTML = risks.map(r =>
+    `<div class="result-card ${r.level}">
+      <div class="result-level">${levelLabel[r.level]}</div>
+      <div class="result-title">${r.title}</div>
+      <div class="result-desc">${r.desc}</div>
+      <div class="result-action"><strong>¿Qué hacer?</strong> ${r.action}</div>
+    </div>`
+  ).join('');
+}
+
+function restart() {
+  answers.fill(null);
+  document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.next-btn').forEach(b => b.disabled = true);
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-0').classList.add('active');
+  document.getElementById('progress').style.width = '0%';
+}
+</script>
+</body>
+</html>
