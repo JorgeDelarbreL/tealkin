@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Auditoría de Narrativa — TealKin</title>
+<title>Narrative Audit — TealKin Tools</title>
 <link rel="alternate" hreflang="es" href="https://tealkin.com/es/narrative-audit.html">
 <link rel="alternate" hreflang="en" href="https://tealkin.com/narrative-audit.html">
 <link rel="alternate" hreflang="x-default" href="https://tealkin.com/narrative-audit.html">
@@ -150,40 +150,39 @@
   <a href="/index.html" class="nav-logo">Teal<span>Kin</span></a>
   <ul class="nav-links">
     <li><a href="/dzon.html">Dzon</a></li>
-    <li><a href="/tools.html" class="active">Herramientas</a></li>
-    <li><a href="/about.html">Acerca de</a></li>
+    <li><a href="/tools.html" class="active">Tools</a></li>
+    <li><a href="/about.html">About</a></li>
   </ul>
-  <a href="/narrative-audit.html" style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mist);text-decoration:none;border:0.5px solid rgba(255,255,255,0.15);padding:4px 10px;border-radius:2px;">EN</a>
 </nav>
 
 <section class="tool-hero">
-  <p class="tool-eyebrow">02 · Auditoría de narrativa</p>
-  <h1 class="tool-title">¿Qué tan diferente<br><em>suenas realmente?</em></h1>
-  <p class="tool-desc">Pega cualquier contenido —tu sitio web, un comunicado de prensa, a cerca de nosotros— y descubre qué tan distintiva es tu narrativa en comparación con los demás de tu industria. No necesitas indicarnos quiénes son tus competidores.</p>
+  <p class="tool-eyebrow">02 · Narrative Audit</p>
+  <h1 class="tool-title">How different do you<br><em>actually sound?</em></h1>
+  <p class="tool-desc">Paste any content — your website, a press release, your about page — and find out how distinctive your narrative is compared to others in your sector. No input needed on who your competitors are.</p>
 </section>
 
 <div class="tool-wrap">
 
   <!-- INPUT -->
   <div class="input-phase" id="input-phase">
-    <label class="input-label">Tu contenido</label>
-    <p class="input-hint">Pega el texto de tu sitio web, comunicado de prensa, a cerca de nosotros o cualquier texto institucional. Cuanto más contenido proporciones, más preciso será el análisis.</p>
-    <textarea id="content-input" placeholder="Pega tu contenido aquí — website, a cerca de nosotros, comunicado de prensa o comunicación institucional..."></textarea>
+    <label class="input-label">Your content</label>
+    <p class="input-hint">Paste your website copy, press release, about page, or any institutional text. The more you give it, the sharper the analysis.</p>
+    <textarea id="content-input" placeholder="Pega tu contenido here — website, about page, press release, or any institutional communication..."></textarea>
     <p class="char-hint" id="char-count">0 caracteres</p>
-    <p class="error-msg" id="error-msg">Por favor ingresa al menos 200 caracteres de contenido para un buen análisis.</p>
+    <p class="error-msg" id="error-msg">Please paste at least 200 caracteres of content to get a meaningful analysis.</p>
     <button class="run-btn" id="run-btn" onclick="runAudit()">
-      Iniciar auditoría <span class="btn-arrow">→</span>
+      Run audit <span class="btn-arrow">→</span>
     </button>
   </div>
 
   <!-- LOADING -->
   <div class="loading-phase" id="loading-phase">
     <div class="loading-steps">
-      <div class="loading-step" id="ls-1"><div class="step-dot"></div>Leyendo tu narrativa</div>
-      <div class="loading-step" id="ls-2"><div class="step-dot"></div>Identificando tu sector y posicionamiento</div>
-      <div class="loading-step" id="ls-3"><div class="step-dot"></div>Buscando organizaciones comparables</div>
-      <div class="loading-step" id="ls-4"><div class="step-dot"></div>Analizando patrones y similitudes</div>
-      <div class="loading-step" id="ls-5"><div class="step-dot"></div>Construyendo tu reporte</div>
+      <div class="loading-step" id="ls-1"><div class="step-dot"></div>Reading your narrative</div>
+      <div class="loading-step" id="ls-2"><div class="step-dot"></div>Identifying your sector and positioning</div>
+      <div class="loading-step" id="ls-3"><div class="step-dot"></div>Finding comparable organizations</div>
+      <div class="loading-step" id="ls-4"><div class="step-dot"></div>Analyzing patterns and similarities</div>
+      <div class="loading-step" id="ls-5"><div class="step-dot"></div>Building your report</div>
     </div>
   </div>
 
@@ -195,7 +194,7 @@
         <div class="score-number" id="score-number">—<span>%</span></div>
       </div>
       <div>
-        <p class="score-label">Score de diferenciación</p>
+        <p class="score-label">Differentiation score</p>
         <p class="score-verdict" id="score-verdict"></p>
         <p class="score-summary" id="score-summary"></p>
         <div class="bar-track"><div class="bar-fill" id="score-bar" style="width:0%"></div></div>
@@ -203,24 +202,24 @@
     </div>
 
     <div class="compared-block">
-      <p class="section-title">Comparado con</p>
+      <p class="section-title">Compared against</p>
       <div class="compared-list" id="compared-list"></div>
-      <button class="refine-btn" onclick="toggleRefine()">Ajustar comparadores →</button>
+      <button class="refine-btn" onclick="toggleRefine()">Refine comparators →</button>
       <div class="refine-panel" id="refine-panel">
-        <p style="font-size:12px;color:var(--mist);margin-bottom:1rem;">Dinos quién agregar o quitar — nombres de empresas, sectores o URLs específicas.</p>
+        <p style="font-size:12px;color:var(--mist);margin-bottom:1rem;">Tell us who to add or remove — company names, sectors, or specific URLs.</p>
         <input type="text" class="refine-input" id="refine-input" placeholder="e.g. Remove Cemex, add Grupo Bimbo and FEMSA">
         <br>
-        <button class="refine-submit" onclick="refineAudit()">Re-analizar con cambios →</button>
+        <button class="refine-submit" onclick="refineAudit()">Re-run with changes →</button>
       </div>
     </div>
 
     <div class="patterns-block">
-      <p class="section-title">Donde suenas como todos los demás</p>
+      <p class="section-title">Where you sound like everyone else</p>
       <div class="pattern-list" id="pattern-list"></div>
     </div>
 
     <div class="hints-block">
-      <p class="hints-title">Dónde buscar tu <em>diferencia.</em></p>
+      <p class="hints-title">Where to look for your <em>difference.</em></p>
       <div class="hint-list" id="hint-list"></div>
     </div>
 
@@ -230,7 +229,7 @@
 </div>
 
 <footer>
-  <a href="index.html" class="footer-logo">Teal<span>Kin</span></a>
+  <a href="/index.html" class="footer-logo">Teal<span>Kin</span></a>
   <p class="footer-copy">© 2026 TealKin. Tulum, Riviera Maya.</p>
   <p class="footer-tagline">Dzon — palabra maya para cenote · Kin — sol</p>
 </footer>
@@ -336,9 +335,9 @@ Respond ONLY with a valid JSON object, no markdown, no explanation, no backticks
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'anthropic-dangerous-direct-browser-ivp': 'true' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-sonnet-4-5',
         max_tokens: 4000,
         tools: [{ type: 'web_search_20250305', name: 'web_search' }],
         messages: [{ role: 'user', content: prompt }]
