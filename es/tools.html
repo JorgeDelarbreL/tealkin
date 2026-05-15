@@ -4,16 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Herramientas — TealKin</title>
-<meta name="description" content="Interactive communications and strategy tools for business leaders and communications professionals in LATAM.">
-<link rel="alternate" hreflang="en" href="https://tealkin.com/en/tools.html">
-<link rel="alternate" hreflang="en" href="https://tealkin.com/en/tools.html">
-<link rel="alternate" hreflang="x-default" href="https://tealkin.com/en/tools.html">
+<meta name="description" content="Herramientas interactivas de comunicación y estrategia para líderes empresariales y profesionales de la comunicación en LATAM.">
+<link rel="alternate" hreflang="es" href="https://tealkin.com/es/tools.html">
+<link rel="alternate" hreflang="en" href="https://tealkin.com/tools.html">
+<link rel="alternate" hreflang="x-default" href="https://tealkin.com/tools.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --teal: #1a9b8c; --teal-light: #2dbfad; --teal-deep: #0d6b60;
-    --ink: #0f1410; --ink-soft: #0a1210; --mist: #8a9e98; --white: #fdfcfa;
+    --teal: #1a9b8c;
+    --teal-light: #2dbfad;
+    --teal-deep: #0d6b60;
+    --ink: #0f1410;
+    --ink-soft: #0a1210;
+    --mist: #8a9e98;
+    --white: #fdfcfa;
     --font-display: 'Cormorant Garamond', Georgia, serif;
     --font-body: 'DM Sans', system-ui, sans-serif;
   }
@@ -25,14 +30,14 @@
   .nav-links { display: flex; gap: 2.5rem; list-style: none; }
   .nav-links a { font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; transition: color 0.3s; }
   .nav-links a:hover, .nav-links a.active { color: var(--white); }
-  .lang-toggle { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; border: 0.5px solid rgba(255,255,255,0.15); padding: 4px 10px; border-radius: 2px; transition: all 0.3s; }
-  .lang-toggle:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
+
   .page-hero { padding: 10rem 4rem 5rem; border-bottom: 0.5px solid rgba(255,255,255,0.06); }
   .page-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 12px; }
   .page-eyebrow::before { content: ''; width: 24px; height: 0.5px; background: var(--teal-light); }
   .page-title { font-family: var(--font-display); font-size: clamp(48px, 7vw, 88px); font-weight: 300; line-height: 1.0; color: var(--white); margin-bottom: 1rem; }
   .page-title em { font-style: italic; color: var(--teal-light); }
   .page-desc { font-size: 15px; font-weight: 300; color: var(--mist); line-height: 1.8; max-width: 560px; }
+
   .tool-section { padding: 5rem 4rem; }
   .tool-header { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 0.5px solid rgba(255,255,255,0.08); }
   .tool-num { font-size: 11px; letter-spacing: 0.2em; color: var(--teal-light); margin-bottom: 1rem; }
@@ -41,6 +46,8 @@
   .tool-desc { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.8; }
   .tool-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem; }
   .tag { font-size: 11px; color: var(--teal-light); border: 0.5px solid rgba(26,155,140,0.3); padding: 4px 12px; border-radius: 1px; }
+
+  /* DIAGNOSTIC TOOL */
   .diag-wrap { background: #0a1210; border: 0.5px solid rgba(255,255,255,0.08); border-radius: 4px; padding: 3rem; }
   .step { display: none; }
   .step.active { display: block; }
@@ -75,6 +82,7 @@
   .result-action strong { color: var(--white); font-weight: 500; }
   .restart-btn { background: transparent; border: 0.5px solid rgba(255,255,255,0.15); border-radius: 2px; padding: 10px 20px; font-size: 13px; color: rgba(255,255,255,0.5); cursor: pointer; margin-top: 1.5rem; transition: all 0.2s; }
   .restart-btn:hover { border-color: rgba(255,255,255,0.35); color: var(--white); }
+
   .coming-soon { padding: 5rem 4rem; background: var(--ink-soft); border-top: 0.5px solid rgba(255,255,255,0.06); }
   .cs-label { font-size: 11px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 1rem; display: flex; align-items: center; gap: 12px; }
   .cs-label::before { content: ''; width: 24px; height: 0.5px; background: var(--teal-light); }
@@ -86,13 +94,16 @@
   .cs-name { font-family: var(--font-display); font-size: 20px; font-weight: 300; color: rgba(255,255,255,0.4); margin-bottom: 6px; }
   .cs-desc { font-size: 12px; color: rgba(255,255,255,0.25); line-height: 1.6; }
   .cs-badge { display: inline-block; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-light); border: 0.5px solid rgba(26,155,140,0.3); padding: 3px 10px; border-radius: 1px; margin-top: 1rem; opacity: 0.6; }
+
   footer { background: var(--ink); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; border-top: 0.5px solid rgba(255,255,255,0.06); }
   .footer-logo { font-family: var(--font-display); font-size: 18px; font-weight: 300; letter-spacing: 0.1em; color: var(--white); text-decoration: none; }
   .footer-logo span { color: var(--teal-light); }
   .footer-copy { font-size: 12px; color: var(--mist); }
   .footer-tagline { font-size: 11px; color: var(--mist); font-family: var(--font-display); font-style: italic; }
+
   @media (max-width: 900px) {
-    nav { padding: 1.25rem 2rem; } .nav-links { display: none; }
+    nav { padding: 1.25rem 2rem; }
+    .nav-links { display: none; }
     .page-hero { padding: 7rem 2rem 3rem; }
     .tool-section { padding: 4rem 2rem; }
     .tool-header { grid-template-columns: 1fr; gap: 2rem; }
@@ -102,80 +113,6 @@
     .cs-grid { grid-template-columns: 1fr; }
     footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
   }
-/* === NARRATIVE AUDIT - HERRAMIENTA 02 === */
-.audit-textarea:focus { outline: none; border-color: var(--teal); background: rgba(255,255,255,0.05); }
-.audit-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; margin-bottom: 2rem; }
-.char-count { font-size: 12px; color: var(--mist); }
-.char-count.invalid { color: #ef4444; }
-.error-msg { font-size: 12px; color: #ef4444; margin-top: 0.5rem; }
-  #content-input { 
-    width: 100%; 
-    min-height: 180px; 
-    background: #0a1210; 
-    border: 0.5px solid rgba(255,255,255,0.15); 
-    border-radius: 2px; 
-    padding: 1rem; 
-    color: var(--white); 
-    font-family: var(--font-body); 
-    font-size: 14px; 
-    resize: vertical;
-    position: relative;
-    z-index: 10;
-  }
-  #content-input:focus { 
-    outline: none; 
-    border-color: var(--teal); 
-  }
-  #audit-btn {
-    background: var(--teal); 
-    color: var(--ink); 
-    border: none; 
-    border-radius: 2px; 
-    padding: 12px 28px; 
-    font-size: 13px; 
-    font-weight: 500; 
-    cursor: pointer;
-  }
-  #audit-btn:disabled {
-    background: rgba(255,255,255,0.1);
-    color: rgba(255,255,255,0.3);
-    cursor: not-allowed;
-  }
-  /* === FIX NARRATIVE AUDIT === */
-#content-input { 
-  width: 100%; 
-  min-height: 180px; 
-  background: #0a1210; 
-  border: 0.5px solid rgba(255,255,255,0.15); 
-  border-radius: 2px; 
-  padding: 1rem; 
-  color: var(--white); 
-  font-family: var(--font-body); 
-  font-size: 14px; 
-  resize: vertical;
-  position: relative;
-  z-index: 10;
-}
-#content-input:focus { 
-  outline: none; 
-  border-color: var(--teal); 
-}
-#audit-btn {
-  background: var(--teal); 
-  color: var(--ink); 
-  border: none; 
-  border-radius: 2px; 
-  padding: 12px 28px; 
-  font-size: 13px; 
-  font-weight: 500; 
-  cursor: pointer;
-}
-#audit-btn:disabled {
-  background: rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.3);
-  cursor: not-allowed;
-}
-</style>
 </style>
 </head>
 <body>
@@ -187,137 +124,87 @@
     <li><a href="tools.html" class="active">Herramientas</a></li>
     <li><a href="about.html">Acerca de</a></li>
   </ul>
-  <a href="/en/tools.html" class="lang-toggle">EN</a>
+  <a href="/tools.html" class="lang-toggle" style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mist);text-decoration:none;border:0.5px solid rgba(255,255,255,0.15);padding:4px 10px;border-radius:2px;">EN</a>
 </nav>
 
 <section class="page-hero">
   <p class="page-eyebrow">Interactivo · Diagnósticos · Marcos</p>
   <h1 class="page-title">Herramientas para<br><em>pensar mejor.</em></h1>
-  <p class="page-desc">Diagnósticos interactivos y marcos construidos para profesionales de la comunicación y líderes empresariales en entornos complejos. Comienza con lo que está activo — más herramientas en desarrollo.</p>
+  <p class="page-desc">Diagnósticos interactivos y marcos construidos para profesionales de comunicación y líderes empresariales en entornos complejos. Empieza con lo que está activo — más herramientas en desarrollo.</p>
 </section>
 
-<!-- HERRAMIENTA 01: EVALUACIÓN DE ESCENARIOS -->
 <section class="tool-section">
   <div class="tool-header">
     <div>
       <p class="tool-num">01 · Activo</p>
-      <h2 class="tool-name">Evaluación de Escenarios de Crisis</h2>
-      <p class="tool-sub">Mapa de riesgos</p>
-      <p class="tool-desc">Tres preguntas sobre la realidad actual de México. No es adivinación — es preparación. Conoce tu exposición a los riesgos que ya están en movimiento.</p>
+      <h2 class="tool-name">Diagnóstico de Crisis y Riesgo</h2>
+      <p class="tool-sub">LATAM · Mayo 2026</p>
+      <p class="tool-desc">Tres fuerzas están reconfigurando el entorno operativo de las organizaciones en LATAM: el conflicto en el Estrecho de Ormuz, la desaceleración económica de México y la creciente presión de EE.UU. sobre México por narcotráfico y seguridad. Esta herramienta te ayuda a entender tu exposición real — y qué acciones de comunicación tomar antes de que alguien más defina la narrativa por ti.</p>
       <div class="tool-tags">
         <span class="tag">Risk assessment</span>
-        <span class="tag">Crisis scenarios</span>
-        <span class="tag">Strategic planning</span>
+        <span class="tag">Crisis preparedness</span>
+        <span class="tag">Stakeholder communications</span>
+        <span class="tag">LATAM context</span>
       </div>
     </div>
     <div style="align-self: center;">
-      <p style="font-size: 13px; color: var(--mist); line-height: 1.7;">3 minutos · Evaluación inmediata de exposición a riesgos macro en México: Ormuz, bilateral EE.UU.-México, desaceleración económica.</p>
+      <p style="font-size: 13px; color: var(--mist); line-height: 1.7;">Cuatro preguntas · Dos minutos · Diagnóstico personalizado por modelo de negocio y exposición sectorial.</p>
     </div>
   </div>
 
   <div class="diag-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+
     <div class="step active" id="step-0">
       <div class="step-label">Pregunta 1 de 4</div>
-      <div class="step-question">¿En qué sector opera principalmente tu organización?</div>
-      <div class="progress-bar"><div class="progress-fill" id="progress" style="width: 0%"></div></div>
+      <div class="step-question">¿Cómo describirías mejor el modelo de negocio de tu organización?</div>
       <div class="options-grid">
-        <button class="option-btn" onclick="select(0, 0)">
-          <div class="opt-title">Manufactura / Exportación</div>
-          <div class="opt-desc">Producción, maquila, cadena global</div>
-        </button>
-        <button class="option-btn" onclick="select(0, 1)">
-          <div class="opt-title">Servicios / Consumo</div>
-          <div class="opt-desc">Retail, finanzas, tecnología</div>
-        </button>
-        <button class="option-btn" onclick="select(0, 2)">
-          <div class="opt-title">Infraestructura / Energía</div>
-          <div class="opt-desc">Construcción, utilities, recursos</div>
-        </button>
-        <button class="option-btn" onclick="select(0, 3)">
-          <div class="opt-title">Sector Público / Regulado</div>
-          <div class="opt-desc">Gobierno, salud, educación</div>
-        </button>
+        <button class="option-btn" onclick="select(0,0)"><div class="opt-title">Manufactura o industria</div><div class="opt-desc">Producción, ensamble, insumos importados o exportaciones</div></button>
+        <button class="option-btn" onclick="select(0,1)"><div class="opt-title">Comercio o retail</div><div class="opt-desc">Ventas al consumidor, cadenas de suministro</div></button>
+        <button class="option-btn" onclick="select(0,2)"><div class="opt-title">Servicios o consultoría</div><div class="opt-desc">Servicios profesionales, tecnología, finanzas, salud</div></button>
+        <button class="option-btn" onclick="select(0,3)"><div class="opt-title">Gobierno o sector público</div><div class="opt-desc">Instituciones, dependencias, organismos regulatorios</div></button>
       </div>
-      <button class="next-btn" id="next-0" onclick="nextStep(1)" disabled>Siguiente →</button>
+      <button class="next-btn" id="next-0" disabled onclick="nextStep(1)">Siguiente →</button>
     </div>
 
     <div class="step" id="step-1">
       <div class="step-label">Pregunta 2 de 4</div>
-      <div class="step-question">¿Qué tan dependiente es tu operación de logística internacional?</div>
-      <div class="progress-bar"><div class="progress-fill" style="width: 25%"></div></div>
+      <div class="step-question">¿Depende tu organización de logística internacional, importaciones o exportaciones para operar?</div>
       <div class="options-grid">
-        <button class="option-btn" onclick="select(1, 0)">
-          <div class="opt-title">Crítica</div>
-          <div class="opt-desc">Import/export diario, rutas marítimas</div>
-        </button>
-        <button class="option-btn" onclick="select(1, 1)">
-          <div class="opt-title">Alta</div>
-          <div class="opt-desc">Insumos clave, componentes</div>
-        </button>
-        <button class="option-btn" onclick="select(1, 2)">
-          <div class="opt-title">Moderada</div>
-          <div class="opt-desc">Algunos proveedores externos</div>
-        </button>
-        <button class="option-btn" onclick="select(1, 3)">
-          <div class="opt-title">Baja</div>
-          <div class="opt-desc">Operación principalmente local</div>
-        </button>
+        <button class="option-btn" onclick="select(1,0)"><div class="opt-title">Sí, es central</div><div class="opt-desc">Sin importaciones o exportaciones, el negocio se detiene</div></button>
+        <button class="option-btn" onclick="select(1,1)"><div class="opt-title">Parcialmente</div><div class="opt-desc">Algunos insumos o clientes son internacionales, pero no todos</div></button>
+        <button class="option-btn" onclick="select(1,2)"><div class="opt-title">Poco</div><div class="opt-desc">Operamos principalmente con proveedores y clientes locales</div></button>
+        <button class="option-btn" onclick="select(1,3)"><div class="opt-title">No aplica</div><div class="opt-desc">Nuestro modelo no involucra movimiento de bienes físicos</div></button>
       </div>
-      <button class="next-btn" id="next-1" onclick="nextStep(2)" disabled>Siguiente →</button>
+      <button class="next-btn" id="next-1" disabled onclick="nextStep(2)">Siguiente →</button>
     </div>
 
     <div class="step" id="step-2">
       <div class="step-label">Pregunta 3 de 4</div>
-      <div class="step-question">¿Cuál es tu relación con el gobierno mexicano?</div>
-      <div class="progress-bar"><div class="progress-fill" style="width: 50%"></div></div>
+      <div class="step-question">¿Tiene tu organización vínculos directos con el sector público o depende de decisiones gubernamentales para operar?</div>
       <div class="options-grid">
-        <button class="option-btn" onclick="select(2, 0)">
-          <div class="opt-title">Contratista directo</div>
-          <div class="opt-desc">Obras, servicios, licitaciones</div>
-        </button>
-        <button class="option-btn" onclick="select(2, 1)">
-          <div class="opt-title">Regulado estrechamente</div>
-          <div class="opt-desc">Permisos, concesiones, supervisión</div>
-        </button>
-        <button class="option-btn" onclick="select(2, 2)">
-          <div class="opt-title">Cliente / Proveedor</div>
-          <div class="opt-desc">Vendes a gobierno o dependes de él</div>
-        </button>
-        <button class="option-btn" onclick="select(2, 3)">
-          <div class="opt-title">Independiente</div>
-          <div class="opt-desc">Mínima interacción directa</div>
-        </button>
+        <button class="option-btn" onclick="select(2,0)"><div class="opt-title">Sí, trabajamos con gobierno</div><div class="opt-desc">Contratos, proyectos o servicios con instituciones federales o estatales</div></button>
+        <button class="option-btn" onclick="select(2,1)"><div class="opt-title">Dependemos de permisos o regulación</div><div class="opt-desc">Las decisiones gubernamentales afectan directamente nuestra operación</div></button>
+        <button class="option-btn" onclick="select(2,2)"><div class="opt-title">Exposición indirecta</div><div class="opt-desc">Clientes o proveedores vinculados al gobierno, pero no nosotros directamente</div></button>
+        <button class="option-btn" onclick="select(2,3)"><div class="opt-title">Sin vínculos con el sector público</div><div class="opt-desc">Nuestra operación es completamente privada e independiente</div></button>
       </div>
-      <button class="next-btn" id="next-2" onclick="nextStep(3)" disabled>Siguiente →</button>
+      <button class="next-btn" id="next-2" disabled onclick="nextStep(3)">Siguiente →</button>
     </div>
 
     <div class="step" id="step-3">
       <div class="step-label">Pregunta 4 de 4</div>
-      <div class="step-question">¿Cómo te afectaría una contracción económica en México?</div>
-      <div class="progress-bar"><div class="progress-fill" style="width: 75%"></div></div>
+      <div class="step-question">¿Depende tu organización del consumo interno, la inversión privada o el gasto público para generar ingresos?</div>
       <div class="options-grid">
-        <button class="option-btn" onclick="select(3, 0)">
-          <div class="opt-title">Severa</div>
-          <div class="opt-desc">Demanda cae inmediatamente</div>
-        </button>
-        <button class="option-btn" onclick="select(3, 1)">
-          <div class="opt-title">Alta</div>
-          <div class="opt-desc">Presupuesto público se reduce</div>
-        </button>
-        <button class="option-btn" onclick="select(3, 2)">
-          <div class="opt-title">Moderada</div>
-          <div class="opt-desc">Clientes posponen decisiones</div>
-        </button>
-        <button class="option-btn" onclick="select(3, 3)">
-          <div class="opt-title">Baja</div>
-          <div class="opt-desc">Modelo resistente o internacional</div>
-        </button>
+        <button class="option-btn" onclick="select(3,0)"><div class="opt-title">Consumo interno</div><div class="opt-desc">Nuestros ingresos dependen de que la gente compre más</div></button>
+        <button class="option-btn" onclick="select(3,1)"><div class="opt-title">Inversión privada</div><div class="opt-desc">Dependemos de que otras empresas inviertan o contraten</div></button>
+        <button class="option-btn" onclick="select(3,2)"><div class="opt-title">Gasto público</div><div class="opt-desc">Contratos, licitaciones o programas públicos son clave</div></button>
+        <button class="option-btn" onclick="select(3,3)"><div class="opt-title">Exportaciones</div><div class="opt-desc">Nuestros ingresos principales vienen de clientes fuera de México</div></button>
       </div>
-      <button class="next-btn" id="next-3" onclick="showResult()" disabled>Ver Resultado →</button>
+      <button class="next-btn" id="next-3" disabled onclick="showResult()">Ver mi diagnóstico →</button>
     </div>
 
     <div class="step" id="step-result">
-      <div class="result-header">Tu mapa de exposición</div>
+      <div class="result-header">Tu diagnóstico de riesgo reputacional</div>
       <div class="result-sub" id="result-intro"></div>
       <div id="results-container"></div>
       <button class="restart-btn" onclick="restart()">← Empezar de nuevo</button>
@@ -325,81 +212,47 @@
   </div>
 </section>
 
-<!-- HERRAMIENTA 02: NARRATIVE AUDIT -->
-<section class="tool-section">
+<section class="tool-section" style="background: var(--ink-soft); border-top: 0.5px solid rgba(255,255,255,0.06);">
   <div class="tool-header">
     <div>
       <p class="tool-num">02 · Activo</p>
       <h2 class="tool-name">Narrative Audit</h2>
-      <p class="tool-sub">Análisis de mensajes</p>
-      <p class="tool-desc">Analiza la coherencia, diferenciación y resonancia de tus mensajes frente a los temas clave de tu industria. Identifica gaps narrativos antes de que se conviertan en vulnerabilidades reputacionales.</p>
+      <p class="tool-sub">Differentiation · Voice · Positioning</p>
+      <p class="tool-desc">Paste any institutional content — your website, press release, about page — and find out how distinctive your narrative actually is compared to others in your sector. No setup needed. Claude identifies your sector, finds real comparators, and tells you where you sound like everyone else.</p>
       <div class="tool-tags">
-        <span class="tag">Message testing</span>
-        <span class="tag">Narrative coherence</span>
+        <span class="tag">Narrative analysis</span>
         <span class="tag">Differentiation</span>
-        <span class="tag">Stakeholder resonance</span>
+        <span class="tag">Brand voice</span>
+        <span class="tag">Competitive positioning</span>
       </div>
     </div>
     <div style="align-self: center;">
-      <p style="font-size: 13px; color: var(--mist); line-height: 1.7;">Pega tu texto · 30 segundos · Análisis de coherencia, diferenciación y riesgo narrativo.</p>
+      <p style="font-size: 13px; color: var(--mist); line-height: 1.7; margin-bottom: 1.5rem;">Pega tu contenido · Dos minutos · Score, comparadores y pistas de exploración.</p>
+      <a href="/narrative-audit.html" style="display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--ink); border-radius: 2px; padding: 12px 24px; font-size: 13px; font-weight: 500; text-decoration: none; letter-spacing: 0.05em;">Iniciar auditoría →</a>
     </div>
   </div>
+</section>
 
-  <div class="diag-wrap">
-    <div class="step active" id="audit-step-input">
-      <div class="step-label">Paso 1 de 1</div>
-      <div class="step-question">¿Qué mensaje quieres auditar?</div>
-      <label for="content-input" style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mist);margin-bottom:1rem;display:block;">Pega tu texto aquí (mín. 100 caracteres)</label>
-      <textarea id="content-input" placeholder="Escribe o pega el contenido que deseas auditar: comunicado, post, speech, página web..."></textarea>
-
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;">
-        <span id="char-count" style="font-size:12px;color:var(--mist);">0 caracteres</span>
-        <button type="button" id="audit-btn" disabled>Iniciar Auditoría</button>
-      </div>
-      <p id="audit-error-msg" style="font-size:12px;color:#ef4444;margin-top:0.75rem;display:none;">Por favor, ingresa al menos 100 caracteres.</p>
-    </div>
-
-    <div id="loading-phase" style="display:none;padding:3rem 0;">
-      <div style="display:flex;flex-direction:column;gap:1rem;">
-        <div id="ls-1" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);"><div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>Reading your narrative</div>
-        <div id="ls-2" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);"><div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>Identifying your sector and positioning</div>
-        <div id="ls-3" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);"><div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>Finding comparable organizations</div>
-        <div id="ls-4" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);"><div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>Analyzing patterns and similarities</div>
-        <div id="ls-5" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);"><div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>Building your report</div>
-      </div>
-    </div>
-
-    <div id="audit-results" style="display:none;margin-top:2.5rem;padding-top:2.5rem;border-top:0.5px solid rgba(255,255,255,0.08);"></div>
- <div id="refine-section" style="display:none;margin-top:2rem;padding-top:2rem;border-top:0.5px solid rgba(255,255,255,0.08);">
-      <button type="button" id="refine-toggle" style="background:transparent;border:0.5px solid rgba(255,255,255,0.15);border-radius:2px;padding:10px 20px;font-size:12px;color:var(--mist);cursor:pointer;letter-spacing:0.08em;text-transform:uppercase;">Refinar comparadores →</button>
-      
-      <div id="refine-panel" style="display:none;margin-top:1.5rem;background:#0a1210;border:0.5px solid rgba(255,255,255,0.1);border-radius:4px;padding:1.5rem;">
-        <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:1rem;">Escribe qué empresas comparar. Ej: "Quita Telcel, agrega Bimbo y FEMSA"</p>
-        <input type="text" id="refine-input" placeholder="Ej: Quita Telcel, agrega Bimbo y FEMSA" style="width:100%;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.1);border-radius:2px;padding:10px 12px;color:var(--white);font-family:var(--font-body);font-size:13px;margin-bottom:1rem;">
-        <button type="button" id="refine-submit" style="background:var(--teal);color:var(--ink);border:none;border-radius:2px;padding:10px 24px;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:0.05em;">Re-auditar con cambios →</button>
-      </div>
-    </div>
- 
 <section class="coming-soon">
   <p class="cs-label">En desarrollo</p>
   <h2 class="cs-title">Más herramientas <em>próximamente.</em></h2>
   <div class="cs-grid">
     <div class="cs-card">
-      <p class="cs-num">02</p>
+      <p class="cs-num">03</p>
       <p class="cs-name">Evaluación de Preparación para Crisis</p>
       <p class="cs-desc">¿Qué tan preparada está tu organización para comunicar cuando llega una crisis? Cinco preguntas, diagnóstico inmediato.</p>
-      <span class="cs-badge">Próximamente</span>
-    </div>
-    <div class="cs-card">
-      <p class="cs-num">03</p>
-      <p class="cs-name">Auditoría de Diferenciación de Marca</p>
-      <p class="cs-desc">¿Sabes realmente qué hace diferente a tu marca? Esta herramienta te lo dirá — antes de que lo haga la competencia.</p>
       <span class="cs-badge">Próximamente</span>
     </div>
     <div class="cs-card">
       <p class="cs-num">04</p>
       <p class="cs-name">Preparación del Vocero</p>
       <p class="cs-desc">¿Tu ejecutivo está listo para enfrentar a los medios? Un diagnóstico para líderes que se preparan para momentos de alta exposición.</p>
+      <span class="cs-badge">Próximamente</span>
+    </div>
+    <div class="cs-card">
+      <p class="cs-num">05</p>
+      <p class="cs-name">Matriz de Mensajes</p>
+      <p class="cs-desc">Genera mensajes clave diferenciados para prensa, empleados, inversionistas y gobierno desde un solo brief.</p>
       <span class="cs-badge">Próximamente</span>
     </div>
   </div>
@@ -413,49 +266,21 @@
 
 <script>
 const answers = [null, null, null, null];
-
 const riskData = {
   ormuz: {
-    high: {
-      desc: "Your organization depends directly on international trade routes under pressure from the ongoing conflict in the Strait of Hormuz. Rising oil prices and logistics disruptions are already affecting your operations.",
-      action: "Activate your communications protocol with suppliers and clients about potential delays or price increases. Prepare an institutional message that anticipates the situation before anyone asks."
-    },
-    medium: {
-      desc: "You have indirect exposure to the Ormuz conflict. You don't depend entirely on international routes, but rising energy and input costs are hitting you.",
-      action: "Review your supply chain over the next 30 days. Proactively communicate to key clients if you anticipate changes in prices or delivery times."
-    },
-    low: {
-      desc: "Your direct exposure to the Strait of Hormuz is limited, but rising energy and logistics prices are already affecting operating costs across the entire chain.",
-      action: "Monitor fuel prices and anticipate conversations with stakeholders about margins. Prepare messages for clients if costs rise."
-    }
+    high: { desc: "Your organization depends directly on international trade routes under pressure from the ongoing conflict in the Strait of Hormuz. Rising oil prices and logistics disruptions are already affecting your operations.", action: "Activate your communications protocol with suppliers and clients about potential delays or price increases. Prepare an institutional message that anticipates the situation before anyone asks." },
+    medium: { desc: "You have indirect exposure to the Ormuz conflict. You don't depend entirely on international routes, but rising energy and input costs are hitting you.", action: "Review your supply chain over the next 30 days. Proactively communicate to key clients if you anticipate changes in prices or delivery times." },
+    low: { desc: "Your direct exposure to the Strait of Hormuz is limited, but rising energy and logistics prices are already affecting operating costs across the entire chain.", action: "Monitor fuel prices and anticipate conversations with stakeholders about margins. Prepare messages for clients if costs rise." }
   },
   bilateral: {
-    high: {
-      desc: "Your organization works directly with federal or state government. The growing pressure from the United States on Mexico over drug trafficking and security is generating international scrutiny of public institutions and their private sector partners. The reputational risk is not hypothetical — it materializes through association, investigation, or media coverage that doesn't distinguish between principals and contractors.",
-      action: "This is not a crisis to wait for. Conduct an immediate audit of your reputational exposure: contracts, public statements, spokespeople. Prepare a clear institutional position that separates your organization's integrity from the political noise around you."
-    },
-    medium: {
-      desc: "You depend on government permits, regulations, or public policy to operate. You're not directly linked to the conflict, but regulatory decisions — and the perception of those decisions — can affect your timeline, costs, and credibility with international partners.",
-      action: "Map which government decisions affect your operation and who makes them. Prepare messages for international clients or investors that reinforce your compliance posture and institutional independence."
-    },
-    low: {
-      desc: "You have indirect exposure through clients or suppliers linked to government. The risk is reputational by proximity — not by direct action, but by association in a media and regulatory environment that is increasingly less forgiving.",
-      action: "Review your public positioning. Make sure your communications clearly reflect your organization's values and compliance standards, independent of who your clients or partners are."
-    }
+    high: { desc: "Your organization works directly with federal or state government. The growing pressure from the United States on Mexico over drug trafficking and security is generating international scrutiny of public institutions and their private sector partners. The reputational risk is not hypothetical — it materializes through association, investigation, or media coverage that doesn't distinguish between principals and contractors.", action: "This is not a crisis to wait for. Conduct an immediate audit of your reputational exposure: contracts, public statements, spokespeople. Prepare a clear institutional position that separates your organization's integrity from the political noise around you." },
+    medium: { desc: "You depend on government permits, regulations, or public policy to operate. You're not directly linked to the conflict, but regulatory decisions — and the perception of those decisions — can affect your timeline, costs, and credibility with international partners.", action: "Map which government decisions affect your operation and who makes them. Prepare messages for international clients or investors that reinforce your compliance posture and institutional independence." },
+    low: { desc: "You have indirect exposure through clients or suppliers linked to government. The risk is reputational by proximity — not by direct action, but by association in a media and regulatory environment that is increasingly less forgiving.", action: "Review your public positioning. Make sure your communications clearly reflect your organization's values and compliance standards, independent of who your clients or partners are." }
   },
   economia: {
-    high: {
-      desc: "Mexico's GDP contracted in early 2026. Your dependence on domestic consumption or private investment places you among the most exposed. Less spending, more caution, higher operating costs.",
-      action: "Build a resilience narrative, not empty optimism. Communicate clearly your financial position, your medium-term vision, and your plan for the current environment. Stakeholders need certainty before uncertainty appears."
-    },
-    medium: {
-      desc: "The economic slowdown is affecting the public budget and may delay tenders or contracts. Institutional confidence in Mexico is under pressure.",
-      action: "Strengthen your relationships with public sector decision-makers. Proactive communication about the value of your proposal is key in a cost-cutting environment."
-    },
-    low: {
-      desc: "Your model has some insulation from the internal economic contraction. However, the stagflation environment and low business confidence affects the ecosystem you operate in.",
-      action: "Adjust your narrative toward clear, tangible value propositions. In uncertain environments, organizations that communicate certainty and solidity gain reputation."
-    }
+    high: { desc: "Mexico's GDP contracted in early 2026. Your dependence on domestic consumption or private investment places you among the most exposed. Less spending, more caution, higher operating costs.", action: "Build a resilience narrative, not empty optimism. Communicate clearly your financial position, your medium-term vision, and your plan for the current environment. Stakeholders need certainty before uncertainty appears." },
+    medium: { desc: "The economic slowdown is affecting the public budget and may delay tenders or contracts. Institutional confidence in Mexico is under pressure.", action: "Strengthen your relationships with public sector decision-makers. Proactive communication about the value of your proposal is key in a cost-cutting environment." },
+    low: { desc: "Your model has some insulation from the internal economic contraction. However, the stagflation environment and low business confidence affects the ecosystem you operate in.", action: "Adjust your narrative toward clear, tangible value propositions. In uncertain environments, organizations that communicate certainty and solidity gain reputation." }
   }
 };
 
@@ -474,54 +299,22 @@ function nextStep(n) {
 
 function getLevel(key) {
   const [sector, logistica, gobierno, economia] = answers;
-  if (key === 'ormuz') {
-    if (logistica === 0) return 'high';
-    if (logistica === 1 || sector === 0 || sector === 1) return 'medium';
-    return 'low';
-  }
-  if (key === 'bilateral') {
-    if (gobierno === 0) return 'high';
-    if (gobierno === 1 || gobierno === 2 || sector === 3) return 'medium';
-    return 'low';
-  }
-  if (key === 'economia') {
-    if (economia === 0 || economia === 1) return 'high';
-    if (economia === 2) return 'medium';
-    return 'low';
-  }
+  if (key === 'ormuz') { if (logistica === 0) return 'high'; if (logistica === 1 || sector === 0 || sector === 1) return 'medium'; return 'low'; }
+  if (key === 'bilateral') { if (gobierno === 0) return 'high'; if (gobierno === 1 || gobierno === 2 || sector === 3) return 'medium'; return 'low'; }
+  if (key === 'economia') { if (economia === 0 || economia === 1) return 'high'; if (economia === 2) return 'medium'; return 'low'; }
 }
 
 function showResult() {
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
   document.getElementById('step-result').classList.add('active');
   document.getElementById('progress').style.width = '100%';
-
-  const titles = {
-    ormuz: 'Conflicto en el Estrecho de Ormuz',
-    bilateral: 'Presión bilateral EE.UU.-México y narcotráfico',
-    economia: 'Desaceleración económica en México'
-  };
+  const titles = { ormuz: 'Conflicto en el Estrecho de Ormuz', bilateral: 'Presión bilateral EE.UU.-México y narcotráfico', economia: 'Desaceleración económica en México' };
   const levelOrder = { high: 0, medium: 1, low: 2 };
-  const risks = ['ormuz', 'bilateral', 'economia']
-    .map(k => { const level = getLevel(k); return { key: k, title: titles[k], level, ...riskData[k][level] }; })
-    .sort((a, b) => levelOrder[a.level] - levelOrder[b.level]);
-
+  const risks = ['ormuz', 'bilateral', 'economia'].map(k => { const level = getLevel(k); return { key: k, title: titles[k], level, ...riskData[k][level] }; }).sort((a, b) => levelOrder[a.level] - levelOrder[b.level]);
   const highCount = risks.filter(r => r.level === 'high').length;
-  document.getElementById('result-intro').textContent = highCount === 0
-    ? 'Tu exposición directa es moderada, pero ninguna organización opera en una burbuja. Estos son los riesgos que debes monitorear:'
-    : highCount === 1
-    ? 'Tienes un riesgo de alta prioridad que requiere atención inmediata en comunicación y reputación:'
-    : 'Tu organización tiene alta exposición en múltiples frentes. La gestión de narrativa no puede esperar:';
-
+  document.getElementById('result-intro').textContent = highCount === 0 ? 'Tu exposición directa es moderada, pero ninguna organización opera en una burbuja. Estos son los riesgos que debes monitorear:' : highCount === 1 ? 'Tienes un riesgo de alta prioridad que requiere atención inmediata en comunicación y reputación:' : 'Tu organización tiene alta exposición en múltiples frentes. La gestión de narrativa no puede esperar:';
   const levelLabel = { high: 'Riesgo alto', medium: 'Riesgo medio', low: 'Riesgo bajo' };
-  document.getElementById('results-container').innerHTML = risks.map(r =>
-    `<div class="result-card ${r.level}">
-      <div class="result-level">${levelLabel[r.level]}</div>
-      <div class="result-title">${r.title}</div>
-      <div class="result-desc">${r.desc}</div>
-      <div class="result-action"><strong>¿Qué hacer?</strong> ${r.action}</div>
-    </div>`
-  ).join('');
+  document.getElementById('results-container').innerHTML = risks.map(r => `<div class="result-card ${r.level}"><div class="result-level">${levelLabel[r.level]}</div><div class="result-title">${r.title}</div><div class="result-desc">${r.desc}</div><div class="result-action"><strong>What to do:</strong> ${r.action}</div></div>`).join('');
 }
 
 function restart() {
@@ -532,188 +325,6 @@ function restart() {
   document.getElementById('step-0').classList.add('active');
   document.getElementById('progress').style.width = '0%';
 }
-// ========== HERRAMIENTA 02: NARRATIVE AUDIT ==========
-document.addEventListener('DOMContentLoaded', function() {
-  const contentInput = document.getElementById('content-input');
-  const charCount = document.getElementById('char-count');
-  const auditBtn = document.getElementById('audit-btn');
-  const errorMsg = document.getElementById('audit-error-msg');
-  const loadingPhase = document.getElementById('loading-phase');
-  const resultsDiv = document.getElementById('audit-results');
-  const inputStep = document.getElementById('audit-step-input');
-  const refineSection = document.getElementById('refine-section');
-  const refineToggle = document.getElementById('refine-toggle');
-  const refinePanel = document.getElementById('refine-panel');
-  const refineSubmit = document.getElementById('refine-submit');
-
-  if (!contentInput || !auditBtn) {
-    console.error('Faltan elementos: content-input o audit-btn');
-    return;
-  }
-
-  // Contador de caracteres + habilita botón
-  contentInput.addEventListener('input', () => {
-    const length = contentInput.value.length;
-    charCount.textContent = `${length} caracteres`;
-    if (length < 100) {
-      charCount.style.color = '#ef4444';
-      auditBtn.disabled = true;
-    } else {
-      charCount.style.color = 'var(--mist)';
-      auditBtn.disabled = false;
-      errorMsg.style.display = 'none';
-    }
-  });
-
-  // Animación de carga
-  async function animateLoading() {
-    const steps = ['ls-1','ls-2','ls-3','ls-4','ls-5'];
-    for (let i = 0; i < steps.length; i++) {
-      const el = document.getElementById(steps[i]);
-      if (!el) continue;
-      if (i > 0) {
-        const prev = document.getElementById(steps[i-1]);
-        prev.style.color = 'var(--teal-light)';
-        prev.querySelector('div').style.background = 'var(--teal-light)';
-      }
-      el.style.color = 'var(--white)';
-      el.querySelector('div').style.background = 'var(--white)';
-      el.querySelector('div').style.animation = 'pulse 1s infinite';
-      await new Promise(r => setTimeout(r, 900));
-    }
-  }
-
-  // Click en Iniciar Auditoría
-  auditBtn.addEventListener('click', async () => {
-    const content = contentInput.value.trim();
-    if (content.length < 100) {
-      errorMsg.style.display = 'block';
-      return;
-    }
-
-    auditBtn.disabled = true;
-    auditBtn.textContent = 'Analizando...';
-    errorMsg.style.display = 'none';
-    resultsDiv.style.display = 'none';
-    inputStep.style.display = 'none';
-    loadingPhase.style.display = 'block';
-
-    ['ls-1','ls-2','ls-3','ls-4','ls-5'].forEach(id => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.style.color = 'rgba(255,255,255,0.4)';
-      el.querySelector('div').style.background = 'rgba(255,255,255,0.15)';
-      el.querySelector('div').style.animation = 'none';
-    });
-
-    await animateLoading();
-
-    setTimeout(() => {
-      loadingPhase.style.display = 'none';
-      auditBtn.disabled = false;
-      auditBtn.textContent = 'Iniciar Auditoría';
-      resultsDiv.style.display = 'block';
-      if (refineSection) refineSection.style.display = 'block';
-
-      resultsDiv.innerHTML = `
-        <div class="result-card medium">
-          <div class="result-level">SCORE: 72/100</div>
-          <div class="result-title">Coherencia Narrativa Media</div>
-          <div class="result-desc">Tu texto comunica crecimiento y expansión de forma clara. Sin embargo, falta diferenciación vs competidores y el tono es demasiado institucional. Detectamos 3 oportunidades de mejora.</div>
-          <div class="result-action"><strong>¿Qué hacer?</strong> 1) Agrega un dato único que solo tu organización pueda reclamar. 2) Humaniza con una cita de cliente o socio. 3) Cambia "fortalecemos presencia" por un verbo más activo y específico.</div>
-        </div>
-        <div class="result-card low">
-          <div class="result-level">RIESGO BAJO</div>
-          <div class="result-title">Sin riesgos reputacionales detectados</div>
-          <div class="result-desc">El mensaje no contiene afirmaciones que puedan generar backlash o malinterpretación en el contexto actual LATAM.</div>
-          <div class="result-action"><strong>¿Qué hacer?</strong> Mantén este nivel de cuidado. Antes de publicar, valida los datos cuantitativos que mencionas.</div>
-        </div>
-        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 0.5px solid rgba(255,255,255,0.08);">
-          <p style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mist);margin-bottom:1.5rem;">COMPARED AGAINST</p>
-          <div id="competitors-list" style="display:flex;flex-direction:column;gap:10px;">
-            <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
-              <div>
-                <div style="font-size:14px;color:var(--white);font-weight:400;">Telcel</div>
-                <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Mismo sector, tono institucional similar</div>
-              </div>
-              <div style="font-size:12px;color:var(--mist);">Similarity <strong style="color:var(--teal-light);">68%</strong></div>
-            </div>
-            <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
-              <div>
-                <div style="font-size:14px;color:var(--white);font-weight:400;">AT&T México</div>
-                <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Mensajes de expansión y cobertura</div>
-              </div>
-              <div style="font-size:12px;color:var(--mist);">Similarity <strong style="color:var(--teal-light);">61%</strong></div>
-            </div>
-            <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
-              <div>
-                <div style="font-size:14px;color:var(--white);font-weight:400;">Movistar</div>
-                <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Enfoque en experiencia del cliente</div>
-              </div>
-              <div style="font-size:12px;color:var(--mist);">Similarity <strong style="color:var(--teal-light);">54%</strong></div>
-            </div>
-          </div>
-          <button type="button" onclick="location.reload()" style="background:transparent;border:0.5px solid rgba(255,255,255,0.15);border-radius:2px;padding:10px 20px;font-size:12px;color:var(--mist);cursor:pointer;margin-top:1.5rem;">← Auditar otro texto</button>
-        </div>`;
-      resultsDiv.scrollIntoView({ behavior: 'smooth' });
-    }, 500);
-  });
-
-  // Refine toggle
-  if (refineToggle) {
-    refineToggle.addEventListener('click', () => {
-      const isOpen = refinePanel.style.display === 'block';
-      refinePanel.style.display = isOpen ? 'none' : 'block';
-      refineToggle.textContent = isOpen ? 'Refinar comparadores →' : 'Cerrar refinamiento ↑';
-    });
-  }
-
-  // Refine submit - parsea empresas
-  if (refineSubmit) {
-    refineSubmit.addEventListener('click', () => {
-      const refinement = document.getElementById('refine-input').value.trim();
-      if (!refinement) return;
-
-      let clean = refinement
-        .replace(/quita|agrega|compara con|vs|versus|pon|incluye|empresas?|competidores?/gi, '')
-        .replace(/:,/g, ',')
-        .trim();
-
-      let empresas = clean.split(/,| y | e /i)
-        .map(e => e.trim())
-        .filter(e => e.length > 2);
-
-      if (empresas.length === 0) empresas = [refinement];
-
-      const competitorsList = document.getElementById('competitors-list');
-      if (competitorsList) {
-        competitorsList.innerHTML = empresas.map((emp, i) => {
-          const similarity = 75 - (i * 8);
-          return `
-            <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
-              <div>
-                <div style="font-size:14px;color:var(--white);font-weight:400;">${emp}</div>
-                <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Re-analizado con tu instrucción</div>
-              </div>
-              <div style="font-size:12px;color:var(--mist);">Similarity <strong style="color:var(--teal-light);">${similarity}%</strong></div>
-            </div>
-          `;
-        }).join('');
-      }
-
-      refinePanel.style.display = 'none';
-      refineToggle.textContent = 'Refinar comparadores →';
-      document.getElementById('refine-input').value = '';
-    });
-  }
-});
-
-
-
-
-
-  
-
 </script>
 </body>
 </html>
