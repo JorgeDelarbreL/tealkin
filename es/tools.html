@@ -201,27 +201,26 @@
   </div>
 </section>
 
-<section class="tool-section" style="background: var(--ink-soft); border-top: 0.5px solid rgba(255,255,255,0.06);">
+<section class="tool-section" id="audit-section">
   <div class="tool-container">
     <div class="tool-header">
       <p class="tool-num">Herramienta 02</p>
       <h2 class="tool-title">Narrative <em>Audit.</em></h2>
-      <p class="tool-intro">Analiza la coherencia y el impacto de tus mensajes frente a los temas clave de la industria. Ideal para revisar borradores de comunicados, artículos de opinión o guiones de entrevistas.</p>
+      <p class="tool-intro">Analiza la coherencia y el impacto de tus mensajes frente a los temas clave de la industria.</p>
     </div>
 
     <div class="audit-card">
       <div class="audit-ui">
         <p class="audit-label">Pega tu texto aquí (mín. 100 caracteres)</p>
-        <textarea id="content-input" placeholder="Escribe o pega el contenido que deseas auditar..." style="width: 100%; min-height: 200px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 1.5rem; border-radius: 8px; font-family: inherit; margin-bottom: 1rem; resize: vertical;"></textarea>
-        
-        <div class="audit-controls" style="display: flex; justify-content: space-between; align-items: center;">
-          <span id="char-count" class="char-count" style="font-size: 0.8rem; color: var(--mist);">0 caracteres</span>
-          <button type="button" onclick="runAudit(); return false;" id="audit-btn" class="audit-main-btn">Iniciar Auditoría</button>
+        <textarea id="content-input" placeholder="Escribe o pega el contenido que deseas auditar..."></textarea>
+        <div class="audit-controls">
+          <span id="char-count" class="char-count">0 caracteres</span>
+          <button type="button" onclick="runAudit();" id="audit-btn" class="audit-main-btn">Iniciar Auditoría</button>
         </div>
-        <p id="error-msg" class="error-msg" style="display:none; color: #ff6b6b; margin-top: 1rem; font-size: 0.9rem;">Por favor, ingresa al menos 100 caracteres para un análisis preciso.</p>
+        <p id="error-msg" class="error-msg" style="display:none;">Por favor, ingresa al menos 100 caracteres.</p>
       </div>
       
-      <div id="audit-results" class="audit-results" style="display:none; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
+      <div id="audit-results" class="audit-results" style="display:none;">
         </div>
     </div>
   </div>
