@@ -370,15 +370,15 @@
     </div>
 
     <div id="audit-results" style="display:none;margin-top:2.5rem;padding-top:2.5rem;border-top:0.5px solid rgba(255,255,255,0.08);"></div>
-    <div id="refine-section" style="display:none;margin-top:2rem;padding-top:2rem;border-top:0.5px solid rgba(255,255,255,0.08);">
-  <button type="button" id="refine-toggle" style="background:transparent;border:0.5px solid rgba(255,255,255,0.15);border-radius:2px;padding:10px 20px;font-size:12px;color:var(--mist);cursor:pointer;letter-spacing:0.08em;text-transform:uppercase;">Refinar comparadores →</button>
-  
-  <div id="refine-panel" style="display:none;margin-top:1.5rem;background:#0a1210;border:0.5px solid rgba(255,255,255,0.1);border-radius:4px;padding:1.5rem;">
-    <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:1rem;">Escribe qué empresas comparar. Ej: "Quita Telcel, agrega Bimbo y FEMSA"</p>
-    <input type="text" id="refine-input" placeholder="Ej: Quita Telcel, agrega Bimbo y FEMSA" style="width:100%;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.1);border-radius:2px;padding:10px 12px;color:var(--white);font-family:var(--font-body);font-size:13px;margin-bottom:1rem;">
-    <button type="button" id="refine-submit" style="background:var(--teal);color:var(--ink);border:none;border-radius:2px;padding:10px 24px;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:0.05em;">Re-auditar con cambios →</button>
-  </div>
-  </div>
+ <div id="refine-section" style="display:none;margin-top:2rem;padding-top:2rem;border-top:0.5px solid rgba(255,255,255,0.08);">
+      <button type="button" id="refine-toggle" style="background:transparent;border:0.5px solid rgba(255,255,255,0.15);border-radius:2px;padding:10px 20px;font-size:12px;color:var(--mist);cursor:pointer;letter-spacing:0.08em;text-transform:uppercase;">Refinar comparadores →</button>
+      
+      <div id="refine-panel" style="display:none;margin-top:1.5rem;background:#0a1210;border:0.5px solid rgba(255,255,255,0.1);border-radius:4px;padding:1.5rem;">
+        <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:1rem;">Escribe qué empresas comparar. Ej: "Quita Telcel, agrega Bimbo y FEMSA"</p>
+        <input type="text" id="refine-input" placeholder="Ej: Quita Telcel, agrega Bimbo y FEMSA" style="width:100%;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.1);border-radius:2px;padding:10px 12px;color:var(--white);font-family:var(--font-body);font-size:13px;margin-bottom:1rem;">
+        <button type="button" id="refine-submit" style="background:var(--teal);color:var(--ink);border:none;border-radius:2px;padding:10px 24px;font-size:12px;font-weight:500;cursor:pointer;letter-spacing:0.05em;">Re-auditar con cambios →</button>
+      </div>
+    </div>
  
 <section class="coming-soon">
   <p class="cs-label">En desarrollo</p>
@@ -616,9 +616,9 @@ function restart() {
     <div class="result-desc">El mensaje no contiene afirmaciones que puedan generar backlash o malinterpretación en el contexto actual LATAM.</div>
     <div class="result-action"><strong>¿Qué hacer?</strong> Mantén este nivel de cuidado. Antes de publicar, valida los datos cuantitativos que mencionas.</div>
   </div>
-  <div style="margin-top: 2rem; padding-top: 2rem; border-top: 0.5px solid rgba(255,255,255,0.08);">
-    <p style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mist);margin-bottom:1.5rem;">COMPARED AGAINST</p>
-    <div id="competitors-list" style="display:flex;flex-direction:column;gap:10px;">
+ <div style="margin-top: 2rem; padding-top: 2rem; border-top: 0.5px solid rgba(255,255,255,0.08);">
+  <p style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mist);margin-bottom:1.5rem;">COMPARED AGAINST</p>
+  <div id="competitors-list" style="display:flex;flex-direction:column;gap:10px;">
       <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
         <div>
           <div style="font-size:14px;color:var(--white);font-weight:400;">Telcel</div>
@@ -675,27 +675,28 @@ setTimeout(() => {
     
     // Mock: actualiza competidores
     const competitorsList = document.getElementById('competitors-list');
-    competitorsList.innerHTML = `
-      <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
-        <div>
-          <div style="font-size:14px;color:var(--white);font-weight:400;">${refinement.includes('Bimbo') ? 'Bimbo' : 'Empresa 1'}</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Aplicando: ${refinement}</div>
+ competitorsList.innerHTML = `
+        <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
+          <div>
+            <div style="font-size:14px;color:var(--white);font-weight:400;">${refinement.includes('Bimbo') ? 'Bimbo' : 'Empresa 1'}</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Aplicando: ${refinement}</div>
+          </div>
+          <div style="font-size:12px;color:var(--mist);">Similarity <strong style="color:var(--teal-light);">73%</strong></div>
         </div>
-        <div style="font-size:12px;color:var(--mist);">Similarity <strong style="color:var(--teal-light);">73%</strong></div>
-      </div>
-      <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
-        <div>
-          <div style="font-size:14px;color:var(--white);font-weight:400;">${refinement.includes('FEMSA') ? 'FEMSA' : 'Empresa 2'}</div>
-          <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Re-analizado</div>
+        <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
+          <div>
+            <div style="font-size:14px;color:var(--white);font-weight:400;">${refinement.includes('FEMSA') ? 'FEMSA' : 'Empresa 2'}</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Re-analizado</div>
+          </div>
+          <div style="font-size:12px;color:var(--mist);">Similarity <strong style="color:var(--teal-light);">62%</strong></div>
         </div>
-        <div style="font-size:12px;color:var(--mist);">Similarity <strong style="color:var(--teal-light);">62%</strong></div>
-      </div>
-    `;
+      `;
+    }
     refinePanel.style.display = 'none';
     refineToggle.textContent = 'Refinar comparadores →';
     document.getElementById('refine-input').value = '';
   });
-}, 100);       
+}     
 </script>
 </body>
 </html>
