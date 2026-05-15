@@ -335,22 +335,19 @@ Respond ONLY with a valid JSON object, no markdown, no explanation, no backticks
   try {
     const response = await fetch('https://tealkin-proxy.delarbre-giorgio.workers.dev/', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'anthropic-dangerous-direct-browser-ivp': 'true' },
+headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'deepseek-chat',
         max_tokens: 4000,
-        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
         messages: [{ role: 'user', content: prompt }]
       })
-    });
+      });
 
     const data = await response.json();
     await loadingAnim;
 
     if (!data.choices || !data.choices.length) throw new Error('No response');
-const allText = data.choices[0].message.content;
-
-    const allText = textBlocks.map(b => b.text).join('');
+    const allText = data.choices[0].message.content;
     const jsonMatch = allText.match(/\{[\s\S]*\}/);
     if (!jsonMatch) throw new Error('No JSON found');
 
