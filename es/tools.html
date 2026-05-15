@@ -199,7 +199,7 @@
 </section>
 
 <section class="tool-section">
-  <div class="tool-header">
+<div class="tool-header">
     <div>
       <p class="tool-num">02 · Activo</p>
       <h2 class="tool-name">Narrative Audit</h2>
@@ -221,8 +221,8 @@
     <div class="step active" id="audit-step-input">
       <div class="step-label">Paso 1 de 1</div>
       <div class="step-question">¿Qué mensaje quieres auditar?</div>
-      <label class="audit-label" for="content-input" style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mist);margin-bottom:1rem;display:block;">Pega tu texto aquí (mín. 100 caracteres)</label>
-      <textarea id="content-input" placeholder="Escribe o pega el contenido que deseas auditar..."></textarea>
+      <label for="content-input" style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mist);margin-bottom:1rem;display:block;">Pega tu texto aquí (mín. 100 caracteres)</label>
+      <textarea id="content-input" placeholder="Escribe o pega el contenido que deseas auditar: comunicado, post, speech, página web..."></textarea>
 
       <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;">
         <span id="char-count" style="font-size:12px;color:var(--mist);">0 caracteres</span>
@@ -244,73 +244,6 @@
     <div id="audit-results" style="display:none;margin-top:2.5rem;padding-top:2.5rem;border-top:0.5px solid rgba(255,255,255,0.08);"></div>
   </div>
   </section>
-
-<section class="tool-section" id="tool-audit">
-  <div class="tool-header">
-    <div>
-      <p class="tool-num">02 · Activo</p>
-      <h2 class="tool-name">Narrative Audit</h2>
-      <p class="tool-sub">Análisis de mensajes</p>
-      <p class="tool-desc">Analiza la coherencia, diferenciación y resonancia de tus mensajes frente a los temas clave de tu industria. Identifica gaps narrativos antes de que se conviertan en vulnerabilidades reputacionales.</p>
-      <div class="tool-tags">
-        <span class="tag">Message testing</span>
-        <span class="tag">Narrative coherence</span>
-        <span class="tag">Differentiation</span>
-        <span class="tag">Stakeholder resonance</span>
-      </div>
-    </div>
-    <div style="align-self: center;">
-      <p style="font-size: 13px; color: var(--mist); line-height: 1.7;">Pega tu texto · 30 segundos · Análisis de coherencia, diferenciación y riesgo narrativo.</p>
-    </div>
-  </div>
-
-  <div class="diag-wrap">
-    <div class="step active" id="audit-step-input">
-      <div class="step-label">Paso 1 de 1</div>
-      <div class="step-question">¿Qué mensaje quieres auditar?</div>
-      <label class="audit-label" for="audit-content-input">Pega tu texto aquí (mín. 100 caracteres)</label>
-      <textarea id="audit-content-input" class="audit-textarea" placeholder="Escribe o pega el contenido que deseas auditar: comunicado, post, speech, página web..."></textarea>
-      <div class="audit-card">
-  <label class="audit-label" for="content-input">Pega tu texto aquí (mín. 100 caracteres)</label>
-  <textarea id="content-input" placeholder="Escribe o pega el contenido que deseas auditar..."></textarea>
-  
-  <div class="audit-controls">
-    <span id="char-count" class="char-count">0 caracteres</span>
-    <button type="button" id="audit-btn" class="audit-main-btn" disabled>Iniciar Auditoría</button>
-  </div>
-  <p id="audit-error-msg" class="error-msg" style="display:none;">Por favor, ingresa al menos 100 caracteres.</p>
-
-  <!-- LOADING PHASE -->
-  <div id="loading-phase" style="display:none; padding: 3rem 0;">
-    <div style="display: flex; flex-direction: column; gap: 1rem;">
-      <div class="loading-step" id="ls-1" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);">
-        <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>
-        Reading your narrative
-      </div>
-      <div class="loading-step" id="ls-2" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);">
-        <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>
-        Identifying your sector and positioning
-      </div>
-      <div class="loading-step" id="ls-3" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);">
-        <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>
-        Finding comparable organizations
-      </div>
-      <div class="loading-step" id="ls-4" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);">
-        <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>
-        Analyzing patterns and similarities
-      </div>
-      <div class="loading-step" id="ls-5" style="display:flex;align-items:center;gap:14px;font-size:13px;color:rgba(255,255,255,0.4);">
-        <div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);flex-shrink:0;"></div>
-        Building your report
-      </div>
-    </div>
-  </div>
-
-  <!-- RESULTS -->
-  <div id="audit-results" style="display:none; margin-top: 2.5rem; padding-top: 2.5rem; border-top: 0.5px solid rgba(255,255,255,0.08);"></div>
-</div>
-    
-</section>
  
 <section class="coming-soon">
   <p class="cs-label">En desarrollo</p>
@@ -465,222 +398,124 @@ function restart() {
   document.getElementById('progress').style.width = '0%';
 }
   // ========== HERRAMIENTA 02: NARRATIVE AUDIT ==========
-const auditTextarea = document.getElementById('audit-content-input');
-const auditCharCount = document.getElementById('audit-char-count');
-const auditBtn = document.getElementById('audit-btn');
-const auditErrorMsg = document.getElementById('audit-error-msg');
+(function() {
+  const contentInput = document.getElementById('content-input');
+  const charCount = document.getElementById('char-count');
+  const auditBtn = document.getElementById('audit-btn');
+  const errorMsg = document.getElementById('audit-error-msg');
+  const loadingPhase = document.getElementById('loading-phase');
+  const resultsDiv = document.getElementById('audit-results');
+  const inputStep = document.getElementById('audit-step-input');
 
-if (auditTextarea) {
-  auditTextarea.addEventListener('input', () => {
-    const length = auditTextarea.value.length;
-    auditCharCount.textContent = `${length} caracteres`;
-    
+  if (!contentInput) return;
+
+  contentInput.addEventListener('input', () => {
+    const length = contentInput.value.length;
+    charCount.textContent = `${length} caracteres`;
     if (length < 100) {
-      auditCharCount.classList.add('invalid');
+      charCount.style.color = '#ef4444';
       auditBtn.disabled = true;
     } else {
-      auditCharCount.classList.remove('invalid');
+      charCount.style.color = 'var(--mist)';
       auditBtn.disabled = false;
-      auditErrorMsg.style.display = 'none';
-    }
-  });
-
-  auditBtn.addEventListener('click', runAudit);
-  document.getElementById('audit-restart').addEventListener('click', restartAudit);
-}
-
-function runAudit() {
-  const content = auditTextarea.value.trim();
-  const resultsDiv = document.getElementById('audit-step-result');
-  const inputDiv = document.getElementById('audit-step-input');
-
-  if (content.length < 100) {
-    auditErrorMsg.style.display = 'block';
-    return;
-  }
-  
-  auditBtn.disabled = true;
-  auditBtn.textContent = 'Analizando...';
-  auditErrorMsg.style.display = 'none';
-
-  // SIMULACIÓN - reemplaza esto con tu API real después
-  setTimeout(() => {
-    auditBtn.disabled = false;
-    auditBtn.textContent = 'Iniciar Auditoría →';
-    
-    inputDiv.classList.remove('active');
-    resultsDiv.classList.add('active');
-    
-    document.getElementById('audit-result-intro').textContent = `Analizamos ${content.length} caracteres de tu mensaje.`;
-    document.getElementById('audit-results-container').innerHTML = `
-      <div class="result-card medium">
-        <div class="result-level">Score: 72/100</div>
-        <div class="result-title">Coherencia Narrativa Media</div>
-        <div class="result-desc">Tu texto comunica crecimiento y expansión de forma clara. Sin embargo, falta diferenciación vs competidores y el tono es demasiado institucional. Detectamos 3 oportunidades de mejora.</div>
-        <div class="result-action"><strong>¿Qué hacer?</strong> 1) Agrega un dato único que solo tu organización pueda reclamar. 2) Humaniza con una cita de cliente o socio. 3) Cambia "fortalecemos presencia" por un verbo más activo y específico.</div>
-      </div>
-      <div class="result-card low">
-        <div class="result-level">Riesgo bajo</div>
-        <div class="result-title">Sin riesgos reputacionales detectados</div>
-        <div class="result-desc">El mensaje no contiene afirmaciones que puedan generar backlash o malinterpretación en el contexto actual LATAM.</div>
-        <div class="result-action"><strong>¿Qué hacer?</strong> Mantén este nivel de cuidado. Antes de publicar, valida los datos cuantitativos que mencionas.</div>
-      </div>`;
-    resultsDiv.scrollIntoView({ behavior: 'smooth' });
-  }, 1500);
-}
-
-function restartAudit() {
-  document.getElementById('audit-step-result').classList.remove('active');
-  document.getElementById('audit-step-input').classList.add('active');
-  auditTextarea.value = '';
-  auditCharCount.textContent = '0 caracteres';
-  auditCharCount.classList.add('invalid');
-  auditBtn.disabled = true;
-}
-  const refineToggle = document.getElementById('refine-toggle');
-const refinePanel = document.getElementById('refine-panel');
-const refineSubmit = document.getElementById('refine-submit');
-
-if (refineToggle) {
-  refineToggle.addEventListener('click', () => {
-    const isOpen = refinePanel.style.display === 'block';
-    refinePanel.style.display = isOpen ? 'none' : 'block';
-    refineToggle.textContent = isOpen ? 'Refinar comparadores →' : 'Cerrar refinamiento ↑';
-  });
-
-  refineSubmit.addEventListener('click', () => {
-    const refinement = document.getElementById('refine-input').value.trim();
-    if (!refinement) return;
-    
-    // Aquí después conectas tu API real con el refinement
-    // Por ahora solo recarga con mensaje
-    refinePanel.style.display = 'none';
-    document.getElementById('audit-results-container').innerHTML = `
-      <div class="result-card medium">
-        <div class="result-level">Re-auditando...</div>
-        <div class="result-title">Aplicando: ${refinement}</div>
-        <div class="result-desc">Aquí conectarías tu backend para re-correr el análisis con los nuevos competidores.</div>
-      </div>`;
-  });
-}
-    (function() {
-    const contentInput = document.getElementById('content-input');
-    const charCount = document.getElementById('char-count');
-    const auditBtn = document.getElementById('audit-btn');
-    const errorMsg = document.getElementById('audit-error-msg');
-    const loadingPhase = document.getElementById('loading-phase');
-    const resultsDiv = document.getElementById('audit-results');
-    const inputStep = document.getElementById('audit-step-input');
-
-    if (!contentInput) return;
-
-    contentInput.addEventListener('input', () => {
-      const length = contentInput.value.length;
-      charCount.textContent = `${length} caracteres`;
-      if (length < 100) {
-        charCount.style.color = '#ef4444';
-        auditBtn.disabled = true;
-      } else {
-        charCount.style.color = 'var(--mist)';
-        auditBtn.disabled = false;
-        errorMsg.style.display = 'none';
-      }
-    });
-
-    async function animateLoading() {
-      const steps = ['ls-1','ls-2','ls-3','ls-4','ls-5'];
-      for (let i = 0; i < steps.length; i++) {
-        const el = document.getElementById(steps[i]);
-        if (i > 0) {
-          const prev = document.getElementById(steps[i-1]);
-          prev.style.color = 'var(--teal-light)';
-          prev.querySelector('div').style.background = 'var(--teal-light)';
-        }
-        el.style.color = 'var(--white)';
-        el.querySelector('div').style.background = 'var(--white)';
-        el.querySelector('div').style.animation = 'pulse 1s infinite';
-        await new Promise(r => setTimeout(r, 900));
-      }
-    }
-
-    auditBtn.addEventListener('click', async () => {
-      const content = contentInput.value.trim();
-      if (content.length < 100) {
-        errorMsg.style.display = 'block';
-        return;
-      }
-
-      auditBtn.disabled = true;
-      auditBtn.textContent = 'Analizando...';
       errorMsg.style.display = 'none';
-      resultsDiv.style.display = 'none';
-      inputStep.style.display = 'none';
-      loadingPhase.style.display = 'block';
+    }
+  });
 
-      ['ls-1','ls-2','ls-3','ls-4','ls-5'].forEach(id => {
-        const el = document.getElementById(id);
-        el.style.color = 'rgba(255,255,255,0.4)';
-        el.querySelector('div').style.background = 'rgba(255,255,255,0.15)';
-        el.querySelector('div').style.animation = 'none';
-      });
+  async function animateLoading() {
+    const steps = ['ls-1','ls-2','ls-3','ls-4','ls-5'];
+    for (let i = 0; i < steps.length; i++) {
+      const el = document.getElementById(steps[i]);
+      if (i > 0) {
+        const prev = document.getElementById(steps[i-1]);
+        prev.style.color = 'var(--teal-light)';
+        prev.querySelector('div').style.background = 'var(--teal-light)';
+      }
+      el.style.color = 'var(--white)';
+      el.querySelector('div').style.background = 'var(--white)';
+      el.querySelector('div').style.animation = 'pulse 1s infinite';
+      await new Promise(r => setTimeout(r, 900));
+    }
+  }
 
-      await animateLoading();
+  auditBtn.addEventListener('click', async () => {
+    const content = contentInput.value.trim();
+    if (content.length < 100) {
+      errorMsg.style.display = 'block';
+      return;
+    }
 
-      setTimeout(() => {
-        loadingPhase.style.display = 'none';
-        auditBtn.disabled = false;
-        auditBtn.textContent = 'Iniciar Auditoría';
-        inputStep.style.display = 'none';
+    auditBtn.disabled = true;
+    auditBtn.textContent = 'Analizando...';
+    errorMsg.style.display = 'none';
+    resultsDiv.style.display = 'none';
+    inputStep.style.display = 'none';
+    loadingPhase.style.display = 'block';
 
-        resultsDiv.style.display = 'block';
-        resultsDiv.innerHTML = `
-          <div class="result-card medium">
-            <div class="result-level">SCORE: 72/100</div>
-            <div class="result-title">Coherencia Narrativa Media</div>
-            <div class="result-desc">Tu texto comunica crecimiento y expansión de forma clara. Sin embargo, falta diferenciación vs competidores y el tono es demasiado institucional. Detectamos 3 oportunidades de mejora.</div>
-            <div class="result-action"><strong>¿Qué hacer?</strong> 1) Agrega un dato único que solo tu organización pueda reclamar. 2) Humaniza con una cita de cliente o socio. 3) Cambia "fortalecemos presencia" por un verbo más activo y específico.</div>
-          </div>
-          <div class="result-card low">
-            <div class="result-level">RIESGO BAJO</div>
-            <div class="result-title">Sin riesgos reputacionales detectados</div>
-            <div class="result-desc">El mensaje no contiene afirmaciones que puedan generar backlash o malinterpretación en el contexto actual LATAM.</div>
-            <div class="result-action"><strong>¿Qué hacer?</strong> Mantén este nivel de cuidado. Antes de publicar, valida los datos cuantitativos que mencionas.</div>
-          </div>
-          <div style="margin-top: 2rem; padding-top: 2rem; border-top: 0.5px solid rgba(255,255,255,0.08);">
-            <p style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mist);margin-bottom:1.5rem;">COMPARED AGAINST</p>
-            <div style="display:flex;flex-direction:column;gap:10px;">
-              <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
-                <div>
-                  <div style="font-size:14px;color:var(--white);font-weight:400;">Telcel</div>
-                  <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Mismo sector, tono institucional similar</div>
-                </div>
-                <div style="font-size:12px;color:var(--mist);">Similarity <strong style="color:var(--teal-light);">68%</strong></div>
-              </div>
-              <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
-                <div>
-                  <div style="font-size:14px;color:var(--white);font-weight:400;">AT&T México</div>
-                  <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Mensajes de expansión y cobertura</div>
-                </div>
-                <div style="font-size:12px;color:var(--mist);">Similarity <strong style="color:var(--teal-light);">61%</strong></div>
-              </div>
-              <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
-                <div>
-                  <div style="font-size:14px;color:var(--white);font-weight:400;">Movistar</div>
-                  <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Enfoque en experiencia del cliente</div>
-                </div>
-                <div style="font-size:12px;color:var(--mist);">Similarity <strong style="color:var(--teal-light);">54%</strong></div>
-              </div>
-            </div>
-            <button type="button" onclick="location.reload()" style="background:transparent;border:0.5px solid rgba(255,255,255,0.15);border-radius:2px;padding:10px 20px;font-size:12px;color:var(--mist);cursor:pointer;margin-top:1.5rem;">← Auditar otro texto</button>
-          </div>`;
-        resultsDiv.scrollIntoView({ behavior: 'smooth' });
-      }, 500);
+    ['ls-1','ls-2','ls-3','ls-4','ls-5'].forEach(id => {
+      const el = document.getElementById(id);
+      el.style.color = 'rgba(255,255,255,0.4)';
+      el.querySelector('div').style.background = 'rgba(255,255,255,0.15)';
+      el.querySelector('div').style.animation = 'none';
     });
-  })();
 
-  const style = document.createElement('style');
-  style.textContent = '@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }';
-  document.head.appendChild(style);
+    await animateLoading();
+
+    setTimeout(() => {
+      loadingPhase.style.display = 'none';
+      auditBtn.disabled = false;
+      auditBtn.textContent = 'Iniciar Auditoría';
+      inputStep.style.display = 'none';
+
+      resultsDiv.style.display = 'block';
+      resultsDiv.innerHTML = `
+        <div class="result-card medium">
+          <div class="result-level">SCORE: 72/100</div>
+          <div class="result-title">Coherencia Narrativa Media</div>
+          <div class="result-desc">Tu texto comunica crecimiento y expansión de forma clara. Sin embargo, falta diferenciación vs competidores y el tono es demasiado institucional. Detectamos 3 oportunidades de mejora.</div>
+          <div class="result-action"><strong>¿Qué hacer?</strong> 1) Agrega un dato único que solo tu organización pueda reclamar. 2) Humaniza con una cita de cliente o socio. 3) Cambia "fortalecemos presencia" por un verbo más activo y específico.</div>
+        </div>
+        <div class="result-card low">
+          <div class="result-level">RIESGO BAJO</div>
+          <div class="result-title">Sin riesgos reputacionales detectados</div>
+          <div class="result-desc">El mensaje no contiene afirmaciones que puedan generar backlash o malinterpretación en el contexto actual LATAM.</div>
+          <div class="result-action"><strong>¿Qué hacer?</strong> Mantén este nivel de cuidado. Antes de publicar, valida los datos cuantitativos que mencionas.</div>
+        </div>
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 0.5px solid rgba(255,255,255,0.08);">
+          <p style="font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--mist);margin-bottom:1.5rem;">COMPARED AGAINST</p>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
+              <div>
+                <div style="font-size:14px;color:var(--white);font-weight:400;">Telcel</div>
+                <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Mismo sector, tono institucional similar</div>
+              </div>
+              <div style="font-size:12px;color:var(--mist);">Similarity <strong style="color:var(--teal-light);">68%</strong></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
+              <div>
+                <div style="font-size:14px;color:var(--white);font-weight:400;">AT&T México</div>
+                <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Mensajes de expansión y cobertura</div>
+              </div>
+              <div style="font-size:12px;color:var(--mist);">Similarity <strong style="color:var(--teal-light);">61%</strong></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.07);border-radius:4px;padding:0.875rem 1.25rem;">
+              <div>
+                <div style="font-size:14px;color:var(--white);font-weight:400;">Movistar</div>
+                <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">Enfoque en experiencia del cliente</div>
+              </div>
+              <div style="font-size:12px;color:var(--mist);">Similarity <strong style="color:var(--teal-light);">54%</strong></div>
+            </div>
+          </div>
+          <button type="button" onclick="location.reload()" style="background:transparent;border:0.5px solid rgba(255,255,255,0.15);border-radius:2px;padding:10px 20px;font-size:12px;color:var(--mist);cursor:pointer;margin-top:1.5rem;">← Auditar otro texto</button>
+        </div>`;
+      resultsDiv.scrollIntoView({ behavior: 'smooth' });
+    }, 500);
+  });
+})();
+
+const style = document.createElement('style');
+style.textContent = '@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }';
+document.head.appendChild(style);  
 </script>
 </body>
 </html>
