@@ -1,105 +1,82 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <!-- EN: Home -->
-  <url>
-    <loc>https://tealkin.com/en/index.html</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/en/index.html"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/index.html"/>
-    <lastmod>2026-05-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
 
-  <!-- ES: Home -->
-  <url>
-    <loc>https://tealkin.com/es/index.html</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/en/index.html"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/index.html"/>
-    <lastmod>2026-05-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>1.0</priority>
-  </url>
+https://tealkin.com/
 
-  <!-- EN: Dzon index -->
-  <url>
-    <loc>https://tealkin.com/en/dzon.html</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/en/dzon.html"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/dzon.html"/>
-    <lastmod>2026-05-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
 
-  <!-- ES: Dzon index -->
-  <url>
-    <loc>https://tealkin.com/es/dzon.html</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/en/dzon.html"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/dzon.html"/>
-    <lastmod>2026-05-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
+2026-05-15
+monthly
+1.0
 
-  <!-- EN: Article 01 -->
-  <url>
-    <loc>https://tealkin.com/en/dzon-01-what-is-the-place-of-communications.html</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/en/dzon-01-what-is-the-place-of-communications.html"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/dzon-01-cual-es-el-lugar-de-la-comunicacion.html"/>
-    <lastmod>2026-05-14</lastmod>
-    <changefreq>never</changefreq>
-    <priority>0.8</priority>
-  </url>
 
-  <!-- ES: Article 01 -->
-  <url>
-    <loc>https://tealkin.com/es/dzon-01-cual-es-el-lugar-de-la-comunicacion.html</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/en/dzon-01-what-is-the-place-of-communications.html"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/dzon-01-cual-es-el-lugar-de-la-comunicacion.html"/>
-    <lastmod>2026-05-14</lastmod>
-    <changefreq>never</changefreq>
-    <priority>0.8</priority>
-  </url>
+https://tealkin.com/es/index.html
 
-  <!-- EN: Tools -->
-  <url>
-    <loc>https://tealkin.com/en/tools.html</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/en/tools.html"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/tools.html"/>
-    <lastmod>2026-05-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
 
-  <!-- ES: Tools -->
-  <url>
-    <loc>https://tealkin.com/es/tools.html</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/en/tools.html"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/tools.html"/>
-    <lastmod>2026-05-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+2026-05-15
+monthly
+1.0
 
-  <!-- EN: About -->
-  <url>
-    <loc>https://tealkin.com/en/about.html</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/en/about.html"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/about.html"/>
-    <lastmod>2026-05-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
 
-  <!-- ES: About -->
-  <url>
-    <loc>https://tealkin.com/es/about.html</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/en/about.html"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/about.html"/>
-    <lastmod>2026-05-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
+https://tealkin.com/dzon.html
 
-</urlset>
+
+2026-05-15
+weekly
+0.9
+
+
+https://tealkin.com/es/dzon.html
+
+
+2026-05-15
+weekly
+0.9
+
+
+https://tealkin.com/dzon-01-what-is-the-place-of-communications.html
+
+
+2026-05-15
+never
+0.8
+
+
+https://tealkin.com/es/dzon-01-cual-es-el-lugar-de-la-comunicacion.html
+
+
+2026-05-15
+never
+0.8
+
+
+https://tealkin.com/tools.html
+
+
+2026-05-15
+monthly
+0.8
+
+
+https://tealkin.com/es/tools.html
+
+
+2026-05-15
+monthly
+0.8
+
+
+https://tealkin.com/about.html
+
+
+2026-05-15
+monthly
+0.7
+
+
+https://tealkin.com/es/about.html
+
+
+2026-05-15
+monthly
+0.7
+
+
