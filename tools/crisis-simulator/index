@@ -7,42 +7,24 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
 <style>
   :root {
-    --teal: #1a9b8c;
-    --teal-dark: #127a6e;
-    --teal-light: #22c4b0;
-    --black: #060a09;
-    --black-mid: #0d1413;
-    --off-white: #f0ece4;
-    --warm-gray: #8a8880;
-    --red: #c0392b;
-    --red-dark: #922b21;
-    --amber: #d4a017;
+    --teal: #1a9b8c; --teal-dark: #127a6e; --teal-light: #22c4b0;
+    --black: #060a09; --black-mid: #0d1413; --off-white: #f0ece4;
+    --warm-gray: #8a8880; --red: #c0392b; --red-dark: #922b21; --amber: #d4a017;
     --font-display: 'Cormorant Garamond', Georgia, serif;
     --font-body: 'DM Sans', system-ui, sans-serif;
     --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { width: 100%; height: 100%; background: var(--black); color: var(--off-white); font-family: var(--font-body); overflow: hidden; }
-
   .screen { position: fixed; inset: 0; display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity 0.6s ease; z-index: 1; }
   .screen.active { opacity: 1; pointer-events: all; z-index: 10; }
-
-  .fallback-bg {
-    position: fixed; inset: 0; z-index: 0;
-    background: radial-gradient(ellipse at 20% 50%, rgba(26,155,140,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(26,155,140,0.05) 0%, transparent 50%), linear-gradient(135deg, #060a09 0%, #0d1e1c 50%, #060a09 100%);
-  }
-  .noise {
-    position: fixed; inset: 0; z-index: 1; opacity: 0.025; pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 128px;
-  }
+  .fallback-bg { position: fixed; inset: 0; z-index: 0; background: radial-gradient(ellipse at 20% 50%, rgba(26,155,140,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(26,155,140,0.05) 0%, transparent 50%), linear-gradient(135deg, #060a09 0%, #0d1e1c 50%, #060a09 100%); }
+  .noise { position: fixed; inset: 0; z-index: 1; opacity: 0.025; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 128px; }
   .scanlines { position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.025) 2px, rgba(0,0,0,0.025) 4px); pointer-events: none; z-index: 999; }
   .choice-flash { position: fixed; inset: 0; background: var(--teal); opacity: 0; pointer-events: none; z-index: 500; transition: opacity 0.1s; }
   .choice-flash.active { opacity: 0.07; }
-
   .corner-mark { position: fixed; width: 20px; height: 20px; z-index: 50; pointer-events: none; }
   .corner-mark::before, .corner-mark::after { content: ''; position: absolute; background: var(--teal); opacity: 0.3; }
   .corner-mark::before { width: 100%; height: 1px; top: 0; left: 0; }
@@ -56,7 +38,6 @@
   .corner-mark.br { bottom: 20px; right: 20px; }
   .corner-mark.br::before { top: auto; bottom: 0; left: auto; right: 0; }
   .corner-mark.br::after { top: auto; bottom: 0; left: auto; right: 0; }
-
   .top-nav { position: fixed; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 24px 48px; z-index: 100; background: linear-gradient(to bottom, rgba(6,10,9,0.85) 0%, transparent 100%); }
   .nav-logo { font-family: var(--font-display); font-size: 20px; font-weight: 400; color: var(--off-white); text-decoration: none; letter-spacing: 0.05em; }
   .nav-logo span { color: var(--teal); }
@@ -64,7 +45,6 @@
   .nav-track-indicator { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm-gray); }
   .nav-restart { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--warm-gray); cursor: pointer; background: none; border: none; font-family: var(--font-body); transition: color 0.3s; }
   .nav-restart:hover { color: var(--off-white); }
-
   .btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 30px; font-family: var(--font-body); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; border: none; transition: var(--transition); text-decoration: none; }
   .btn-primary { background: var(--teal); color: var(--black); }
   .btn-primary:hover { background: var(--teal-light); transform: translateX(4px); }
@@ -73,23 +53,18 @@
   .btn-ghost { background: transparent; color: var(--warm-gray); padding: 10px 0; letter-spacing: 0.15em; font-size: 11px; }
   .btn-ghost:hover { color: var(--off-white); }
   .btn-group { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-
   @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
   .stagger > * { opacity: 0; animation: fadeUp 0.5s both; }
   .stagger > *:nth-child(1) { animation-delay: 0.1s; }
   .stagger > *:nth-child(2) { animation-delay: 0.2s; }
   .stagger > *:nth-child(3) { animation-delay: 0.3s; }
   .stagger > *:nth-child(4) { animation-delay: 0.4s; }
-
-  /* ── INTRO ── */
   #screen-intro { align-items: center; justify-content: center; text-align: center; padding: 40px; }
   .intro-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.8s 0.3s forwards; }
   .intro-title { font-family: var(--font-display); font-size: clamp(60px, 10vw, 116px); font-weight: 300; line-height: 0.9; letter-spacing: -0.02em; color: var(--off-white); margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s 0.5s forwards; }
   .intro-title span { display: block; font-style: italic; color: var(--teal-light); }
   .intro-tagline { font-family: var(--font-display); font-size: clamp(15px, 1.8vw, 21px); font-weight: 300; font-style: italic; color: var(--warm-gray); max-width: 600px; line-height: 1.65; margin-bottom: 56px; opacity: 0; animation: fadeUp 0.8s 0.7s forwards; }
   .intro-cta { opacity: 0; animation: fadeUp 0.8s 0.9s forwards; }
-
-  /* ── CHARACTER ── */
   #screen-character { flex-direction: row; }
   .character-visual { width: 42%; position: relative; overflow: hidden; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 48px; }
   .character-photo { position: absolute; inset: 0; background-size: cover; background-position: center top; filter: saturate(0.25) brightness(0.55); }
@@ -101,8 +76,6 @@
   .character-label { font-size: 11px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 22px; }
   .character-intro { font-family: var(--font-display); font-size: clamp(19px, 2.2vw, 28px); font-weight: 300; line-height: 1.65; color: var(--off-white); margin-bottom: 44px; }
   .character-intro strong { font-weight: 600; font-style: italic; color: var(--teal-light); }
-
-  /* ── TRACK SELECT ── */
   #screen-tracks { padding: 56px; align-items: center; justify-content: center; }
   .tracks-header { text-align: center; margin-bottom: 44px; }
   .tracks-label { font-size: 11px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; }
@@ -120,8 +93,6 @@
   .track-sector { font-size: 11px; letter-spacing: 0.1em; color: var(--teal); text-transform: uppercase; margin-bottom: 12px; }
   .track-scandal { font-family: var(--font-display); font-size: 14px; font-style: italic; color: var(--warm-gray); line-height: 1.5; margin-bottom: 16px; }
   .track-lesson { font-size: 11px; font-weight: 300; color: rgba(240,236,228,0.38); line-height: 1.6; border-top: 1px solid rgba(26,155,140,0.1); padding-top: 14px; }
-
-  /* ── GAME ── */
   #screen-game { flex-direction: row; }
   .game-left { width: 52%; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
   .game-scene-img { position: absolute; inset: 0; background-size: cover; background-position: center; filter: saturate(0.2) brightness(0.4); transition: background-image 0.5s; }
@@ -137,7 +108,6 @@
   .game-decision-title { font-family: var(--font-display); font-size: clamp(30px, 3.2vw, 48px); font-weight: 400; color: var(--off-white); line-height: 1.1; margin-bottom: 22px; }
   .game-situation { font-family: var(--font-display); font-size: clamp(14px, 1.3vw, 17px); font-weight: 300; line-height: 1.8; color: rgba(240,236,228,0.75); max-width: 500px; }
   .no-correct-banner { display: inline-block; margin-top: 22px; padding: 7px 15px; border: 1px solid var(--amber); color: var(--amber); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; }
-
   .game-right { width: 48%; display: flex; flex-direction: column; justify-content: center; padding: 80px 68px 80px 44px; gap: 12px; }
   .options-label { font-size: 11px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; }
   .option-card { background: rgba(13,20,19,0.75); border: 1px solid rgba(26,155,140,0.13); padding: 20px 24px; cursor: pointer; transition: var(--transition); backdrop-filter: blur(8px); }
@@ -145,8 +115,6 @@
   .option-letter { font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 7px; }
   .option-text { font-family: var(--font-display); font-size: 19px; font-weight: 600; color: var(--off-white); line-height: 1.2; margin-bottom: 6px; }
   .option-quote { font-family: var(--font-display); font-size: 13px; font-style: italic; color: var(--warm-gray); line-height: 1.5; }
-
-  /* ── CONSEQUENCE ── */
   #screen-consequence { flex-direction: row; }
   .consequence-img { width: 40%; position: relative; overflow: hidden; display: flex; align-items: flex-end; }
   .consequence-img-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: saturate(0.18) brightness(0.38); }
@@ -154,7 +122,6 @@
   .consequence-img-caption { position: relative; z-index: 2; padding: 44px 36px; }
   .loss-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,236,228,0.28); margin-bottom: 10px; }
   .loss-tag { display: inline-flex; align-items: center; padding: 9px 18px; border: 1px solid rgba(192,57,43,0.45); color: var(--red); font-size: 13px; font-family: var(--font-display); font-style: italic; }
-
   .consequence-content { width: 60%; display: flex; flex-direction: column; justify-content: center; padding: 80px 72px 80px 60px; overflow-y: auto; }
   .consequence-track { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
   .consequence-decision { font-family: var(--font-display); font-size: clamp(14px, 1.5vw, 19px); font-style: italic; color: var(--warm-gray); margin-bottom: 28px; }
@@ -162,8 +129,6 @@
   .consequence-quote { font-family: var(--font-display); font-size: clamp(14px, 1.4vw, 17px); font-style: italic; color: var(--warm-gray); line-height: 1.75; margin-bottom: 32px; }
   .consequence-divider { width: 32px; height: 1px; background: var(--teal); margin-bottom: 28px; }
   .consequence-text { font-family: var(--font-display); font-size: clamp(15px, 1.5vw, 20px); font-weight: 400; color: var(--off-white); line-height: 1.8; margin-bottom: 36px; }
-
-  /* ── GAME OVER ── */
   #screen-gameover { align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 60px; }
   #screen-gameover::before { content: ''; position: fixed; inset: 0; background: var(--red-dark); opacity: 0; z-index: -1; animation: redFlash 0.2s 0.05s ease forwards; }
   @keyframes redFlash { 0% { opacity: 0; } 40% { opacity: 0.45; } 100% { opacity: 0; } }
@@ -172,8 +137,6 @@
   .gameover-ending { font-family: var(--font-display); font-size: clamp(14px, 1.7vw, 21px); font-style: italic; color: var(--warm-gray); margin-bottom: 14px; animation: fadeUp 0.6s 0.5s both; }
   .gameover-consequence { font-family: var(--font-display); font-size: clamp(13px, 1.3vw, 17px); color: rgba(240,236,228,0.5); max-width: 580px; line-height: 1.8; margin-bottom: 44px; animation: fadeUp 0.6s 0.6s both; }
   .gameover-lesson { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(240,236,228,0.25); max-width: 460px; line-height: 1.9; border-top: 1px solid rgba(240,236,228,0.08); padding-top: 26px; margin-bottom: 40px; animation: fadeUp 0.6s 0.7s both; }
-
-  /* ── SURVIVAL ── */
   #screen-survival { align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 60px; overflow-y: auto; }
   .survival-label { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--teal); margin-bottom: 18px; animation: fadeUp 0.8s 0.2s both; }
   .survival-title { font-family: var(--font-display); font-size: clamp(38px, 7vw, 84px); font-weight: 300; line-height: 1; color: var(--off-white); animation: fadeUp 0.8s 0.35s both; }
@@ -188,7 +151,6 @@
   .map-row:last-child { border-bottom: none; }
   .map-decision { color: var(--warm-gray); font-family: var(--font-display); font-style: italic; }
   .map-loss { color: var(--red); font-size: 12px; }
-
   @media (max-width: 900px) {
     #screen-character, #screen-game, #screen-consequence { flex-direction: column; overflow-y: auto; }
     .character-visual, .game-left, .consequence-img { width: 100%; height: 240px; min-height: 240px; }
@@ -200,7 +162,6 @@
 </style>
 </head>
 <body>
-
 <div class="fallback-bg"></div>
 <div class="noise"></div>
 <div class="scanlines"></div>
@@ -209,7 +170,6 @@
 <div class="corner-mark tr"></div>
 <div class="corner-mark bl"></div>
 <div class="corner-mark br"></div>
-
 <nav class="top-nav">
   <a href="https://tealkin.com" class="nav-logo">Teal<span>Kin</span></a>
   <div class="nav-right">
@@ -217,33 +177,26 @@
     <button class="nav-restart" id="navRestart" style="display:none" onclick="restartGame()">← Restart</button>
   </div>
 </nav>
-
-<!-- INTRO -->
 <div class="screen active" id="screen-intro">
   <p class="intro-eyebrow">TealKin / Tools</p>
   <h1 class="intro-title">Crisis<span>Simulator</span></h1>
-  <p class="intro-tagline">Three cases. Three scenarios. One lesson: in reputation management, every hour you deny the truth is an hour you hand the crisis to grow.</p>
+  <p class="intro-tagline">Three cases. Three scenarios. One lesson: in reputation management, every hour you deny the truth is an hour you hand the crisis room to grow.</p>
   <div class="intro-cta btn-group" style="justify-content:center">
     <button class="btn btn-primary" onclick="goTo('screen-character')">Start →</button>
     <button class="btn btn-ghost" onclick="showInfo()">About this sim</button>
   </div>
 </div>
-
-<!-- CHARACTER -->
 <div class="screen" id="screen-character">
   <div class="character-visual">
     <div class="character-photo" style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80&fit=crop&crop=face')"></div>
-    <div class="character-name-tag">
-      <h2>Cris Cisneros</h2>
-      <p>Division Director</p>
-    </div>
+    <div class="character-name-tag"><h2>Cris Cisneros</h2><p>Division Director</p></div>
   </div>
   <div class="character-content stagger">
     <p class="character-label">Your role</p>
     <p class="character-intro">
-      You’ve spent years delivering results, leading teams, making the tough calls others won’t.<br><br>
-      Today you’ll face one of the biggest challenges of your career. It’s not about operations.<br><br>
-      <strong>It’s about the company’s reputation.</strong>
+      You have spent years delivering results, leading teams, making the tough calls others avoid.<br><br>
+      Today you will face one of the biggest professional challenges of your career. It has nothing to do with operations.<br><br>
+      <strong>It is about the company's reputation.</strong>
     </p>
     <div class="btn-group">
       <button class="btn btn-primary" onclick="goTo('screen-tracks')">Choose a case →</button>
@@ -251,17 +204,13 @@
     </div>
   </div>
 </div>
-
-<!-- TRACKS -->
 <div class="screen" id="screen-tracks">
   <div class="tracks-header">
     <p class="tracks-label">Select a case</p>
-    <h2 class="tracks-title">Which battlefield are you entering today?</h2>
+    <h2 class="tracks-title">Which arena are you entering today?</h2>
   </div>
   <div class="tracks-grid stagger" id="tracksGrid"></div>
 </div>
-
-<!-- GAME -->
 <div class="screen" id="screen-game">
   <div class="game-left">
     <div class="game-scene-img" id="gameSceneImg"></div>
@@ -279,8 +228,6 @@
     <div id="optionsContainer" class="stagger"></div>
   </div>
 </div>
-
-<!-- CONSEQUENCE -->
 <div class="screen" id="screen-consequence">
   <div class="consequence-img">
     <div class="consequence-img-bg" id="consImgBg"></div>
@@ -301,8 +248,6 @@
     </div>
   </div>
 </div>
-
-<!-- GAME OVER -->
 <div class="screen" id="screen-gameover">
   <p class="gameover-label" id="gameoverLabel">Terminal crisis</p>
   <h1 class="gameover-title">Game<br>Over</h1>
@@ -314,8 +259,6 @@
     <button class="btn btn-ghost" onclick="goTo('screen-tracks')">Switch case</button>
   </div>
 </div>
-
-<!-- SURVIVAL -->
 <div class="screen" id="screen-survival">
   <p class="survival-label" id="survivalLabel">Final outcome</p>
   <h1 class="survival-title" id="survivalTitle"></h1>
@@ -330,14 +273,268 @@
     <button class="btn btn-ghost" onclick="restartTrack()">Replay this case</button>
   </div>
 </div>
-
 <script>
 const IMG = {
-  sunshine:  'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=70&fit=crop',
-  nexus:     'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=70&fit=crop',
-  nutricare: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=70&fit=crop',
-  scenes: {
-    sunshine: [
-      'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&q=70&fit=crop',
-      'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&q=70&fit=crop',
-      'https://images.unsplash.com/photo-1529156069898-49953e39b3
+  sunshine:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=70&fit=crop',
+  nexus:'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=70&fit=crop',
+  nutricare:'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=70&fit=crop',
+  scenes:{
+    sunshine:['https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1589578228447-e1a4e481c6c8?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&q=70&fit=crop'],
+    nexus:['https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1495020689067-958852a7765e?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&q=70&fit=crop'],
+    nutricare:['https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1578496479914-7ef3b0193be3?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&q=70&fit=crop']
+  },
+  consequences:{
+    sunshine:['https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1589578228447-e1a4e481c6c8?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=900&q=70&fit=crop'],
+    nexus:['https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1495020689067-958852a7765e?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=900&q=70&fit=crop'],
+    nutricare:['https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1578496479914-7ef3b0193be3?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=900&q=70&fit=crop']
+  }
+};
+
+const GAME_DATA = { tracks: [
+  { id:"sunshine", name:"Sunshine Foods", sector:"B2C · Consumer goods", scandal:"Systematic sexual harassment and assault by senior executives", lesson:"Every hour you deny the truth is an hour you hand the crisis room to grow.",
+    reputationMap:[{decision:"D1 — You deny to the press",loss:"Credibility"},{decision:"D2 — CEO on camera",loss:"The CEO as a future card"},{decision:"D3 — PR firm",loss:"Moral authority"},{decision:"D4 — Victims speak",loss:"Narrative control"},{decision:"D5 — No full cooperation",loss:"The company"}],
+    decisions:[
+      {id:"d1",number:1,title:"The press contacts you",situation:"24 hours. You have internal evidence the allegations are true. The question is not whether this gets published — it is how you arrive at that publication.",
+        options:[
+          {id:"a",label:"A",text:"Deny everything",quote:"\"These allegations are completely false and constitute a deliberate attack against our company. We reserve the right to pursue legal action.\"",consequence:"The aggressive denial becomes the central narrative. No one in the market believes you. You lose the first reputational block: credibility.",lossIndex:0,next:"d2",gameOver:false},
+          {id:"b",label:"B",text:"Institutional silence",quote:"You do not respond. The outlet publishes without your statement.",consequence:"Twelve hours of silence on a safety issue is treated as tacit confirmation on social media. Brand abandonment decisions happen in real time.",lossIndex:0,next:"d2",gameOver:false},
+          {id:"c",label:"C",text:"Cautious response",quote:"\"We are becoming aware of these allegations and opening an internal review process. We will issue a statement in the coming days.\"",consequence:"The story breaks contained. You have 72 hours before pressure demands a real position. It is the path with the most room to maneuver.",lossIndex:null,next:"d2",gameOver:false}
+        ]},
+      {id:"d2",number:2,title:"Publication and the cascade effect",situation:"The outlet publishes with your denial included. Within 48 hours four national outlets pick up the story. Your denial is central to the narrative. There are protests outside your offices. Employees speak anonymously to journalists.",
+        options:[
+          {id:"a",label:"A",text:"CEO reiterates the denial on camera",quote:"You raise the stakes. The CEO appears on camera and denies everything personally.",consequence:"The CEO becomes personally exposed. His face is now the face of the scandal. Any future evidence destroys him directly. You lose the CEO as a future sacrifice card.",lossIndex:1,next:"d3",gameOver:false},
+          {id:"b",label:"B",text:"You retract the denial with no explanation",quote:"You say nothing more. The original denial hangs there without support.",consequence:"Silence after a denial reads as tactical confirmation. The outlets cover it exactly that way. You lose credibility without gaining anything.",lossIndex:1,next:"d3",gameOver:false},
+          {id:"c",label:"C",text:"Second statement that hedges without correcting",quote:"\"We reiterate that the company always acts in accordance with its values. We are reviewing all internal processes.\"",consequence:"Ambiguity in crisis management always reads as weakness or maneuvering. But you preserve some time for the next decision.",lossIndex:null,next:"d3",gameOver:false}
+        ]},
+      {id:"d3",number:3,title:"Government and the NGO enter",situation:"An international NGO is supporting the victims and demanding an independent investigation. A legislative committee has summoned the CEO to testify in 15 days. International outlets are picking up the story. Two supermarket chains pull the product as a precaution.",
+        options:[
+          {id:"a",label:"A",text:"You hire a crisis PR firm",quote:"You professionalize the response. The firm proposes a brand humanization strategy built around the company's legacy.",consequence:"Humanizing a brand in the middle of assault allegations reads as cynical. A journalist publishes a devastating analysis: 'Sunshine Foods would rather talk about its employees than about its victims.'",lossIndex:2,next:"d4",gameOver:false},
+          {id:"b",label:"B",text:"The board distances itself from the named executives",quote:"Without formally dismissing them, the board states they are 'temporarily removed from their duties while the facts are clarified.'",consequence:"Late and read as a maneuver. But it introduces a gap between the company and the accused. Outlets report: 'the company is beginning to yield.' Minimal but real reputational asset.",lossIndex:null,next:"d4",gameOver:false},
+          {id:"c",label:"C",text:"You leak off the record that resignations are coming",quote:"The information reaches two trusted journalists. The rumor circulates without official confirmation.",consequence:"You buy 72 hours of calm. If the resignations do not materialize, the leak becomes evidence of manipulation. The NGO uses it exactly that way in their next statement. Russian roulette.",lossIndex:2,next:"d4",gameOver:false}
+        ]},
+      {id:"d4",number:4,noCorrectAnswer:true,title:"The victims speak",situation:"The three original victims give coordinated interviews on the same day. Their testimonies include dates, locations, and names. One has text messages from an executive. Another has an internal HR email asking for 'discretion.' Four additional victims emerge within 24 hours. The company hashtag is trending globally.",
+        options:[
+          {id:"a",label:"A",text:"CEO accepts institutional responsibility",quote:"He does not admit personal knowledge. He accepts that the corporate culture failed. He announces the definitive separation of the named executives, an external audit, and a victim compensation fund.",consequence:"The most costly option financially and the least bad reputationally. But it arrives on top of a prior denial. The CEO contradicts himself. The victims reject the fund as insufficient.",lossIndex:3,next:"d5",gameOver:false},
+          {id:"b",label:"B",text:"Lawyers take full control",quote:"No public statements. Everything goes through legal communications. The strategy: protect legally while the media scandal burns itself out.",consequence:"Legal silence in the face of specific testimony backed by documentary evidence is not sustainable in the media. The company disappears from the debate as an actor, not as a subject.",lossIndex:3,next:"d5",gameOver:false},
+          {id:"c",label:"C",text:"You announce the CEO's resignation without admitting fault",quote:"The CEO steps down. An interim director is named. The statement says it is a personal decision 'to avoid being a distraction at this critical moment.'",consequence:"A resignation without admission of fault reads as a veiled confession. But it removes the CEO as a target and opens a window for the company to attempt repositioning. A sacrifice that buys time, not credibility.",lossIndex:3,next:"d5",gameOver:false}
+        ]},
+      {id:"d5",number:5,title:"Point of no return",situation:"The government confirms a criminal investigation against the executives and possibly against executives who knew about the conduct. Three countries where Sunshine Foods operates are reviewing licenses. Banks call an emergency meeting. This is no longer a reputational scandal. It is a corporate survival crisis.",
+        options:[
+          {id:"a",label:"A",text:"Full and proactive cooperation with the criminal investigation",quote:"The company proactively delivers all documentation, including unrequested evidence. It hires an independent monitor. It negotiates real compensation with victims before trial.",consequence:"Executives convicted. The company pays historic fines. It loses two international markets. But authorities acknowledge the cooperation. Three years later, under new leadership, it operates.",lossIndex:null,next:null,gameOver:false,isSurvival:true,survivalType:"damaged",ending:"REAL SURVIVAL, DESTROYED IDENTITY. It is no longer Sunshine Foods. It is something else with the same name."},
+          {id:"b",label:"B",text:"Selective cooperation while protecting certain files",quote:"The company cooperates with what it cannot conceal and protects what it believes it can.",consequence:"In month three, a former legal department employee delivers evidence of the obstruction. Now there are two criminal cases: the original and the active cover-up. International regulators enter. Banks execute guarantees.",lossIndex:4,next:null,gameOver:true,gameOverType:"liquidacion",ending:"FORCED LIQUIDATION."},
+          {id:"c",label:"C",text:"Corporate restructuring and sale of exposed divisions",quote:"Before the government acts, the company fragments. It sells the units where the conduct occurred.",consequence:"A judge issues a precautionary order freezing all transactions. Creditors file for technical bankruptcy. The liquidation process lasts four years and destroys the value of all assets.",lossIndex:4,next:null,gameOver:true,gameOverType:"colapso",ending:"GAME OVER."}
+        ]}
+    ]},
+  { id:"nexus", name:"Nexus Energy", sector:"B2B · Energy", scandal:"Algorithmic manipulation of energy prices for 8 years", lesson:"In B2B, reputation is a contractual asset, not an emotional one. Basic PR maneuvers backfire with sophisticated audiences.",
+    reputationMap:[{decision:"D1 — You deny the document",loss:"Technical credibility with a sophisticated audience"},{decision:"D2 — Generic statement",loss:"Direct relationship with institutional clients"},{decision:"D3 — Persecution narrative",loss:"Last private allies"},{decision:"D4 — Fund or pointing at others",loss:"Possibility of a negotiated agreement"},{decision:"D5 — No full cooperation",loss:"The company"}],
+    decisions:[
+      {id:"d1",number:1,title:"The Financial Times contacts you",situation:"48 hours. A leaked internal document clearly shows price manipulation in the European market. The document is real. The question is not whether this gets published — it is how you arrive at that publication.",
+        options:[
+          {id:"a",label:"A",text:"You deny the validity of the document",quote:"You issue a statement questioning the authenticity of the algorithmic analysis. You allege it is manipulated or taken out of context. You threaten legal action against the FT if they publish.",consequence:"You are betting that no one else has the document or can verify it. In today's media environment, that bet almost always loses.",lossIndex:0,next:"d2",gameOver:false},
+          {id:"b",label:"B",text:"Silence with legal blocking",quote:"You do not respond to the journalist. Your lawyers contact the FT to explore whether there is a legal basis to stop publication.",consequence:"The attempt to legally block a publication of this scale is news in itself. The FT has spent decades covering exactly this kind of corporate pressure.",lossIndex:0,next:"d2",gameOver:false},
+          {id:"c",label:"C",text:"You request an off the record meeting with the journalist",quote:"Not as a formal interview. As a conversation. The goal is to understand exactly what they have and whether there is anything you can contextualize before publication.",consequence:"The most tactically intelligent option. But a FT journalist with this material may read the meeting request as confirmation. Dangerous ground, but with more information.",lossIndex:null,next:"d2",gameOver:false}
+        ]},
+      {id:"d2",number:2,title:"The publication",situation:"The FT publishes. The headline is devastating: 'Nexus Energy manipulated prices for eight years while advising allied governments on energy security.' Within 6 hours: 400,000 reads. Bloomberg, Reuters and WSJ are calling. Three institutional clients say they are reviewing their relationship with Nexus.",
+        options:[
+          {id:"a",label:"A",text:"CEO gives an exclusive interview to Bloomberg that afternoon",quote:"Alderman appears on camera, serious, apparently undefensive. He says the company is cooperating with authorities and any irregularity will be investigated.",consequence:"Alderman is subjected to 20 minutes of questions he cannot answer cleanly because the document is real. Every evasive answer becomes a clip. His face becomes permanently associated with the scandal.",lossIndex:1,next:"d3",gameOver:false},
+          {id:"b",label:"B",text:"Institutional statement citing 'areas for improvement'",quote:"\"Nexus Energy takes its responsibility to its clients and to the markets very seriously. We are initiating a thorough review of our trading practices.\"",consequence:"With an irrefutable technical document already published in the FT, the statement reads as an insult to the intelligence of your institutional clients. Three suspend payments that afternoon.",lossIndex:1,next:"d3",gameOver:false},
+          {id:"c",label:"C",text:"You contact your 17 government clients directly",quote:"Before responding publicly, you call each government client personally. You tell them what you know, what is happening, and what you are going to do.",consequence:"Your most important clients hear it from you, not from Bloomberg. It does not save you, but it preserves a critical direct communication channel.",lossIndex:null,next:"d3",gameOver:false}
+        ]},
+      {id:"d3",number:3,title:"Regulators and allies enter",situation:"Second week. The European Commission opens a formal investigation. The US DOJ is evaluating the situation. Two senators are calling to bar Nexus from government contracts. Three government clients tell you privately they would prefer to resolve this without additional scandal.",
+        options:[
+          {id:"a",label:"A",text:"You proactively announce an international independent monitor",quote:"Before regulators impose it, you publicly hire a top-tier audit firm to review all your trading practices over the past 10 years.",consequence:"Regulators see it as cooperation but do not stop their investigations. Clients use it as grounds to avoid suspending contracts. It buys 3 weeks of operational stability.",lossIndex:null,next:"d4",gameOver:false},
+          {id:"b",label:"B",text:"You leak that the European investigation is politically motivated",quote:"The alternative narrative: Nexus is a victim of regulators seeking to justify greater state intervention.",consequence:"The technical document is already published and verified. Sophisticated institutional clients read this as a signal that the company will not accept responsibility. Two of three allied governments suspend contracts.",lossIndex:2,next:"d4",gameOver:false},
+          {id:"c",label:"C",text:"You request urgent bilateral meetings with regulators",quote:"Not as a defensive legal strategy. As institutional relationship management: we want to speak with you before this escalates further.",consequence:"Regulators agree. The meetings are not public. Outlets build a narrative about Nexus negotiating privately. But internally you define the real perimeter of legal damage.",lossIndex:null,next:"d4",gameOver:false}
+        ]},
+      {id:"d4",number:4,noCorrectAnswer:true,title:"The second layer of the scandal",situation:"The audit reveals that the three developing countries whose energy policy was designed using Nexus projections have oversized infrastructure they cannot finance. One is in partial default. The World Bank and IMF are involved. New devastating headline: 'Nexus did not just steal from rich governments. It sank poor ones.'",
+        options:[
+          {id:"a",label:"A",text:"The CEO resigns and the company announces full leadership restructuring",quote:"Alderman steps down with a statement accepting moral responsibility, though not legal. An interim CEO with a crisis management profile is named.",consequence:"The resignation is global news but opens a window. Some clients who were waiting for a clear signal of rupture with the past now have it. Regulators read the restructuring as genuine willingness to change.",lossIndex:null,next:"d5",gameOver:false},
+          {id:"b",label:"B",text:"The company launches a one billion dollar compensation fund",quote:"Unilateral announcement without admitting legal fault. The fund designed to cover costs of oversized infrastructure.",consequence:"The World Bank publicly rejects it as insufficient. Prosecutors use the fund as evidence that the company knew the full extent of the damage.",lossIndex:3,next:"d5",gameOver:false},
+          {id:"c",label:"C",text:"Nexus leaks that other players have similar practices",quote:"It is leaked to specialist outlets that energy price manipulation is widespread in the sector and that Nexus is being used as a scapegoat.",consequence:"It may be true. It does not matter. Pointing at others while your own scandal is active reads as evasion. Regulators open sector-wide investigations. Nexus is the most documented case of all.",lossIndex:3,next:"d5",gameOver:false}
+        ]},
+      {id:"d5",number:5,title:"Point of no return",situation:"Six weeks later. DOJ investigation formalized in criminal charges against three trading executives. European Commission: preliminary fine of 2.3 billion euros. Eight of 17 government clients have suspended contracts. Banks have cut unsecured credit lines. The company can operate for 90 more days on current liquidity.",
+        options:[
+          {id:"a",label:"A",text:"Full cooperation with the DOJ in exchange for a negotiated agreement",quote:"The company becomes a cooperating witness. It delivers all documentation, including evidence implicating individual executives. It negotiates an agreement with massive fines and an external monitor for five years.",consequence:"Two executives go to prison. The company pays 4.1 billion in fines and compensation. It loses eight markets permanently. Under a new name and new leadership, it operates in four markets over the next five years.",lossIndex:null,next:null,gameOver:false,isSurvival:true,survivalType:"damaged",ending:"TECHNICAL SURVIVAL, TOTAL DESTRUCTION OF THE ORIGINAL BRAND."},
+          {id:"b",label:"B",text:"The company fights all charges legally while selling assets",quote:"Full resistance strategy. Lawyers fight every charge. Simultaneously they attempt to sell profitable divisions to generate liquidity.",consequence:"Litigation against the DOJ with this volume of evidence is unwinnable. Each month costs between 15 and 20 million in legal fees. By month five without an agreement, banks execute guarantees.",lossIndex:4,next:null,gameOver:true,gameOverType:"liquidacion",ending:"FORCED LIQUIDATION."},
+          {id:"c",label:"C",text:"You seek a strategic buyer to absorb Nexus before the government acts",quote:"A private equity fund specializing in distressed assets is interested. The idea is to sell the entire company with its liabilities at an emergency price.",consequence:"The DOJ obtains a court order blocking any sale during the investigation. The move is interpreted as evasion. Prosecutors add obstruction charges. The fund publicly withdraws.",lossIndex:4,next:null,gameOver:true,gameOverType:"colapso",ending:"ACCELERATED COLLAPSE."}
+        ]}
+    ]},
+  { id:"nutricare", name:"NutriCare Foods", sector:"B2C · Infant nutrition", scandal:"Accusation of high sugar levels in baby products — no real technical fault", lesson:"Being right does not save you if you fail to connect humanly. Reputation is not defined by the truth but by the narrative the public builds with incomplete information.",
+    reputationMap:[{decision:"D1 — Silence or influencers",loss:"The critical window of the first hours"},{decision:"D2 — Educational campaign",loss:"Emotional connection with mothers"},{decision:"D3 — Defending dual formulation",loss:"Global moral coherence"},{decision:"D4 — Scientific response to mothers",loss:"The brand's humanity"},{decision:"D5 — Litigation or selling the line",loss:"The company"}],
+    decisions:[
+      {id:"d1",number:1,title:"The first five hours",situation:"An NGO published a report comparing sugar levels in infant nutrition products. BabyFirst appears with the highest indices. The report does not distinguish between added sugars and natural sugars from fruit. NutriCare does not add sugar — the levels come from fruit concentration. The headline dominating social media in 12 countries: 'NutriCare puts twice the sugar in your baby's food.' Technically false. Reputationally devastating.",
+        options:[
+          {id:"a",label:"A",text:"The CEO goes public before noon",quote:"Video recorded that morning. Caroline Mercer speaks directly to camera. She explains the difference between natural and added sugars. She uses data. She shows the labels.",consequence:"If the message is technically correct but emotionally cold, a mother who saw the headline does not hear the scientific explanation. She hears an executive defending her company.",lossIndex:0,next:"d2",gameOver:false},
+          {id:"b",label:"B",text:"Silence for the first 12 hours",quote:"You do not react to the headline. You let the news cycle run while you prepare a full scientific document with evidence, industry comparisons, and pediatrician endorsements.",consequence:"Twelve hours of silence on a child health issue in social media is an eternity. Every hour without a response is confirmation. Mothers make purchasing decisions in real time.",lossIndex:0,next:"d2",gameOver:false},
+          {id:"c",label:"C",text:"You activate contracted maternity influencers",quote:"Your marketing team contacts 340 maternity influencers in 12 countries to publish content about BabyFirst's natural ingredients.",consequence:"If it emerges that you activated a network of paid influencers in the first hours of a child health crisis, the story changes: it is no longer sugar in baby food — it is manipulation of mothers at a moment of vulnerability.",lossIndex:0,next:"d2",gameOver:false}
+        ]},
+      {id:"d2",number:2,title:"The media cycle takes hold",situation:"24 hours later. A pediatrician with 2.3 million followers publishes a video: 'Technically NutriCare is right... but why did a company with 80 years of experience never explain this before?' The video has 8 million views. In Brazil, Mexico and Colombia groups of mothers are organizing boycotts.",
+        options:[
+          {id:"a",label:"A",text:"CEO convenes press conference with independent pediatrician panel",quote:"Not just NutriCare talking about NutriCare. Five pediatricians from five different countries scientifically endorse the formulation.",consequence:"The most solid response scientifically. But if any of the five pediatricians has any historical relationship with NutriCare, outlets will find it within hours. The press conference becomes evidence that the company bought medical opinions.",lossIndex:1,next:"d3",gameOver:false},
+          {id:"b",label:"B",text:"Educational content campaign about natural sugars",quote:"Without directly mentioning the scandal. Useful, scientifically endorsed content distributed on social media. The goal: shift the conversation.",consequence:"Anxious mothers today do not want a nutrition class. They want the company to tell them directly whether the product they fed their baby for months is safe. The educational campaign reads as sophisticated evasion.",lossIndex:1,next:"d3",gameOver:false},
+          {id:"c",label:"C",text:"You respond directly to the pediatrician's video",quote:"The CEO writes to her publicly on Instagram. Not as a corporate response. As a mother and CEO simultaneously. She acknowledges the question is legitimate. She says NutriCare should have explained this before.",consequence:"The most human and most risky move. If in 48 hours the content you publish looks incomplete or calculated, the credibility you gained with the acknowledgment is destroyed multiplied.",lossIndex:null,next:"d3",gameOver:false}
+        ]},
+      {id:"d3",number:3,title:"Governments and the NGO escalate",situation:"Third week. The NGO issues a second document with two findings: in eight developing countries BabyFirst has formulations with significantly higher sugar levels than in European and North American markets. And they publish an internal 2019 email where a product director asks whether it is possible to 'optimize the sweetness profile' in emerging markets. The email does not prove bad intent but confirms the difference was a conscious decision. Five health ministries in LATAM announce standard reviews.",
+        options:[
+          {id:"a",label:"A",text:"NutriCare announces global unification of all BabyFirst formulations",quote:"All markets will have exactly the same formulation within the next 18 months, regardless of local regulation. Announced as a values decision, not a response to the scandal.",consequence:"It costs hundreds of millions in reformulation and relaunch. Some emerging markets will reject the product because local babies are accustomed to the current taste profile. But it is the only move that shows the company listened and acted.",lossIndex:null,next:"d4",gameOver:false},
+          {id:"b",label:"B",text:"NutriCare argues differences reflect local nutritional preferences",quote:"Technical and cultural defense: each market has its own nutritional standards. NutriCare adapted its products to those local realities.",consequence:"Saying that babies in developing countries need more sugar than European babies is a narrative no spokesperson can sustain on camera without it becoming the most shared clip of the week.",lossIndex:2,next:"d4",gameOver:false},
+          {id:"c",label:"C",text:"NutriCare announces an independent audit of all global formulations",quote:"You do not commit to changes yet. You commit to full transparency. The audit will take 90 days and its results will be made public without corporate editing.",consequence:"It buys time. But 90 days in an active infant health crisis is a long time. Mothers do not wait 90 days to decide whether to keep buying BabyFirst.",lossIndex:null,next:"d4",gameOver:false}
+        ]},
+      {id:"d4",number:4,noCorrectAnswer:true,title:"The victims have a face",situation:"A mother in Colombia whose 14-month-old baby was diagnosed with elevated blood sugar levels gives a national television interview. She shows BabyFirst products. The interview has 40 million combined views. Twelve more mothers in six countries with similar stories appear within three days. No case has scientific evidence of direct causality. A law firm specializing in class actions announces it is collecting cases.",
+        options:[
+          {id:"a",label:"A",text:"The CEO personally visits the first mother in Colombia",quote:"Not as a PR act. No NutriCare cameras. The CEO travels, meets with the mother, listens. If the mother decides to share the encounter on her own platforms, she will do it on her own terms.",consequence:"The most unpredictable move. If the mother receives it as a genuine gesture and shares it, NutriCare recovers some humanity. If she interprets it as a maneuver and shares it that way, it is the worst possible scenario.",lossIndex:null,next:"d5",gameOver:false},
+          {id:"b",label:"B",text:"NutriCare announces a free pediatric consultation program",quote:"The company funds consultations with independent pediatricians for any family with concerns about their baby's health related to nutrition.",consequence:"Generous and calculated simultaneously. The law firm will interpret it as an attempt to control the medical diagnosis of affected babies before that diagnosis becomes legal evidence.",lossIndex:3,next:"d5",gameOver:false},
+          {id:"c",label:"C",text:"NutriCare issues a scientific statement dismantling medical causality",quote:"Technical response to the personal stories. Data, studies, evidence that there is no demonstrable causality between BabyFirst and the reported health problems.",consequence:"Scientifically correct. Humanly catastrophic. A multinational responding with data to a mother crying while showing her sick baby is the content that destroys brands permanently.",lossIndex:3,next:"d5",gameOver:false}
+        ]},
+      {id:"d5",number:5,title:"Point of no return",situation:"Two months later. The class action lawsuit in the US has been formally admitted with 847 families. The FDA announces a review of sugar standards in infant nutrition citing the BabyFirst case. Four countries in LATAM have implemented additional warning labels specifically for BabyFirst. Global sales have fallen 34%. The board has two irreconcilable positions: fight to the end because the company is right, or reach a global agreement even if it implicitly concedes something that technically did not occur.",
+        options:[
+          {id:"a",label:"A",text:"NutriCare reaches a global agreement with all parties simultaneously",quote:"Settlement with the law firm: compensation for 847 families without admission of scientific fault. Public commitment to the FDA to adopt new standards before they become mandatory. Global reformulation announcement with a concrete date. Independent infant nutrition research fund financed by NutriCare but managed by universities.",consequence:"It costs 2.3 billion between compensation, reformulation, and the fund. Sales take 18 months to partially recover. BabyFirst loses category leadership in 12 markets. But the brand exists.",lossIndex:null,next:null,gameOver:false,isSurvival:true,survivalType:"transformed",ending:"REAL SURVIVAL WITH TRANSFORMED IDENTITY. Three years later with reformulation implemented, it recovers credibility with younger consumers who value transparency."},
+          {id:"b",label:"B",text:"NutriCare fights the class action arguing absence of scientific causality",quote:"The company has scientific grounds. Its lawyers are the best in food litigation. The strategy is to win in court and use that victory to rebuild the narrative.",consequence:"The litigation takes four years. During those four years every hearing is sustained negative media coverage. Sales do not recover during the litigation. NutriCare wins the case and loses the category.",lossIndex:4,next:null,gameOver:true,gameOverType:"pyrrhic",ending:"PYRRHIC VICTORY. GAME OVER."},
+          {id:"c",label:"C",text:"NutriCare sells the BabyFirst line to a competitor",quote:"Strategic portfolio decision: BabyFirst is the problem. Without BabyFirst there is no crisis. The company has other profitable lines.",consequence:"The sale is universally interpreted as an admission of fault. The class action strengthens. The buyer demands indemnity guarantees that NutriCare cannot provide with the litigation active. The transaction collapses.",lossIndex:4,next:null,gameOver:true,gameOverType:"abandono",ending:"COLLAPSE BY STRATEGIC ABANDONMENT. GAME OVER."}
+        ]}
+    ]}
+]};
+
+const state = { currentTrack: null, currentDecisionIndex: 0, selectedOption: null };
+
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const showRestart = ['screen-game','screen-consequence','screen-gameover','screen-survival'].includes(id);
+  document.getElementById('navRestart').style.display = showRestart ? 'block' : 'none';
+}
+function flash() {
+  const el = document.getElementById('choiceFlash');
+  el.classList.add('active');
+  setTimeout(() => el.classList.remove('active'), 180);
+}
+function showInfo() {
+  alert('Crisis Simulator is a corporate reputation management training tool. Three fictionalized real cases. Five decisions per case. Consequences are pedagogical, not prescriptive.');
+}
+function initTracks() {
+  const grid = document.getElementById('tracksGrid');
+  grid.innerHTML = '';
+  GAME_DATA.tracks.forEach((track, i) => {
+    const card = document.createElement('div');
+    card.className = 'track-card';
+    card.innerHTML = '<div class="track-card-img" style="background-image:url(\''+IMG[track.id]+'\')"></div><div class="track-card-body"><p class="track-num">Track 0'+(i+1)+'</p><h3 class="track-company">'+track.name+'</h3><p class="track-sector">'+track.sector+'</p><p class="track-scandal">'+track.scandal+'</p><p class="track-lesson">'+track.lesson+'</p></div>';
+    card.onclick = () => startTrack(track.id);
+    grid.appendChild(card);
+  });
+}
+function startTrack(trackId) {
+  state.currentTrack = GAME_DATA.tracks.find(t => t.id === trackId);
+  state.currentDecisionIndex = 0;
+  state.selectedOption = null;
+  document.getElementById('navTrackIndicator').textContent = state.currentTrack.name;
+  renderDecision();
+  goTo('screen-game');
+}
+function renderDecision() {
+  const track = state.currentTrack;
+  const i = state.currentDecisionIndex;
+  const decision = track.decisions[i];
+  document.getElementById('gameSceneImg').style.backgroundImage = "url('"+IMG.scenes[track.id][i]+"')";
+  const prog = document.getElementById('gameProgress');
+  prog.innerHTML = '';
+  for (let j = 0; j < 5; j++) {
+    const step = document.createElement('div');
+    step.className = 'progress-step'+(j < i ? ' done' : '')+(j === i ? ' active' : '');
+    prog.appendChild(step);
+  }
+  const lbl = document.createElement('span');
+  lbl.className = 'progress-label';
+  lbl.textContent = 'Decision '+decision.number+' of 5';
+  prog.appendChild(lbl);
+  document.getElementById('gameDecisionNum').textContent = String(decision.number).padStart(2,'0');
+  document.getElementById('gameTrackName').textContent = track.name.toUpperCase();
+  document.getElementById('gameDecisionTitle').textContent = decision.title;
+  document.getElementById('gameSituation').textContent = decision.situation;
+  document.getElementById('noCorrectBanner').style.display = decision.noCorrectAnswer ? 'inline-block' : 'none';
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  decision.options.forEach((opt, k) => {
+    const card = document.createElement('div');
+    card.className = 'option-card';
+    card.style.animationDelay = (k * 0.08)+'s';
+    card.innerHTML = '<p class="option-letter">'+opt.label+'</p><p class="option-text">'+opt.text+'</p><p class="option-quote">'+opt.quote+'</p>';
+    card.onclick = () => selectOption(opt);
+    container.appendChild(card);
+  });
+}
+function selectOption(option) {
+  state.selectedOption = option;
+  flash();
+  setTimeout(() => showConsequence(option), 150);
+}
+function showConsequence(option) {
+  const track = state.currentTrack;
+  const i = state.currentDecisionIndex;
+  const decision = track.decisions[i];
+  document.getElementById('consImgBg').style.backgroundImage = "url('"+IMG.consequences[track.id][i]+"')";
+  const lossTag = document.getElementById('consLossTag');
+  if (option.lossIndex !== null && option.lossIndex !== undefined) {
+    document.getElementById('consLossText').textContent = track.reputationMap[option.lossIndex].loss;
+    lossTag.style.display = 'inline-flex';
+  } else { lossTag.style.display = 'none'; }
+  document.getElementById('consTrack').textContent = track.name.toUpperCase()+' · DECISION '+decision.number;
+  document.getElementById('consDecision').textContent = decision.title;
+  document.getElementById('consChosen').textContent = option.text;
+  document.getElementById('consQuote').textContent = option.quote;
+  document.getElementById('consText').textContent = option.consequence;
+  document.getElementById('consContinueBtn').textContent = option.gameOver ? 'See outcome →' : option.isSurvival ? 'See final outcome →' : 'Next decision →';
+  goTo('screen-consequence');
+}
+function continueFromConsequence() {
+  const option = state.selectedOption;
+  if (option.gameOver) showGameOver(option);
+  else if (option.isSurvival) showSurvival(option);
+  else { state.currentDecisionIndex++; renderDecision(); goTo('screen-game'); }
+}
+function showGameOver(option) {
+  const track = state.currentTrack;
+  const labels = { liquidacion:'Forced liquidation', colapso:'Accelerated collapse', pyrrhic:'Pyrrhic victory', abandono:'Strategic abandonment' };
+  document.getElementById('gameoverLabel').textContent = labels[option.gameOverType] || 'Terminal crisis';
+  document.getElementById('gameoverEnding').textContent = option.ending;
+  document.getElementById('gameoverConsequence').textContent = option.consequence;
+  document.getElementById('gameoverLesson').textContent = 'Core lesson: '+track.lesson;
+  goTo('screen-gameover');
+}
+function showSurvival(option) {
+  const track = state.currentTrack;
+  document.getElementById('survivalLabel').textContent = 'Final outcome · '+track.name;
+  document.getElementById('survivalTitle').innerHTML = option.survivalType === 'transformed' ? 'The company<br><span>survives.</span>' : 'The company<br><span>persists.</span>';
+  document.getElementById('survivalEnding').textContent = option.ending;
+  document.getElementById('survivalLesson').textContent = track.lesson;
+  const mapEl = document.getElementById('survivalMap');
+  mapEl.innerHTML = '<h3>Reputation map — '+track.name+'</h3>';
+  track.reputationMap.forEach(row => {
+    const div = document.createElement('div');
+    div.className = 'map-row';
+    div.innerHTML = '<span class="map-decision">'+row.decision+'</span><span class="map-loss">'+row.loss+'</span>';
+    mapEl.appendChild(div);
+  });
+  goTo('screen-survival');
+}
+function restartGame() {
+  state.currentTrack = null; state.currentDecisionIndex = 0;
+  document.getElementById('navTrackIndicator').textContent = '';
+  goTo('screen-tracks');
+}
+function restartTrack() {
+  if (state.currentTrack) startTrack(state.currentTrack.id);
+  else goTo('screen-tracks');
+}
+document.addEventListener('DOMContentLoaded', () => {
+  initTracks();
+  document.addEventListener('keydown', e => {
+    if (document.getElementById('screen-game').classList.contains('active') && ['1','2','3'].includes(e.key)) {
+      const opts = state.currentTrack.decisions[state.currentDecisionIndex].options;
+      if (opts[parseInt(e.key)-1]) selectOption(opts[parseInt(e.key)-1]);
+    }
+    if (e.key === 'Enter' && document.getElementById('screen-consequence').classList.contains('active')) continueFromConsequence();
+  });
+});
+</script>
+</body>
+</html>
