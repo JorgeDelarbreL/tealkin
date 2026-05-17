@@ -9,13 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --teal: #1a9b8c;
-    --teal-light: #2dbfad;
-    --teal-deep: #0d6b60;
-    --ink: #0f1410;
-    --ink-soft: #0a1210;
-    --mist: #8a9e98;
-    --white: #fdfcfa;
+    --teal: #1a9b8c; --teal-light: #2dbfad; --teal-deep: #0d6b60;
+    --ink: #0f1410; --ink-soft: #0a1210; --mist: #8a9e98; --white: #fdfcfa;
     --font-display: 'Cormorant Garamond', Georgia, serif;
     --font-body: 'DM Sans', system-ui, sans-serif;
   }
@@ -27,14 +22,12 @@
   .nav-links { display: flex; gap: 2.5rem; list-style: none; }
   .nav-links a { font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; transition: color 0.3s; }
   .nav-links a:hover, .nav-links a.active { color: var(--white); }
-
   .page-hero { padding: 10rem 4rem 5rem; border-bottom: 0.5px solid rgba(255,255,255,0.06); }
   .page-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 12px; }
   .page-eyebrow::before { content: ''; width: 24px; height: 0.5px; background: var(--teal-light); }
   .page-title { font-family: var(--font-display); font-size: clamp(48px, 7vw, 88px); font-weight: 300; line-height: 1.0; color: var(--white); margin-bottom: 1rem; }
   .page-title em { font-style: italic; color: var(--teal-light); }
   .page-desc { font-size: 15px; font-weight: 300; color: var(--mist); line-height: 1.8; max-width: 560px; }
-
   .tool-section { padding: 5rem 4rem; }
   .tool-header { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 0.5px solid rgba(255,255,255,0.08); }
   .tool-num { font-size: 11px; letter-spacing: 0.2em; color: var(--teal-light); margin-bottom: 1rem; }
@@ -43,8 +36,6 @@
   .tool-desc { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.8; }
   .tool-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem; }
   .tag { font-size: 11px; color: var(--teal-light); border: 0.5px solid rgba(26,155,140,0.3); padding: 4px 12px; border-radius: 1px; }
-
-  /* DIAGNOSTIC TOOL */
   .diag-wrap { background: #0a1210; border: 0.5px solid rgba(255,255,255,0.08); border-radius: 4px; padding: 3rem; }
   .step { display: none; }
   .step.active { display: block; }
@@ -79,36 +70,29 @@
   .result-action strong { color: var(--white); font-weight: 500; }
   .restart-btn { background: transparent; border: 0.5px solid rgba(255,255,255,0.15); border-radius: 2px; padding: 10px 20px; font-size: 13px; color: rgba(255,255,255,0.5); cursor: pointer; margin-top: 1.5rem; transition: all 0.2s; }
   .restart-btn:hover { border-color: rgba(255,255,255,0.35); color: var(--white); }
-
   .coming-soon { padding: 5rem 4rem; background: var(--ink-soft); border-top: 0.5px solid rgba(255,255,255,0.06); }
   .cs-label { font-size: 11px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 1rem; display: flex; align-items: center; gap: 12px; }
   .cs-label::before { content: ''; width: 24px; height: 0.5px; background: var(--teal-light); }
-  .cs-title { font-family: var(--font-display); font-size: clamp(24px, 3vw, 36px); font-weight: 300; color: var(--white); margin-bottom: 2.5rem; }
+  .cs-title { font-family: var(--font-display); font-size: clamp(24px, 3vw, 36px); font-weight: 300; color: var(--white); margin-bottom: 1.5rem; }
   .cs-title em { font-style: italic; color: var(--teal-light); }
+  .cs-desc-intro { font-size: 14px; font-weight: 300; color: var(--mist); line-height: 1.8; max-width: 560px; margin-bottom: 2.5rem; }
   .cs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.05); }
   .cs-card { background: var(--ink-soft); padding: 2rem; }
-  .cs-num { font-size: 11px; letter-spacing: 0.15em; color: rgba(255,255,255,0.2); margin-bottom: 1rem; }
+  .cs-icon { font-size: 22px; margin-bottom: 1rem; opacity: 0.4; }
   .cs-name { font-family: var(--font-display); font-size: 20px; font-weight: 300; color: rgba(255,255,255,0.4); margin-bottom: 6px; }
   .cs-desc { font-size: 12px; color: rgba(255,255,255,0.25); line-height: 1.6; }
   .cs-badge { display: inline-block; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-light); border: 0.5px solid rgba(26,155,140,0.3); padding: 3px 10px; border-radius: 1px; margin-top: 1rem; opacity: 0.6; }
-
   footer { background: var(--ink); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; border-top: 0.5px solid rgba(255,255,255,0.06); }
   .footer-logo { font-family: var(--font-display); font-size: 18px; font-weight: 300; letter-spacing: 0.1em; color: var(--white); text-decoration: none; }
   .footer-logo span { color: var(--teal-light); }
   .footer-copy { font-size: 12px; color: var(--mist); }
   .footer-tagline { font-size: 11px; color: var(--mist); font-family: var(--font-display); font-style: italic; }
-
   @media (max-width: 900px) {
-    nav { padding: 1.25rem 2rem; }
-    .nav-links { display: none; }
-    .page-hero { padding: 7rem 2rem 3rem; }
-    .tool-section { padding: 4rem 2rem; }
-    .tool-header { grid-template-columns: 1fr; gap: 2rem; }
-    .options-grid { grid-template-columns: 1fr; }
-    .diag-wrap { padding: 2rem; }
-    .coming-soon { padding: 4rem 2rem; }
-    .cs-grid { grid-template-columns: 1fr; }
-    footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+    nav { padding: 1.25rem 2rem; } .nav-links { display: none; }
+    .page-hero { padding: 7rem 2rem 3rem; } .tool-section { padding: 4rem 2rem; }
+    .tool-header { grid-template-columns: 1fr; gap: 2rem; } .options-grid { grid-template-columns: 1fr; }
+    .diag-wrap { padding: 2rem; } .coming-soon { padding: 4rem 2rem; }
+    .cs-grid { grid-template-columns: 1fr; } footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
   }
 </style>
 </head>
@@ -130,13 +114,14 @@
   <p class="page-desc">Interactive diagnostics and frameworks built for communications professionals and business leaders navigating complex environments. Start with what's live — more tools in development.</p>
 </section>
 
+<!-- TOOL 01 -->
 <section class="tool-section">
   <div class="tool-header">
     <div>
       <p class="tool-num">01 · Live</p>
       <h2 class="tool-name">Crisis & Risk Diagnostic</h2>
       <p class="tool-sub">LATAM · May 2026</p>
-      <p class="tool-desc">Three global crises are reshaping the operating environment for organizations in LATAM right now. Most executives see them as political or economic context. This tool helps you understand your real exposure — and what communications actions to take before someone else defines the narrative for you.</p>
+      <p class="tool-desc">Three forces are reshaping the operating environment for organizations in LATAM: the conflict in the Strait of Hormuz, Mexico's economic slowdown, and growing US pressure on Mexico over drug trafficking and security. This tool helps you understand your real exposure — and what communications actions to take before someone else defines the narrative for you.</p>
       <div class="tool-tags">
         <span class="tag">Risk assessment</span>
         <span class="tag">Crisis preparedness</span>
@@ -178,12 +163,12 @@
 
     <div class="step" id="step-2">
       <div class="step-label">Question 3 of 4</div>
-      <div class="step-question">Does your organization have operations, suppliers, clients, or partners in northern or northwestern Mexico?</div>
+      <div class="step-question">Does your organization have direct ties to the public sector or depend on government decisions to operate?</div>
       <div class="options-grid">
-        <button class="option-btn" onclick="select(2,0)"><div class="opt-title">Yes, we operate there</div><div class="opt-desc">Offices, plants, distribution or staff in that region</div></button>
-        <button class="option-btn" onclick="select(2,1)"><div class="opt-title">We have suppliers there</div><div class="opt-desc">We buy inputs or services from companies in that area</div></button>
-        <button class="option-btn" onclick="select(2,2)"><div class="opt-title">We have clients there</div><div class="opt-desc">We sell or distribute to that region</div></button>
-        <button class="option-btn" onclick="select(2,3)"><div class="opt-title">No direct links</div><div class="opt-desc">Our operation has no contact with that area</div></button>
+        <button class="option-btn" onclick="select(2,0)"><div class="opt-title">Yes, we work with government</div><div class="opt-desc">Contracts, projects or services with federal or state institutions</div></button>
+        <button class="option-btn" onclick="select(2,1)"><div class="opt-title">We depend on permits or regulation</div><div class="opt-desc">Government decisions directly affect our operations</div></button>
+        <button class="option-btn" onclick="select(2,2)"><div class="opt-title">Indirect exposure</div><div class="opt-desc">Clients or suppliers linked to government, but not us directly</div></button>
+        <button class="option-btn" onclick="select(2,3)"><div class="opt-title">No public sector ties</div><div class="opt-desc">Our operation is fully private and independent</div></button>
       </div>
       <button class="next-btn" id="next-2" disabled onclick="nextStep(3)">Next →</button>
     </div>
@@ -209,6 +194,7 @@
   </div>
 </section>
 
+<!-- TOOL 02 -->
 <section class="tool-section" style="background: var(--ink-soft); border-top: 0.5px solid rgba(255,255,255,0.06);">
   <div class="tool-header">
     <div>
@@ -230,26 +216,50 @@
   </div>
 </section>
 
+<!-- TOOL 03 -->
+<section class="tool-section" style="border-top: 0.5px solid rgba(255,255,255,0.06);">
+  <div class="tool-header">
+    <div>
+      <p class="tool-num">03 · Live</p>
+      <h2 class="tool-name">Crisis Simulator</h2>
+      <p class="tool-sub">Reputation management · Decision-making · B2C · B2B</p>
+      <p class="tool-desc">Three fictionalized real corporate scandals. Five decisions per case. Consequences shift with every choice. The game does not tell you what is right — it shows you what you lose when you get it wrong. Built for executives and communications professionals who want to understand the logic of a crisis before living one.</p>
+      <div class="tool-tags">
+        <span class="tag">Crisis management</span>
+        <span class="tag">Corporate reputation</span>
+        <span class="tag">Decision-making</span>
+        <span class="tag">Executive training</span>
+      </div>
+    </div>
+    <div style="align-self: center;">
+      <p style="font-size: 13px; color: var(--mist); line-height: 1.7; margin-bottom: 1.5rem;">Three cases · Five decisions · No right answers until the end.</p>
+      <a href="/tools/crisis-simulator" style="display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--ink); border-radius: 2px; padding: 12px 24px; font-size: 13px; font-weight: 500; text-decoration: none; letter-spacing: 0.05em;">Enter the simulator →</a>
+    </div>
+  </div>
+</section>
+
+<!-- COMING SOON -->
 <section class="coming-soon">
   <p class="cs-label">In development</p>
   <h2 class="cs-title">More tools <em>coming.</em></h2>
+  <p class="cs-desc-intro">Same logic: short, sharp, built for professionals who don't have time to waste. Readiness checks, message frameworks, scenario simulations. No fluff.</p>
   <div class="cs-grid">
     <div class="cs-card">
-      <p class="cs-num">03</p>
-      <p class="cs-name">Crisis Readiness Check</p>
-      <p class="cs-desc">How prepared is your organization to communicate when a crisis hits? Five questions, instant assessment.</p>
+      <div class="cs-icon">◎</div>
+      <p class="cs-name">Readiness diagnostics</p>
+      <p class="cs-desc">Is your organization ready to communicate before the crisis arrives? Fast assessment tools for teams and executives.</p>
       <span class="cs-badge">Coming soon</span>
     </div>
     <div class="cs-card">
-      <p class="cs-num">04</p>
-      <p class="cs-name">Spokesperson Readiness</p>
-      <p class="cs-desc">Is your executive ready to face the media? A diagnostic for leaders preparing for high-exposure moments.</p>
+      <div class="cs-icon">◈</div>
+      <p class="cs-name">Message frameworks</p>
+      <p class="cs-desc">Structures for building differentiated messages by audience — press, employees, investors, government — from a single brief.</p>
       <span class="cs-badge">Coming soon</span>
     </div>
     <div class="cs-card">
-      <p class="cs-num">05</p>
-      <p class="cs-name">Message Matrix</p>
-      <p class="cs-desc">Generate differentiated key messages for press, employees, investors and government from a single brief.</p>
+      <div class="cs-icon">◇</div>
+      <p class="cs-name">Scenario simulations</p>
+      <p class="cs-desc">More cases, more contexts, more variables. The same logic as the Crisis Simulator applied to other high-pressure decision environments.</p>
       <span class="cs-badge">Coming soon</span>
     </div>
   </div>
@@ -265,19 +275,19 @@
 const answers = [null, null, null, null];
 const riskData = {
   ormuz: {
-    high: { desc: "Dependes directamente de rutas de comercio internacional que están bajo presión por el conflicto en el Estrecho de Ormuz. El alza en precios del petróleo y las disrupciones logísticas ya están afectando tus operaciones.", action: "Activa tu protocolo de comunicación con proveedores y clientes sobre posibles retrasos o alzas de precio. Prepara un mensaje institucional que anticipe la situación antes de que te pregunten." },
-    medium: { desc: "Tienes exposición indirecta al conflicto en Ormuz. Aunque no dependes completamente de rutas internacionales, el alza en energía y costos de insumos te afecta.", action: "Evalúa tu cadena de suministro en los próximos 30 días. Comunica proactivamente a clientes clave si anticipas cambios en precios o tiempos de entrega." },
-    low: { desc: "Tu exposición directa al Estrecho de Ormuz es limitada, pero el alza en precios de energía y logística ya está afectando costos operativos en toda la cadena.", action: "Monitorea el precio del combustible y anticipa conversaciones con stakeholders sobre márgenes. Prepara mensajes para clientes si los costos suben." }
+    high: { desc: "Your organization depends directly on international trade routes under pressure from the conflict in the Strait of Hormuz. Rising oil prices and logistics disruptions are already affecting your operations.", action: "Activate your communications protocol with suppliers and clients about potential delays or price increases. Prepare an institutional message that anticipates the situation before anyone asks." },
+    medium: { desc: "You have indirect exposure to the Hormuz conflict. You don't depend entirely on international routes, but rising energy and input costs are hitting you.", action: "Review your supply chain over the next 30 days. Proactively communicate to key clients if you anticipate changes in prices or delivery times." },
+    low: { desc: "Your direct exposure to the Strait of Hormuz is limited, but rising energy and logistics prices are already affecting operating costs across the entire chain.", action: "Monitor fuel prices and anticipate conversations with stakeholders about margins. Prepare messages for clients if costs rise." }
   },
-  rocha: {
-    high: { desc: "Tienes vínculos directos con la región de Sinaloa. La inestabilidad institucional y la atención mediática sobre el norte de México puede afectar tu reputación por asociación geográfica, aunque no tengas nada que ver con el caso.", action: "Prepara una posición institucional clara sobre tu operación en la región. Refuerza mensajes de transparencia y cumplimiento normativo hacia clientes, inversionistas y medios. No esperes a que te pregunten." },
-    medium: { desc: "La crisis política en Sinaloa y la tensión con EE.UU. puede afectar la percepción de estabilidad institucional en tu entorno de negocio o con tus clientes en la región.", action: "Revisa tu narrativa de confianza institucional. Si tienes clientes en la zona, considera comunicación proactiva que refuerce seguridad y continuidad operativa." },
-    low: { desc: "Tu exposición directa al caso Rocha Moya es limitada, pero la tensión bilateral México-EE.UU. que genera puede afectar el clima de inversión y la percepción de seguridad institucional en tu sector.", action: "Monitorea cómo evoluciona la narrativa bilateral. Si tienes socios o clientes estadounidenses, prepara mensajes que refuercen tu posición institucional y transparencia." }
+  bilateral: {
+    high: { desc: "Your organization works directly with federal or state government. Growing US pressure on Mexico over drug trafficking and security is generating international scrutiny of public institutions and their private sector partners. Reputational risk materializes through association, investigation, or media coverage that does not distinguish between principals and contractors.", action: "Do not wait for the crisis. Conduct an immediate audit of your reputational exposure: contracts, public statements, spokespeople. Prepare a clear institutional position that separates your organization's integrity from the political noise around you." },
+    medium: { desc: "You depend on permits, regulation, or public policy to operate. You are not directly linked to the conflict, but regulatory decisions — and the perception of those decisions — can affect your timelines, costs, and credibility with international partners.", action: "Map which government decisions affect your operation and who makes them. Prepare messages for international clients or investors that reinforce your compliance posture and institutional independence." },
+    low: { desc: "You have indirect exposure through clients or suppliers linked to government. The risk is reputational by proximity — not by direct action, but by association in a media and regulatory environment that is increasingly less forgiving.", action: "Review your public positioning. Make sure your communications clearly reflect your organization's values and compliance standards, independent of who your clients or partners are." }
   },
   economia: {
-    high: { desc: "El PIB de México cayó 0.8% en el primer trimestre de 2026. Tu dependencia del consumo interno o la inversión privada te coloca como uno de los principales afectados. Menor gasto, mayor cautela y costos operativos altos.", action: "Es momento de construir narrativa de resiliencia, no de optimismo vacío. Comunica con claridad tu posición financiera, tu visión de mediano plazo y tu plan ante el entorno. Los stakeholders necesitan certeza antes de que aparezca la incertidumbre." },
-    medium: { desc: "La desaceleración económica afecta el presupuesto público y puede retrasar licitaciones o contratos. La confianza institucional en México está bajo presión.", action: "Refuerza tus relaciones con tomadores de decisión en el sector público. La comunicación proactiva sobre el valor de tu propuesta es clave en entornos de recorte." },
-    low: { desc: "Tu modelo tiene cierto blindaje ante la contracción económica interna. Sin embargo, el entorno de estanflación y baja confianza empresarial afecta el ecosistema donde operas.", action: "Ajusta tu narrativa hacia propuestas de valor claras y tangibles. En entornos de incertidumbre, las empresas que comunican certeza y solidez ganan reputación." }
+    high: { desc: "Mexico's GDP contracted in early 2026. Your dependence on domestic consumption or private investment places you among the most exposed. Less spending, more caution, higher operating costs.", action: "Build a resilience narrative, not empty optimism. Communicate clearly your financial position, your medium-term vision, and your plan for the current environment. Stakeholders need certainty before uncertainty appears." },
+    medium: { desc: "The economic slowdown is affecting the public budget and may delay tenders or contracts. Institutional confidence in Mexico is under pressure.", action: "Strengthen your relationships with public sector decision-makers. Proactive communication about the value of your proposal is key in a cost-cutting environment." },
+    low: { desc: "Your model has some insulation from the internal economic contraction. However, the stagflation environment and low business confidence affects the ecosystem you operate in.", action: "Adjust your narrative toward clear, tangible value propositions. In uncertain environments, organizations that communicate certainty and solidity gain reputation." }
   }
 };
 
@@ -287,33 +297,29 @@ function select(step, opt) {
   answers[step] = opt;
   document.getElementById('next-' + step).disabled = false;
 }
-
 function nextStep(n) {
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
   document.getElementById('step-' + n).classList.add('active');
   document.getElementById('progress').style.width = (n * 25) + '%';
 }
-
 function getLevel(key) {
-  const [sector, logistica, sinaloa, economia] = answers;
+  const [sector, logistica, gobierno, economia] = answers;
   if (key === 'ormuz') { if (logistica === 0) return 'high'; if (logistica === 1 || sector === 0 || sector === 1) return 'medium'; return 'low'; }
-  if (key === 'rocha') { if (sinaloa === 0 || sinaloa === 1) return 'high'; if (sinaloa === 2 || sector === 3) return 'medium'; return 'low'; }
+  if (key === 'bilateral') { if (gobierno === 0) return 'high'; if (gobierno === 1 || gobierno === 2 || sector === 3) return 'medium'; return 'low'; }
   if (key === 'economia') { if (economia === 0 || economia === 1) return 'high'; if (economia === 2) return 'medium'; return 'low'; }
 }
-
 function showResult() {
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
   document.getElementById('step-result').classList.add('active');
   document.getElementById('progress').style.width = '100%';
-  const titles = { ormuz: 'Crisis en el Estrecho de Ormuz', rocha: 'Caso Rocha Moya y tensión bilateral México-EE.UU.', economia: 'Desaceleración económica en México' };
+  const titles = { ormuz: 'Conflict in the Strait of Hormuz', bilateral: 'US-Mexico bilateral pressure and drug trafficking', economia: 'Economic slowdown in Mexico' };
   const levelOrder = { high: 0, medium: 1, low: 2 };
-  const risks = ['ormuz', 'rocha', 'economia'].map(k => { const level = getLevel(k); return { key: k, title: titles[k], level, ...riskData[k][level] }; }).sort((a, b) => levelOrder[a.level] - levelOrder[b.level]);
+  const risks = ['ormuz', 'bilateral', 'economia'].map(k => { const level = getLevel(k); return { key: k, title: titles[k], level, ...riskData[k][level] }; }).sort((a, b) => levelOrder[a.level] - levelOrder[b.level]);
   const highCount = risks.filter(r => r.level === 'high').length;
-  document.getElementById('result-intro').textContent = highCount === 0 ? 'Tu exposición directa es moderada, pero ninguna empresa opera en una burbuja. Estos son los riesgos que debes monitorear:' : highCount === 1 ? 'Tienes un riesgo de alta prioridad que requiere atención inmediata en comunicación y reputación:' : 'Tu empresa tiene exposición alta en múltiples frentes. La gestión de narrativa no puede esperar:';
-  const levelLabel = { high: 'Riesgo alto', medium: 'Riesgo medio', low: 'Riesgo bajo' };
-  document.getElementById('results-container').innerHTML = risks.map(r => `<div class="result-card ${r.level}"><div class="result-level">${levelLabel[r.level]}</div><div class="result-title">${r.title}</div><div class="result-desc">${r.desc}</div><div class="result-action"><strong>¿Qué hacer?</strong> ${r.action}</div></div>`).join('');
+  document.getElementById('result-intro').textContent = highCount === 0 ? 'Your direct exposure is moderate, but no organization operates in a bubble. These are the risks you need to monitor:' : highCount === 1 ? 'You have one high-priority risk that requires immediate attention in communications and reputation:' : 'Your organization has high exposure on multiple fronts. Narrative management cannot wait:';
+  const levelLabel = { high: 'High risk', medium: 'Medium risk', low: 'Low risk' };
+  document.getElementById('results-container').innerHTML = risks.map(r => '<div class="result-card '+r.level+'"><div class="result-level">'+levelLabel[r.level]+'</div><div class="result-title">'+r.title+'</div><div class="result-desc">'+r.desc+'</div><div class="result-action"><strong>What to do:</strong> '+r.action+'</div></div>').join('');
 }
-
 function restart() {
   answers.fill(null);
   document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
