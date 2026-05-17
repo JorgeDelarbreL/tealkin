@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crisis Simulator — TealKin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --teal: #1a9b8c;
+    --teal-dark: #127a6e;
+    --teal-light: #22c4b0;
+    --black: #060a09;
+    --black-mid: #0d1413;
+    --off-white: #f0ece4;
+    --warm-gray: #8a8880;
+    --red: #c0392b;
+    --red-dark: #922b21;
+    --amber: #d4a017;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+    --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; background: var(--black); color: var(--off-white); font-family: var(--font-body); overflow: hidden; }
+
+  .screen { position: fixed; inset: 0; display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity 0.6s ease; z-index: 1; }
+  .screen.active { opacity: 1; pointer-events: all; z-index: 10; }
+
+  .fallback-bg {
+    position: fixed; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(26,155,140,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(26,155,140,0.05) 0%, transparent 50%), linear-gradient(135deg, #060a09 0%, #0d1e1c 50%, #060a09 100%);
+  }
+  .noise {
+    position: fixed; inset: 0; z-index: 1; opacity: 0.025; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 128px;
+  }
+  .scanlines { position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.025) 2px, rgba(0,0,0,0.025) 4px); pointer-events: none; z-index: 999; }
+  .choice-flash { position: fixed; inset: 0; background: var(--teal); opacity: 0; pointer-events: none; z-index: 500; transition: opacity 0.1s; }
+  .choice-flash.active { opacity: 0.07; }
+
+  .corner-mark { position: fixed; width: 20px; height: 20px; z-index: 50; pointer-events: none; }
+  .corner-mark::before, .corner-mark::after { content: ''; position: absolute; background: var(--teal); opacity: 0.3; }
+  .corner-mark::before { width: 100%; height: 1px; top: 0; left: 0; }
+  .corner-mark::after { width: 1px; height: 100%; top: 0; left: 0; }
+  .corner-mark.tl { top: 20px; left: 20px; }
+  .corner-mark.tr { top: 20px; right: 20px; }
+  .corner-mark.tr::before, .corner-mark.tr::after { left: auto; right: 0; }
+  .corner-mark.bl { bottom: 20px; left: 20px; }
+  .corner-mark.bl::before { top: auto; bottom: 0; }
+  .corner-mark.bl::after { top: auto; bottom: 0; }
+  .corner-mark.br { bottom: 20px; right: 20px; }
+  .corner-mark.br::before { top: auto; bottom: 0; left: auto; right: 0; }
+  .corner-mark.br::after { top: auto; bottom: 0; left: auto; right: 0; }
+
+  .top-nav { position: fixed; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 24px 48px; z-index: 100; background: linear-gradient(to bottom, rgba(6,10,9,0.85) 0%, transparent 100%); }
+  .nav-logo { font-family: var(--font-display); font-size: 20px; font-weight: 400; color: var(--off-white); text-decoration: none; letter-spacing: 0.05em; }
+  .nav-logo span { color: var(--teal); }
+  .nav-right { display: flex; align-items: center; gap: 32px; }
+  .nav-track-indicator { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm-gray); }
+  .nav-restart { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--warm-gray); cursor: pointer; background: none; border: none; font-family: var(--font-body); transition: color 0.3s; }
+  .nav-restart:hover { color: var(--off-white); }
+
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 30px; font-family: var(--font-body); font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; border: none; transition: var(--transition); text-decoration: none; }
+  .btn-primary { background: var(--teal); color: var(--black); }
+  .btn-primary:hover { background: var(--teal-light); transform: translateX(4px); }
+  .btn-outline { background: transparent; color: var(--off-white); border: 1px solid rgba(240,236,228,0.3); }
+  .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+  .btn-ghost { background: transparent; color: var(--warm-gray); padding: 10px 0; letter-spacing: 0.15em; font-size: 11px; }
+  .btn-ghost:hover { color: var(--off-white); }
+  .btn-group { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+  .stagger > * { opacity: 0; animation: fadeUp 0.5s both; }
+  .stagger > *:nth-child(1) { animation-delay: 0.1s; }
+  .stagger > *:nth-child(2) { animation-delay: 0.2s; }
+  .stagger > *:nth-child(3) { animation-delay: 0.3s; }
+  .stagger > *:nth-child(4) { animation-delay: 0.4s; }
+
+  /* ── INTRO ── */
+  #screen-intro { align-items: center; justify-content: center; text-align: center; padding: 40px; }
+  .intro-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.8s 0.3s forwards; }
+  .intro-title { font-family: var(--font-display); font-size: clamp(60px, 10vw, 116px); font-weight: 300; line-height: 0.9; letter-spacing: -0.02em; color: var(--off-white); margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s 0.5s forwards; }
+  .intro-title span { display: block; font-style: italic; color: var(--teal-light); }
+  .intro-tagline { font-family: var(--font-display); font-size: clamp(15px, 1.8vw, 21px); font-weight: 300; font-style: italic; color: var(--warm-gray); max-width: 600px; line-height: 1.65; margin-bottom: 56px; opacity: 0; animation: fadeUp 0.8s 0.7s forwards; }
+  .intro-cta { opacity: 0; animation: fadeUp 0.8s 0.9s forwards; }
+
+  /* ── CHARACTER ── */
+  #screen-character { flex-direction: row; }
+  .character-visual { width: 42%; position: relative; overflow: hidden; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 48px; }
+  .character-photo { position: absolute; inset: 0; background-size: cover; background-position: center top; filter: saturate(0.25) brightness(0.55); }
+  .character-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, var(--black) 0%, rgba(6,10,9,0.3) 55%, transparent 100%); }
+  .character-name-tag { position: relative; z-index: 2; text-align: center; }
+  .character-name-tag h2 { font-family: var(--font-display); font-size: 42px; font-weight: 600; color: var(--off-white); letter-spacing: 0.02em; }
+  .character-name-tag p { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-top: 8px; }
+  .character-content { width: 58%; display: flex; flex-direction: column; justify-content: center; padding: 80px 80px 80px 56px; }
+  .character-label { font-size: 11px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 22px; }
+  .character-intro { font-family: var(--font-display); font-size: clamp(19px, 2.2vw, 28px); font-weight: 300; line-height: 1.65; color: var(--off-white); margin-bottom: 44px; }
+  .character-intro strong { font-weight: 600; font-style: italic; color: var(--teal-light); }
+
+  /* ── TRACK SELECT ── */
+  #screen-tracks { padding: 56px; align-items: center; justify-content: center; }
+  .tracks-header { text-align: center; margin-bottom: 44px; }
+  .tracks-label { font-size: 11px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; }
+  .tracks-title { font-family: var(--font-display); font-size: clamp(30px, 4vw, 50px); font-weight: 300; color: var(--off-white); }
+  .tracks-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 1080px; width: 100%; }
+  .track-card { background: rgba(13,20,19,0.8); border: 1px solid rgba(26,155,140,0.14); cursor: pointer; position: relative; overflow: hidden; transition: var(--transition); backdrop-filter: blur(10px); }
+  .track-card-img { width: 100%; height: 150px; background-size: cover; background-position: center; filter: saturate(0.25) brightness(0.45); transition: filter 0.4s; }
+  .track-card:hover .track-card-img { filter: saturate(0.4) brightness(0.6); }
+  .track-card-body { padding: 24px 26px 28px; }
+  .track-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--teal); transition: height 0.4s; }
+  .track-card:hover { border-color: rgba(26,155,140,0.38); transform: translateY(-3px); }
+  .track-card:hover::before { height: 100%; }
+  .track-num { font-size: 11px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+  .track-company { font-family: var(--font-display); font-size: 26px; font-weight: 600; color: var(--off-white); line-height: 1.1; margin-bottom: 5px; }
+  .track-sector { font-size: 11px; letter-spacing: 0.1em; color: var(--teal); text-transform: uppercase; margin-bottom: 12px; }
+  .track-scandal { font-family: var(--font-display); font-size: 14px; font-style: italic; color: var(--warm-gray); line-height: 1.5; margin-bottom: 16px; }
+  .track-lesson { font-size: 11px; font-weight: 300; color: rgba(240,236,228,0.38); line-height: 1.6; border-top: 1px solid rgba(26,155,140,0.1); padding-top: 14px; }
+
+  /* ── GAME ── */
+  #screen-game { flex-direction: row; }
+  .game-left { width: 52%; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+  .game-scene-img { position: absolute; inset: 0; background-size: cover; background-position: center; filter: saturate(0.2) brightness(0.4); transition: background-image 0.5s; }
+  .game-scene-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(6,10,9,0.1) 0%, rgba(6,10,9,0.15) 35%, rgba(6,10,9,0.82) 70%, rgba(6,10,9,0.97) 100%); }
+  .game-left-content { position: relative; z-index: 2; padding: 60px 52px 60px 68px; }
+  .game-progress { display: flex; align-items: center; gap: 8px; margin-bottom: 26px; }
+  .progress-step { width: 28px; height: 2px; background: rgba(26,155,140,0.18); transition: background 0.4s; }
+  .progress-step.done { background: var(--teal-dark); }
+  .progress-step.active { background: var(--teal); }
+  .progress-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--warm-gray); margin-left: 8px; }
+  .game-decision-num { font-family: var(--font-display); font-size: 96px; font-weight: 300; color: rgba(26,155,140,0.06); line-height: 1; position: absolute; top: 44px; left: 52px; user-select: none; pointer-events: none; }
+  .game-track-name { font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 12px; }
+  .game-decision-title { font-family: var(--font-display); font-size: clamp(30px, 3.2vw, 48px); font-weight: 400; color: var(--off-white); line-height: 1.1; margin-bottom: 22px; }
+  .game-situation { font-family: var(--font-display); font-size: clamp(14px, 1.3vw, 17px); font-weight: 300; line-height: 1.8; color: rgba(240,236,228,0.75); max-width: 500px; }
+  .no-correct-banner { display: inline-block; margin-top: 22px; padding: 7px 15px; border: 1px solid var(--amber); color: var(--amber); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; }
+
+  .game-right { width: 48%; display: flex; flex-direction: column; justify-content: center; padding: 80px 68px 80px 44px; gap: 12px; }
+  .options-label { font-size: 11px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; }
+  .option-card { background: rgba(13,20,19,0.75); border: 1px solid rgba(26,155,140,0.13); padding: 20px 24px; cursor: pointer; transition: var(--transition); backdrop-filter: blur(8px); }
+  .option-card:hover { border-color: rgba(26,155,140,0.48); background: rgba(26,155,140,0.06); transform: translateX(6px); }
+  .option-letter { font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 7px; }
+  .option-text { font-family: var(--font-display); font-size: 19px; font-weight: 600; color: var(--off-white); line-height: 1.2; margin-bottom: 6px; }
+  .option-quote { font-family: var(--font-display); font-size: 13px; font-style: italic; color: var(--warm-gray); line-height: 1.5; }
+
+  /* ── CONSEQUENCE ── */
+  #screen-consequence { flex-direction: row; }
+  .consequence-img { width: 40%; position: relative; overflow: hidden; display: flex; align-items: flex-end; }
+  .consequence-img-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: saturate(0.18) brightness(0.38); }
+  .consequence-img-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(6,10,9,0.05) 0%, rgba(6,10,9,0.65) 100%); }
+  .consequence-img-caption { position: relative; z-index: 2; padding: 44px 36px; }
+  .loss-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,236,228,0.28); margin-bottom: 10px; }
+  .loss-tag { display: inline-flex; align-items: center; padding: 9px 18px; border: 1px solid rgba(192,57,43,0.45); color: var(--red); font-size: 13px; font-family: var(--font-display); font-style: italic; }
+
+  .consequence-content { width: 60%; display: flex; flex-direction: column; justify-content: center; padding: 80px 72px 80px 60px; overflow-y: auto; }
+  .consequence-track { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+  .consequence-decision { font-family: var(--font-display); font-size: clamp(14px, 1.5vw, 19px); font-style: italic; color: var(--warm-gray); margin-bottom: 28px; }
+  .consequence-chosen { font-family: var(--font-display); font-size: clamp(24px, 3.2vw, 42px); font-weight: 600; color: var(--off-white); margin-bottom: 12px; line-height: 1.1; }
+  .consequence-quote { font-family: var(--font-display); font-size: clamp(14px, 1.4vw, 17px); font-style: italic; color: var(--warm-gray); line-height: 1.75; margin-bottom: 32px; }
+  .consequence-divider { width: 32px; height: 1px; background: var(--teal); margin-bottom: 28px; }
+  .consequence-text { font-family: var(--font-display); font-size: clamp(15px, 1.5vw, 20px); font-weight: 400; color: var(--off-white); line-height: 1.8; margin-bottom: 36px; }
+
+  /* ── GAME OVER ── */
+  #screen-gameover { align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 60px; }
+  #screen-gameover::before { content: ''; position: fixed; inset: 0; background: var(--red-dark); opacity: 0; z-index: -1; animation: redFlash 0.2s 0.05s ease forwards; }
+  @keyframes redFlash { 0% { opacity: 0; } 40% { opacity: 0.45; } 100% { opacity: 0; } }
+  .gameover-label { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--red); margin-bottom: 18px; animation: fadeUp 0.6s 0.2s both; }
+  .gameover-title { font-family: var(--font-display); font-size: clamp(60px, 12vw, 132px); font-weight: 700; color: var(--red); line-height: 0.85; letter-spacing: -0.02em; margin-bottom: 28px; animation: fadeUp 0.6s 0.35s both; }
+  .gameover-ending { font-family: var(--font-display); font-size: clamp(14px, 1.7vw, 21px); font-style: italic; color: var(--warm-gray); margin-bottom: 14px; animation: fadeUp 0.6s 0.5s both; }
+  .gameover-consequence { font-family: var(--font-display); font-size: clamp(13px, 1.3vw, 17px); color: rgba(240,236,228,0.5); max-width: 580px; line-height: 1.8; margin-bottom: 44px; animation: fadeUp 0.6s 0.6s both; }
+  .gameover-lesson { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(240,236,228,0.25); max-width: 460px; line-height: 1.9; border-top: 1px solid rgba(240,236,228,0.08); padding-top: 26px; margin-bottom: 40px; animation: fadeUp 0.6s 0.7s both; }
+
+  /* ── SURVIVAL ── */
+  #screen-survival { align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 60px; overflow-y: auto; }
+  .survival-label { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--teal); margin-bottom: 18px; animation: fadeUp 0.8s 0.2s both; }
+  .survival-title { font-family: var(--font-display); font-size: clamp(38px, 7vw, 84px); font-weight: 300; line-height: 1; color: var(--off-white); animation: fadeUp 0.8s 0.35s both; }
+  .survival-title span { font-style: italic; color: var(--teal-light); }
+  .survival-ending { font-family: var(--font-display); font-size: clamp(13px, 1.4vw, 18px); font-style: italic; color: var(--warm-gray); max-width: 620px; line-height: 1.75; margin: 20px 0 40px; animation: fadeUp 0.8s 0.5s both; }
+  .survival-lesson-wrap { border: 1px solid rgba(26,155,140,0.2); padding: 26px 40px; max-width: 620px; margin-bottom: 40px; animation: fadeUp 0.8s 0.65s both; }
+  .survival-lesson-label { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 12px; }
+  .survival-lesson-text { font-family: var(--font-display); font-size: clamp(15px, 1.7vw, 20px); font-style: italic; font-weight: 300; color: var(--off-white); line-height: 1.65; }
+  .survival-map { width: 100%; max-width: 620px; margin-bottom: 44px; animation: fadeUp 0.8s 0.8s both; }
+  .survival-map h3 { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm-gray); margin-bottom: 14px; text-align: left; }
+  .map-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(240,236,228,0.06); font-size: 13px; }
+  .map-row:last-child { border-bottom: none; }
+  .map-decision { color: var(--warm-gray); font-family: var(--font-display); font-style: italic; }
+  .map-loss { color: var(--red); font-size: 12px; }
+
+  @media (max-width: 900px) {
+    #screen-character, #screen-game, #screen-consequence { flex-direction: column; overflow-y: auto; }
+    .character-visual, .game-left, .consequence-img { width: 100%; height: 240px; min-height: 240px; }
+    .character-content, .game-right, .consequence-content { width: 100%; padding: 28px 28px 48px; }
+    .game-left-content { padding: 20px 28px 28px; }
+    .tracks-grid { grid-template-columns: 1fr; }
+    .top-nav { padding: 14px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="fallback-bg"></div>
+<div class="noise"></div>
+<div class="scanlines"></div>
+<div class="choice-flash" id="choiceFlash"></div>
+<div class="corner-mark tl"></div>
+<div class="corner-mark tr"></div>
+<div class="corner-mark bl"></div>
+<div class="corner-mark br"></div>
+
+<nav class="top-nav">
+  <a href="https://tealkin.com" class="nav-logo">Teal<span>Kin</span></a>
+  <div class="nav-right">
+    <span class="nav-track-indicator" id="navTrackIndicator"></span>
+    <button class="nav-restart" id="navRestart" style="display:none" onclick="restartGame()">← Restart</button>
+  </div>
+</nav>
+
+<!-- INTRO -->
+<div class="screen active" id="screen-intro">
+  <p class="intro-eyebrow">TealKin / Tools</p>
+  <h1 class="intro-title">Crisis<span>Simulator</span></h1>
+  <p class="intro-tagline">Three cases. Three scenarios. One lesson: in reputation management, every hour you deny the truth is an hour you hand the crisis to grow.</p>
+  <div class="intro-cta btn-group" style="justify-content:center">
+    <button class="btn btn-primary" onclick="goTo('screen-character')">Start →</button>
+    <button class="btn btn-ghost" onclick="showInfo()">About this sim</button>
+  </div>
+</div>
+
+<!-- CHARACTER -->
+<div class="screen" id="screen-character">
+  <div class="character-visual">
+    <div class="character-photo" style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80&fit=crop&crop=face')"></div>
+    <div class="character-name-tag">
+      <h2>Cris Cisneros</h2>
+      <p>Division Director</p>
+    </div>
+  </div>
+  <div class="character-content stagger">
+    <p class="character-label">Your role</p>
+    <p class="character-intro">
+      You’ve spent years delivering results, leading teams, making the tough calls others won’t.<br><br>
+      Today you’ll face one of the biggest challenges of your career. It’s not about operations.<br><br>
+      <strong>It’s about the company’s reputation.</strong>
+    </p>
+    <div class="btn-group">
+      <button class="btn btn-primary" onclick="goTo('screen-tracks')">Choose a case →</button>
+      <button class="btn btn-ghost" onclick="goTo('screen-intro')">← Back</button>
+    </div>
+  </div>
+</div>
+
+<!-- TRACKS -->
+<div class="screen" id="screen-tracks">
+  <div class="tracks-header">
+    <p class="tracks-label">Select a case</p>
+    <h2 class="tracks-title">Which battlefield are you entering today?</h2>
+  </div>
+  <div class="tracks-grid stagger" id="tracksGrid"></div>
+</div>
+
+<!-- GAME -->
+<div class="screen" id="screen-game">
+  <div class="game-left">
+    <div class="game-scene-img" id="gameSceneImg"></div>
+    <div class="game-left-content">
+      <div class="game-decision-num" id="gameDecisionNum">01</div>
+      <div class="game-progress" id="gameProgress"></div>
+      <p class="game-track-name" id="gameTrackName"></p>
+      <h2 class="game-decision-title" id="gameDecisionTitle"></h2>
+      <p class="game-situation" id="gameSituation"></p>
+      <div id="noCorrectBanner" class="no-correct-banner" style="display:none">⚠ No right answer. Only the least bad.</div>
+    </div>
+  </div>
+  <div class="game-right">
+    <p class="options-label">Your options</p>
+    <div id="optionsContainer" class="stagger"></div>
+  </div>
+</div>
+
+<!-- CONSEQUENCE -->
+<div class="screen" id="screen-consequence">
+  <div class="consequence-img">
+    <div class="consequence-img-bg" id="consImgBg"></div>
+    <div class="consequence-img-caption">
+      <p class="loss-label">What you lose</p>
+      <div class="loss-tag" id="consLossTag" style="display:none"><span id="consLossText"></span></div>
+    </div>
+  </div>
+  <div class="consequence-content">
+    <p class="consequence-track" id="consTrack"></p>
+    <p class="consequence-decision" id="consDecision"></p>
+    <h2 class="consequence-chosen" id="consChosen"></h2>
+    <p class="consequence-quote" id="consQuote"></p>
+    <div class="consequence-divider"></div>
+    <p class="consequence-text" id="consText"></p>
+    <div class="btn-group">
+      <button class="btn btn-primary" id="consContinueBtn" onclick="continueFromConsequence()">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- GAME OVER -->
+<div class="screen" id="screen-gameover">
+  <p class="gameover-label" id="gameoverLabel">Terminal crisis</p>
+  <h1 class="gameover-title">Game<br>Over</h1>
+  <p class="gameover-ending" id="gameoverEnding"></p>
+  <p class="gameover-consequence" id="gameoverConsequence"></p>
+  <p class="gameover-lesson" id="gameoverLesson"></p>
+  <div class="btn-group" style="justify-content:center">
+    <button class="btn btn-outline" onclick="restartTrack()">Try again</button>
+    <button class="btn btn-ghost" onclick="goTo('screen-tracks')">Switch case</button>
+  </div>
+</div>
+
+<!-- SURVIVAL -->
+<div class="screen" id="screen-survival">
+  <p class="survival-label" id="survivalLabel">Final outcome</p>
+  <h1 class="survival-title" id="survivalTitle"></h1>
+  <p class="survival-ending" id="survivalEnding"></p>
+  <div class="survival-lesson-wrap">
+    <p class="survival-lesson-label">Core lesson</p>
+    <p class="survival-lesson-text" id="survivalLesson"></p>
+  </div>
+  <div class="survival-map" id="survivalMap"></div>
+  <div class="btn-group" style="justify-content:center">
+    <button class="btn btn-primary" onclick="goTo('screen-tracks')">Play another case →</button>
+    <button class="btn btn-ghost" onclick="restartTrack()">Replay this case</button>
+  </div>
+</div>
+
+<script>
+const IMG = {
+  sunshine:  'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=70&fit=crop',
+  nexus:     'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=70&fit=crop',
+  nutricare: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=70&fit=crop',
+  scenes: {
+    sunshine: [
+      'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&q=70&fit=crop',
+      'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&q=70&fit=crop',
+      'https://images.unsplash.com/photo-1529156069898-49953e39b3
