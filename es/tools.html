@@ -47,7 +47,6 @@
   .tool-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem; }
   .tag { font-size: 11px; color: var(--teal-light); border: 0.5px solid rgba(26,155,140,0.3); padding: 4px 12px; border-radius: 1px; }
 
-  /* DIAGNOSTIC TOOL */
   .diag-wrap { background: #0a1210; border: 0.5px solid rgba(255,255,255,0.08); border-radius: 4px; padding: 3rem; }
   .step { display: none; }
   .step.active { display: block; }
@@ -86,11 +85,12 @@
   .coming-soon { padding: 5rem 4rem; background: var(--ink-soft); border-top: 0.5px solid rgba(255,255,255,0.06); }
   .cs-label { font-size: 11px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 1rem; display: flex; align-items: center; gap: 12px; }
   .cs-label::before { content: ''; width: 24px; height: 0.5px; background: var(--teal-light); }
-  .cs-title { font-family: var(--font-display); font-size: clamp(24px, 3vw, 36px); font-weight: 300; color: var(--white); margin-bottom: 2.5rem; }
+  .cs-title { font-family: var(--font-display); font-size: clamp(24px, 3vw, 36px); font-weight: 300; color: var(--white); margin-bottom: 1.5rem; }
   .cs-title em { font-style: italic; color: var(--teal-light); }
+  .cs-desc-intro { font-size: 14px; font-weight: 300; color: var(--mist); line-height: 1.8; max-width: 560px; margin-bottom: 2.5rem; }
   .cs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.05); }
   .cs-card { background: var(--ink-soft); padding: 2rem; }
-  .cs-num { font-size: 11px; letter-spacing: 0.15em; color: rgba(255,255,255,0.2); margin-bottom: 1rem; }
+  .cs-icon { font-size: 22px; margin-bottom: 1rem; opacity: 0.4; }
   .cs-name { font-family: var(--font-display); font-size: 20px; font-weight: 300; color: rgba(255,255,255,0.4); margin-bottom: 6px; }
   .cs-desc { font-size: 12px; color: rgba(255,255,255,0.25); line-height: 1.6; }
   .cs-badge { display: inline-block; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-light); border: 0.5px solid rgba(26,155,140,0.3); padding: 3px 10px; border-radius: 1px; margin-top: 1rem; opacity: 0.6; }
@@ -124,7 +124,7 @@
     <li><a href="/es/tools.html" class="active">Herramientas</a></li>
     <li><a href="/es/about.html">Acerca de</a></li>
   </ul>
-  <a href="/tools.html" class="lang-toggle" style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mist);text-decoration:none;border:0.5px solid rgba(255,255,255,0.15);padding:4px 10px;border-radius:2px;">EN</a>
+  <a href="/tools.html" style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mist);text-decoration:none;border:0.5px solid rgba(255,255,255,0.15);padding:4px 10px;border-radius:2px;">EN</a>
 </nav>
 
 <section class="page-hero">
@@ -133,6 +133,7 @@
   <p class="page-desc">Diagnósticos interactivos y marcos construidos para profesionales de comunicación y líderes empresariales en entornos complejos. Empieza con lo que está activo — más herramientas en desarrollo.</p>
 </section>
 
+<!-- TOOL 01 -->
 <section class="tool-section">
   <div class="tool-header">
     <div>
@@ -141,10 +142,10 @@
       <p class="tool-sub">LATAM · Mayo 2026</p>
       <p class="tool-desc">Tres fuerzas están reconfigurando el entorno operativo de las organizaciones en LATAM: el conflicto en el Estrecho de Ormuz, la desaceleración económica de México y la creciente presión de EE.UU. sobre México por narcotráfico y seguridad. Esta herramienta te ayuda a entender tu exposición real — y qué acciones de comunicación tomar antes de que alguien más defina la narrativa por ti.</p>
       <div class="tool-tags">
-        <span class="tag">Risk assessment</span>
-        <span class="tag">Crisis preparedness</span>
-        <span class="tag">Stakeholder communications</span>
-        <span class="tag">LATAM context</span>
+        <span class="tag">Evaluación de riesgo</span>
+        <span class="tag">Preparación para crisis</span>
+        <span class="tag">Comunicación con stakeholders</span>
+        <span class="tag">Contexto LATAM</span>
       </div>
     </div>
     <div style="align-self: center;">
@@ -212,6 +213,7 @@
   </div>
 </section>
 
+<!-- TOOL 02 -->
 <section class="tool-section" style="background: var(--ink-soft); border-top: 0.5px solid rgba(255,255,255,0.06);">
   <div class="tool-header">
     <div>
@@ -233,26 +235,50 @@
   </div>
 </section>
 
+<!-- TOOL 03 -->
+<section class="tool-section" style="border-top: 0.5px solid rgba(255,255,255,0.06);">
+  <div class="tool-header">
+    <div>
+      <p class="tool-num">03 · Activo</p>
+      <h2 class="tool-name">Crisis Simulator</h2>
+      <p class="tool-sub">Gestión de reputación · Toma de decisiones · B2C · B2B</p>
+      <p class="tool-desc">Tres escándalos corporativos reales ficcionalizados. Cinco decisiones por caso. Las consecuencias cambian con cada elección. El juego no te dice qué está bien — te muestra qué pierdes cuando te equivocas. Construido para directivos y comunicadores que quieren entender la lógica de una crisis antes de vivirla.</p>
+      <div class="tool-tags">
+        <span class="tag">Gestión de crisis</span>
+        <span class="tag">Reputación corporativa</span>
+        <span class="tag">Toma de decisiones</span>
+        <span class="tag">Formación ejecutiva</span>
+      </div>
+    </div>
+    <div style="align-self: center;">
+      <p style="font-size: 13px; color: var(--mist); line-height: 1.7; margin-bottom: 1.5rem;">Tres casos · Cinco decisiones · Sin respuestas correctas hasta el final.</p>
+      <a href="/tools/crisis-simulator" style="display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--ink); border-radius: 2px; padding: 12px 24px; font-size: 13px; font-weight: 500; text-decoration: none; letter-spacing: 0.05em;">Entrar al simulador →</a>
+    </div>
+  </div>
+</section>
+
+<!-- COMING SOON -->
 <section class="coming-soon">
   <p class="cs-label">En desarrollo</p>
-  <h2 class="cs-title">Más herramientas <em>próximamente.</em></h2>
+  <h2 class="cs-title">Más herramientas <em>en camino.</em></h2>
+  <p class="cs-desc-intro">La lógica es la misma: corto, directo, construido para profesionales que no tienen tiempo que perder. Diagnósticos, evaluaciones de preparación, marcos de mensajes. Sin relleno.</p>
   <div class="cs-grid">
     <div class="cs-card">
-      <p class="cs-num">03</p>
-      <p class="cs-name">Evaluación de Preparación para Crisis</p>
-      <p class="cs-desc">¿Qué tan preparada está tu organización para comunicar cuando llega una crisis? Cinco preguntas, diagnóstico inmediato.</p>
+      <div class="cs-icon">◎</div>
+      <p class="cs-name">Diagnósticos de preparación</p>
+      <p class="cs-desc">¿Tu organización está lista para comunicar antes de que llegue la crisis? Herramientas de evaluación rápida para equipos y directivos.</p>
       <span class="cs-badge">Próximamente</span>
     </div>
     <div class="cs-card">
-      <p class="cs-num">04</p>
-      <p class="cs-name">Preparación del Vocero</p>
-      <p class="cs-desc">¿Tu ejecutivo está listo para enfrentar a los medios? Un diagnóstico para líderes que se preparan para momentos de alta exposición.</p>
+      <div class="cs-icon">◈</div>
+      <p class="cs-name">Marcos de mensajes</p>
+      <p class="cs-desc">Estructuras para construir mensajes diferenciados por audiencia — prensa, empleados, inversionistas, gobierno — desde un solo brief.</p>
       <span class="cs-badge">Próximamente</span>
     </div>
     <div class="cs-card">
-      <p class="cs-num">05</p>
-      <p class="cs-name">Matriz de Mensajes</p>
-      <p class="cs-desc">Genera mensajes clave diferenciados para prensa, empleados, inversionistas y gobierno desde un solo brief.</p>
+      <div class="cs-icon">◇</div>
+      <p class="cs-name">Simulaciones de escenario</p>
+      <p class="cs-desc">Más casos, más contextos, más variables. La misma lógica del Crisis Simulator aplicada a otros entornos de decisión bajo presión.</p>
       <span class="cs-badge">Próximamente</span>
     </div>
   </div>
@@ -268,19 +294,19 @@
 const answers = [null, null, null, null];
 const riskData = {
   ormuz: {
-    high: { desc: "Your organization depends directly on international trade routes under pressure from the ongoing conflict in the Strait of Hormuz. Rising oil prices and logistics disruptions are already affecting your operations.", action: "Activate your communications protocol with suppliers and clients about potential delays or price increases. Prepare an institutional message that anticipates the situation before anyone asks." },
-    medium: { desc: "You have indirect exposure to the Ormuz conflict. You don't depend entirely on international routes, but rising energy and input costs are hitting you.", action: "Review your supply chain over the next 30 days. Proactively communicate to key clients if you anticipate changes in prices or delivery times." },
-    low: { desc: "Your direct exposure to the Strait of Hormuz is limited, but rising energy and logistics prices are already affecting operating costs across the entire chain.", action: "Monitor fuel prices and anticipate conversations with stakeholders about margins. Prepare messages for clients if costs rise." }
+    high: { desc: "Tu organización depende directamente de rutas de comercio internacional bajo presión por el conflicto en el Estrecho de Ormuz. El alza en precios del petróleo y las disrupciones logísticas ya están afectando tus operaciones.", action: "Activa tu protocolo de comunicación con proveedores y clientes sobre posibles retrasos o alzas de precio. Prepara un mensaje institucional que anticipe la situación antes de que te pregunten." },
+    medium: { desc: "Tienes exposición indirecta al conflicto en Ormuz. Aunque no dependes completamente de rutas internacionales, el alza en energía y costos de insumos te afecta.", action: "Evalúa tu cadena de suministro en los próximos 30 días. Comunica proactivamente a clientes clave si anticipas cambios en precios o tiempos de entrega." },
+    low: { desc: "Tu exposición directa al Estrecho de Ormuz es limitada, pero el alza en precios de energía y logística ya está afectando costos operativos en toda la cadena.", action: "Monitorea el precio del combustible y anticipa conversaciones con stakeholders sobre márgenes. Prepara mensajes para clientes si los costos suben." }
   },
   bilateral: {
-    high: { desc: "Your organization works directly with federal or state government. The growing pressure from the United States on Mexico over drug trafficking and security is generating international scrutiny of public institutions and their private sector partners. The reputational risk is not hypothetical — it materializes through association, investigation, or media coverage that doesn't distinguish between principals and contractors.", action: "This is not a crisis to wait for. Conduct an immediate audit of your reputational exposure: contracts, public statements, spokespeople. Prepare a clear institutional position that separates your organization's integrity from the political noise around you." },
-    medium: { desc: "You depend on government permits, regulations, or public policy to operate. You're not directly linked to the conflict, but regulatory decisions — and the perception of those decisions — can affect your timeline, costs, and credibility with international partners.", action: "Map which government decisions affect your operation and who makes them. Prepare messages for international clients or investors that reinforce your compliance posture and institutional independence." },
-    low: { desc: "You have indirect exposure through clients or suppliers linked to government. The risk is reputational by proximity — not by direct action, but by association in a media and regulatory environment that is increasingly less forgiving.", action: "Review your public positioning. Make sure your communications clearly reflect your organization's values and compliance standards, independent of who your clients or partners are." }
+    high: { desc: "Tu organización trabaja directamente con gobierno federal o estatal. La presión creciente de EE.UU. sobre México por narcotráfico y seguridad está generando escrutinio internacional sobre instituciones públicas y sus socios privados. El riesgo reputacional no es hipotético — se materializa por asociación, investigación o cobertura mediática que no distingue entre principales y contratistas.", action: "No esperes a que llegue la crisis. Realiza una auditoría inmediata de tu exposición reputacional: contratos, declaraciones públicas, voceros. Prepara una posición institucional clara que separe la integridad de tu organización del ruido político a tu alrededor." },
+    medium: { desc: "Dependes de permisos, regulación o política pública para operar. No estás directamente vinculado al conflicto, pero las decisiones regulatorias — y la percepción de esas decisiones — pueden afectar tus tiempos, costos y credibilidad con socios internacionales.", action: "Mapea qué decisiones de gobierno afectan tu operación y quién las toma. Prepara mensajes para clientes o inversionistas internacionales que refuercen tu postura de cumplimiento e independencia institucional." },
+    low: { desc: "Tienes exposición indirecta a través de clientes o proveedores vinculados al gobierno. El riesgo es reputacional por proximidad — no por acción directa, sino por asociación en un entorno mediático y regulatorio cada vez menos tolerante.", action: "Revisa tu posicionamiento público. Asegúrate de que tus comunicaciones reflejen claramente los valores y estándares de cumplimiento de tu organización, independientemente de quiénes sean tus clientes o socios." }
   },
   economia: {
-    high: { desc: "Mexico's GDP contracted in early 2026. Your dependence on domestic consumption or private investment places you among the most exposed. Less spending, more caution, higher operating costs.", action: "Build a resilience narrative, not empty optimism. Communicate clearly your financial position, your medium-term vision, and your plan for the current environment. Stakeholders need certainty before uncertainty appears." },
-    medium: { desc: "The economic slowdown is affecting the public budget and may delay tenders or contracts. Institutional confidence in Mexico is under pressure.", action: "Strengthen your relationships with public sector decision-makers. Proactive communication about the value of your proposal is key in a cost-cutting environment." },
-    low: { desc: "Your model has some insulation from the internal economic contraction. However, the stagflation environment and low business confidence affects the ecosystem you operate in.", action: "Adjust your narrative toward clear, tangible value propositions. In uncertain environments, organizations that communicate certainty and solidity gain reputation." }
+    high: { desc: "El PIB de México contrajo en el primer trimestre de 2026. Tu dependencia del consumo interno o la inversión privada te coloca como uno de los más expuestos. Menor gasto, mayor cautela y costos operativos altos.", action: "Construye narrativa de resiliencia, no de optimismo vacío. Comunica con claridad tu posición financiera, tu visión de mediano plazo y tu plan ante el entorno. Los stakeholders necesitan certeza antes de que aparezca la incertidumbre." },
+    medium: { desc: "La desaceleración económica afecta el presupuesto público y puede retrasar licitaciones o contratos. La confianza institucional en México está bajo presión.", action: "Refuerza tus relaciones con tomadores de decisión en el sector público. La comunicación proactiva sobre el valor de tu propuesta es clave en entornos de recorte." },
+    low: { desc: "Tu modelo tiene cierto blindaje ante la contracción económica interna. Sin embargo, el entorno de estanflación y baja confianza empresarial afecta el ecosistema donde operas.", action: "Ajusta tu narrativa hacia propuestas de valor claras y tangibles. En entornos de incertidumbre, las organizaciones que comunican certeza y solidez ganan reputación." }
   }
 };
 
