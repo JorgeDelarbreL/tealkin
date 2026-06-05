@@ -19,8 +19,11 @@
 <link rel="alternate" hreflang="es" href="https://tealkin.com/es/index.html">
 <link rel="alternate" hreflang="x-default" href="https://tealkin.com/">
 <script>
-  const lang = navigator.language || navigator.userLanguage || 'en';
-  if (lang.startsWith('es')) { window.location.replace('/es/index.html'); }
+  const userChose = localStorage.getItem('tk-lang');
+const lang = navigator.language || navigator.userLanguage || 'en';
+if (!userChose && lang.startsWith('es')) {
+  window.location.replace('/es/index.html');
+}
 </script>
 <style>
   :root {
@@ -329,7 +332,7 @@
     <li><a href="about.html">About</a></li>
   </ul>
   <div class="nav-right">
-    <a href="/es/index.html" class="lang-toggle">ES</a>
+    <a href="/es/index.html" class="lang-toggle" onclick="localStorage.setItem('tk-lang','es')">ES</a>
     <button class="nav-hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
