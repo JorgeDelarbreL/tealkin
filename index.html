@@ -6,9 +6,8 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-4Y4JT3R4WK');
-</script>  
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TealKin — Strategic Communications</title>
@@ -57,98 +56,34 @@
   .nav-right { display: flex; align-items: center; gap: 1.5rem; }
   .lang-toggle { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; border: 0.5px solid rgba(255,255,255,0.15); padding: 4px 10px; border-radius: 2px; transition: all 0.3s; }
   .lang-toggle:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
-
-  /* Hamburger */
   .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
   .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--mist); transition: all 0.3s; }
   .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
   .nav-hamburger.open span:nth-child(2) { opacity: 0; }
   .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
-
-  /* Mobile menu */
   .nav-mobile { display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 190; background: rgba(10,18,12,0.98); backdrop-filter: blur(16px); padding: 2rem; flex-direction: column; gap: 0; border-bottom: 0.5px solid rgba(255,255,255,0.06); }
   .nav-mobile.open { display: flex; }
   .nav-mobile a, .nav-mobile .nav-mobile-soon { display: block; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; padding: 1rem 0; border-bottom: 0.5px solid rgba(255,255,255,0.05); transition: color 0.3s; }
   .nav-mobile a:hover { color: var(--white); }
   .nav-mobile .nav-mobile-soon { color: rgba(255,255,255,0.2); cursor: default; display: flex; align-items: center; gap: 8px; }
 
-  /* ── HERO — fullscreen con video de fondo ── */
-  /*
-    VIDEO DE FONDO DEL HERO:
-    Para activar, sube un video a YouTube (unlisted) con el ambiente
-    de Tulum/Riviera Maya, cenote, selva, mar — algo visual y atmosférico.
-    Reemplaza HERO_VIDEO_ID por el ID de YouTube.
-    Quita el div.hero-bg-fallback cuando tengas el video.
-  */
-  .hero {
-    min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden; padding: 8rem 2rem 6rem; text-align: center;
-  }
-  
-.hero-video-wrap {
-  position: absolute; inset: 0; z-index: 0; overflow: hidden;
-}
-.hero-video-wrap video {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  min-width: 100%; min-height: 100%;
-  width: auto; height: auto;
-  object-fit: cover;
-}
-
-  
-  */
-  .hero-bg-fallback {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 80% 70% at 50% 40%, rgba(26,155,140,0.12) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 40% at 20% 80%, rgba(13,107,96,0.08) 0%, transparent 50%),
-      radial-gradient(ellipse 40% 30% at 80% 20%, rgba(26,155,140,0.06) 0%, transparent 50%),
-      linear-gradient(180deg, var(--ink) 0%, #080d09 100%);
-  }
-  .hero-grid {
-    position: absolute; inset: 0; z-index: 1;
-    background-image:
-      linear-gradient(rgba(26,155,140,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(26,155,140,0.025) 1px, transparent 1px);
-    background-size: 80px 80px;
-  }
- .hero-overlay {
-  position: absolute; inset: 0; z-index: 2;
-  background: 
-    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(5,12,8,0.55) 0%, rgba(5,12,8,0.2) 100%),
-    linear-gradient(to bottom, rgba(10,18,12,0.4) 0%, rgba(10,18,12,0.15) 40%, rgba(10,18,12,0.6) 100%);
-}
-  .hero-content { position: relative; z-index: 3; max-width: 900px; display: flex; flex-direction: column; align-items: center; gap: 0; }
-  .hero-eyebrow {
-    font-size: 11px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--teal-light); margin-bottom: 2rem; display: flex; align-items: center; gap: 12px;
-    animation: fadeUp 0.8s ease 0.2s both;
-  }
+  /* ── HERO ── */
+  .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; padding: 8rem 2rem 6rem; text-align: center; }
+  .hero-video-wrap { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+  .hero-video-wrap video { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); min-width: 100%; min-height: 100%; width: auto; height: auto; object-fit: cover; }
+  .hero-grid { position: absolute; inset: 0; z-index: 1; background-image: linear-gradient(rgba(26,155,140,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(26,155,140,0.025) 1px, transparent 1px); background-size: 80px 80px; }
+  .hero-overlay { position: absolute; inset: 0; z-index: 2; background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(5,12,8,0.55) 0%, rgba(5,12,8,0.2) 100%), linear-gradient(to bottom, rgba(10,18,12,0.4) 0%, rgba(10,18,12,0.15) 40%, rgba(10,18,12,0.6) 100%); }
+  .hero-content { position: relative; z-index: 3; max-width: 900px; display: flex; flex-direction: column; align-items: center; }
+  .hero-eyebrow { font-size: 11px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 2rem; display: flex; align-items: center; gap: 12px; animation: fadeUp 0.8s ease 0.2s both; }
   .hero-eyebrow::before, .hero-eyebrow::after { content: ''; width: 24px; height: 0.5px; background: var(--teal-light); }
-  .hero-title {
-    font-family: var(--font-display); font-size: clamp(52px, 8vw, 104px);
-    font-weight: 300; line-height: 1.0; margin-bottom: 2rem; color: var(--white);
-    animation: fadeUp 0.8s ease 0.4s both;
-  }
+  .hero-title { font-family: var(--font-display); font-size: clamp(52px, 8vw, 104px); font-weight: 300; line-height: 1.0; margin-bottom: 2rem; color: var(--white); animation: fadeUp 0.8s ease 0.4s both; }
   .hero-title em { font-style: italic; color: var(--teal-light); }
-  .hero-subtitle {
-    font-size: clamp(14px, 1.6vw, 16px); font-weight: 300; color: var(--mist);
-    max-width: 580px; line-height: 1.85; margin-bottom: 3.5rem;
-    animation: fadeUp 0.8s ease 0.6s both;
-  }
+  .hero-subtitle { font-size: clamp(14px, 1.6vw, 16px); font-weight: 300; color: var(--mist); max-width: 580px; line-height: 1.85; margin-bottom: 3.5rem; animation: fadeUp 0.8s ease 0.6s both; }
   .hero-subtitle strong { color: var(--white); font-weight: 400; }
-  .hero-scroll-hint {
-    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-    display: flex; flex-direction: column; align-items: center; gap: 8px;
-    animation: fadeUp 0.8s ease 1.2s both; z-index: 3;
-  }
+  .hero-scroll-hint { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; animation: fadeUp 0.8s ease 1.2s both; z-index: 3; }
   .hero-scroll-hint span { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
   .scroll-line { width: 1px; height: 36px; background: linear-gradient(to bottom, rgba(45,191,173,0.5), transparent); animation: scrollPulse 2s ease-in-out infinite; }
-  .hero-location {
-    position: absolute; bottom: 2.5rem; right: 4rem; z-index: 3;
-    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.25); text-align: right;
-  }
+  .hero-location { position: absolute; bottom: 2.5rem; right: 4rem; z-index: 3; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.25); text-align: right; }
   .hero-location span { display: block; color: rgba(45,191,173,0.5); margin-bottom: 3px; }
 
   /* ── SHARED ── */
@@ -171,36 +106,12 @@
   .stat-desc { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.5); line-height: 1.75; }
 
   /* ── VIDEO CONTEXTO ── */
-  /*
-    PLACEHOLDER — VIDEO FLASH DE NOTICIAS
-    1. Edita tu clip: guerra Irán, Venezuela, IA, disrupción. Max 90s.
-    2. Sube a YouTube unlisted. Copia el ID.
-    3. Descomenta el iframe, reemplaza VIDEO_ID_CONTEXTO.
-    4. Borra div.video-placeholder.
-  */
   .video-context-section { position: relative; width: 100%; background: #000; overflow: hidden; }
   .video-ratio { position: relative; width: 100%; padding-bottom: 42%; }
   @media (max-width: 768px) { .video-ratio { padding-bottom: 56.25%; } }
-  .video-ratio iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
-  .video-placeholder { position: absolute; inset: 0; background: linear-gradient(135deg, #080d08 0%, #0d1a14 50%, #060b07 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; border-top: 0.5px solid rgba(26,155,140,0.08); border-bottom: 0.5px solid rgba(26,155,140,0.08); }
-  .video-placeholder-icon { width: 56px; height: 56px; border: 0.5px solid rgba(45,191,173,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-  .video-placeholder-icon svg { width: 20px; height: 20px; fill: rgba(45,191,173,0.4); }
-  .video-placeholder p { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.15); }
-  .vp-note { font-size: 9px !important; color: rgba(45,191,173,0.25) !important; }
- .video-overlay-text {
-  position: absolute; top: 0; left: 0; padding: 2rem 2.5rem;
-  background: linear-gradient(135deg, rgba(0,0,0,0.75) 0%, transparent 100%);
-  z-index: 2; pointer-events: none;
-  max-width: 420px;
-}
-.video-overlay-text p {
-  font-family: var(--font-display); font-size: clamp(14px, 1.8vw, 22px);
-  font-weight: 300; font-style: italic; color: rgba(255,255,255,0.9);
-  line-height: 1.4;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
-}
-
-  
+  .video-ratio video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .video-overlay-text { position: absolute; top: 0; left: 0; padding: 2rem 2.5rem; background: linear-gradient(135deg, rgba(0,0,0,0.75) 0%, transparent 100%); z-index: 2; pointer-events: none; max-width: 420px; }
+  .video-overlay-text p { font-family: var(--font-display); font-size: clamp(14px, 1.8vw, 22px); font-weight: 300; font-style: italic; color: rgba(255,255,255,0.9); line-height: 1.4; text-shadow: 0 2px 8px rgba(0,0,0,0.7); }
 
   /* ── DISRUPTION ── */
   .disruption-section { padding: 8rem 4rem; background: var(--ink-soft); border-top: 0.5px solid rgba(255,255,255,0.04); }
@@ -227,7 +138,7 @@
   .pullquote-text em { font-style: italic; color: rgba(255,255,255,0.5); }
   .pullquote-source { margin-top: 2rem; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
 
-  /* ── CUATRO ÁREAS ── */
+  /* ── FOUR AREAS ── */
   .areas-section { padding: 8rem 4rem; background: var(--ink); }
   .areas-inner { max-width: 1100px; margin: 0 auto; }
   .areas-header { margin-bottom: 4rem; }
@@ -250,15 +161,7 @@
   .area-card:hover .area-link { opacity: 1; }
   .area-link::after { content: '→'; }
 
-  /* ── VIDEO REPUTACIÓN ── */
-  /*
-    PLACEHOLDER — VIDEO REPUTACIÓN EN ACCIÓN
-    Opciones:
-    A) Clip propio editado.
-    B) Obama speech: ID = X65e6t2I-SM
-    C) Cualquier video de YouTube relevante.
-    Reemplaza VIDEO_ID_REPUTACION.
-  */
+  /* ── VIDEO REP ── */
   .video-rep-section { padding: 6rem 4rem; background: var(--ink-soft); border-top: 0.5px solid rgba(255,255,255,0.04); }
   .video-rep-inner { max-width: 1000px; margin: 0 auto; }
   .video-rep-header { margin-bottom: 2.5rem; }
@@ -301,7 +204,7 @@
   .hub-title { font-family: var(--font-display); font-size: clamp(26px, 3.5vw, 44px); font-weight: 300; color: var(--white); margin-top: 1rem; }
   .hub-title em { font-style: italic; color: var(--teal-light); }
   .hub-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.04); }
-  .hub-card { background: var(--ink-soft); padding: 2.5rem; text-decoration: none; display: block; position: relative; transition: background 0.3s; opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s; }
+  .hub-card { background: var(--ink-soft); padding: 2.5rem; text-decoration: none; display: block; position: relative; opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s; }
   .hub-card.visible { opacity: 1; transform: translateY(0); }
   .hub-card:nth-child(2) { transition-delay: 0.08s; }
   .hub-card:nth-child(3) { transition-delay: 0.16s; }
@@ -325,61 +228,46 @@
   .footer-copy { font-size: 12px; color: var(--mist); }
   .footer-tagline { font-size: 11px; color: var(--mist); font-family: var(--font-display); font-style: italic; }
 
-  /* ── ANIMACIONES ── */
+  /* ── ANIMATIONS ── */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes scrollPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
-  /* ── RESPONSIVE TABLET (max 1024px) ── */
+  /* ── TABLET ── */
   @media (max-width: 1024px) {
     nav { padding: 1.25rem 2.5rem; }
     .nav-links { gap: 1.5rem; }
-    .argument-section, .disruption-section, .areas-section,
-    .video-rep-section, .lab-cta-section, .hub-section { padding: 6rem 2.5rem; }
+    .argument-section, .disruption-section, .areas-section, .video-rep-section, .lab-cta-section, .hub-section { padding: 6rem 2.5rem; }
     .pullquote-section { padding: 5rem 2.5rem; }
-    .disruption-inner { gap: 4rem; }
-    .lab-cta-inner { gap: 4rem; }
+    .disruption-inner, .lab-cta-inner { gap: 4rem; }
     .hub-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
-  /* ── RESPONSIVE MOBILE (max 768px) ── */
+  /* ── MOBILE ── */
   @media (max-width: 768px) {
     nav { padding: 1.25rem 1.5rem; }
     .nav-links { display: none; }
     .nav-hamburger { display: flex; }
-
-    .hero { padding: 7rem 1.5rem 5rem; text-align: center; }
+    .hero { padding: 7rem 1.5rem 5rem; }
     .hero-eyebrow { font-size: 10px; justify-content: center; }
     .hero-location { display: none; }
-
-    .argument-section, .disruption-section, .areas-section,
-    .video-rep-section, .lab-cta-section, .hub-section { padding: 5rem 1.5rem; }
+    .argument-section, .disruption-section, .areas-section, .video-rep-section, .lab-cta-section, .hub-section { padding: 5rem 1.5rem; }
     .pullquote-section { padding: 4rem 1.5rem; }
-
     .stats-row { grid-template-columns: 1fr; }
     .stat-block { padding: 2rem 1.5rem; }
-
-    .disruption-inner { grid-template-columns: 1fr; gap: 3rem; }
-
+    .disruption-inner, .lab-cta-inner { grid-template-columns: 1fr; gap: 3rem; }
     .areas-grid { grid-template-columns: 1fr; }
     .area-card { padding: 2rem 1.5rem; }
     .area-link { opacity: 1; }
-
-    .lab-cta-inner { grid-template-columns: 1fr; gap: 3rem; }
-
     .hub-grid { grid-template-columns: 1fr; }
     .hub-card { padding: 2rem 1.5rem; }
-
-    .video-overlay-text { padding: 2rem 1.5rem; }
-
+    .video-overlay-text { padding: 1.5rem; }
     footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; text-align: center; }
     .footer-tagline { display: none; }
   }
 
-  /* ── RESPONSIVE SMALL (max 480px) ── */
   @media (max-width: 480px) {
     .hero-title { font-size: clamp(40px, 11vw, 56px); }
     .argument-headline { font-size: clamp(28px, 7vw, 40px); }
-    .nav { padding: 1rem 1.25rem; }
   }
 </style>
 </head>
@@ -391,8 +279,8 @@
   <ul class="nav-links">
     <li><a href="dzon.html">Dzon</a></li>
     <li><a href="lab.html">Lab</a></li>
-    <li><span class="nav-soon">Áreas <span class="nav-soon-badge">Soon</span></span></li>
-    <li><span class="nav-soon">Casos <span class="nav-soon-badge">Soon</span></span></li>
+    <li><span class="nav-soon">Areas <span class="nav-soon-badge">Soon</span></span></li>
+    <li><span class="nav-soon">Cases <span class="nav-soon-badge">Soon</span></span></li>
     <li><a href="about.html">About</a></li>
   </ul>
   <div class="nav-right">
@@ -403,25 +291,22 @@
   </div>
 </nav>
 
-<!-- Mobile menu -->
 <div class="nav-mobile" id="nav-mobile">
   <a href="dzon.html">Dzon</a>
   <a href="lab.html">Lab</a>
-  <span class="nav-mobile-soon">Áreas <span class="nav-soon-badge">Soon</span></span>
-  <span class="nav-mobile-soon">Casos <span class="nav-soon-badge">Soon</span></span>
+  <span class="nav-mobile-soon">Areas <span class="nav-soon-badge">Soon</span></span>
+  <span class="nav-mobile-soon">Cases <span class="nav-soon-badge">Soon</span></span>
   <a href="about.html">About</a>
   <a href="/es/index.html" style="color:var(--teal-light)">ES →</a>
 </div>
 
-
 <!-- ── HERO ── -->
 <section class="hero">
-<div class="hero-video-wrap">
-  <video autoplay muted loop playsinline>
-    <source src="img/hero-bg.mp4" type="video/mp4">
-  </video>
-</div>
-  
+  <div class="hero-video-wrap">
+    <video autoplay muted loop playsinline>
+      <source src="img/hero-bg.mp4" type="video/mp4">
+    </video>
+  </div>
   <div class="hero-grid"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
@@ -446,26 +331,26 @@
 <!-- ── STATS ── -->
 <section class="argument-section" id="argument">
   <div class="argument-inner">
-    <p class="section-eyebrow">Por qué importa la reputación</p>
+    <p class="section-eyebrow">Why reputation matters</p>
     <h2 class="argument-headline">
-      Las empresas más valiosas del mundo <em>no venden productos.</em><br>
-      Venden confianza.
+      The world's most valuable companies <em>don't sell products.</em><br>
+      They sell trust.
     </h2>
     <div class="stats-row">
       <div class="stat-block">
         <div class="stat-number">92<span style="font-size:0.45em;vertical-align:0.15em">%</span></div>
         <div class="stat-source">Ocean Tomo · Intangible Asset Market Value Study · Feb 2026</div>
-        <div class="stat-desc">Del valor total del S&P 500 corresponde a activos intangibles. En 1975 era el 17%. El valor migró de lo que se puede tocar a lo que se puede creer.</div>
+        <div class="stat-desc">Of the S&P 500's total value is made up of intangible assets. In 1975, that figure was 17%. Value has migrated from what you can touch to what people believe about you.</div>
       </div>
       <div class="stat-block">
         <div class="stat-number">50<span style="font-size:0.45em;vertical-align:0.15em">%</span></div>
         <div class="stat-source">CEO Reputation Index 2026 · CEOWORLD</div>
-        <div class="stat-desc">De la reputación corporativa se atribuye directamente a la reputación del CEO. La persona y la organización ya no son separables ante los públicos que importan.</div>
+        <div class="stat-desc">Of corporate reputation is directly attributed to the CEO's personal reputation. The individual and the organization are no longer separable in the eyes of the audiences that matter.</div>
       </div>
       <div class="stat-block">
         <div class="stat-number">74<span style="font-size:0.45em;vertical-align:0.15em">%</span></div>
         <div class="stat-source">SSRN · Generative AI and Content Homogenization · 2025</div>
-        <div class="stat-desc">De las páginas web nuevas contienen contenido generado por IA detectable. Cuando todos suenan igual, diferenciarse se vuelve una ventaja estructural.</div>
+        <div class="stat-desc">Of new websites contain detectable AI-generated content. When everyone sounds the same, standing apart becomes a structural competitive advantage.</div>
       </div>
     </div>
   </div>
@@ -478,7 +363,7 @@
       <source src="img/news-bg.mp4" type="video/mp4">
     </video>
     <div class="video-overlay-text">
-      <p>El mundo cambió más en los últimos 18 meses que en la década anterior.</p>
+      <p>The world changed more in the last 18 months than in the previous decade.</p>
     </div>
   </div>
 </div>
@@ -487,36 +372,37 @@
 <section class="disruption-section" id="disruption">
   <div class="disruption-inner">
     <div class="disruption-text">
-      <p class="section-eyebrow">El contexto que cambia todo</p>
+      <p class="section-eyebrow">The context that changes everything</p>
       <h2 class="disruption-headline">
-        La IA no es una herramienta.<br>
-        Es un <em>acelerador de indiferenciación.</em>
+        AI isn't a tool.<br>
+        It's an <em>accelerator of sameness.</em>
       </h2>
       <p class="disruption-body">
-        En menos de dos años, la inteligencia artificial generativa pasó de novedad a infraestructura.
-        Hoy, el mismo modelo redacta el comunicado de tu empresa y el de tu competidor.
-        <strong>El resultado: organizaciones que invierten más en comunicación y se parecen más entre sí.</strong>
+        In under two years, generative AI went from novelty to infrastructure.
+        Today, the same model drafts your company's press release and your competitor's.
+        The same prompt shapes the content strategy of a hundred different brands.
+        <strong>The result: organizations investing more in communications while sounding increasingly alike.</strong>
       </p>
       <p class="disruption-body">
-        En ese entorno, la reputación no es una consecuencia de la estrategia.
-        Es el único activo que la IA no puede replicar — porque se construye en el tiempo,
-        en las decisiones reales, en la consistencia entre lo que se dice y lo que se hace.
+        In that environment, reputation isn't a byproduct of strategy.
+        It's the only asset AI cannot replicate — because it's built over time,
+        through real decisions, through the consistency between what is said and what is done.
       </p>
     </div>
     <div class="disruption-data">
       <div class="disruption-data-item">
         <div class="d-num">30%</div>
-        <div class="d-label">de los CEOs globales confía en el crecimiento de ingresos en los próximos 12 meses. El mínimo de los últimos cinco años.</div>
-        <div class="d-source">PwC 29th Global CEO Survey · Davos 2026 · 4,454 CEOs · 95 países</div>
+        <div class="d-label">of global CEOs are confident in revenue growth over the next 12 months. The lowest figure in five years.</div>
+        <div class="d-source">PwC 29th Global CEO Survey · Davos 2026 · 4,454 CEOs · 95 countries</div>
       </div>
       <div class="disruption-data-item">
         <div class="d-num">46%</div>
-        <div class="d-label">de las reputaciones corporativas cayeron en 2025. Solo el 37% mejoró.</div>
-        <div class="d-source">Axios-Harris Poll 100 · 27ª edición anual · 25,000 encuestados</div>
+        <div class="d-label">of corporate reputations declined in 2025. Only 37% improved.</div>
+        <div class="d-source">Axios-Harris Poll 100 · 27th Annual Edition · 25,000 respondents</div>
       </div>
       <div class="disruption-data-item">
         <div class="d-num">$80T</div>
-        <div class="d-label">en activos intangibles corporativos a nivel global en 2024. Máximo histórico. Crecimiento del 28% en un solo año.</div>
+        <div class="d-label">in corporate intangible assets globally in 2024. An all-time high. Up 28% in a single year.</div>
         <div class="d-source">WIPO · Brand Finance GIFT 2024</div>
       </div>
     </div>
@@ -527,68 +413,70 @@
 <section class="pullquote-section">
   <div class="pullquote-inner">
     <p class="pullquote-text">
-      "El área de comunicación traduce la estrategia de negocio en confianza pública,
-      convirtiendo la identidad de la empresa en su
-      <em>ventaja competitiva más duradera."</em>
+      "The communications function translates business strategy into public trust,
+      turning a company's identity into its
+      <em>most enduring competitive advantage."</em>
     </p>
     <p class="pullquote-source">Harvard Business Review</p>
   </div>
 </section>
 
-<!-- ── LAS CUATRO ÁREAS ── -->
+<!-- ── FOUR AREAS ── -->
 <section class="areas-section" id="areas">
   <div class="areas-inner">
     <div class="areas-header">
-      <p class="section-eyebrow">Las cuatro vertientes</p>
-      <h2 class="areas-title">Dónde vive <em>la reputación.</em></h2>
+      <p class="section-eyebrow">The four dimensions</p>
+      <h2 class="areas-title">Where reputation <em>actually lives.</em></h2>
     </div>
     <div class="areas-grid">
       <a href="areas.html#corporativa" class="area-card">
         <p class="area-num">01</p>
         <h3 class="area-maya">Pek'Kin</h3>
-        <p class="area-name">Comunicación Corporativa</p>
-        <p class="area-desc">La huella que deja una organización cuando habla, decide y actúa con consistencia. Construye credibilidad ante autoridades, aliados e inversores antes de que nadie la pida.</p>
-        <span class="area-link">Explorar</span>
+        <p class="area-name">Corporate Communications</p>
+        <p class="area-desc">The mark an organization leaves when it speaks, decides, and acts with consistency. Builds institutional credibility with regulators, partners, and investors — before anyone asks for it.</p>
+        <span class="area-link">Explore</span>
       </a>
       <a href="areas.html#marca" class="area-card">
         <p class="area-num">02</p>
         <h3 class="area-maya">A'Kin</h3>
-        <p class="area-name">Comunicación de Marca</p>
-        <p class="area-desc">Tu luz propia. La voz que ningún modelo de IA puede generar porque nace de quién eres realmente. En la era de la homogenización, la voz auténtica es el diferenciador más escaso.</p>
-        <span class="area-link">Explorar</span>
+        <p class="area-name">Brand Communications</p>
+        <p class="area-desc">Your own light. The voice no AI model can generate because it comes from who you actually are. In the age of homogenization, an authentic voice is the scarcest differentiator of all.</p>
+        <span class="area-link">Explore</span>
       </a>
       <a href="areas.html#interna" class="area-card">
         <p class="area-num">03</p>
         <h3 class="area-maya">Ha'</h3>
-        <p class="area-name">Comunicación Interna</p>
-        <p class="area-desc">El agua que nutre desde adentro. La reputación externa se sostiene sobre la convicción interna. Los equipos deben creer el mensaje antes de proyectarlo hacia afuera.</p>
-        <span class="area-link">Explorar</span>
+        <p class="area-name">Internal Communications</p>
+        <p class="area-desc">The water that nourishes from within. External reputation rests on internal conviction. Teams must believe the message before they can project it outward.</p>
+        <span class="area-link">Explore</span>
       </a>
       <a href="areas.html#crisis" class="area-card">
         <p class="area-num">04</p>
         <h3 class="area-maya">Sak Ha'</h3>
-        <p class="area-name">Gestión de Riesgos y Crisis</p>
-        <p class="area-desc">Agua clara. La calma que solo existe cuando hay preparación real debajo de la superficie. Anticipa, monitoriza y neutraliza escenarios adversos antes de que definan la narrativa.</p>
-        <span class="area-link">Explorar</span>
+        <p class="area-name">Risk & Crisis Management</p>
+        <p class="area-desc">Clear water. The calm that only exists when there is real preparation beneath the surface. Anticipate, monitor, and neutralize adverse scenarios before they define the narrative.</p>
+        <span class="area-link">Explore</span>
       </a>
     </div>
   </div>
 </section>
 
-<!-- ── VIDEO REPUTACIÓN ── -->
+<!-- ── VIDEO REP ── -->
 <section class="video-rep-section">
   <div class="video-rep-inner">
     <div class="video-rep-header">
-      <p class="section-eyebrow">Para cerrar el argumento</p>
-      <h3 class="video-rep-title">La reputación <em>determina decisiones.</em></h3>
+      <p class="section-eyebrow">To close the argument</p>
+      <h3 class="video-rep-title">Reputation <em>drives decisions.</em></h3>
     </div>
     <div class="video-rep-wrap">
       <!--
+      Para activar: reemplaza VIDEO_ID_REPUTACION con el ID de YouTube.
+      Opción rápida: Obama speech ID = X65e6t2I-SM
       <iframe src="https://www.youtube.com/embed/VIDEO_ID_REPUTACION?rel=0&modestbranding=1&controls=1" allow="fullscreen" allowfullscreen></iframe>
       -->
       <div class="video-rep-placeholder">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-        <p>Video · Reputación en acción · reemplazar VIDEO_ID_REPUTACION</p>
+        <p>Video · Reputation in action · replace VIDEO_ID_REPUTACION</p>
       </div>
     </div>
   </div>
@@ -600,22 +488,22 @@
     <div class="lab-cta-text">
       <p class="section-eyebrow">TealKin Lab</p>
       <h2 class="lab-cta-title">
-        Comunicación estratégica<br><em>construida con tecnología.</em>
+        Strategic communications<br><em>built with technology.</em>
       </h2>
       <p class="lab-cta-body">
-        Las agencias te dicen que pueden hacerlo.
-        <strong>Aquí te lo demostramos desde ahora.</strong>
-        El Lab es donde la comunicación estratégica y la inteligencia artificial se intersectan —
-        herramientas reales, construidas para pensar el problema de forma diferente.
+        Agencies tell you they can do it.
+        <strong>We show you right now.</strong>
+        The Lab is where strategic communications and artificial intelligence intersect —
+        real tools, built to think about the problem differently.
       </p>
-      <a href="lab.html" class="lab-cta-link">Explorar el Lab →</a>
+      <a href="lab.html" class="lab-cta-link">Explore the Lab →</a>
     </div>
     <div class="lab-tools">
       <a href="lab.html#crisis-diagnostic" class="lab-tool-card">
         <div class="lab-tool-left">
           <span class="lab-tool-label">Live</span>
           <span class="lab-tool-name">Crisis & Risk Diagnostic</span>
-          <span class="lab-tool-desc">Exposición al contexto LATAM · 4 preguntas · 2 minutos</span>
+          <span class="lab-tool-desc">LATAM exposure · 4 questions · 2 minutes</span>
         </div>
         <span class="lab-tool-arrow">→</span>
       </a>
@@ -623,7 +511,7 @@
         <div class="lab-tool-left">
           <span class="lab-tool-label">Live</span>
           <span class="lab-tool-name">Narrative Audit</span>
-          <span class="lab-tool-desc">¿Qué tan diferente suenas? Pega tu contenido y descúbrelo</span>
+          <span class="lab-tool-desc">How different do you actually sound? Paste your content and find out</span>
         </div>
         <span class="lab-tool-arrow">→</span>
       </a>
@@ -631,15 +519,15 @@
         <div class="lab-tool-left">
           <span class="lab-tool-label">Live</span>
           <span class="lab-tool-name">Crisis Simulator</span>
-          <span class="lab-tool-desc">Simula cómo respondería tu organización ante una crisis real</span>
+          <span class="lab-tool-desc">Simulate how your organization would respond to a real crisis</span>
         </div>
         <span class="lab-tool-arrow">→</span>
       </a>
       <a href="lab.html#autodiagnostico" class="lab-tool-card disabled">
         <div class="lab-tool-left">
           <span class="lab-tool-label">Soon</span>
-          <span class="lab-tool-name">Autodiagnóstico de Reputación</span>
-          <span class="lab-tool-desc">Pek'Kin, A'Kin, Ha' o Sak Ha' — el modelo te dice dónde actuar primero</span>
+          <span class="lab-tool-name">Reputation Self-Assessment</span>
+          <span class="lab-tool-desc">Pek'Kin, A'Kin, Ha' or Sak Ha' — the model tells you where to act first</span>
         </div>
         <span class="lab-tool-arrow">→</span>
       </a>
@@ -651,43 +539,43 @@
 <section class="hub-section" id="hub">
   <div class="hub-inner">
     <div class="hub-header">
-      <p class="section-eyebrow">El ecosistema TealKin</p>
-      <h2 class="hub-title">Cinco formas de ir <em>más adentro.</em></h2>
+      <p class="section-eyebrow">The TealKin ecosystem</p>
+      <h2 class="hub-title">Five ways to go <em>deeper.</em></h2>
     </div>
     <div class="hub-grid">
       <a href="dzon.html" class="hub-card">
         <p class="hub-card-num">01</p>
         <h3 class="hub-card-name">Dzon</h3>
-        <p class="hub-card-tag">Blog · Análisis · Contexto</p>
-        <p class="hub-card-desc">Artículos de fondo sobre comunicación corporativa, crisis, reputación y el contexto político y económico de LATAM.</p>
+        <p class="hub-card-tag">Blog · Analysis · Context</p>
+        <p class="hub-card-desc">In-depth articles on corporate communications, crisis, reputation, and the political and economic context shaping LATAM.</p>
         <p class="hub-card-status status-live">● Live</p>
       </a>
       <a href="lab.html" class="hub-card">
         <p class="hub-card-num">02</p>
         <h3 class="hub-card-name">Lab</h3>
-        <p class="hub-card-tag">IA · Diagnósticos · Simulación</p>
-        <p class="hub-card-desc">El laboratorio donde la comunicación estratégica y la tecnología se intersectan. Herramientas reales para pensar el problema diferente.</p>
-        <p class="hub-card-status status-live">● Live — más en desarrollo</p>
+        <p class="hub-card-tag">AI · Diagnostics · Simulation</p>
+        <p class="hub-card-desc">The laboratory where strategic communications and technology intersect. Real tools built to think about the problem differently.</p>
+        <p class="hub-card-status status-live">● Live — more in development</p>
       </a>
       <a href="areas.html" class="hub-card soon">
         <p class="hub-card-num">03</p>
-        <h3 class="hub-card-name">Áreas</h3>
+        <h3 class="hub-card-name">Areas</h3>
         <p class="hub-card-tag">Pek'Kin · A'Kin · Ha' · Sak Ha'</p>
-        <p class="hub-card-desc">Las cuatro vertientes de la comunicación. Cómo piensa y trabaja TealKin cada una de ellas.</p>
+        <p class="hub-card-desc">The four dimensions of communications. How TealKin thinks and works across each of them.</p>
         <p class="hub-card-status status-soon">○ Coming soon</p>
       </a>
       <a href="casos.html" class="hub-card soon">
         <p class="hub-card-num">04</p>
-        <h3 class="hub-card-name">Casos</h3>
+        <h3 class="hub-card-name">Cases</h3>
         <p class="hub-card-tag">Pek'Kin · A'Kin · Ha' · Sak Ha'</p>
-        <p class="hub-card-desc">Casos reales de comunicación estratégica analizados en profundidad. Decisiones, contexto y resultado.</p>
+        <p class="hub-card-desc">Real strategic communications cases analyzed in depth. Decisions, context, and outcomes. Not press releases.</p>
         <p class="hub-card-status status-soon">○ Coming soon</p>
       </a>
       <a href="about.html" class="hub-card">
         <p class="hub-card-num">05</p>
         <h3 class="hub-card-name">About</h3>
         <p class="hub-card-tag">Jorge Delarbre · TealKin</p>
-        <p class="hub-card-desc">14 años en comunicación corporativa a través de LATAM. La experiencia y el criterio detrás de todo esto.</p>
+        <p class="hub-card-desc">14 years in corporate communications across LATAM. The experience and perspective behind all of this.</p>
         <p class="hub-card-status status-live">● Live</p>
       </a>
     </div>
@@ -702,7 +590,6 @@
 </footer>
 
 <script>
-/* HAMBURGER MENU */
 const hamburger = document.getElementById('hamburger');
 const navMobile = document.getElementById('nav-mobile');
 hamburger.addEventListener('click', () => {
@@ -716,7 +603,6 @@ document.querySelectorAll('.nav-mobile a').forEach(link => {
   });
 });
 
-/* SCROLL REVEAL */
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) entry.target.classList.add('visible');
@@ -724,7 +610,6 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.stat-block, .area-card, .hub-card, .disruption-data-item').forEach(el => observer.observe(el));
 
-/* NAV SCROLL */
 window.addEventListener('scroll', () => {
   document.getElementById('main-nav').style.background =
     window.scrollY > 60 ? 'rgba(10,18,12,0.97)' : 'rgba(15,20,16,0.85)';
