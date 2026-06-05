@@ -161,17 +161,62 @@
   .area-card:hover .area-link { opacity: 1; }
   .area-link::after { content: '→'; }
 
-  /* ── VIDEO REP ── */
-  .video-rep-section { padding: 6rem 4rem; background: var(--ink-soft); border-top: 0.5px solid rgba(255,255,255,0.04); }
-  .video-rep-inner { max-width: 1000px; margin: 0 auto; }
-  .video-rep-header { margin-bottom: 2.5rem; }
-  .video-rep-title { font-family: var(--font-display); font-size: clamp(20px, 2.8vw, 36px); font-weight: 300; color: var(--white); margin-top: 1rem; }
-  .video-rep-title em { font-style: italic; color: var(--teal-light); }
-  .video-rep-wrap { position: relative; width: 100%; padding-bottom: 56.25%; border: 0.5px solid rgba(255,255,255,0.06); }
-  .video-rep-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
-  .video-rep-placeholder { position: absolute; inset: 0; background: rgba(255,255,255,0.02); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; }
-  .video-rep-placeholder svg { width: 44px; height: 44px; stroke: rgba(45,191,173,0.25); fill: none; stroke-width: 1; }
-  .video-rep-placeholder p { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.12); }
+
+/* ── REPUTATION GAME ── */
+.rep-game-section { padding: 8rem 4rem; background: var(--ink-soft); border-top: 0.5px solid rgba(255,255,255,0.04); }
+.rep-game-inner { max-width: 1000px; margin: 0 auto; }
+.rep-game-header { margin-bottom: 3rem; }
+.rep-game-title { font-family: var(--font-display); font-size: clamp(28px, 4vw, 52px); font-weight: 300; color: var(--white); margin-top: 1rem; line-height: 1.1; }
+.rep-game-title em { font-style: italic; color: var(--teal-light); }
+.rep-game-subtitle { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.45); margin-top: 1rem; line-height: 1.7; }
+.rep-progress { display: flex; gap: 10px; margin-bottom: 2.5rem; }
+.rep-dot { width: 28px; height: 2px; background: rgba(255,255,255,0.12); border-radius: 2px; transition: background 0.4s; }
+.rep-dot.active { background: var(--teal-light); }
+.rep-dot.done { background: rgba(45,191,173,0.35); }
+.rep-round { display: none; }
+.rep-round.active { display: block; }
+.rep-round-cat { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(45,191,173,0.5); margin-bottom: 0.75rem; }
+.rep-round-q { font-family: var(--font-display); font-size: clamp(20px, 2.8vw, 32px); font-weight: 300; color: var(--white); margin-bottom: 2rem; line-height: 1.2; }
+.rep-split { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center; }
+.rep-vs { font-family: var(--font-display); font-size: 18px; color: rgba(255,255,255,0.2); text-align: center; }
+.rep-side { cursor: pointer; display: flex; flex-direction: column; gap: 12px; transition: transform 0.2s; }
+.rep-side:hover { transform: translateY(-3px); }
+.rep-side.chosen .rep-img-wrap { border-color: var(--teal-light); }
+.rep-side.chosen .rep-img-wrap img { filter: brightness(0.9) saturate(1.1); }
+.rep-side.unchosen { opacity: 0.25; }
+.rep-side.chosen, .rep-side.unchosen { pointer-events: none; }
+.rep-img-wrap { position: relative; width: 100%; padding-bottom: 62%; overflow: hidden; border: 0.5px solid rgba(255,255,255,0.08); border-radius: 2px; }
+.rep-img-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; filter: brightness(0.75) saturate(0.8); transition: filter 0.4s, transform 0.4s; }
+.rep-side:hover .rep-img-wrap img { filter: brightness(0.9) saturate(1); transform: scale(1.03); }
+.rep-img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
+.rep-side-label { font-family: var(--font-display); font-size: clamp(16px, 2vw, 22px); font-weight: 300; color: var(--white); }
+.rep-btn { background: none; border: 0.5px solid rgba(255,255,255,0.15); border-radius: 2px; padding: 8px 20px; font-family: var(--font-body); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s; width: fit-content; }
+.rep-side:hover .rep-btn { border-color: var(--teal-light); color: var(--teal-light); }
+.rep-side.chosen .rep-btn { border-color: var(--teal-light); color: var(--teal-light); background: rgba(45,191,173,0.08); }
+.rep-reveal { display: none; margin-top: 2rem; padding: 2rem; border-left: 2px solid var(--teal-light); background: rgba(45,191,173,0.04); animation: fadeUp 0.5s ease both; }
+.rep-reveal.visible { display: block; }
+.rep-reveal-text { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.7); line-height: 1.85; }
+.rep-reveal-text strong { color: var(--white); font-weight: 400; }
+.rep-next-btn { margin-top: 1.25rem; background: var(--white); color: var(--ink); border: none; border-radius: 2px; padding: 10px 24px; font-family: var(--font-body); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; cursor: pointer; transition: background 0.2s; }
+.rep-next-btn:hover { background: var(--teal-light); }
+.rep-final-wrap { text-align: center; padding: 3rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+.rep-final-icon svg { width: 48px; height: 48px; stroke: var(--teal-light); opacity: 0.6; }
+.rep-final-title { font-family: var(--font-display); font-size: clamp(24px, 3.5vw, 42px); font-weight: 300; color: var(--white); line-height: 1.2; }
+.rep-final-title em { font-style: italic; color: var(--teal-light); }
+.rep-final-body { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.85; max-width: 600px; }
+.rep-restart-btn { background: none; border: 0.5px solid rgba(255,255,255,0.15); border-radius: 2px; padding: 9px 22px; font-family: var(--font-body); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); cursor: pointer; transition: all 0.2s; margin-top: 1rem; }
+.rep-restart-btn:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
+@media (max-width: 768px) {
+  .rep-game-section { padding: 5rem 1.5rem; }
+  .rep-split { grid-template-columns: 1fr; gap: 12px; }
+  .rep-vs { display: none; }
+  .rep-side { flex-direction: row; align-items: center; gap: 16px; }
+  .rep-img-wrap { width: 100px; padding-bottom: 0; height: 70px; flex-shrink: 0; }
+  .rep-side-label { font-size: 16px; }
+  .rep-btn { font-size: 10px; padding: 6px 14px; }
+}
+
+
 
   /* ── LAB CTA ── */
   .lab-cta-section { padding: 8rem 4rem; background: var(--ink); position: relative; overflow: hidden; }
@@ -461,26 +506,126 @@
   </div>
 </section>
 
-<!-- ── VIDEO REP ── -->
-<section class="video-rep-section">
-  <div class="video-rep-inner">
-    <div class="video-rep-header">
-      <p class="section-eyebrow">To close the argument</p>
-      <h3 class="video-rep-title">Reputation <em>drives decisions.</em></h3>
+<!-- ── REPUTATION GAME ── -->
+<section class="rep-game-section" id="rep-game">
+  <div class="rep-game-inner">
+    <div class="rep-game-header">
+      <p class="section-eyebrow">The argument in action</p>
+      <h2 class="rep-game-title">Four decisions.<br><em>One pattern.</em></h2>
+      <p class="rep-game-subtitle">Choose between each pair. Then see what actually drove your decision.</p>
     </div>
-    <div class="video-rep-wrap">
-      <!--
-      Para activar: reemplaza VIDEO_ID_REPUTACION con el ID de YouTube.
-      Opción rápida: Obama speech ID = X65e6t2I-SM
-      <iframe src="https://www.youtube.com/embed/VIDEO_ID_REPUTACION?rel=0&modestbranding=1&controls=1" allow="fullscreen" allowfullscreen></iframe>
-      -->
-      <div class="video-rep-placeholder">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-        <p>Video · Reputation in action · replace VIDEO_ID_REPUTACION</p>
+    <div class="rep-game-wrap">
+      <div class="rep-progress">
+        <div class="rep-dot active" id="dot-0"></div>
+        <div class="rep-dot" id="dot-1"></div>
+        <div class="rep-dot" id="dot-2"></div>
+        <div class="rep-dot" id="dot-3"></div>
       </div>
+
+      <div class="rep-round active" id="round-0">
+        <div class="rep-round-cat">⚽ Football · Real Madrid</div>
+        <div class="rep-round-q">Which one would you drop from the squad?</div>
+        <div class="rep-split">
+          <div class="rep-side" id="side-0-A" onclick="choose(0,'A')">
+            <div class="rep-img-wrap"><img src="img/mbappe.jpg" alt="Mbappé"><div class="rep-img-overlay"></div></div>
+            <div class="rep-side-label">Mbappé</div>
+            <button class="rep-btn">Drop Mbappé</button>
+          </div>
+          <div class="rep-vs">VS</div>
+          <div class="rep-side" id="side-0-B" onclick="choose(0,'B')">
+            <div class="rep-img-wrap"><img src="img/bellingham.jpg" alt="Bellingham"><div class="rep-img-overlay"></div></div>
+            <div class="rep-side-label">Bellingham</div>
+            <button class="rep-btn">Drop Bellingham</button>
+          </div>
+        </div>
+        <div class="rep-reveal" id="reveal-0">
+          <p class="rep-reveal-text">Mbappé remains the squad's most efficient scorer. Yet his recent off-pitch reputation put him first on most people's list. <strong>Reputation outperformed results.</strong></p>
+          <button class="rep-next-btn" onclick="nextRound(1)">Next →</button>
+        </div>
+      </div>
+
+      <div class="rep-round" id="round-1">
+        <div class="rep-round-cat">📱 Technology · Same price</div>
+        <div class="rep-round-q">Which one do you buy?</div>
+        <div class="rep-split">
+          <div class="rep-side" id="side-1-A" onclick="choose(1,'A')">
+            <div class="rep-img-wrap"><img src="img/iphone.jpg" alt="iPhone 17 Pro Max"><div class="rep-img-overlay"></div></div>
+            <div class="rep-side-label">iPhone 17 Pro Max</div>
+            <button class="rep-btn">Choose iPhone</button>
+          </div>
+          <div class="rep-vs">VS</div>
+          <div class="rep-side" id="side-1-B" onclick="choose(1,'B')">
+            <div class="rep-img-wrap"><img src="img/xiaomi.jpg" alt="Xiaomi 15 Ultra"><div class="rep-img-overlay"></div></div>
+            <div class="rep-side-label">Xiaomi 15 Ultra</div>
+            <button class="rep-btn">Choose Xiaomi</button>
+          </div>
+        </div>
+        <div class="rep-reveal" id="reveal-1">
+          <p class="rep-reveal-text">The Xiaomi 15 Ultra leads on specs and battery life at the same price. Most people still choose the iPhone. <strong>They're not buying the device. They're buying the reputation.</strong></p>
+          <button class="rep-next-btn" onclick="nextRound(2)">Next →</button>
+        </div>
+      </div>
+
+      <div class="rep-round" id="round-2">
+        <div class="rep-round-cat">⛳ Golf · Where would you rather play?</div>
+        <div class="rep-round-q">Same green fee. Which do you choose?</div>
+        <div class="rep-split">
+          <div class="rep-side" id="side-2-A" onclick="choose(2,'A')">
+            <div class="rep-img-wrap"><img src="img/augusta.jpg" alt="Augusta National"><div class="rep-img-overlay"></div></div>
+            <div class="rep-side-label">Augusta National</div>
+            <button class="rep-btn">Choose Augusta</button>
+          </div>
+          <div class="rep-vs">VS</div>
+          <div class="rep-side" id="side-2-B" onclick="choose(2,'B')">
+            <div class="rep-img-wrap"><img src="img/jumeirah.jpg" alt="Jumeirah Golf Estates"><div class="rep-img-overlay"></div></div>
+            <div class="rep-side-label">Jumeirah Golf Estates</div>
+            <button class="rep-btn">Choose Jumeirah</button>
+          </div>
+        </div>
+        <div class="rep-reveal" id="reveal-2">
+          <p class="rep-reveal-text">Jumeirah hosts the DP World Tour Finals, was designed by Greg Norman, and has no years-long waiting list. Most people still choose Augusta. <strong>The name and the legacy are worth more than the course.</strong></p>
+          <button class="rep-next-btn" onclick="nextRound(3)">Next →</button>
+        </div>
+      </div>
+
+      <div class="rep-round" id="round-3">
+        <div class="rep-round-cat">💰 Investment · $5 million to place</div>
+        <div class="rep-round-q">Where does your money go?</div>
+        <div class="rep-split">
+          <div class="rep-side" id="side-3-A" onclick="choose(3,'A')">
+            <div class="rep-img-wrap"><img src="img/blackrock.jpg" alt="BlackRock"><div class="rep-img-overlay"></div></div>
+            <div class="rep-side-label">BlackRock Global Allocation</div>
+            <button class="rep-btn">Choose BlackRock</button>
+          </div>
+          <div class="rep-vs">VS</div>
+          <div class="rep-side" id="side-3-B" onclick="choose(3,'B')">
+            <div class="rep-img-wrap"><img src="img/akre.jpg" alt="Akre Focus Fund"><div class="rep-img-overlay"></div></div>
+            <div class="rep-side-label">Akre Focus Fund</div>
+            <button class="rep-btn">Choose Akre</button>
+          </div>
+        </div>
+        <div class="rep-reveal" id="reveal-3">
+          <p class="rep-reveal-text">Akre shows superior net returns with a verified 8-year track record. Most capital still flows to the Wall Street giant. <strong>When the stakes are high, reputation is the ultimate shield against perceived risk.</strong></p>
+          <button class="rep-next-btn" onclick="showFinal()">See the pattern →</button>
+        </div>
+      </div>
+
+      <div class="rep-round" id="round-final">
+        <div class="rep-final-wrap">
+          <div class="rep-final-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <h3 class="rep-final-title">Every decision you just made<br><em>was driven by reputation.</em></h3>
+          <p class="rep-final-body">Not by data. Not by specs. Not by returns. The pattern is always the same: when people choose between two comparable options, reputation breaks the tie. Every single time.</p>
+          <p class="rep-final-body">That's not irrational. That's how trust works — and why building it deliberately is the most strategic investment an organization can make.</p>
+          <button class="rep-restart-btn" onclick="restartGame()">← Play again</button>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
+
 
 <!-- ── LAB CTA ── -->
 <section class="lab-cta-section" id="lab">
@@ -614,6 +759,48 @@ window.addEventListener('scroll', () => {
   document.getElementById('main-nav').style.background =
     window.scrollY > 60 ? 'rgba(10,18,12,0.97)' : 'rgba(15,20,16,0.85)';
 });
+
+function choose(round, side) {
+  const chosen = document.getElementById('side-' + round + '-' + side);
+  const other = document.getElementById('side-' + round + '-' + (side === 'A' ? 'B' : 'A'));
+  chosen.classList.add('chosen');
+  other.classList.add('unchosen');
+  const reveal = document.getElementById('reveal-' + round);
+  reveal.classList.add('visible');
+  reveal.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function nextRound(next) {
+  document.getElementById('round-' + (next - 1)).classList.remove('active');
+  document.getElementById('round-' + next).classList.add('active');
+  document.getElementById('dot-' + (next - 1)).classList.remove('active');
+  document.getElementById('dot-' + (next - 1)).classList.add('done');
+  if (next < 4) document.getElementById('dot-' + next).classList.add('active');
+  document.getElementById('rep-game').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function showFinal() {
+  document.getElementById('round-3').classList.remove('active');
+  document.getElementById('round-final').classList.add('active');
+  document.querySelectorAll('.rep-dot').forEach(d => { d.classList.remove('active'); d.classList.add('done'); });
+  document.getElementById('rep-game').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function restartGame() {
+  for (let i = 0; i < 4; i++) {
+    document.getElementById('round-' + i).classList.remove('active');
+    document.getElementById('reveal-' + i).classList.remove('visible');
+    ['A','B'].forEach(s => {
+      document.getElementById('side-' + i + '-' + s).classList.remove('chosen','unchosen');
+    });
+    document.getElementById('dot-' + i).classList.remove('active','done');
+  }
+  document.getElementById('round-final').classList.remove('active');
+  document.getElementById('round-0').classList.add('active');
+  document.getElementById('dot-0').classList.add('active');
+  document.getElementById('rep-game').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 </script>
 
 </body>
