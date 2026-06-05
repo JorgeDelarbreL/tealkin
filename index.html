@@ -84,15 +84,19 @@
     min-height: 100vh; display: flex; align-items: center; justify-content: center;
     position: relative; overflow: hidden; padding: 8rem 2rem 6rem; text-align: center;
   }
-  .hero-video-wrap {
-    position: absolute; inset: 0; z-index: 0; overflow: hidden;
-  }
-  /* Uncomment when video is ready:
-  .hero-video-wrap iframe {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 177.78vh; min-width: 100%; height: 56.25vw; min-height: 100%;
-    border: none; pointer-events: none;
-  }
+  
+.hero-video-wrap {
+  position: absolute; inset: 0; z-index: 0; overflow: hidden;
+}
+.hero-video-wrap video {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%; min-height: 100%;
+  width: auto; height: auto;
+  object-fit: cover;
+}
+
+  
   */
   .hero-bg-fallback {
     position: absolute; inset: 0;
@@ -398,14 +402,11 @@
 
 <!-- ── HERO ── -->
 <section class="hero">
-  <div class="hero-video-wrap">
-    <iframe
-      id="hero-iframe"
-      src="https://www.youtube.com/embed/LHwVgPWjZn0?autoplay=1&mute=1&loop=1&playlist=LHwVgPWjZn0&controls=0&rel=0&modestbranding=1&enablejsapi=1"
-      allow="autoplay; fullscreen"
-      allowfullscreen>
-    </iframe>
-  </div>
+<div class="hero-video-wrap">
+  <video autoplay muted loop playsinline>
+    <source src="img/hero-bg.mp4" type="video/mp4">
+  </video>
+</div>
   
   <div class="hero-grid"></div>
   <div class="hero-overlay"></div>
