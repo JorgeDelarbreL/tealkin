@@ -187,17 +187,19 @@
   .video-placeholder-icon svg { width: 20px; height: 20px; fill: rgba(45,191,173,0.4); }
   .video-placeholder p { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.15); }
   .vp-note { font-size: 9px !important; color: rgba(45,191,173,0.25) !important; }
-  .video-overlay-text {
-  position: absolute; bottom: 0; left: 0; right: 0; padding: 3rem 4rem;
-  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+ .video-overlay-text {
+  position: absolute; top: 0; left: 0; padding: 2rem 2.5rem;
+  background: linear-gradient(135deg, rgba(0,0,0,0.75) 0%, transparent 100%);
   z-index: 2; pointer-events: none;
+  max-width: 420px;
 }
 .video-overlay-text p {
-  font-family: var(--font-display); font-size: clamp(16px, 2.5vw, 32px);
-  font-weight: 300; font-style: italic; color: rgba(255,255,255,0.95);
-  max-width: 700px; line-height: 1.4;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.8), 0 1px 4px rgba(0,0,0,0.9);
+  font-family: var(--font-display); font-size: clamp(14px, 1.8vw, 22px);
+  font-weight: 300; font-style: italic; color: rgba(255,255,255,0.9);
+  line-height: 1.4;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
 }
+
   
 
   /* ── DISRUPTION ── */
