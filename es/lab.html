@@ -1,56 +1,69 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  
-    ------GOOGLE ANALYTICS-----
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Y4JT3R4WK"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4Y4JT3R4WK"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-4Y4JT3R4WK');
 </script>
-  
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Herramientas — TealKin</title>
-<meta name="description" content="Herramientas interactivas de comunicación y estrategia para líderes empresariales y profesionales de la comunicación en LATAM.">
-<link rel="alternate" hreflang="es" href="https://tealkin.com/es/tools.html">
-<link rel="alternate" hreflang="en" href="https://tealkin.com/tools.html">
-<link rel="alternate" hreflang="x-default" href="https://tealkin.com/tools.html">
-<link rel="canonical" href="https://tealkin.com/es/tools.html">
+<title>Lab — TealKin</title>
+<meta name="description" content="Donde la comunicación estratégica y la IA se intersectan. Herramientas reales construidas para pensar el problema diferente.">
+<link rel="alternate" hreflang="es" href="https://tealkin.com/es/lab.html">
+<link rel="alternate" hreflang="en" href="https://tealkin.com/lab.html">
+<link rel="alternate" hreflang="x-default" href="https://tealkin.com/lab.html">
+<link rel="canonical" href="https://tealkin.com/es/lab.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --teal: #1a9b8c;
-    --teal-light: #2dbfad;
-    --teal-deep: #0d6b60;
-    --ink: #0f1410;
-    --ink-soft: #0a1210;
-    --mist: #8a9e98;
-    --white: #fdfcfa;
+    --teal: #1a9b8c; --teal-light: #2dbfad; --teal-deep: #0d6b60;
+    --ink: #0f1410; --ink-soft: #0a1210; --mist: #8a9e98; --white: #fdfcfa;
     --font-display: 'Cormorant Garamond', Georgia, serif;
     --font-body: 'DM Sans', system-ui, sans-serif;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: var(--font-body); background: var(--ink); color: var(--white); overflow-x: hidden; }
+
+  /* ── NAV ── */
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 4rem; display: flex; align-items: center; justify-content: space-between; background: rgba(15,20,16,0.9); backdrop-filter: blur(12px); border-bottom: 0.5px solid rgba(255,255,255,0.06); }
   .nav-logo { font-family: var(--font-display); font-size: 22px; font-weight: 300; letter-spacing: 0.12em; color: var(--white); text-decoration: none; }
   .nav-logo span { color: var(--teal-light); }
-  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
   .nav-links a { font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; transition: color 0.3s; }
   .nav-links a:hover, .nav-links a.active { color: var(--white); }
+  .nav-soon { font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); cursor: default; display: flex; align-items: center; gap: 5px; }
+  .nav-soon-badge { font-size: 7px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(45,191,173,0.4); border: 0.5px solid rgba(45,191,173,0.2); padding: 2px 5px; border-radius: 1px; }
+  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  .lang-toggle { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; border: 0.5px solid rgba(255,255,255,0.15); padding: 4px 10px; border-radius: 2px; transition: all 0.3s; }
+  .lang-toggle:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+  .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--mist); transition: all 0.3s; }
+  .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+  .nav-mobile { display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 190; background: rgba(10,18,12,0.98); backdrop-filter: blur(16px); padding: 2rem; flex-direction: column; gap: 0; border-bottom: 0.5px solid rgba(255,255,255,0.06); }
+  .nav-mobile.open { display: flex; }
+  .nav-mobile a, .nav-mobile .nav-mobile-soon { display: block; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; padding: 1rem 0; border-bottom: 0.5px solid rgba(255,255,255,0.05); transition: color 0.3s; }
+  .nav-mobile a:hover { color: var(--white); }
+  .nav-mobile .nav-mobile-soon { color: rgba(255,255,255,0.2); cursor: default; display: flex; align-items: center; gap: 8px; }
 
-  .page-hero { padding: 10rem 4rem 5rem; border-bottom: 0.5px solid rgba(255,255,255,0.06); }
+  /* ── PAGE HERO ── */
+  .page-hero { padding: 10rem 4rem 5rem; border-bottom: 0.5px solid rgba(255,255,255,0.06); position: relative; overflow: hidden; }
+  .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 70% 50%, rgba(26,155,140,0.06) 0%, transparent 60%); pointer-events: none; }
   .page-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 12px; }
   .page-eyebrow::before { content: ''; width: 24px; height: 0.5px; background: var(--teal-light); }
   .page-title { font-family: var(--font-display); font-size: clamp(48px, 7vw, 88px); font-weight: 300; line-height: 1.0; color: var(--white); margin-bottom: 1rem; }
   .page-title em { font-style: italic; color: var(--teal-light); }
-  .page-desc { font-size: 15px; font-weight: 300; color: var(--mist); line-height: 1.8; max-width: 560px; }
+  .page-desc { font-size: 15px; font-weight: 300; color: var(--mist); line-height: 1.8; max-width: 580px; }
+  .page-desc strong { color: var(--white); font-weight: 400; }
 
+  /* ── TOOL SECTIONS ── */
   .tool-section { padding: 5rem 4rem; }
+  .tool-section.alt { background: var(--ink-soft); border-top: 0.5px solid rgba(255,255,255,0.06); }
   .tool-header { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 0.5px solid rgba(255,255,255,0.08); }
   .tool-num { font-size: 11px; letter-spacing: 0.2em; color: var(--teal-light); margin-bottom: 1rem; }
   .tool-name { font-family: var(--font-display); font-size: 32px; font-weight: 300; color: var(--white); margin-bottom: 8px; }
@@ -58,7 +71,12 @@
   .tool-desc { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.8; }
   .tool-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem; }
   .tag { font-size: 11px; color: var(--teal-light); border: 0.5px solid rgba(26,155,140,0.3); padding: 4px 12px; border-radius: 1px; }
+  .tool-cta { align-self: center; }
+  .tool-cta p { font-size: 13px; color: var(--mist); line-height: 1.7; margin-bottom: 1.5rem; }
+  .tool-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--ink); border-radius: 2px; padding: 12px 24px; font-size: 13px; font-weight: 500; text-decoration: none; letter-spacing: 0.05em; transition: background 0.2s; }
+  .tool-btn:hover { background: var(--teal-light); }
 
+  /* ── DIAGNOSTIC ── */
   .diag-wrap { background: #0a1210; border: 0.5px solid rgba(255,255,255,0.08); border-radius: 4px; padding: 3rem; }
   .step { display: none; }
   .step.active { display: block; }
@@ -94,6 +112,7 @@
   .restart-btn { background: transparent; border: 0.5px solid rgba(255,255,255,0.15); border-radius: 2px; padding: 10px 20px; font-size: 13px; color: rgba(255,255,255,0.5); cursor: pointer; margin-top: 1.5rem; transition: all 0.2s; }
   .restart-btn:hover { border-color: rgba(255,255,255,0.35); color: var(--white); }
 
+  /* ── COMING SOON ── */
   .coming-soon { padding: 5rem 4rem; background: var(--ink-soft); border-top: 0.5px solid rgba(255,255,255,0.06); }
   .cs-label { font-size: 11px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 1rem; display: flex; align-items: center; gap: 12px; }
   .cs-label::before { content: ''; width: 24px; height: 0.5px; background: var(--teal-light); }
@@ -107,15 +126,18 @@
   .cs-desc { font-size: 12px; color: rgba(255,255,255,0.25); line-height: 1.6; }
   .cs-badge { display: inline-block; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-light); border: 0.5px solid rgba(26,155,140,0.3); padding: 3px 10px; border-radius: 1px; margin-top: 1rem; opacity: 0.6; }
 
+  /* ── FOOTER ── */
   footer { background: var(--ink); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; border-top: 0.5px solid rgba(255,255,255,0.06); }
   .footer-logo { font-family: var(--font-display); font-size: 18px; font-weight: 300; letter-spacing: 0.1em; color: var(--white); text-decoration: none; }
   .footer-logo span { color: var(--teal-light); }
   .footer-copy { font-size: 12px; color: var(--mist); }
   .footer-tagline { font-size: 11px; color: var(--mist); font-family: var(--font-display); font-style: italic; }
 
+  /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
-    nav { padding: 1.25rem 2rem; }
+    nav { padding: 1.25rem 1.5rem; }
     .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
     .page-hero { padding: 7rem 2rem 3rem; }
     .tool-section { padding: 4rem 2rem; }
     .tool-header { grid-template-columns: 1fr; gap: 2rem; }
@@ -124,35 +146,59 @@
     .coming-soon { padding: 4rem 2rem; }
     .cs-grid { grid-template-columns: 1fr; }
     footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+    .footer-tagline { display: none; }
   }
 </style>
 </head>
 <body>
 
-<nav>
+<!-- ── NAV ── -->
+<nav id="main-nav">
   <a href="/es/index.html" class="nav-logo">Teal<span>Kin</span></a>
   <ul class="nav-links">
     <li><a href="/es/dzon.html">Dzon</a></li>
-    <li><a href="/es/tools.html" class="active">Herramientas</a></li>
-    <li><a href="/es/about.html">Acerca de</a></li>
+    <li><a href="/es/lab.html" class="active">Lab</a></li>
+    <li><span class="nav-soon">Áreas <span class="nav-soon-badge">Pronto</span></span></li>
+    <li><span class="nav-soon">Casos <span class="nav-soon-badge">Pronto</span></span></li>
+    <li><a href="/es/about.html">Nosotros</a></li>
   </ul>
-  <a href="/tools.html" style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mist);text-decoration:none;border:0.5px solid rgba(255,255,255,0.15);padding:4px 10px;border-radius:2px;">EN</a>
+  <div class="nav-right">
+    <a href="/lab.html" class="lang-toggle" onclick="localStorage.setItem('tk-lang','en')">EN</a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
+<div class="nav-mobile" id="nav-mobile">
+  <a href="/es/dzon.html">Dzon</a>
+  <a href="/es/lab.html">Lab</a>
+  <span class="nav-mobile-soon">Áreas <span class="nav-soon-badge">Pronto</span></span>
+  <span class="nav-mobile-soon">Casos <span class="nav-soon-badge">Pronto</span></span>
+  <a href="/es/about.html">Nosotros</a>
+  <a href="/lab.html" style="color:var(--teal-light)" onclick="localStorage.setItem('tk-lang','en')">EN →</a>
+</div>
+
+<!-- ── PAGE HERO ── -->
 <section class="page-hero">
-  <p class="page-eyebrow">Interactivo · Diagnósticos · Marcos</p>
-  <h1 class="page-title">Herramientas para<br><em>pensar mejor.</em></h1>
-  <p class="page-desc">Diagnósticos interactivos y marcos construidos para profesionales de comunicación y líderes empresariales en entornos complejos. Empieza con lo que está activo — más herramientas en desarrollo.</p>
+  <p class="page-eyebrow">IA · Diagnósticos · Simulación</p>
+  <h1 class="page-title">Donde la comunicación<br>se construye con <em>tecnología.</em></h1>
+  <p class="page-desc">
+    Las agencias te dicen que pueden hacerlo. <strong>Aquí te lo demostramos desde ahora.</strong>
+    El Lab es donde la comunicación estratégica y la inteligencia artificial se intersectan —
+    herramientas reales, construidas para pensar el problema diferente.
+    Empieza con lo que está activo. Más en desarrollo.
+  </p>
 </section>
 
-<!-- TOOL 01 -->
-<section class="tool-section">
+<!-- ── TOOL 01: CRISIS & RISK DIAGNOSTIC ── -->
+<section class="tool-section" id="crisis-diagnostic">
   <div class="tool-header">
     <div>
       <p class="tool-num">01 · Activo</p>
       <h2 class="tool-name">Diagnóstico de Crisis y Riesgo</h2>
-      <p class="tool-sub">LATAM · Mayo 2026</p>
-      <p class="tool-desc">Tres fuerzas están reconfigurando el entorno operativo de las organizaciones en México: el conflicto en el Estrecho de Ormuz, la desaceleración económica y la creciente presión de EE.UU. sobre el país por narcotráfico y seguridad. Esta herramienta te ayuda a entender tu exposición real y qué acciones de comunicación tomar antes de que alguien más defina la narrativa por ti.</p>
+      <p class="tool-sub">LATAM · 2026</p>
+      <p class="tool-desc">Tres fuerzas están reconfigurando el entorno operativo de las organizaciones en México: el conflicto en el Estrecho de Ormuz, la desaceleración económica y la creciente presión de EE.UU. sobre el país. Esta herramienta te ayuda a entender tu exposición real y qué acciones de comunicación tomar antes de que alguien más defina la narrativa por ti.</p>
       <div class="tool-tags">
         <span class="tag">Evaluación de riesgo</span>
         <span class="tag">Preparación para crisis</span>
@@ -160,14 +206,13 @@
         <span class="tag">Contexto LATAM</span>
       </div>
     </div>
-    <div style="align-self: center;">
-      <p style="font-size: 13px; color: var(--mist); line-height: 1.7;">Cuatro preguntas · Dos minutos · Diagnóstico personalizado por modelo de negocio y exposición sectorial.</p>
+    <div class="tool-cta">
+      <p>Cuatro preguntas · Dos minutos · Diagnóstico personalizado por modelo de negocio y exposición sectorial.</p>
     </div>
   </div>
 
   <div class="diag-wrap">
     <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
-
     <div class="step active" id="step-0">
       <div class="step-label">Pregunta 1 de 4</div>
       <div class="step-question">¿Cómo describirías mejor el modelo de negocio de tu organización?</div>
@@ -179,7 +224,6 @@
       </div>
       <button class="next-btn" id="next-0" disabled onclick="nextStep(1)">Siguiente →</button>
     </div>
-
     <div class="step" id="step-1">
       <div class="step-label">Pregunta 2 de 4</div>
       <div class="step-question">¿Depende tu organización de logística internacional, importaciones o exportaciones para operar?</div>
@@ -191,7 +235,6 @@
       </div>
       <button class="next-btn" id="next-1" disabled onclick="nextStep(2)">Siguiente →</button>
     </div>
-
     <div class="step" id="step-2">
       <div class="step-label">Pregunta 3 de 4</div>
       <div class="step-question">¿Tiene tu organización vínculos directos con el sector público o depende de decisiones gubernamentales para operar?</div>
@@ -203,7 +246,6 @@
       </div>
       <button class="next-btn" id="next-2" disabled onclick="nextStep(3)">Siguiente →</button>
     </div>
-
     <div class="step" id="step-3">
       <div class="step-label">Pregunta 4 de 4</div>
       <div class="step-question">¿Depende tu organización del consumo interno, la inversión privada o el gasto público para generar ingresos?</div>
@@ -215,7 +257,6 @@
       </div>
       <button class="next-btn" id="next-3" disabled onclick="showResult()">Ver mi diagnóstico →</button>
     </div>
-
     <div class="step" id="step-result">
       <div class="result-header">Tu diagnóstico de riesgo reputacional</div>
       <div class="result-sub" id="result-intro"></div>
@@ -225,8 +266,8 @@
   </div>
 </section>
 
-<!-- TOOL 02 -->
-<section class="tool-section" style="background: var(--ink-soft); border-top: 0.5px solid rgba(255,255,255,0.06);">
+<!-- ── TOOL 02: NARRATIVE AUDIT ── -->
+<section class="tool-section alt" id="narrative-audit">
   <div class="tool-header">
     <div>
       <p class="tool-num">02 · Activo</p>
@@ -240,19 +281,19 @@
         <span class="tag">Posicionamiento competitivo</span>
       </div>
     </div>
-    <div style="align-self: center;">
-      <p style="font-size: 13px; color: var(--mist); line-height: 1.7; margin-bottom: 1.5rem;">Pega tu contenido · Dos minutos · Score, comparadores y pistas de exploración.</p>
-      <a href="/es/narrative-audit.html" style="display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--ink); border-radius: 2px; padding: 12px 24px; font-size: 13px; font-weight: 500; text-decoration: none; letter-spacing: 0.05em;">Iniciar auditoría →</a>
+    <div class="tool-cta">
+      <p>Pega tu contenido · Dos minutos · Score, comparadores y pistas de exploración.</p>
+      <a href="/es/narrative-audit.html" class="tool-btn">Iniciar auditoría →</a>
     </div>
   </div>
 </section>
 
-<!-- TOOL 03 -->
-<section class="tool-section" style="border-top: 0.5px solid rgba(255,255,255,0.06);">
+<!-- ── TOOL 03: CRISIS SIMULATOR ── -->
+<section class="tool-section" id="crisis-simulator">
   <div class="tool-header">
     <div>
       <p class="tool-num">03 · Activo</p>
-      <h2 class="tool-name">Simulador de crisis</h2>
+      <h2 class="tool-name">Simulador de Crisis</h2>
       <p class="tool-sub">Gestión de reputación · Toma de decisiones · B2C · B2B</p>
       <p class="tool-desc">Tres escándalos corporativos reales ficcionalizados. Cinco decisiones por caso. Las consecuencias cambian con cada elección. El juego no te dice qué está bien, te muestra qué pierdes cuando te equivocas. Construido para directivos y comunicadores que quieren entender la lógica de una crisis antes de vivirla.</p>
       <div class="tool-tags">
@@ -262,35 +303,35 @@
         <span class="tag">Formación ejecutiva</span>
       </div>
     </div>
-    <div style="align-self: center;">
-      <p style="font-size: 13px; color: var(--mist); line-height: 1.7; margin-bottom: 1.5rem;">Tres casos · Cinco decisiones · Sin respuestas correctas hasta el final.</p>
-      <a href="/tools/crisis-simulator/index-es.html" style="display: inline-flex; align-items: center; gap: 8px; background: var(--white); color: var(--ink); border-radius: 2px; padding: 12px 24px; font-size: 13px; font-weight: 500; text-decoration: none; letter-spacing: 0.05em;">Entrar al simulador →</a>
+    <div class="tool-cta">
+      <p>Tres casos · Cinco decisiones · Sin respuestas correctas hasta el final.</p>
+      <a href="/tools/crisis-simulator/index-es.html" class="tool-btn">Entrar al simulador →</a>
     </div>
   </div>
 </section>
 
-<!-- COMING SOON -->
+<!-- ── COMING SOON ── -->
 <section class="coming-soon">
   <p class="cs-label">En desarrollo</p>
   <h2 class="cs-title">Más herramientas <em>en camino.</em></h2>
-  <p class="cs-desc-intro">La lógica es la misma: corto, directo, construido para profesionales que no tienen tiempo que perder. Diagnósticos, evaluaciones de preparación, marcos de mensajes. Sin relleno.</p>
+  <p class="cs-desc-intro">La lógica es la misma: directa, construida para profesionales que no tienen tiempo que perder. Cada herramienta demuestra lo que la comunicación estratégica puede hacer cuando está impulsada por IA.</p>
   <div class="cs-grid">
     <div class="cs-card">
       <div class="cs-icon">◎</div>
-      <p class="cs-name">Diagnósticos de preparación</p>
-      <p class="cs-desc">¿Tu organización está lista para comunicar antes de que llegue la crisis? Herramientas de evaluación rápida para equipos y directivos.</p>
+      <p class="cs-name">Autodiagnóstico de Reputación</p>
+      <p class="cs-desc">Pek'Kin, A'Kin, Ha' o Sak Ha' — responde cinco preguntas y el modelo te dice cuál de las cuatro áreas es tu brecha reputacional más urgente ahora mismo.</p>
       <span class="cs-badge">Próximamente</span>
     </div>
     <div class="cs-card">
       <div class="cs-icon">◈</div>
-      <p class="cs-name">Marcos de mensajes</p>
-      <p class="cs-desc">Estructuras para construir mensajes diferenciados por audiencia — prensa, empleados, inversionistas, gobierno — desde un solo brief.</p>
+      <p class="cs-name">Marcos de Mensajes</p>
+      <p class="cs-desc">Estructuras para construir mensajes diferenciados por audiencia — prensa, empleados, inversionistas, gobierno — desde un solo brief. Sin plantillas. Pensamiento real.</p>
       <span class="cs-badge">Próximamente</span>
     </div>
     <div class="cs-card">
       <div class="cs-icon">◇</div>
-      <p class="cs-name">Simulaciones de escenario</p>
-      <p class="cs-desc">Más casos, más contextos, más variables. La misma lógica del Simulador de crisis aplicada a otros entornos de decisión bajo presión.</p>
+      <p class="cs-name">Simulaciones de Escenario</p>
+      <p class="cs-desc">Más casos, más contextos, más variables. La misma lógica del Simulador de Crisis aplicada a otros entornos de decisión bajo presión en LATAM.</p>
       <span class="cs-badge">Próximamente</span>
     </div>
   </div>
@@ -303,6 +344,27 @@
 </footer>
 
 <script>
+/* HAMBURGER */
+const hamburger = document.getElementById('hamburger');
+const navMobile = document.getElementById('nav-mobile');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  navMobile.classList.toggle('open');
+});
+document.querySelectorAll('.nav-mobile a').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    navMobile.classList.remove('open');
+  });
+});
+
+/* NAV SCROLL */
+window.addEventListener('scroll', () => {
+  document.getElementById('main-nav').style.background =
+    window.scrollY > 60 ? 'rgba(10,18,12,0.97)' : 'rgba(15,20,16,0.9)';
+});
+
+/* DIAGNOSTIC */
 const answers = [null, null, null, null];
 const riskData = {
   ormuz: {
@@ -311,12 +373,12 @@ const riskData = {
     low: { desc: "Tu exposición directa al Estrecho de Ormuz es limitada, pero el alza en precios de energía y logística ya está afectando costos operativos en toda la cadena.", action: "Monitorea el precio del combustible y anticipa conversaciones con stakeholders sobre márgenes. Prepara mensajes para clientes si los costos suben." }
   },
   bilateral: {
-    high: { desc: "Tu organización trabaja directamente con gobierno federal o estatal. La presión creciente de EE.UU. sobre México por narcotráfico y seguridad está generando escrutinio internacional sobre instituciones públicas y sus socios privados. El riesgo reputacional no es hipotético — se materializa por asociación, investigación o cobertura mediática que no distingue entre principales y contratistas.", action: "No esperes a que llegue la crisis. Realiza una auditoría inmediata de tu exposición reputacional: contratos, declaraciones públicas, voceros. Prepara una posición institucional clara que separe la integridad de tu organización del ruido político a tu alrededor." },
-    medium: { desc: "Dependes de permisos, regulación o política pública para operar. No estás directamente vinculado al conflicto, pero las decisiones regulatorias — y la percepción de esas decisiones — pueden afectar tus tiempos, costos y credibilidad con socios internacionales.", action: "Mapea qué decisiones de gobierno afectan tu operación y quién las toma. Prepara mensajes para clientes o inversionistas internacionales que refuercen tu postura de cumplimiento e independencia institucional." },
-    low: { desc: "Tienes exposición indirecta a través de clientes o proveedores vinculados al gobierno. El riesgo es reputacional por proximidad — no por acción directa, sino por asociación en un entorno mediático y regulatorio cada vez menos tolerante.", action: "Revisa tu posicionamiento público. Asegúrate de que tus comunicaciones reflejen claramente los valores y estándares de cumplimiento de tu organización, independientemente de quiénes sean tus clientes o socios." }
+    high: { desc: "Tu organización trabaja directamente con gobierno federal o estatal. La presión creciente de EE.UU. sobre México está generando escrutinio internacional sobre instituciones públicas y sus socios privados. El riesgo reputacional se materializa por asociación, investigación o cobertura mediática.", action: "No esperes a que llegue la crisis. Realiza una auditoría inmediata de tu exposición reputacional. Prepara una posición institucional clara que separe la integridad de tu organización del ruido político a tu alrededor." },
+    medium: { desc: "Dependes de permisos, regulación o política pública para operar. Las decisiones regulatorias — y la percepción de esas decisiones — pueden afectar tus tiempos, costos y credibilidad con socios internacionales.", action: "Mapea qué decisiones de gobierno afectan tu operación y quién las toma. Prepara mensajes para clientes o inversionistas internacionales que refuercen tu postura de cumplimiento." },
+    low: { desc: "Tienes exposición indirecta a través de clientes o proveedores vinculados al gobierno. El riesgo es reputacional por proximidad — no por acción directa, sino por asociación.", action: "Revisa tu posicionamiento público. Asegúrate de que tus comunicaciones reflejen claramente los valores y estándares de cumplimiento de tu organización." }
   },
   economia: {
-    high: { desc: "El PIB de México contrajo en el primer trimestre de 2026. Tu dependencia del consumo interno o la inversión privada te coloca como uno de los más expuestos. Menor gasto, mayor cautela y costos operativos altos.", action: "Construye narrativa de resiliencia, no de optimismo vacío. Comunica con claridad tu posición financiera, tu visión de mediano plazo y tu plan ante el entorno. Los stakeholders necesitan certeza antes de que aparezca la incertidumbre." },
+    high: { desc: "El PIB de México contrajo en el primer trimestre de 2026. Tu dependencia del consumo interno o la inversión privada te coloca como uno de los más expuestos. Menor gasto, mayor cautela y costos operativos altos.", action: "Construye narrativa de resiliencia, no de optimismo vacío. Comunica con claridad tu posición financiera, tu visión de mediano plazo y tu plan ante el entorno." },
     medium: { desc: "La desaceleración económica afecta el presupuesto público y puede retrasar licitaciones o contratos. La confianza institucional en México está bajo presión.", action: "Refuerza tus relaciones con tomadores de decisión en el sector público. La comunicación proactiva sobre el valor de tu propuesta es clave en entornos de recorte." },
     low: { desc: "Tu modelo tiene cierto blindaje ante la contracción económica interna. Sin embargo, el entorno de estanflación y baja confianza empresarial afecta el ecosistema donde operas.", action: "Ajusta tu narrativa hacia propuestas de valor claras y tangibles. En entornos de incertidumbre, las organizaciones que comunican certeza y solidez ganan reputación." }
   }
@@ -328,33 +390,29 @@ function select(step, opt) {
   answers[step] = opt;
   document.getElementById('next-' + step).disabled = false;
 }
-
 function nextStep(n) {
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
   document.getElementById('step-' + n).classList.add('active');
   document.getElementById('progress').style.width = (n * 25) + '%';
 }
-
 function getLevel(key) {
   const [sector, logistica, gobierno, economia] = answers;
   if (key === 'ormuz') { if (logistica === 0) return 'high'; if (logistica === 1 || sector === 0 || sector === 1) return 'medium'; return 'low'; }
   if (key === 'bilateral') { if (gobierno === 0) return 'high'; if (gobierno === 1 || gobierno === 2 || sector === 3) return 'medium'; return 'low'; }
   if (key === 'economia') { if (economia === 0 || economia === 1) return 'high'; if (economia === 2) return 'medium'; return 'low'; }
 }
-
 function showResult() {
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
   document.getElementById('step-result').classList.add('active');
   document.getElementById('progress').style.width = '100%';
-  const titles = { ormuz: 'Conflicto en el Estrecho de Ormuz', bilateral: 'Presión bilateral EE.UU.-México y narcotráfico', economia: 'Desaceleración económica en México' };
+  const titles = { ormuz: 'Conflicto en el Estrecho de Ormuz', bilateral: 'Presión bilateral EE.UU.-México', economia: 'Desaceleración económica en México' };
   const levelOrder = { high: 0, medium: 1, low: 2 };
   const risks = ['ormuz', 'bilateral', 'economia'].map(k => { const level = getLevel(k); return { key: k, title: titles[k], level, ...riskData[k][level] }; }).sort((a, b) => levelOrder[a.level] - levelOrder[b.level]);
   const highCount = risks.filter(r => r.level === 'high').length;
   document.getElementById('result-intro').textContent = highCount === 0 ? 'Tu exposición directa es moderada, pero ninguna organización opera en una burbuja. Estos son los riesgos que debes monitorear:' : highCount === 1 ? 'Tienes un riesgo de alta prioridad que requiere atención inmediata en comunicación y reputación:' : 'Tu organización tiene alta exposición en múltiples frentes. La gestión de narrativa no puede esperar:';
   const levelLabel = { high: 'Riesgo alto', medium: 'Riesgo medio', low: 'Riesgo bajo' };
-  document.getElementById('results-container').innerHTML = risks.map(r => `<div class="result-card ${r.level}"><div class="result-level">${levelLabel[r.level]}</div><div class="result-title">${r.title}</div><div class="result-desc">${r.desc}</div><div class="result-action"><strong>¿Qué hacer?</strong> ${r.action}</div></div>`).join('');
+  document.getElementById('results-container').innerHTML = risks.map(r => '<div class="result-card ' + r.level + '"><div class="result-level">' + levelLabel[r.level] + '</div><div class="result-title">' + r.title + '</div><div class="result-desc">' + r.desc + '</div><div class="result-action"><strong>¿Qué hacer?</strong> ' + r.action + '</div></div>').join('');
 }
-
 function restart() {
   answers.fill(null);
   document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
