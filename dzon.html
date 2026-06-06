@@ -1,45 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    ------GOOGLE ANALYTICS-----
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Y4JT3R4WK"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4Y4JT3R4WK"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-4Y4JT3R4WK');
 </script>
-  
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dzon — TealKin</title>
 <meta name="description" content="Analysis and perspective on corporate communications, crisis management, and strategic reputation across LATAM.">
 <link rel="canonical" href="https://tealkin.com/dzon.html">
+<link rel="alternate" hreflang="en" href="https://tealkin.com/dzon.html">
+<link rel="alternate" hreflang="es" href="https://tealkin.com/es/dzon.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --teal: #1a9b8c;
-    --teal-light: #2dbfad;
-    --teal-deep: #0d6b60;
-    --ink: #0f1410;
-    --ink-soft: #0a1210;
-    --mist: #8a9e98;
-    --white: #fdfcfa;
+    --teal: #1a9b8c; --teal-light: #2dbfad; --teal-deep: #0d6b60;
+    --ink: #0f1410; --ink-soft: #0a1210; --mist: #8a9e98; --white: #fdfcfa;
     --font-display: 'Cormorant Garamond', Georgia, serif;
     --font-body: 'DM Sans', system-ui, sans-serif;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: var(--font-body); background: var(--ink); color: var(--white); overflow-x: hidden; }
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 4rem; display: flex; align-items: center; justify-content: space-between; background: rgba(15,20,16,0.9); backdrop-filter: blur(12px); border-bottom: 0.5px solid rgba(255,255,255,0.06); }
-  .nav-logo { font-family: var(--font-display); font-size: 22px; font-weight: 300; letter-spacing: 0.12em; color: var(--white); text-decoration: none; }
+
+  /* ── NAV ── */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; padding: 1.5rem 4rem; display: flex; align-items: center; justify-content: space-between; background: rgba(15,20,16,0.9); backdrop-filter: blur(12px); border-bottom: 0.5px solid rgba(255,255,255,0.06); transition: background 0.4s; }
+  .nav-logo { font-family: var(--font-display); font-size: 22px; font-weight: 300; letter-spacing: 0.12em; color: var(--white); text-decoration: none; flex-shrink: 0; }
   .nav-logo span { color: var(--teal-light); }
-  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
   .nav-links a { font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; transition: color 0.3s; }
   .nav-links a:hover, .nav-links a.active { color: var(--white); }
+  .nav-soon { font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); cursor: default; display: flex; align-items: center; gap: 5px; }
+  .nav-soon-badge { font-size: 7px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(45,191,173,0.4); border: 0.5px solid rgba(45,191,173,0.2); padding: 2px 5px; border-radius: 1px; }
+  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  .lang-toggle { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; border: 0.5px solid rgba(255,255,255,0.15); padding: 4px 10px; border-radius: 2px; transition: all 0.3s; }
+  .lang-toggle:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+  .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--mist); transition: all 0.3s; }
+  .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+  .nav-mobile { display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 190; background: rgba(10,18,12,0.98); backdrop-filter: blur(16px); padding: 2rem; flex-direction: column; gap: 0; border-bottom: 0.5px solid rgba(255,255,255,0.06); }
+  .nav-mobile.open { display: flex; }
+  .nav-mobile a, .nav-mobile .nav-mobile-soon { display: block; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; padding: 1rem 0; border-bottom: 0.5px solid rgba(255,255,255,0.05); transition: color 0.3s; }
+  .nav-mobile a:hover { color: var(--white); }
+  .nav-mobile .nav-mobile-soon { color: rgba(255,255,255,0.2); cursor: default; display: flex; align-items: center; gap: 8px; }
 
+  /* ── PAGE HERO ── */
   .page-hero { padding: 10rem 4rem 5rem; border-bottom: 0.5px solid rgba(255,255,255,0.06); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; }
   .page-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 12px; }
   .page-eyebrow::before { content: ''; width: 24px; height: 0.5px; background: var(--teal-light); }
@@ -48,10 +59,10 @@
   .page-desc { font-size: 15px; font-weight: 300; color: var(--mist); line-height: 1.8; max-width: 420px; align-self: end; padding-bottom: 0.5rem; }
   .page-desc strong { color: rgba(255,255,255,0.7); font-weight: 400; }
 
+  /* ── POSTS ── */
   .posts-section { padding: 6rem 4rem; }
   .posts-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3rem; border-bottom: 0.5px solid rgba(255,255,255,0.08); padding-bottom: 1.5rem; }
   .posts-count { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); }
-
   .post-list { display: flex; flex-direction: column; gap: 0; }
   .post-item { display: grid; grid-template-columns: 120px 1fr auto; gap: 3rem; align-items: start; padding: 2.5rem 0; border-bottom: 0.5px solid rgba(255,255,255,0.06); text-decoration: none; transition: all 0.3s; }
   .post-item:first-child { border-top: 0.5px solid rgba(255,255,255,0.06); }
@@ -65,6 +76,7 @@
   .post-tag { font-size: 10px; color: var(--teal-light); border: 0.5px solid rgba(26,155,140,0.3); padding: 3px 10px; border-radius: 1px; }
   .post-arrow { font-size: 18px; color: var(--teal-light); opacity: 0; transition: all 0.3s; padding-top: 4px; }
 
+  /* ── TOPICS ── */
   .topics { padding: 5rem 4rem; background: var(--ink-soft); border-top: 0.5px solid rgba(255,255,255,0.06); }
   .topics-label { font-size: 11px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 1rem; display: flex; align-items: center; gap: 12px; }
   .topics-label::before { content: ''; width: 24px; height: 0.5px; background: var(--teal-light); }
@@ -74,35 +86,58 @@
   .topic { font-size: 13px; color: var(--mist); border: 0.5px solid rgba(255,255,255,0.1); padding: 8px 18px; border-radius: 2px; transition: all 0.3s; cursor: default; }
   .topic:hover { color: var(--white); border-color: var(--teal); }
 
+  /* ── FOOTER ── */
   footer { background: var(--ink); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; border-top: 0.5px solid rgba(255,255,255,0.06); }
   .footer-logo { font-family: var(--font-display); font-size: 18px; font-weight: 300; letter-spacing: 0.1em; color: var(--white); text-decoration: none; }
   .footer-logo span { color: var(--teal-light); }
   .footer-copy { font-size: 12px; color: var(--mist); }
   .footer-tagline { font-size: 11px; color: var(--mist); font-family: var(--font-display); font-style: italic; }
 
+  /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
-    nav { padding: 1.25rem 2rem; }
+    nav { padding: 1.25rem 1.5rem; }
     .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
     .page-hero { grid-template-columns: 1fr; padding: 7rem 2rem 3rem; gap: 2rem; }
     .posts-section { padding: 4rem 2rem; }
     .post-item { grid-template-columns: 1fr; gap: 0.5rem; }
     .post-arrow { display: none; }
     .topics { padding: 4rem 2rem; }
     footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+    .footer-tagline { display: none; }
   }
 </style>
 </head>
 <body>
 
-<nav>
+<!-- ── NAV ── -->
+<nav id="main-nav">
   <a href="index.html" class="nav-logo">Teal<span>Kin</span></a>
   <ul class="nav-links">
     <li><a href="dzon.html" class="active">Dzon</a></li>
-    <li><a href="tools.html">Tools</a></li>
+    <li><a href="lab.html">Lab</a></li>
+    <li><span class="nav-soon">Areas <span class="nav-soon-badge">Soon</span></span></li>
+    <li><span class="nav-soon">Cases <span class="nav-soon-badge">Soon</span></span></li>
     <li><a href="about.html">About</a></li>
   </ul>
+  <div class="nav-right">
+    <a href="/es/dzon.html" class="lang-toggle" onclick="localStorage.setItem('tk-lang','es')">ES</a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
+<div class="nav-mobile" id="nav-mobile">
+  <a href="dzon.html">Dzon</a>
+  <a href="lab.html">Lab</a>
+  <span class="nav-mobile-soon">Areas <span class="nav-soon-badge">Soon</span></span>
+  <span class="nav-mobile-soon">Cases <span class="nav-soon-badge">Soon</span></span>
+  <a href="about.html">About</a>
+  <a href="/es/dzon.html" style="color:var(--teal-light)" onclick="localStorage.setItem('tk-lang','es')">ES →</a>
+</div>
+
+<!-- ── PAGE HERO ── -->
 <section class="page-hero">
   <div>
     <p class="page-eyebrow">Insights · Analysis · Perspective</p>
@@ -111,11 +146,11 @@
   <p class="page-desc">Named after the Maya word for cenote — water that runs <strong>deep beneath the surface</strong>. Dzon is where we go beyond the headline to analyze what corporate communications, crisis, and reputation strategy actually look like in LATAM right now.</p>
 </section>
 
+<!-- ── POSTS ── -->
 <section class="posts-section">
   <div class="posts-header">
     <p class="posts-count">1 post published</p>
   </div>
-
   <div class="post-list">
     <a href="dzon-01-cual-es-el-lugar-de-la-comunicacion.html" class="post-item">
       <div>
@@ -136,6 +171,7 @@
   </div>
 </section>
 
+<!-- ── TOPICS ── -->
 <section class="topics">
   <p class="topics-label">What we cover</p>
   <h2 class="topics-title">Topics in <em>Dzon.</em></h2>
@@ -161,6 +197,25 @@
   <p class="footer-copy">© 2026 TealKin. Tulum, Riviera Maya.</p>
   <p class="footer-tagline">Dzon — the Maya word for cenote · Kin — sun</p>
 </footer>
+
+<script>
+const hamburger = document.getElementById('hamburger');
+const navMobile = document.getElementById('nav-mobile');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  navMobile.classList.toggle('open');
+});
+document.querySelectorAll('.nav-mobile a').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    navMobile.classList.remove('open');
+  });
+});
+window.addEventListener('scroll', () => {
+  document.getElementById('main-nav').style.background =
+    window.scrollY > 60 ? 'rgba(10,18,12,0.97)' : 'rgba(15,20,16,0.9)';
+});
+</script>
 
 </body>
 </html>
