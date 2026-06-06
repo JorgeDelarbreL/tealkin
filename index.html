@@ -134,7 +134,7 @@ if (!userChose && lang.startsWith('es')) {
   .d-source { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-top: 4px; }
 
   /* ── PULL QUOTE ── */
-  .pullquote-section { padding: 7rem 4rem; background: var(--teal-deep); position: relative; overflow: hidden; }
+.pullquote-section { padding: 7rem 4rem; position: relative; overflow: hidden; background: #000; }
   .pullquote-section::before { content: '"'; position: absolute; top: -40px; left: 3rem; font-family: var(--font-display); font-size: 300px; font-weight: 300; color: rgba(255,255,255,0.04); line-height: 1; pointer-events: none; }
   .pullquote-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 2; }
   .pullquote-text { font-family: var(--font-display); font-size: clamp(20px, 3.2vw, 44px); font-weight: 300; line-height: 1.3; color: var(--white); }
@@ -459,6 +459,10 @@ if (!userChose && lang.startsWith('es')) {
 
 <!-- ── PULL QUOTE ── -->
 <section class="pullquote-section">
+  <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.25;filter:brightness(0.4) saturate(0.6);z-index:0;">
+    <source src="img/quote-bg.mp4" type="video/mp4">
+  </video>
+  <div style="position:absolute;inset:0;background:rgba(13,107,96,0.8);z-index:1;"></div>
   <div class="pullquote-inner">
     <p class="pullquote-text">
       "The communications function translates business strategy into public trust,
