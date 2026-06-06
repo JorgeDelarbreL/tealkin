@@ -51,8 +51,11 @@
   .nav-mobile .nav-mobile-soon { color: rgba(255,255,255,0.2); cursor: default; display: flex; align-items: center; gap: 8px; }
 
   /* ── PAGE HERO ── */
-  .page-hero { padding: 10rem 4rem 5rem; border-bottom: 0.5px solid rgba(255,255,255,0.06); }
-  .page-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 12px; }
+.page-hero { padding: 10rem 4rem 5rem; border-bottom: 0.5px solid rgba(255,255,255,0.06); position: relative; overflow: hidden; background: #000; min-height: 420px; display: flex; flex-direction: column; justify-content: flex-end; }
+.page-hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.4; filter: brightness(0.7) saturate(0.8); z-index: 0; }
+.page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(10,18,12,0.1) 0%, rgba(10,18,12,0.45) 100%); z-index: 1; }
+.page-hero-content { position: relative; z-index: 2; }
+.page-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 12px; }
   .page-eyebrow::before { content: ''; width: 24px; height: 0.5px; background: var(--teal-light); }
   .page-title { font-family: var(--font-display); font-size: clamp(48px, 7vw, 88px); font-weight: 300; line-height: 1.0; color: var(--white); }
   .page-title em { font-style: italic; color: var(--teal-light); }
@@ -108,7 +111,7 @@
     nav { padding: 1.25rem 1.5rem; }
     .nav-links { display: none; }
     .nav-hamburger { display: flex; }
-    .page-hero { padding: 7rem 2rem 3rem; }
+.page-hero { padding: 7rem 2rem 3rem; min-height: 320px; }
     .about-main { grid-template-columns: 1fr; padding: 4rem 2rem; gap: 3rem; }
     .about-left { position: static; }
     .education-section { padding: 4rem 2rem; }
@@ -149,8 +152,14 @@
 
 <!-- ── PAGE HERO ── -->
 <section class="page-hero">
-  <p class="page-eyebrow">Behind TealKin</p>
-  <h1 class="page-title">The experience<br>behind the <em>thinking.</em></h1>
+  <video autoplay muted loop playsinline class="page-hero-video">
+    <source src="img/about-bg.mp4" type="video/mp4">
+  </video>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <p class="page-eyebrow">Behind TealKin</p>
+    <h1 class="page-title">The experience<br>behind the <em>thinking.</em></h1>
+  </div>
 </section>
 
 <!-- ── ABOUT MAIN ── -->
