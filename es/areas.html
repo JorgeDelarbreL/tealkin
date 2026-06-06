@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4Y4JT3R4WK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-4Y4JT3R4WK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Áreas — TealKin</title>
+<meta name="description" content="Las cuatro vertientes de práctica de TealKin: Pek'Kin comunicación corporativa, A'Kin comunicación de marca, Ha' comunicación interna y Sak Ha' gestión de crisis y riesgo.">
+<link rel="canonical" href="https://tealkin.com/es/areas.html">
+<link rel="alternate" hreflang="en" href="https://tealkin.com/areas.html">
+<link rel="alternate" hreflang="es" href="https://tealkin.com/es/areas.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #1a9b8c; --teal-light: #2dbfad; --teal-deep: #0d6b60;
+    --ink: #0f1410; --ink-soft: #0a1210; --mist: #8a9e98; --white: #fdfcfa;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-body); background: var(--ink); color: var(--white); overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; padding: 1.5rem 4rem; display: flex; align-items: center; justify-content: space-between; background: rgba(15,20,16,0.9); backdrop-filter: blur(12px); border-bottom: 0.5px solid rgba(255,255,255,0.06); transition: background 0.4s; }
+  .nav-logo { font-family: var(--font-display); font-size: 22px; font-weight: 300; letter-spacing: 0.12em; color: var(--white); text-decoration: none; flex-shrink: 0; }
+  .nav-logo span { color: var(--teal-light); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+  .nav-links a { font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; transition: color 0.3s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--white); }
+  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  .lang-toggle { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; border: 0.5px solid rgba(255,255,255,0.15); padding: 4px 10px; border-radius: 2px; transition: all 0.3s; }
+  .lang-toggle:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+  .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--mist); transition: all 0.3s; }
+  .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+  .nav-mobile { display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 190; background: rgba(10,18,12,0.98); backdrop-filter: blur(16px); padding: 2rem; flex-direction: column; gap: 0; border-bottom: 0.5px solid rgba(255,255,255,0.06); }
+  .nav-mobile.open { display: flex; }
+  .nav-mobile a { display: block; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; padding: 1rem 0; border-bottom: 0.5px solid rgba(255,255,255,0.05); transition: color 0.3s; }
+  .nav-mobile a:hover { color: var(--white); }
+
+  /* ── PAGE HERO ── */
+  .page-hero { padding: 10rem 4rem 5rem; border-bottom: 0.5px solid rgba(255,255,255,0.06); position: relative; overflow: hidden; background: #000; min-height: 420px; display: flex; flex-direction: column; justify-content: flex-end; }
+  .page-hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.4; filter: brightness(0.7) saturate(0.8); z-index: 0; }
+  .page-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(10,18,12,0.1) 0%, rgba(10,18,12,0.45) 100%); z-index: 1; }
+  .page-hero-content { position: relative; z-index: 2; }
+  .page-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 12px; }
+  .page-eyebrow::before { content: ''; width: 24px; height: 0.5px; background: var(--teal-light); }
+  .page-title { font-family: var(--font-display); font-size: clamp(48px, 7vw, 88px); font-weight: 300; line-height: 1.0; color: var(--white); margin-bottom: 1rem; }
+  .page-title em { font-style: italic; color: var(--teal-light); }
+  .page-desc { font-size: 15px; font-weight: 300; color: var(--mist); line-height: 1.8; max-width: 580px; }
+
+  /* ── AREAS GRID ── */
+  .areas-section { padding: 6rem 4rem; }
+  .areas-intro { max-width: 640px; margin-bottom: 5rem; }
+  .areas-intro-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 1rem; display: flex; align-items: center; gap: 12px; }
+  .areas-intro-label::before { content: ''; width: 24px; height: 0.5px; background: var(--teal-light); }
+  .areas-intro-text { font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.9; }
+
+  .areas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.04); }
+  .area-card { background: var(--ink); padding: 3.5rem; position: relative; transition: background 0.3s; }
+  .area-card:hover { background: rgba(26,155,140,0.04); }
+  .area-number { font-family: var(--font-display); font-size: 80px; font-weight: 300; line-height: 1; color: rgba(255,255,255,0.04); position: absolute; top: 2rem; right: 2.5rem; letter-spacing: -0.02em; }
+  .area-maya { font-family: var(--font-display); font-size: clamp(36px, 4vw, 52px); font-weight: 300; color: var(--white); line-height: 1.05; margin-bottom: 4px; }
+  .area-maya em { font-style: italic; color: var(--teal-light); }
+  .area-category { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mist); margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 0.5px solid rgba(255,255,255,0.08); }
+  .area-body { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.85; margin-bottom: 1.75rem; }
+  .area-services { display: flex; flex-direction: column; gap: 8px; }
+  .area-service { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.35); display: flex; align-items: center; gap: 10px; }
+  .area-service::before { content: ''; width: 16px; height: 0.5px; background: var(--teal); flex-shrink: 0; }
+
+  /* ── COLOR ACCENTS PER AREA ── */
+  .area-card.pekkin .area-maya em { color: var(--teal-light); }
+  .area-card.akin .area-maya em { color: #6ab0de; }
+  .area-card.ha .area-maya em { color: #72c472; }
+  .area-card.sakha .area-maya em { color: #d97070; }
+  .area-card.akin .area-service::before { background: #6ab0de; }
+  .area-card.ha .area-service::before { background: #72c472; }
+  .area-card.sakha .area-service::before { background: #d97070; }
+
+  /* ── FOOTER ── */
+  footer { background: var(--ink); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; border-top: 0.5px solid rgba(255,255,255,0.06); }
+  .footer-logo { font-family: var(--font-display); font-size: 18px; font-weight: 300; letter-spacing: 0.1em; color: var(--white); text-decoration: none; }
+  .footer-logo span { color: var(--teal-light); }
+  .footer-copy { font-size: 12px; color: var(--mist); }
+  .footer-tagline { font-size: 11px; color: var(--mist); font-family: var(--font-display); font-style: italic; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    .page-hero { padding: 7rem 2rem 3rem; min-height: 320px; }
+    .areas-section { padding: 4rem 1.5rem; }
+    .areas-intro { margin-bottom: 3rem; }
+    .areas-grid { grid-template-columns: 1fr; }
+    .area-card { padding: 2.5rem 2rem; }
+    footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+    .footer-tagline { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="main-nav">
+  <a href="/es/index.html" class="nav-logo">Teal<span>Kin</span></a>
+  <ul class="nav-links">
+    <li><a href="/es/dzon.html">Dzon</a></li>
+    <li><a href="/es/lab.html">Lab</a></li>
+    <li><a href="/es/areas.html" class="active">Áreas</a></li>
+    <li><a href="/es/cases.html">Casos</a></li>
+    <li><a href="/es/about.html">Nosotros</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="/areas.html" class="lang-toggle" onclick="localStorage.setItem('tk-lang','en')">EN</a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="nav-mobile" id="nav-mobile">
+  <a href="/es/dzon.html">Dzon</a>
+  <a href="/es/lab.html">Lab</a>
+  <a href="/es/areas.html">Áreas</a>
+  <a href="/es/cases.html">Casos</a>
+  <a href="/es/about.html">Nosotros</a>
+  <a href="/areas.html" style="color:var(--teal-light)" onclick="localStorage.setItem('tk-lang','en')">EN →</a>
+</div>
+
+<!-- ── PAGE HERO ── -->
+<section class="page-hero">
+  <video autoplay muted loop playsinline class="page-hero-video">
+    <source src="/img/areas-bg.mp4" type="video/mp4">
+  </video>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <p class="page-eyebrow">Vertientes de práctica</p>
+    <h1 class="page-title">Cuatro <em>vertientes.</em><br>Una metodología.</h1>
+    <p class="page-desc">Nombradas a partir de conceptos mayas sobre el agua, el sol y la tierra — las cuatro áreas desde las que TealKin aborda la comunicación estratégica.</p>
+  </div>
+</section>
+
+<!-- ── AREAS ── -->
+<section class="areas-section">
+  <div class="areas-intro">
+    <p class="areas-intro-label">El marco</p>
+    <p class="areas-intro-text">Cada reto de comunicación pertenece a un dominio específico. Identificar cuál —y qué combinación— determina cómo actuar. Estas cuatro vertientes comparten una base analítica común: la convicción de que la comunicación es una variable estratégica, no una función de apoyo.</p>
+  </div>
+
+  <div class="areas-grid">
+
+    <div class="area-card pekkin">
+      <span class="area-number">01</span>
+      <h2 class="area-maya">Pek'<em>Kin</em></h2>
+      <p class="area-category">Comunicación Corporativa</p>
+      <p class="area-body">Cómo las organizaciones se posicionan frente a medios, inversionistas, reguladores y comunidades. Gestión de reputación, narrativa corporativa, relaciones con grupos de interés y la arquitectura comunicacional que sostiene a una institución a lo largo del tiempo.</p>
+      <div class="area-services">
+        <span class="area-service">Estrategia de reputación</span>
+        <span class="area-service">Relaciones con medios</span>
+        <span class="area-service">Mapeo de stakeholders</span>
+        <span class="area-service">Comunicación ESG</span>
+        <span class="area-service">Posicionamiento ejecutivo</span>
+      </div>
+    </div>
+
+    <div class="area-card akin">
+      <span class="area-number">02</span>
+      <h2 class="area-maya">A'<em>Kin</em></h2>
+      <p class="area-category">Comunicación de Marca</p>
+      <p class="area-body">La relación entre una marca y sus audiencias — construida a través de coherencia narrativa, relevancia cultural y visibilidad sostenida. La comunicación de marca no es publicidad: es la orquestación estratégica del significado en todos los puntos de contacto.</p>
+      <div class="area-services">
+        <span class="area-service">Narrativa de marca</span>
+        <span class="area-service">Comunicación de lanzamiento</span>
+        <span class="area-service">Estrategia con influencers</span>
+        <span class="area-service">Gestión de comunidades</span>
+        <span class="area-service">Posicionamiento cultural</span>
+      </div>
+    </div>
+
+    <div class="area-card ha">
+      <span class="area-number">03</span>
+      <h2 class="area-maya">Ha'</h2>
+      <p class="area-category">Comunicación Interna</p>
+      <p class="area-body">La infraestructura comunicacional que mantiene cohesionadas a las organizaciones: alineación, cultura, gestión del cambio y mensajes de liderazgo. La comunicación interna determina si la estrategia permanece en papel o vive en la forma en que las personas trabajan.</p>
+      <div class="area-services">
+        <span class="area-service">Gestión del cambio</span>
+        <span class="area-service">Comunicación de cultura</span>
+        <span class="area-service">Mensajes de liderazgo</span>
+        <span class="area-service">Vinculación del empleado</span>
+        <span class="area-service">Narrativa organizacional</span>
+      </div>
+    </div>
+
+    <div class="area-card sakha">
+      <span class="area-number">04</span>
+      <h2 class="area-maya">Sak <em>Ha'</em></h2>
+      <p class="area-category">Crisis y Gestión del Riesgo</p>
+      <p class="area-body">Cómo las organizaciones navegan la disrupción sin perder credibilidad. La comunicación en crisis no es control de daños — es la capacidad de actuar con claridad, velocidad y coherencia cuando la confianza institucional está bajo presión.</p>
+      <div class="area-services">
+        <span class="area-service">Diseño de protocolos de crisis</span>
+        <span class="area-service">Monitoreo de riesgos</span>
+        <span class="area-service">Entrenamiento de voceros</span>
+        <span class="area-service">Gestión de issues</span>
+        <span class="area-service">Recuperación post-crisis</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <a href="/es/index.html" class="footer-logo">Teal<span>Kin</span></a>
+  <p class="footer-copy">© 2026 TealKin. Tulum, Riviera Maya.</p>
+  <p class="footer-tagline">Dzon — la palabra maya para cenote · Kin — sol</p>
+</footer>
+
+<script>
+const hamburger = document.getElementById('hamburger');
+const navMobile = document.getElementById('nav-mobile');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  navMobile.classList.toggle('open');
+});
+document.querySelectorAll('.nav-mobile a').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    navMobile.classList.remove('open');
+  });
+});
+window.addEventListener('scroll', () => {
+  document.getElementById('main-nav').style.background =
+    window.scrollY > 60 ? 'rgba(10,18,12,0.97)' : 'rgba(15,20,16,0.9)';
+});
+</script>
+
+</body>
+</html>
