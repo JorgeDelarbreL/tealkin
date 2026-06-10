@@ -10,7 +10,7 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simulador de Crisis — TealKin</title>
+<title>Simulador de Crisis · TealKin</title>
 <meta name="description" content="Un simulador de comunicación de crisis impulsado por IA. Ponte en el lugar de quien decide durante una crisis corporativa en vivo y observa cómo reacciona el mundo en tiempo real.">
 <link rel="canonical" href="https://tealkin.com/tools/crisis-simulator/index-es.html">
 <link rel="alternate" hreflang="en" href="https://tealkin.com/tools/crisis-simulator/index.html">
@@ -363,7 +363,7 @@ html,body{width:100%;height:100%;background:var(--ink);color:var(--white);font-f
     <div class="device-frame">
       <div class="device-bar">
         <span class="device-dot r"></span><span class="device-dot y"></span><span class="device-dot g"></span>
-        <span class="device-url">wire.terminal — feed en vivo</span>
+        <span class="device-url">wire.terminal · feed en vivo</span>
       </div>
       <div class="device-body" id="headlinesContent">
         <div class="live-loader-wrap" id="headlinesLoader"></div>
@@ -400,7 +400,7 @@ html,body{width:100%;height:100%;background:var(--ink);color:var(--white);font-f
     <div class="device-frame">
       <div class="device-bar">
         <span class="device-dot r"></span><span class="device-dot y"></span><span class="device-dot g"></span>
-        <span class="device-url">Correo — Bandeja (Filtrado)</span>
+        <span class="device-url">Correo · Bandeja (Filtrado)</span>
       </div>
       <div class="device-body" id="leakContent">
         <div class="live-loader-wrap" id="leakLoader"></div>
@@ -520,16 +520,16 @@ const GAME_DATA = { risks: [
         { title:'Ya está en Facebook', channels:['press','social'], situation:`Una familiar publicó que a su esposo "se lo llevaron." 3,000 veces compartido. Los medios nacionales ya lo cubren. Los secuestradores endurecen sus condiciones al ver la cobertura.`,
           options:[
             { label:'A', text:'Confirmar el incidente públicamente, pedir discreción a los medios', quote:`"Podemos confirmar un incidente de seguridad que afecta a miembros de nuestro equipo. Por la seguridad de los involucrados, pedimos a los medios discreción mientras esto se resuelve."`, flags:[], meters:{reputation:-5,narrative:10,trust:8} },
-            { label:'B', text:'Pedirle a la familia que borre la publicación', quote:`Una solicitud privada a la familia — todavía sin comunicado público.`, flags:['silenced_family','internal_leak'], meters:{reputation:-14,narrative:-12,trust:-10} },
+            { label:'B', text:'Pedirle a la familia que borre la publicación', quote:`Una solicitud privada a la familia, todavía sin comunicado público.`, flags:['silenced_family','internal_leak'], meters:{reputation:-14,narrative:-12,trust:-10} },
             { label:'C', text:'Negar que sea un secuestro', quote:`"Las personas en cuestión se encuentran de viaje por motivos de trabajo y pueden ser contactadas por los canales habituales."`, flags:['denied_responsibility','legal_threat'], meters:{reputation:-25,narrative:-22,trust:-18} }
           ]},
-        { title:'Prueba de vida', tbc:true, situation:`Han pasado 36 horas. El video de prueba de vida de los secuestradores se filtra directamente a un medio nacional, sin pasar por la familia. La oficina central de Vértex en el extranjero emite su propio comunicado sin coordinarse con el equipo regional — contradiciendo el mensaje local sobre si hay negociaciones en curso. La esposa del Director de Planta anuncia que dará su propia conferencia de prensa mañana.` }
+        { title:'Prueba de vida', tbc:true, situation:`Han pasado 36 horas. El video de prueba de vida de los secuestradores se filtra directamente a un medio nacional, sin pasar por la familia. La oficina central de Vértex en el extranjero emite su propio comunicado sin coordinarse con el equipo regional, contradiciendo el mensaje local sobre si hay negociaciones en curso. La esposa del Director de Planta anuncia que dará su propia conferencia de prensa mañana.` }
       ]}
   ]},
-{ id:'cyber', num:'03', name:'Ciberseguridad', tagline:`La brecha es técnica. La exposición es personal — y tiene nombres y apellidos.`,
+{ id:'cyber', num:'03', name:'Ciberseguridad', tagline:`La brecha es técnica. La exposición es personal: tiene nombres y apellidos.`,
   scenarios: [
     { id:'alterra', letter:'A', org:'Alterra', sector:'Bienes Raíces · Desarrolladora Premium', role:'CEO', initFlags:[],
-      setup:`Alterra es una desarrolladora de bienes raíces premium. Un empleado usó una herramienta de IA no autorizada para procesar contratos. La herramienta tenía una vulnerabilidad. 847 contratos — nombres, direcciones y montos de figuras públicas, incluyendo un senador, dos empresarios bajo investigación activa y un secretario de gabinete — aparecen en un foro de la dark web.`,
+      setup:`Alterra es una desarrolladora de bienes raíces premium. Un empleado usó una herramienta de IA no autorizada para procesar contratos. La herramienta tenía una vulnerabilidad. 847 contratos (nombres, direcciones y montos de figuras públicas, incluyendo un senador, dos empresarios bajo investigación activa y un secretario de gabinete) aparecen en un foro de la dark web.`,
       decisions:[
         { title:'Seis horas para publicar', channels:['press'], situation:`Un periodista de investigación te contacta. Tiene los documentos. Publicará en seis horas a menos que reciba una declaración. Las personas de alto perfil afectadas todavía no han sido notificadas.`,
           options:[
@@ -543,12 +543,12 @@ const GAME_DATA = { risks: [
             { label:'B', text:'Despedir al empleado en silencio, llamarlo un caso "aislado"', quote:`"Este fue un incidente aislado atribuible a un error humano, el cual ya fue atendido."`, flags:['government_involved','internal_leak'], meters:{reputation:-16,narrative:-12,trust:-8} },
             { label:'C', text:'Decir que el empleado actuó de buena fe, que nada era previsible', quote:`"El empleado actuó de buena fe, y la empresa no tenía manera razonable de anticipar el uso de esta herramienta."`, flags:['government_involved','denied_responsibility','legal_threat'], meters:{reputation:-26,narrative:-20,trust:-15} }
           ]},
-        { title:'El senador responde', tbc:true, situation:`El senador cuyo contrato se filtró anuncia que perseguirá a Alterra personalmente, llamando a la brecha "una falla deliberada de una empresa que vende confianza como su producto principal." Una segunda publicación en la dark web asegura tener 1,200 documentos más de un sistema distinto y no relacionado de Alterra — algo que el propio equipo de seguridad de Alterra no puede confirmar ni descartar en la siguiente hora.` }
+        { title:'El senador responde', tbc:true, situation:`El senador cuyo contrato se filtró anuncia que perseguirá a Alterra personalmente, llamando a la brecha "una falla deliberada de una empresa que vende confianza como su producto principal." Una segunda publicación en la dark web asegura tener 1,200 documentos más de un sistema distinto y no relacionado de Alterra, algo que el propio equipo de seguridad de Alterra no puede confirmar ni descartar en la siguiente hora.` }
       ]},
     { id:'meridian', letter:'B', org:'Banco Meridian', sector:'Banca · Banco Minorista', role:'CEO', initFlags:[],
       setup:`Banco Meridian. Un ataque coordinado, asistido por IA, vulnera los sistemas de autenticación a las 2:47am de un lunes. Para las 8am, los clientes no pueden hacer transferencias. A las 9am, un mensaje de rescate exige el pago en criptomonedas. El regulador bancario ya fue notificado. Recuperación estimada: de 6 a 72 horas.`,
       decisions:[
-        { title:'#BancoMeridianCaido', channels:['social'], situation:`Las redes sociales explotan — los clientes no pueden pagar nómina ni hacer transferencias. #BancoMeridianCaido es tendencia. Necesitas comunicar antes de que la narrativa se te escape de las manos.`,
+        { title:'#BancoMeridianCaido', channels:['social'], situation:`Las redes sociales explotan: los clientes no pueden pagar nómina ni hacer transferencias. #BancoMeridianCaido es tendencia. Necesitas comunicar antes de que la narrativa se te escape de las manos.`,
           options:[
             { label:'A', text:'Confirmar el incidente, los fondos están seguros, dar un plazo', quote:`"Estamos atendiendo un incidente técnico de seguridad. Los fondos de los clientes están seguros y no se vieron afectados. Esperamos restablecer el servicio dentro del plazo indicado, y mientras tanto activamos canales alternativos."`, flags:['government_involved'], meters:{reputation:-10,narrative:15,trust:10} },
             { label:'B', text:'Decir que es "mantenimiento programado"', quote:`"Algunos servicios presentan interrupciones temporales debido a mantenimiento programado."`, flags:['government_involved','denied_responsibility'], meters:{reputation:-16,narrative:-15,trust:-8} },
@@ -560,7 +560,7 @@ const GAME_DATA = { risks: [
             { label:'B', text:'Solo un comunicado escrito, sin confirmar el ataque', quote:`"Podemos confirmar que el servicio normal se reanudará antes de que termine el día. No comentaremos especulaciones sobre exigencias de terceros."`, flags:['internal_leak'], meters:{reputation:-16,narrative:-12,trust:-5} },
             { label:'C', text:'Pagar en silencio, atribuírselo "al equipo interno"', quote:`"El servicio fue restablecido en su totalidad por nuestro equipo técnico interno."`, flags:['internal_leak','legal_threat'], meters:{reputation:-20,narrative:-15,trust:-10} }
           ]},
-        { title:'Lo que se llevaron', tbc:true, situation:`Forense confirma que los atacantes extrajeron una base de datos de clientes antes de cifrar los sistemas — números de identificación y saldos de cuenta de aproximadamente 40,000 clientes. El regulador solicita una reunión formal en 24 horas. Un despacho de litigio colectivo anuncia que está "evaluando los tiempos de divulgación del banco" para una posible demanda por negligencia.` }
+        { title:'Lo que se llevaron', tbc:true, situation:`Forense confirma que los atacantes extrajeron una base de datos de clientes antes de cifrar los sistemas: números de identificación y saldos de cuenta de aproximadamente 40,000 clientes. El regulador solicita una reunión formal en 24 horas. Un despacho de litigio colectivo anuncia que está "evaluando los tiempos de divulgación del banco" para una posible demanda por negligencia.` }
       ]}
   ]}
 ]};
@@ -713,9 +713,9 @@ function renderStatementPanel(opt){
   const right = document.getElementById('decisionRight');
   right.innerHTML = `<p class="options-label">El comunicado público de Cris</p>
     <div class="statement-panel">
-      <p class="statement-strategy">Enfoque elegido — Opción ${opt.label}: <b>${escapeHtml(opt.text)}</b></p>
+      <p class="statement-strategy">Enfoque elegido · Opción ${opt.label}: <b>${escapeHtml(opt.text)}</b></p>
       <textarea class="statement-input" id="statementInput">${escapeHtml(opt.quote)}</textarea>
-      <p class="statement-hint">Hazlo con las palabras de Cris. Lo que quede en este cuadro es lo que se publica — y es justo a lo que la prensa y las redes sociales reaccionarán a continuación.</p>
+      <p class="statement-hint">Hazlo con las palabras de Cris. Lo que quede en este cuadro es lo que se publica. Es justo a lo que la prensa y las redes sociales reaccionarán a continuación.</p>
       <div class="btn-group"><button class="btn btn-primary" id="statementSendBtn" onclick="confirmStatement()">Enviar comunicado →</button></div>
     </div>`;
   document.getElementById('statementInput').focus();
@@ -750,15 +750,15 @@ const DATELINE_CITY = { KPNF:'Ciudad de México', novu:'São Paulo', merco:'Mont
 const NEWS_SYSTEM = `Eres el editor de El Financiero Regional, un diario de negocios líder en LATAM. Escribe una nota informativa de no más de 180 palabras sobre una crisis corporativa en desarrollo. Responde ÚNICAMENTE en este formato exacto, sin markdown, sin comentarios adicionales:
 HEADLINE: <titular>
 LEAD: <primer párrafo>||<segundo párrafo>
-QUOTE: <una declaración textual de un actor relevante — un familiar, un regulador o un vocero de la empresa, elegido según las banderas activas>
+QUOTE: <una declaración textual de un actor relevante: un familiar, un regulador o un vocero de la empresa, elegido según las banderas activas>
 BYLINE: <nombre de reportero ficticio>
-Tono: informativo, neutral, sin adjetivos dramáticos, en español de prensa de negocios LATAM. Nunca uses nombres reales de empresas o personas — inventa nombres ficticios coherentes con la organización dada.`;
+Tono: informativo, neutral, sin adjetivos dramáticos, en español de prensa de negocios LATAM. Nunca uses nombres reales de empresas o personas. Inventa nombres ficticios coherentes con la organización dada.`;
 
 const HEADLINES_SYSTEM = `Genera 4 titulares cortos que reaccionen a una crisis corporativa en desarrollo, uno de cada uno de estos medios:
-1. El Financiero Regional — serio, registro económico
-2. NotiClick — tabloide, sensacionalista
-3. Sector Pro — técnico, prensa especializada B2B
-4. La Voz Común — activista, registro de justicia social
+1. El Financiero Regional: serio, registro económico
+2. NotiClick: tabloide, sensacionalista
+3. Sector Pro: técnico, prensa especializada B2B
+4. La Voz Común: activista, registro de justicia social
 Cada titular de máximo 12 palabras, en español. Responde ÚNICAMENTE con exactamente 4 líneas, con este formato:
 1. <titular>
 2. <titular>
@@ -771,7 +771,7 @@ const SOCIAL_SYSTEM = `Genera 4 publicaciones de distintas personas reaccionando
 - Un activista o influencer (solo si la bandera influencer_viral está activa)
 - El CEO de una empresa rival (solo si la bandera competitor_active está activa)
 - Un empleado anónimo (solo si la bandera internal_leak está activa)
-- Un ciudadano común indignado (siempre disponible — úsalo para llenar los lugares restantes)
+- Un ciudadano común indignado (siempre disponible, úsalo para llenar los lugares restantes)
 Cada publicación de máximo 240 caracteres, en primera persona, con un tono realista para ese actor, en español. Incluye un hashtag ficticio donde encaje naturalmente. Responde ÚNICAMENTE con 4 líneas, con este formato exacto:
 ACTOR | @usuario | texto de la publicación
 Sin explicaciones, sin markdown, sin nombres reales.`;
@@ -783,7 +783,7 @@ SUBJECT: <asunto>
 BODY: <cuerpo del correo>
 Sin explicaciones, sin markdown, sin nombres reales.`;
 
-const VIRAL_SYSTEM = `Un video sobre una crisis corporativa en desarrollo se volvió viral en una plataforma de video LATAM. Genera un título sensacionalista para el video (máximo 12 palabras), un nombre de canal ficticio y 3 comentarios cortos de espectadores (máximo 25 palabras cada uno, con tonos variados — solidario, crítico, en broma), en español. Responde ÚNICAMENTE en este formato:
+const VIRAL_SYSTEM = `Un video sobre una crisis corporativa en desarrollo se volvió viral en una plataforma de video LATAM. Genera un título sensacionalista para el video (máximo 12 palabras), un nombre de canal ficticio y 3 comentarios cortos de espectadores (máximo 25 palabras cada uno, con tonos variados: solidario, crítico, en broma), en español. Responde ÚNICAMENTE en este formato:
 TITLE: <título>
 CHANNEL: <nombre del canal>
 COMMENT1: <comentario>
@@ -816,7 +816,7 @@ function buildContext(){
   return {
     org: sc.org, sector: sc.sector, sectorShort: sc.sector.split('·')[0].trim(),
     riskName: state.risk.name, riskLower: state.risk.name.toLowerCase(),
-    decisionText: `${last.text} — ${last.quote}`,
+    decisionText: `${last.text} · ${last.quote}`,
     flags: Array.from(state.flags).join(', ') || 'ninguna por ahora'
   };
 }
@@ -880,7 +880,7 @@ async function fetchLeak(){ return parseLeak(await callAIWithTimeout(LEAK_SYSTEM
 async function fetchViral(){ return parseViral(await callAIWithTimeout(VIRAL_SYSTEM, userContextBlock(buildContext()))); }
 async function fetchDiagnosis(){
   const ctx = buildOutcomeContext();
-  const user = `Categoría de riesgo: ${ctx.riskName}. Organización: ${ctx.org} (${ctx.sector}). Rol de Cris Cisneros: ${ctx.role}.\nDecisiones tomadas:\n${ctx.historyText}\nBanderas activas: ${ctx.flags}\nMedidores finales — Reputación: ${ctx.meters.reputation}/100, Narrativa: ${ctx.meters.narrative}/100, Confianza interna: ${ctx.meters.trust}/100.`;
+  const user = `Categoría de riesgo: ${ctx.riskName}. Organización: ${ctx.org} (${ctx.sector}). Rol de Cris Cisneros: ${ctx.role}.\nDecisiones tomadas:\n${ctx.historyText}\nBanderas activas: ${ctx.flags}\nMedidores finales · Reputación: ${ctx.meters.reputation}/100, Narrativa: ${ctx.meters.narrative}/100, Confianza interna: ${ctx.meters.trust}/100.`;
   return await callAIWithTimeout(DIAGNOSIS_SYSTEM, user, 9000);
 }
 
@@ -893,7 +893,7 @@ function fallbackNews(ctx){
       `El manejo del caso por parte de la empresa ha llamado la atención de reguladores, socios y el público en general, mientras distintos actores piden mayor claridad en las próximas horas.`
     ],
     quote: `"Estamos monitoreando la situación de cerca y esperamos tener mayor claridad pronto", declaró a este medio una persona cercana al caso.`,
-    byline: 'Redacción — El Financiero Regional'
+    byline: 'Redacción · El Financiero Regional'
   };
 }
 function fallbackHeadlines(ctx){
@@ -923,8 +923,8 @@ function fallbackSocial(ctx){
 function fallbackLeak(ctx){
   return {
     from:'Líder de Comunicación Interna',
-    to:'Alta Dirección — Comité de Crisis',
-    subject:'Re: mensaje externo — uso interno',
+    to:'Alta Dirección · Comité de Crisis',
+    subject:'Re: mensaje externo · uso interno',
     body:`Para que quede claro antes de que esto avance: la versión que estamos dando hacia afuera no es el panorama completo, y algunas personas en este hilo ya saben por qué. Mantengamos esta lista de distribución reducida hasta que acordemos los siguientes pasos.`
   };
 }
@@ -935,16 +935,16 @@ function fallbackViral(ctx){
     comments:[
       `Cuesta creer que una empresa de este tamaño lo haya manejado así.`,
       `Mejor esperemos a tener más información antes de juzgar.`,
-      `Le sigo la pista a esto — ojalá las personas afectadas reciban respuestas reales.`
+      `Le sigo la pista a esto, ojalá las personas afectadas reciban respuestas reales.`
     ]
   };
 }
 function fallbackDiagnosis(ctx){
   const m = ctx.meters;
   const avg = (m.reputation+m.narrative+m.trust)/3;
-  if(avg>=55) return `Las decisiones aquí cambiaron, una y otra vez, comodidad de corto plazo por credibilidad de largo plazo — reconocer el problema temprano, acercarse directamente a las personas afectadas y adelantarse a las filtraciones con la versión propia de ${ctx.org}. El costo fue real y se nota en cada medidor. Lo que se ganó fue una narrativa que la empresa todavía controla. El patrón a vigilar: incluso las decisiones más sólidas llegaron después de que el mundo ya sabía que algo andaba mal. La siguiente prueba para ${ctx.org} es adelantarse a una historia antes de que estalle, no solo después.`;
-  if(avg>=35) return `La respuesta de ${ctx.org} combinó momentos de responsabilidad real con vacilación — instancias de transparencia debilitadas por demoras, lenguaje ambiguo o decisiones tomadas para proteger una posición legal más que la confianza pública. Las banderas acumuladas aquí (${ctx.flags}) marcan exactamente el momento en que la historia se le escapó de las manos a Cris. Un primer movimiento más rápido y directo probablemente habría cambiado cómo se leyó todo lo que vino después.`;
-  return `Esto se lee como un colapso interno en cámara lenta. Cada decisión individual pudo parecer defendible en su momento — ganar tiempo, proteger la posición legal, evitar admitir más de lo necesario — pero juntas forman un patrón de negación y demora que el público, los reguladores y la propia gente de ${ctx.org} notaron. Para cuando llegó alguna concesión, se leyó como confesión y no como liderazgo. La lección no es qué palabras se usaron. Es qué tan tarde apareció la verdad.`;
+  if(avg>=55) return `Las decisiones aquí cambiaron, una y otra vez, comodidad de corto plazo por credibilidad de largo plazo: reconocer el problema temprano, acercarse directamente a las personas afectadas y adelantarse a las filtraciones con la versión propia de ${ctx.org}. El costo fue real y se nota en cada medidor. Lo que se ganó fue una narrativa que la empresa todavía controla. El patrón a vigilar: incluso las decisiones más sólidas llegaron después de que el mundo ya sabía que algo andaba mal. La siguiente prueba para ${ctx.org} es adelantarse a una historia antes de que estalle, no solo después.`;
+  if(avg>=35) return `La respuesta de ${ctx.org} combinó momentos de responsabilidad real con vacilación: instancias de transparencia debilitadas por demoras, lenguaje ambiguo o decisiones tomadas para proteger una posición legal más que la confianza pública. Las banderas acumuladas aquí (${ctx.flags}) marcan exactamente el momento en que la historia se le escapó de las manos a Cris. Un primer movimiento más rápido y directo probablemente habría cambiado cómo se leyó todo lo que vino después.`;
+  return `Esto se lee como un colapso interno en cámara lenta. Cada decisión individual pudo parecer defendible en su momento (ganar tiempo, proteger la posición legal, evitar admitir más de lo necesario), pero juntas forman un patrón de negación y demora que el público, los reguladores y la propia gente de ${ctx.org} notaron. Para cuando llegó alguna concesión, se leyó como confesión y no como liderazgo. La lección no es qué palabras se usaron. Es qué tan tarde apareció la verdad.`;
 }
 function getFallback(type){
   const ctx = buildContext();
@@ -1059,7 +1059,7 @@ function influencerLine(){
   return `Hilo sobre ${state.scenario.org}: la gente merece saber lo que realmente está pasando aquí.`;
 }
 function hashtagFor(){
-  const tags = { novu:'NovuNosClasifica', merco:'QueSabiaMerco', meridian:'BancoMeridianCaido' };
+  const tags = { novu:'NovuNosClasifica', merco:'QueSabiaSuperCoati', meridian:'BancoMeridianCaido' };
   return tags[state.scenario.id] || (state.scenario.org.replace(/[^A-Za-z0-9]/g,'')+'Crisis');
 }
 function anonHandle(){
@@ -1143,7 +1143,7 @@ function renderLeak(d){
         <div class="leak-meta-row"><span class="leak-meta-label">Asunto</span><span>${escapeHtml(d.subject)}</span></div>
       </div>
       <div class="leak-body">${escapeHtml(d.body)}</div>
-      <p class="leak-source">— reenviado de forma anónima a tres redacciones</p>
+      <p class="leak-source">Reenviado de forma anónima a tres redacciones</p>
     </div>`;
 }
 
@@ -1175,7 +1175,7 @@ function buildOutcomeContext(){
   const sc = state.scenario;
   return {
     org: sc.org, sector: sc.sector, role: sc.role, riskName: state.risk.name,
-    historyText: state.history.map((h,i)=>`D${i+1}: ${h.text} — ${h.quote}`).join('\n'),
+    historyText: state.history.map((h,i)=>`D${i+1}: ${h.text} · ${h.quote}`).join('\n'),
     flags: Array.from(state.flags).join(', ') || 'ninguna',
     meters: state.meters
   };
@@ -1196,15 +1196,15 @@ function renderOutcome(){
 }
 function shareLinkedIn(){
   const m = state.meters; const sc = state.scenario;
-  const text = `Acabo de jugar el Simulador de Crisis de TealKin como ${sc.role} de ${sc.org} durante una crisis de ${state.risk.name.toLowerCase()}.\n\nResultado final — Reputación: ${m.reputation}/100 · Narrativa: ${m.narrative}/100 · Confianza interna: ${m.trust}/100.\n\nPruébalo tú mismo: https://tealkin.com/tools/crisis-simulator/index-es.html`;
+  const text = `Acabo de jugar el Simulador de Crisis de TealKin como ${sc.role} de ${sc.org} durante una crisis de ${state.risk.name.toLowerCase()}.\n\nResultado final · Reputación: ${m.reputation}/100 · Narrativa: ${m.narrative}/100 · Confianza interna: ${m.trust}/100.\n\nPruébalo tú mismo: https://tealkin.com/tools/crisis-simulator/index-es.html`;
   if(navigator.clipboard) navigator.clipboard.writeText(text).catch(()=>{});
   const url = 'https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent('https://tealkin.com/tools/crisis-simulator/index-es.html');
   window.open(url, '_blank', 'noopener');
 }
 function contactUs(){
   const m = state.meters; const sc = state.scenario;
-  const subject = `Simulador de Crisis — interés para ${sc.org}`;
-  const body = `Hola equipo de TealKin,\n\nAcabo de jugar el Simulador de Crisis — eje de ${state.risk.name}, como ${sc.role} de ${sc.org}.\nResultado final — Reputación: ${m.reputation}/100 · Narrativa: ${m.narrative}/100 · Confianza interna: ${m.trust}/100.\n\nMe gustaría platicar sobre una versión a la medida de esto para mi empresa.\n\n`;
+  const subject = `Interés en el Simulador de Crisis para ${sc.org}`;
+  const body = `Hola equipo de TealKin,\n\nAcabo de jugar el Simulador de Crisis (eje de ${state.risk.name}), como ${sc.role} de ${sc.org}.\nResultado final · Reputación: ${m.reputation}/100 · Narrativa: ${m.narrative}/100 · Confianza interna: ${m.trust}/100.\n\nMe gustaría platicar sobre una versión a la medida de esto para mi empresa.\n\n`;
   window.location.href = `mailto:jdelarbrel@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
