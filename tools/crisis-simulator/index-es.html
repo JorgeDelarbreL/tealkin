@@ -301,7 +301,7 @@ html,body{width:100%;height:100%;background:var(--ink);color:var(--white);font-f
   <div class="cris-avatar"><span>CC</span></div>
   <h1 class="intro-title">Cris <em>Cisneros</em></h1>
   <p class="intro-role" id="introRole">Quien decide · Comité de Crisis</p>
-  <p class="intro-desc">Tú no eres quien da la cara ante la prensa. Eres quien está en la sala y tiene que decidir — y todo lo que se dice hacia afuera es solo la punta visible de lo que decides hacer.<br>En los próximos diez minutos, el mundo va a reaccionar a cada decisión que tomes.</p>
+  <p class="intro-desc">Estás en el centro de la decisión. Eres no solo el que decide qué se dice, sino todo lo que sucede alrededor.<br>En los próximos diez minutos, el mundo va a reaccionar a cada decisión que tomes. ¿Estás preparado?</p>
   <div class="intro-cta btn-group" style="justify-content:center">
     <button class="btn btn-primary" onclick="goTo('screen-risk')">Entrar →</button>
   </div>
@@ -452,10 +452,10 @@ const AI_ENDPOINT = 'https://tealkin-proxy.delarbre-giorgio.workers.dev';
 const LANG = 'es';
 
 const GAME_DATA = { risks: [
-{ id:'ai', num:'01', name:'Inteligencia Artificial', tagline:`La automatización corrió más rápido que la supervisión. Ahora el trabajo que salió a la calle tiene tu nombre.`,
+{ id:'ai', num:'01', name:'Inteligencia Artificial', tagline:`La automatización fue más rápida que la supervisión. Ahora el trabajo que salió a la calle tiene tu nombre.`,
   scenarios: [
-    { id:'arca', letter:'A', org:'Arca Consulting', sector:'Servicios Profesionales · Consultoría Estratégica', role:'Socio Director', initFlags:[],
-      setup:`Arca es una firma de estrategia premium. Sin que el Socio Director lo supiera, el equipo de research automatizó con IA la producción de reportes sectoriales. Un cliente descubre que su reporte "exclusivo" — el que pagó a precio premium — es un collage de contenido de blogs públicos y un estudio confidencial filtrado. La historia está a una llamada de la prensa financiera.`,
+    { id:'KPNF', letter:'A', org:'KPNF Consulting', sector:'Servicios Profesionales · Consultoría Estratégica', role:'Socio Director', initFlags:[],
+      setup:`KPNF es una firma de estrategia premium. Sin que el Socio Director lo supiera, el equipo de research automatizó con IA la producción de reportes sectoriales. Un cliente descubre que su reporte "exclusivo", el que pagó a precio premium, es un collage de contenido de blogs públicos y un estudio confidencial filtrado. La historia está a una llamada de la prensa financiera.`,
       decisions:[
         { title:'El cliente llama', channels:['press'], situation:`El cliente llama, furioso. Tiene capturas de pantalla que prueban el plagio. Todavía no ha ido a la prensa.`,
           options:[
@@ -463,50 +463,50 @@ const GAME_DATA = { risks: [
             { label:'B', text:'Pedir 48 horas para "revisarlo"', quote:`"Dennos 48 horas para investigar a fondo antes de decir algo definitivo."`, flags:['competitor_active'], meters:{reputation:-10,narrative:-12,trust:-3} },
             { label:'C', text:'Negar que sea plagio', quote:`"Nuestra metodología sintetiza de forma legítima inteligencia disponible públicamente. Rechazamos el término plagio."`, flags:['denied_responsibility'], meters:{reputation:-20,narrative:-18,trust:-12} }
           ]},
-        { title:'Ya está impreso', channels:['press'], situation:`El cliente fue a la prensa financiera. La nota sale esta mañana. Para el mediodía, otros tres clientes han llamado preguntando si sus reportes también fueron generados con IA.`,
+        { title:'Ya está impreso', channels:['press'], situation:`El cliente fue a la prensa financiera y la nota salió esta mañana. Para el mediodía, otros tres clientes han llamado preguntando si sus reportes también fueron generados con IA.`,
           options:[
             { label:'A', text:'Salir públicamente, auditar todo', quote:`"Usamos herramientas de IA sin la transparencia ni la supervisión que nuestros clientes merecen. Eso cambia hoy, con una auditoría externa de todo nuestro portafolio."`, flags:[], meters:{reputation:-8,narrative:12,trust:8} },
-            { label:'B', text:'Atender cada llamada en privado', quote:`Llamadas directas, caso por caso, a los clientes preocupados — nada queda registrado.`, flags:['internal_leak'], meters:{reputation:-12,narrative:-15,trust:-5} },
+            { label:'B', text:'Atender cada llamada en privado', quote:`Llamadas directas, caso por caso, a los clientes preocupados sin que quede registrado.`, flags:['internal_leak'], meters:{reputation:-12,narrative:-15,trust:-5} },
             { label:'C', text:'Cuestionar los motivos del cliente ante la prensa', quote:`"Vale la pena señalar que este cliente tiene una disputa de honorarios abierta con nuestra firma. Dejamos que los lectores saquen sus propias conclusiones."`, flags:['media_aggressive','legal_threat'], meters:{reputation:-22,narrative:-20,trust:-15} }
           ]},
-        { title:'El informante', tbc:true, situation:`En menos de 48 horas, un excolaborador de Arca publica un hilo extenso detallando el flujo interno de IA — y nombra qué otros reportes "insignia" fueron afectados. Dos organismos regionales que acreditan firmas de consultoría anuncian que "están revisando el caso." El consejo convocó una sesión de emergencia para mañana por la mañana.` }
+        { title:'El informante', tbc:true, situation:`En menos de 48 horas, un excolaborador de KPNF publica un hilo extenso detallando el flujo interno de IA y nombra qué otros reportes "insignia" fueron afectados. Dos organismos regionales que acreditan firmas de consultoría anuncian que "están revisando el caso". El consejo convocó una sesión de emergencia para mañana por la mañana.` }
       ]},
     { id:'novu', letter:'B', org:'Novu', sector:'Bienes de Consumo · Marca Juvenil', role:'CEO', initFlags:['influencer_viral'],
-      setup:`Novu es una marca de consumo enfocada en público joven. Para recortar costos, lanzó su campaña insignia generada 100% por IA, reemplazando por completo a su agencia. El sistema produjo variantes personalizadas por perfil de audiencia — nadie las revisó todas. Las variantes dirigidas a hombres jóvenes eran sexistas. Las dirigidas a audiencias LGBTQ se burlaban de ellas. El lunes por la mañana, una influencer con 2.3M de seguidores se vuelve viral comparando las variantes una junto a otra bajo #NovuNosClasifica.`,
+      setup:`Novu es una marca de consumo enfocada en público joven. Para recortar costos, lanzó su campaña insignia generada 100% por IA, reemplazando por completo a su agencia. El sistema produjo variantes personalizadas por perfil de audiencia sin ser revisadas a profunidad. Las variantes dirigidas a hombres jóvenes eran sexistas. Las dirigidas a audiencias LGBTQ se burlaban de ellas. El lunes por la mañana, una influencer con 2.3M de seguidores se vuelve viral comparando las variantes una junto a otra bajo #NovuNosClasifica.`,
       decisions:[
-        { title:'Cuatro horas en tendencia', channels:['social'], situation:`El hilo de la influencer lleva cuatro horas activo. #NovuNosClasifica tiene 180 mil menciones. Marketing te dice que eran "variantes de prueba que nunca debieron publicarse."`,
+        { title:'Cuatro horas en tendencia', channels:['social'], situation:`El hilo de la influencer lleva cuatro horas activo. #NovuNosClasifica tiene 180 mil menciones. Marketing te dice que eran "variantes de prueba que nunca debieron publicarse".`,
           options:[
-            { label:'A', text:'Retirar toda la campaña, ahora', quote:`"Retiramos la campaña por completo. No representa quiénes somos ni quiénes queremos ser — y lo sentimos."`, flags:[], meters:{reputation:-6,narrative:15,trust:10} },
-            { label:'B', text:'Retirar solo las variantes ofensivas', quote:`"Un grupo de variantes no pasó nuestro proceso de revisión y fue retirado."`, flags:['internal_leak'], meters:{reputation:-12,narrative:-12,trust:-5} },
+            { label:'A', text:'Retirar toda la campaña, ahora', quote:`"Retiramos la campaña por completo. No representa quiénes somos ni quiénes queremos ser. Lo sentimos mucho."`, flags:[], meters:{reputation:-6,narrative:15,trust:10} },
+            { label:'B', text:'Retirar solo las variantes ofensivas', quote:`"Un grupo de variantes no pasó nuestro proceso de revisión y fue retirado".`, flags:['internal_leak'], meters:{reputation:-12,narrative:-12,trust:-5} },
             { label:'C', text:'Decir que está fuera de contexto', quote:`"Estas imágenes están circulando sin contexto. En esencia, esta campaña celebra la diversidad."`, flags:['denied_responsibility'], meters:{reputation:-22,narrative:-20,trust:-12} }
           ]},
         { title:'La exigencia de disculpa', channels:['press','social'], situation:`Tres organizaciones LGBTQ y dos colectivos feministas exigen una disculpa pública del CEO. La agencia que Novu despidió filtra que "advirtió exactamente este riesgo y fue ignorada."`,
           options:[
-            { label:'A', text:'El CEO se disculpa en cámara y nombra un comité de revisión', quote:`"Esto pasó bajo mi responsabilidad y me toca corregirlo — con las comunidades que lastimamos sentadas en la mesa."`, flags:[], meters:{reputation:-8,narrative:15,trust:10} },
-            { label:'B', text:'Emitir un comunicado por escrito, sin dar la cara', quote:`"Novu reconoce el impacto de estos materiales y está revisando su proceso de aprobación de contenido."`, flags:['competitor_active'], meters:{reputation:-12,narrative:-10,trust:-3} },
-            { label:'C', text:'Culpar a las "limitaciones" de la IA', quote:`"Novu, en muchos sentidos, también fue defraudada por las limitaciones de la tecnología en la que confió."`, flags:['denied_responsibility','media_aggressive'], meters:{reputation:-24,narrative:-22,trust:-15} }
+            { label:'A', text:'El CEO se disculpa en cámara y nombra un comité de revisión', quote:`"Esto pasó bajo mi responsabilidad y me toca corregirlo con las comunidades que lastimamos sentadas en la mesa."`, flags:[], meters:{reputation:-8,narrative:15,trust:10} },
+            { label:'B', text:'Emitir un comunicado por escrito, sin dar la cara', quote:`"Novu reconoce el impacto de estos materiales y está revisando su proceso de aprobación de contenido".`, flags:['competitor_active'], meters:{reputation:-12,narrative:-10,trust:-3} },
+            { label:'C', text:'Culpar a las "limitaciones" de la IA', quote:`"Novu, en muchos sentidos, también fue defraudada por los sesgos de la tecnología en la que confió".`, flags:['denied_responsibility','media_aggressive'], meters:{reputation:-24,narrative:-22,trust:-15} }
           ]},
-        { title:'La agencia habla', tbc:true, situation:`La presentación filtrada de la agencia ya es completamente pública — incluida la diapositiva que advertía a Novu, por nombre, que "las variantes generativas sin supervisión por segmento demográfico representan un riesgo reputacional severo." Dos socios minoristas retiran en silencio las exhibiciones de Novu "mientras se revisa la situación." Una segunda influencer, esta seguida por inversionistas, empieza a preguntar por qué el consejo aprobó despedir a la agencia.` }
+        { title:'La agencia habla', tbc:true, situation:`La presentación filtrada de la agencia ya es completamente pública, incluida la diapositiva que advertía a Novu, por nombre, que "las variantes generativas sin supervisión por segmento demográfico representan un riesgo reputacional severo". Dos socios minoristas retiran en silencio las exhibiciones de Novu "mientras se revisa la situación". Una segunda influencer, esta seguida por inversionistas, empieza a preguntar por qué el consejo aprobó despedir a la agencia.` }
       ]}
   ]},
 { id:'security', num:'02', name:'Seguridad', tagline:`La amenaza al principio no es reputacional. Es una persona. La comunicación viene después.`,
   scenarios: [
-    { id:'merco', letter:'A', org:'Merco', sector:'Retail · Cadena de Supermercados', role:'Director General', initFlags:['influencer_viral'],
-      setup:`Merco es una cadena de retail nacional en México. Un sábado por la tarde, un enfrentamiento armado en el estacionamiento de una tienda del norte deja a un cliente de 34 años muerto y a cuatro heridos. El video ya circula en redes sociales antes de que Merco se entere de lo ocurrido.`,
+    { id:'merco', letter:'A', org:'Super Coati', sector:'Retail · Cadena de Supermercados', role:'Director General', initFlags:['influencer_viral'],
+      setup:`Super Coati es una cadena de retail nacional en México. Un sábado por la tarde, un enfrentamiento armado en el estacionamiento de una tienda del norte deja a un cliente de 34 años muerto y a cuatro heridos. El video ya circula en redes sociales antes de que Super Coati se entere de lo ocurrido.`,
       decisions:[
         { title:'600 mil vistas', channels:['press','social'], situation:`El video tiene 600 mil vistas. Los medios ya identificaron la tienda. La familia de la víctima no ha sido contactada. La tienda sigue abierta.`,
           options:[
-            { label:'A', text:'Cerrar la tienda, llamar primero a la familia', quote:`"Antes que nada, nuestra prioridad es llegar directamente con la familia — no a través de un comunicado."`, flags:[], meters:{reputation:-8,narrative:12,trust:10} },
-            { label:'B', text:'Publicar un comunicado genérico, mantener la tienda abierta', quote:`"Merco lamenta profundamente los hechos ocurridos y colabora plenamente con las autoridades correspondientes."`, flags:['silenced_family'], meters:{reputation:-15,narrative:-12,trust:-5} },
+            { label:'A', text:'Cerrar la tienda, llamar primero a la familia', quote:`"Antes que nada, nuestra prioridad es llegar directamente con la familia, no a través de un comunicado."`, flags:[], meters:{reputation:-8,narrative:12,trust:10} },
+            { label:'B', text:'Publicar un comunicado genérico, mantener la tienda abierta', quote:`"Super Coati lamenta profundamente los hechos ocurridos y colabora plenamente con las autoridades correspondientes".`, flags:['silenced_family'], meters:{reputation:-15,narrative:-12,trust:-5} },
             { label:'C', text:'No decir nada hasta tener "el panorama completo"', quote:`No se emite comunicado. Se instruye al personal a no hablar con los medios.`, flags:['silenced_family','media_aggressive'], meters:{reputation:-22,narrative:-20,trust:-12} }
           ]},
         { title:'La familia habla', channels:['press'], situation:`La familia dio una entrevista en televisión nacional. Dicen que nadie de la empresa los llamó nunca. El alcalde declaró que "las empresas deben garantizar la seguridad de sus clientes."`,
           options:[
-            { label:'A', text:'Reunirse con la familia en persona, con un directivo presente', quote:`"Hoy nos reunimos con la familia. Con su acuerdo, Merco cubrirá los gastos médicos y financiará una mejora de seguridad en todas las tiendas de la región."`, flags:[], meters:{reputation:-6,narrative:15,trust:10} },
+            { label:'A', text:'Reunirse con la familia en persona, con un directivo presente', quote:`"Hoy nos reunimos con la familia. Con su acuerdo, Super Coati cubrirá los gastos médicos y financiará una mejora de seguridad en todas las tiendas de la región."`, flags:[], meters:{reputation:-6,narrative:15,trust:10} },
             { label:'B', text:'Enviar al equipo legal con una oferta de indemnización', quote:`Una oferta de compensación privada, condicionada a una cláusula de confidencialidad.`, flags:['silenced_family','legal_threat'], meters:{reputation:-14,narrative:-10,trust:-8} },
             { label:'C', text:'Decir que es responsabilidad del gobierno', quote:`"La seguridad pública en zonas comerciales es, en esencia, responsabilidad del Estado."`, flags:['denied_responsibility','media_aggressive'], meters:{reputation:-24,narrative:-22,trust:-15} }
           ]},
-        { title:'La segunda grabación', tbc:true, situation:`Surge un segundo video — grabación de seguridad interna, con marca de tiempo seis minutos antes del tiroteo, que muestra a dos hombres armados pasar frente a un guardia de Merco que los deja seguir. El sindicato de guardias dice que el personal "advirtió en repetidas ocasiones" la falta de protocolo de seguridad en esa sucursal. La fiscalía estatal anuncia una revisión de cumplimiento en las 40 tiendas de la región.` }
+        { title:'La segunda grabación', tbc:true, situation:`Surge un segundo video, se trata de una grabación de seguridad interna, con marca de tiempo seis minutos antes del tiroteo, que muestra a dos hombres armados pasar frente a un guardia de Super Coati que los deja seguir. El sindicato de guardias dice que el personal "advirtió en repetidas ocasiones" la falta de protocolo de seguridad en esa sucursal. La fiscalía estatal anuncia una revisión de cumplimiento en las 40 tiendas de la región.` }
       ]},
     { id:'vertex', letter:'B', org:'Vértex', sector:'Manufactura · Multinacional', role:'CEO Regional', initFlags:[],
       setup:`Vértex es una empresa manufacturera transnacional. Un martes al amanecer, el Director de Planta y dos supervisores son interceptados camino al trabajo. Los secuestradores exigen rescate. En dos horas, el turno de 400 personas llegará a la planta sin saber lo que pasó.`,
@@ -745,7 +745,7 @@ function restartGame(){
 }
 
 /* ============ AI INTEGRATION ============ */
-const DATELINE_CITY = { arca:'Ciudad de México', novu:'São Paulo', merco:'Monterrey', vertex:'Querétaro', alterra:'Ciudad de México', meridian:'Bogotá' };
+const DATELINE_CITY = { KPNF:'Ciudad de México', novu:'São Paulo', merco:'Monterrey', vertex:'Querétaro', alterra:'Ciudad de México', meridian:'Bogotá' };
 
 const NEWS_SYSTEM = `Eres el editor de El Financiero Regional, un diario de negocios líder en LATAM. Escribe una nota informativa de no más de 180 palabras sobre una crisis corporativa en desarrollo. Responde ÚNICAMENTE en este formato exacto, sin markdown, sin comentarios adicionales:
 HEADLINE: <titular>
