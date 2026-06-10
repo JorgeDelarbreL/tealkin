@@ -70,12 +70,6 @@
   .stat { border-top: 0.5px solid rgba(255,255,255,0.1); padding-top: 1rem; }
   .stat-num { font-family: var(--font-display); font-size: 32px; font-weight: 300; color: var(--teal-light); line-height: 1; margin-bottom: 4px; }
   .stat-label { font-size: 11px; font-weight: 300; color: var(--mist); line-height: 1.4; }
-  .contact-block { border-top: 0.5px solid rgba(255,255,255,0.08); padding-top: 1.5rem; margin-top: 1rem; }
-  .contact-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mist); margin-bottom: 8px; }
-  .contact-email { font-family: var(--font-display); font-size: 16px; color: var(--white); text-decoration: none; border-bottom: 0.5px solid rgba(255,255,255,0.2); padding-bottom: 2px; transition: border-color 0.3s; }
-  .contact-email:hover { border-color: var(--white); }
-  .contact-linkedin { display: block; margin-top: 8px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; transition: color 0.3s; }
-  .contact-linkedin:hover { color: var(--white); }
 
   /* ── ABOUT RIGHT ── */
   .body-text { font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.7); line-height: 1.95; margin-bottom: 1.5rem; }
@@ -84,7 +78,7 @@
   .clients-section { margin-top: 3rem; border-top: 0.5px solid rgba(255,255,255,0.08); padding-top: 2rem; }
   .clients-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mist); margin-bottom: 1.25rem; }
   .clients-list { display: flex; flex-wrap: wrap; gap: 8px; }
-  .client { font-size: 12px; color: rgba(255,255,255,0.45); border: 0.5px solid rgba(255,255,255,0.1); padding: 6px 14px; border-radius: 1px; transition: all 0.3s; cursor: default; }
+  .client { font-size: 12px; color: rgba(255,255,255,0.45); border: 0.5px solid rgba(255,255,255,0.1); padding: 6px 14px; border-radius: 1px; transition: all 0.3s; cursor: pointer; text-decoration: none; }
   .client:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
 
   /* ── EDUCATION ── */
@@ -98,6 +92,28 @@
   .section-label::before { content: ''; width: 24px; height: 0.5px; background: var(--teal-light); }
   .section-title { font-family: var(--font-display); font-size: clamp(28px, 3vw, 40px); font-weight: 300; color: var(--white); }
   .section-title em { font-style: italic; color: var(--teal-light); }
+
+  /* ── CONTACT ── */
+  .contact-section { padding: 5rem 4rem; border-top: 0.5px solid rgba(255,255,255,0.06); }
+  .contact-intro { font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.7); line-height: 1.8; max-width: 560px; margin-top: 1.25rem; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 4rem; margin-top: 3rem; align-items: start; }
+  .contact-methods { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-method { display: flex; align-items: center; gap: 1rem; border: 0.5px solid rgba(255,255,255,0.1); border-radius: 2px; padding: 1.25rem 1.5rem; text-decoration: none; color: var(--white); transition: all 0.3s; }
+  .contact-method:hover { border-color: var(--teal-light); background: rgba(26,155,140,0.06); }
+  .contact-method-icon { flex-shrink: 0; width: 40px; height: 40px; border: 0.5px solid rgba(255,255,255,0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--teal-light); }
+  .contact-method-icon svg { width: 18px; height: 18px; }
+  .contact-method-label { display: block; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mist); margin-bottom: 4px; }
+  .contact-method-value { display: block; font-family: var(--font-display); font-size: 18px; color: var(--white); }
+  .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+  .form-row { display: flex; flex-direction: column; gap: 6px; }
+  .form-row label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mist); }
+  .form-row input, .form-row textarea { font-family: var(--font-body); font-size: 14px; color: var(--white); background: transparent; border: 0.5px solid rgba(255,255,255,0.15); border-radius: 2px; padding: 0.75rem 1rem; transition: border-color 0.3s; resize: vertical; }
+  .form-row input:focus, .form-row textarea:focus { outline: none; border-color: var(--teal-light); }
+  .form-row input::placeholder, .form-row textarea::placeholder { color: rgba(255,255,255,0.25); }
+  .contact-submit { display: inline-flex; align-items: center; justify-content: center; gap: 10px; align-self: flex-start; font-family: var(--font-body); font-size: 12px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink); background: var(--teal-light); border: none; border-radius: 2px; padding: 0.9rem 2rem; cursor: pointer; transition: background 0.3s; }
+  .contact-submit:hover { background: var(--teal); }
+  .contact-submit svg { width: 16px; height: 16px; }
+  .contact-note { font-size: 12px; color: var(--mist); }
 
   /* ── FOOTER ── */
   footer { background: var(--ink); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; border-top: 0.5px solid rgba(255,255,255,0.06); }
@@ -116,12 +132,20 @@
     .about-left { position: static; }
     .education-section { padding: 4rem 2rem; }
     .edu-grid { grid-template-columns: 1fr; }
+    .contact-section { padding: 4rem 2rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
     .footer-tagline { display: none; }
   }
 </style>
 </head>
 <body>
+
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <symbol id="icon-external-link" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></symbol>
+  <symbol id="icon-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></symbol>
+  <symbol id="icon-send" viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9z"/></symbol>
+</svg>
 
 <!-- ── NAV ── -->
 <nav id="main-nav">
@@ -185,11 +209,6 @@
         <p class="stat-label">Countries with direct communications leadership experience</p>
       </div>
     </div>
-    <div class="contact-block">
-      <p class="contact-label">Get in touch</p>
-      <a href="mailto:jdelarbrel@gmail.com" class="contact-email">jdelarbrel@gmail.com</a>
-      <a href="https://www.linkedin.com/in/jorge-alejandro-delarbre" target="_blank" class="contact-linkedin">LinkedIn →</a>
-    </div>
   </div>
 
   <div class="about-right">
@@ -208,33 +227,33 @@
     <div class="clients-section">
       <p class="clients-label">Selected client experience</p>
       <div class="clients-list">
-        <span class="client">PepsiCo</span>
-        <span class="client">Nestlé</span>
-        <span class="client">Walmart</span>
-        <span class="client">American Airlines</span>
-        <span class="client">Diageo</span>
-        <span class="client">Philip Morris</span>
-        <span class="client">Banorte</span>
-        <span class="client">Aon</span>
-        <span class="client">ENEL</span>
-        <span class="client">Naturgy</span>
-        <span class="client">Rappi</span>
-        <span class="client">Volvo</span>
-        <span class="client">Airbus</span>
-        <span class="client">ROADIS</span>
-        <span class="client">Reckitt</span>
-        <span class="client">Kenvue</span>
-        <span class="client">AstraZeneca</span>
-        <span class="client">SWIFT</span>
-        <span class="client">BerryMex</span>
-        <span class="client">INE</span>
-        <span class="client">Asolmex</span>
-        <span class="client">Autlán</span>
-        <span class="client">WWE</span>
-        <span class="client">Little Caesars</span>
-        <span class="client">Infonavit</span>
-        <span class="client">Palacio de Hierro</span>
-        <span class="client">Jaguar</span>
+        <a class="client" href="https://www.pepsico.com" target="_blank" rel="noopener">PepsiCo</a>
+        <a class="client" href="https://www.nestle.com" target="_blank" rel="noopener">Nestlé</a>
+        <a class="client" href="https://corporate.walmart.com" target="_blank" rel="noopener">Walmart</a>
+        <a class="client" href="https://www.aa.com" target="_blank" rel="noopener">American Airlines</a>
+        <a class="client" href="https://www.diageo.com" target="_blank" rel="noopener">Diageo</a>
+        <a class="client" href="https://www.pmi.com" target="_blank" rel="noopener">Philip Morris</a>
+        <a class="client" href="https://www.banorte.com" target="_blank" rel="noopener">Banorte</a>
+        <a class="client" href="https://www.aon.com" target="_blank" rel="noopener">Aon</a>
+        <a class="client" href="https://www.enel.com" target="_blank" rel="noopener">ENEL</a>
+        <a class="client" href="https://www.naturgy.com" target="_blank" rel="noopener">Naturgy</a>
+        <a class="client" href="https://www.rappi.com" target="_blank" rel="noopener">Rappi</a>
+        <a class="client" href="https://www.volvotrucks.com" target="_blank" rel="noopener">Volvo</a>
+        <a class="client" href="https://www.airbus.com" target="_blank" rel="noopener">Airbus</a>
+        <a class="client" href="https://www.roadis.com" target="_blank" rel="noopener">ROADIS</a>
+        <a class="client" href="https://www.reckitt.com" target="_blank" rel="noopener">Reckitt</a>
+        <a class="client" href="https://www.kenvue.com" target="_blank" rel="noopener">Kenvue</a>
+        <a class="client" href="https://www.astrazeneca.com" target="_blank" rel="noopener">AstraZeneca</a>
+        <a class="client" href="https://www.swift.com" target="_blank" rel="noopener">SWIFT</a>
+        <a class="client" href="https://www.berrymex.com" target="_blank" rel="noopener">BerryMex</a>
+        <a class="client" href="https://www.ine.mx" target="_blank" rel="noopener">INE</a>
+        <a class="client" href="https://asolmex.org" target="_blank" rel="noopener">Asolmex</a>
+        <a class="client" href="https://www.autlan.com.mx" target="_blank" rel="noopener">Autlán</a>
+        <a class="client" href="https://corporate.wwe.com" target="_blank" rel="noopener">WWE</a>
+        <a class="client" href="https://littlecaesars.com" target="_blank" rel="noopener">Little Caesars</a>
+        <a class="client" href="https://www.infonavit.org.mx" target="_blank" rel="noopener">Infonavit</a>
+        <a class="client" href="https://www.elpalaciodehierro.com" target="_blank" rel="noopener">Palacio de Hierro</a>
+        <a class="client" href="https://www.jaguar.com" target="_blank" rel="noopener">Jaguar</a>
       </div>
     </div>
   </div>
@@ -263,6 +282,52 @@
   </div>
 </section>
 
+<!-- ── CONTACT ── -->
+<section class="contact-section">
+  <p class="section-label">Get in touch</p>
+  <h2 class="section-title">Let's start a <em>conversation.</em></h2>
+  <p class="contact-intro">Whether it's a project, a partnership, or a question about something on TealKin, the easiest ways to reach me are below — or send a message directly with the form.</p>
+
+  <div class="contact-grid">
+    <div class="contact-methods">
+      <a href="https://www.linkedin.com/in/jorge-alejandro-delarbre" target="_blank" rel="noopener" class="contact-method">
+        <span class="contact-method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-external-link"></use></svg></span>
+        <span>
+          <span class="contact-method-label">Connect on LinkedIn</span>
+          <span class="contact-method-value">/in/jorge-alejandro-delarbre</span>
+        </span>
+      </a>
+      <a href="mailto:jdelarbrel@gmail.com" class="contact-method">
+        <span class="contact-method-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-mail"></use></svg></span>
+        <span>
+          <span class="contact-method-label">Email</span>
+          <span class="contact-method-value">jdelarbrel@gmail.com</span>
+        </span>
+      </a>
+    </div>
+
+    <form class="contact-form" id="contactForm">
+      <div class="form-row">
+        <label for="contactName">Name</label>
+        <input type="text" id="contactName" name="name" placeholder="Your name" required>
+      </div>
+      <div class="form-row">
+        <label for="contactEmail">Email</label>
+        <input type="email" id="contactEmail" name="email" placeholder="you@company.com" required>
+      </div>
+      <div class="form-row">
+        <label for="contactMessage">Message</label>
+        <textarea id="contactMessage" name="message" rows="5" placeholder="What would you like to talk about?" required></textarea>
+      </div>
+      <button type="submit" class="contact-submit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-send"></use></svg>
+        Send message
+      </button>
+      <p class="contact-note">Opens your email client with this message ready to send.</p>
+    </form>
+  </div>
+</section>
+
 <footer>
   <a href="index.html" class="footer-logo">Teal<span>Kin</span></a>
   <p class="footer-copy">© 2026 TealKin. Tulum, Riviera Maya.</p>
@@ -285,6 +350,16 @@ document.querySelectorAll('.nav-mobile a').forEach(link => {
 window.addEventListener('scroll', () => {
   document.getElementById('main-nav').style.background =
     window.scrollY > 60 ? 'rgba(10,18,12,0.97)' : 'rgba(15,20,16,0.9)';
+});
+
+document.getElementById('contactForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const name = document.getElementById('contactName').value.trim();
+  const email = document.getElementById('contactEmail').value.trim();
+  const message = document.getElementById('contactMessage').value.trim();
+  const subject = 'TealKin website inquiry from ' + name;
+  const body = message + '\n\n— ' + name + ' (' + email + ')';
+  window.location.href = 'mailto:jdelarbrel@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 });
 </script>
 

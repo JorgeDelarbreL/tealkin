@@ -301,6 +301,150 @@ window.addEventListener('scroll', () => {
   document.getElementById('main-nav').style.background =
     window.scrollY > 60 ? 'rgba(10,18,12,0.97)' : 'rgba(15,20,16,0.9)';
 });
+
+const SERVICE_DETAILS = {
+  'reputation-strategy': {
+    icon: 'reputation-strategy',
+    summary: "La forma en que una organización es percibida por quienes deciden su futuro (inversionistas, reguladores, socios, talento) rara vez ocurre por accidente. Construimos la arquitectura narrativa y los argumentos que sustentan esa percepción de manera deliberada, y damos seguimiento a cómo evoluciona con el tiempo.",
+    includes: ['Auditorías de reputación y mapeo de percepción', 'Arquitectura narrativa y mensajes clave', 'Programas de thought leadership', 'Monitoreo y benchmarking de reputación']
+  },
+  'media-relations': {
+    icon: 'media-relations',
+    summary: "Relaciones estratégicas y sostenidas con los periodistas, editores y medios que importan para tu sector, construidas antes de necesitarlas, no cuando la noticia ya estalló. Desde colocación proactiva hasta reportajes a profundidad que construyen autoridad con el tiempo.",
+    includes: ['Estrategia de prensa y calendarios editoriales', 'Gestión de relaciones con periodistas', 'Artículos de opinión y columnas firmadas', 'Materiales y documentos para prensa']
+  },
+  'stakeholder-mapping': {
+    icon: 'stakeholder-mapping',
+    summary: "Toda organización opera dentro de una red de personas e instituciones cuya percepción define su margen de acción. Mapeamos esa red (influencia, alineación, riesgo) y diseñamos un plan de relacionamiento específico para cada grupo.",
+    includes: ['Mapeo de influencia e intereses', 'Planes de relacionamiento por audiencia', 'Comunicación con inversionistas y reguladores', 'Construcción de coaliciones y alianzas']
+  },
+  'esg-communications': {
+    icon: 'esg-communications',
+    summary: "Los compromisos ambientales, sociales y de gobernanza solo generan confianza cuando se comunican con el mismo rigor que los resultados financieros: sustentados, consistentes y capaces de resistir el escrutinio. Ayudamos a traducir la estrategia ESG en una narrativa pública creíble.",
+    includes: ['Narrativa ESG y apoyo en reportes', 'Estrategia de campañas de sostenibilidad', 'Revisión de riesgo de greenwashing', 'Mensajes ESG por tipo de stakeholder']
+  },
+  'executive-positioning': {
+    icon: 'executive-positioning',
+    summary: "Un CEO o fundador suele ser el activo más visible de una organización, y también el más expuesto. Construimos el perfil público, la voz y la plataforma que convierten a un líder en un vocero creíble de la historia de la empresa.",
+    includes: ['Estrategia de visibilidad ejecutiva', 'Entrenamiento en medios y vocería', 'Thought leadership y ghostwriting', 'Auditorías de marca personal']
+  },
+  'brand-narrative': {
+    icon: 'brand-narrative',
+    summary: "La historia que una marca cuenta sobre sí misma y la que sus audiencias realmente creen no siempre coinciden. Construimos marcos narrativos que cierran esa brecha y le dan a cada campaña un hilo conductor coherente.",
+    includes: ['Historia de marca y marcos de mensajes', 'Lineamientos de tono de voz', 'Auditorías de narrativa', 'Arquitectura de mensajes multicanal']
+  },
+  'launch-communications': {
+    icon: 'launch-communications',
+    summary: "Un lanzamiento es un momento único e irrepetible para definir cómo se entenderá algo nuevo. Planeamos la secuencia, los canales y los voceros para que esa primera impresión cumpla el objetivo que necesita cumplir.",
+    includes: ['Estrategia y cronograma de lanzamiento', 'Siembra con prensa e influencers', 'Gestión de embargos y exclusivas', 'Plan de continuidad post-lanzamiento']
+  },
+  'influencer-strategy': {
+    icon: 'influencer-strategy',
+    summary: "Hoy la influencia está distribuida entre creadores, comunidades y plataformas, y una sola alianza mal evaluada puede deshacer meses de trabajo de marca. Identificamos a las voces correctas, definimos los términos y gestionamos la relación de principio a fin.",
+    includes: ['Identificación y validación de creadores', 'Briefs de campaña y derechos de uso', 'Seguimiento de desempeño', 'Acuerdos de colaboración a prueba de crisis']
+  },
+  'community-management': {
+    icon: 'community-management',
+    summary: "La comunidad de una marca es donde su reputación se pone a prueba todos los días, en público y en tiempo real. Diseñamos el tono, los protocolos de respuesta y los estándares de moderación que mantienen esa conversación alineada con la marca, incluso bajo presión.",
+    includes: ['Escucha social y marcos de respuesta', 'Lineamientos y moderación de comunidad', 'Tono de voz aplicado', 'Protocolos de escalamiento']
+  },
+  'cultural-positioning': {
+    icon: 'cultural-positioning',
+    summary: "Las marcas culturalmente relevantes no solo anuncian en un momento determinado, lo entienden lo suficiente como para participar de forma creíble. Ayudamos a las marcas a leer los cambios culturales y a decidir dónde, y si conviene, sumarse.",
+    includes: ['Análisis cultural y de tendencias', 'Evaluación de relevancia y riesgo', 'Estrategia de alianzas y patrocinios', 'Localización para mercados de LATAM']
+  },
+  'change-management': {
+    icon: 'change-management',
+    summary: "La mayoría de las iniciativas de cambio fallan no porque la estrategia esté mal, sino porque nunca se involucró a las personas que la viven. Diseñamos las comunicaciones que convierten un programa de cambio de un simple anuncio en algo que las personas entienden y adoptan.",
+    includes: ['Hojas de ruta de comunicación del cambio', 'Kits para mandos medios y cascadas de mensajes', 'Monitoreo del clima durante la transición', 'Comunicación de fusiones y reestructuras']
+  },
+  'culture-communications': {
+    icon: 'culture-communications',
+    summary: "La cultura no es una diapositiva en un manual de bienvenida, es lo que las personas viven todos los días. Ayudamos a traducir los valores declarados en el lenguaje, los rituales y los mensajes cotidianos que hacen visible la cultura en toda la organización.",
+    includes: ['Traducción de valores en mensajes', 'Campañas internas y rituales', 'Auditorías de cultura', 'Programas de reconocimiento y storytelling']
+  },
+  'leadership-messaging': {
+    icon: 'leadership-messaging',
+    summary: "Lo que dicen los líderes (con qué frecuencia y en qué tono) define cómo entiende toda la organización hacia dónde se dirige. Ayudamos a los ejecutivos a comunicarse con claridad y consistencia, desde town halls hasta actualizaciones de una sola línea.",
+    includes: ['Contenido para town halls y all-hands', 'Marcos para memos y correos ejecutivos', 'Coaching de voz de liderazgo', 'Arquitectura de mensajes en cascada']
+  },
+  'employee-engagement': {
+    icon: 'employee-engagement',
+    summary: "Los empleados comprometidos son los voceros más creíbles de una organización, y también sus críticos más honestos. Construimos los mecanismos de escucha y los momentos de comunicación que mantienen esa relación bidireccional y confiable.",
+    includes: ['Encuestas de clima y rondas de escucha', 'Diseño de campañas internas', 'Comunicación de reconocimiento', 'Diseño de mecanismos de retroalimentación']
+  },
+  'organizational-narrative': {
+    icon: 'organizational-narrative',
+    summary: "Toda organización tiene una historia interna sobre de dónde viene y hacia dónde va, la haya escrito alguien o no. Ayudamos a articular esa narrativa para que estrategia, cultura y comunicación apunten en la misma dirección.",
+    includes: ['Articulación de misión y visión', 'Marcos de storytelling interno', 'Comunicación de cascada de estrategia', 'Narrativas de aniversarios e hitos']
+  },
+  'crisis-protocol-design': {
+    icon: 'crisis-protocol-design',
+    summary: "La primera hora de una crisis se decide mucho antes de que ocurra: en los protocolos, roles y árboles de decisión construidos con anticipación. Diseñamos los playbooks que permiten a una organización actuar rápido sin actuar con descuido.",
+    includes: ['Playbooks y árboles de decisión', 'Roles y cadenas de escalamiento', 'Banco de comunicados de contención', 'Simulacros y ejercicios de mesa']
+  },
+  'risk-monitoring': {
+    icon: 'risk-monitoring',
+    summary: "La mayoría de las crisis de reputación fueron visibles como una señal mucho antes de convertirse en titular. Construimos los sistemas de monitoreo que detectan riesgos emergentes en medios, redes sociales y canales regulatorios, con tiempo suficiente para actuar.",
+    includes: ['Configuración de escucha en medios y redes', 'Scoring de riesgo y alertas tempranas', 'Monitoreo regulatorio y sectorial', 'Reportes trimestrales de riesgo']
+  },
+  'spokesperson-training': {
+    icon: 'spokesperson-training',
+    summary: "Bajo presión, la preparación de un vocero se nota de inmediato: en su lenguaje, su aplomo y lo que decide no decir. Entrenamos a las personas que enfrentarán a medios, reguladores o al público en los momentos que más importan.",
+    includes: ['Entrenamiento en medios y entrevistas simuladas', 'Disciplina de mensaje', 'Preparación para cámara y eventos en vivo', 'Simulacros de escenarios de crisis']
+  },
+  'issue-management': {
+    icon: 'issue-management',
+    summary: "Un issue es una crisis que todavía no ha ocurrido, y la ventana para gestionarlo en silencio suele ser corta. Damos seguimiento a los issues emergentes y construimos la estrategia de respuesta antes de que lleguen a medios o a la conversación en redes.",
+    includes: ['Identificación y seguimiento de issues', 'Documentos de postura y estrategia de respuesta', 'Equipos de trabajo multidisciplinarios', 'Briefings preventivos a stakeholders']
+  },
+  'post-crisis-recovery': {
+    icon: 'post-crisis-recovery',
+    summary: "Lo que una organización hace en los meses posteriores a una crisis suele determinar si se le recuerda como un fracaso o como un punto de inflexión. Diseñamos la narrativa de recuperación y reconstruimos la confianza que la crisis puso en riesgo.",
+    includes: ['Narrativa y cronograma de recuperación', 'Campañas de reconstrucción de confianza', 'Reactivación del relacionamiento con stakeholders', 'Lecciones aprendidas y actualización de protocolos']
+  }
+};
+
+(function(){
+  const overlay = document.getElementById('serviceModalOverlay');
+  const modal = overlay.querySelector('.service-modal');
+  const iconEl = document.getElementById('serviceModalIcon');
+  const eyebrowEl = document.getElementById('serviceModalEyebrow');
+  const titleEl = document.getElementById('serviceModalTitle');
+  const summaryEl = document.getElementById('serviceModalSummary');
+  const includesEl = document.getElementById('serviceModalIncludes');
+  const includesLabel = 'En la práctica';
+  let lastFocused = null;
+
+  document.querySelectorAll('.area-service').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const data = SERVICE_DETAILS[btn.dataset.service];
+      if (!data) return;
+      const card = btn.closest('.area-card');
+      eyebrowEl.textContent = card.querySelector('.area-maya').textContent.trim() + ' · ' + card.querySelector('.area-category').textContent.trim();
+      titleEl.textContent = btn.textContent.trim();
+      summaryEl.textContent = data.summary;
+      iconEl.className = 'service-modal-icon';
+      ['akin','ha','sakha'].forEach(c => { if (card.classList.contains(c)) iconEl.classList.add(c); });
+      iconEl.innerHTML = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-' + data.icon + '"></use></svg>';
+      includesEl.innerHTML = '<p class="service-modal-includes-label">' + includesLabel + '</p>' +
+        data.includes.map(i => '<div class="service-modal-include">' + i + '</div>').join('');
+      lastFocused = btn;
+      overlay.classList.add('open');
+      document.body.classList.add('modal-open');
+      modal.focus();
+    });
+  });
+
+  function closeServiceModal(){
+    overlay.classList.remove('open');
+    document.body.classList.remove('modal-open');
+    if (lastFocused) lastFocused.focus();
+  }
+  document.getElementById('serviceModalClose').addEventListener('click', closeServiceModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeServiceModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open')) closeServiceModal(); });
+})();
 </script>
 
 </body>
