@@ -11,1048 +11,1208 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Crisis Simulator — TealKin</title>
-<link rel="canonical" href="https://tealkin.com/tools/crisis-simulator/index-es.html">
+<meta name="description" content="An AI-driven crisis communication simulator. Step into the seat of the decision-maker during a live corporate crisis and watch the world react in real time.">
+<link rel="canonical" href="https://tealkin.com/tools/crisis-simulator/index.html">
+<link rel="alternate" hreflang="en" href="https://tealkin.com/tools/crisis-simulator/index.html">
+<link rel="alternate" hreflang="es" href="https://tealkin.com/tools/crisis-simulator/index-es.html">
+<link rel="alternate" hreflang="x-default" href="https://tealkin.com/tools/crisis-simulator/index.html">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4Y4JT3R4WK"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4Y4JT3R4WK');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --teal: #1a9b8c; --teal-dark: #127a6e; --teal-light: #22c4b0;
-    --black: #060a09; --black-mid: #0d1413; --off-white: #f0ece4;
-    --warm-gray: #8a8880; --red: #c0392b; --red-dark: #922b21; --amber: #d4a017;
-    --font-display: 'Cormorant Garamond', Georgia, serif;
-    --font-body: 'DM Sans', system-ui, sans-serif;
-    --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { width: 100%; height: 100%; background: var(--black); color: var(--off-white); font-family: var(--font-body); overflow: hidden; }
-  .screen { position: fixed; inset: 0; display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity 0.6s ease; z-index: 1; }
-  .screen.active { opacity: 1; pointer-events: all; z-index: 10; }
-  .fallback-bg { position: fixed; inset: 0; z-index: 0; background: radial-gradient(ellipse at 20% 50%, rgba(26,155,140,0.08) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(26,155,140,0.05) 0%, transparent 50%), linear-gradient(135deg, #060a09 0%, #0d1e1c 50%, #060a09 100%); }
-  .noise { position: fixed; inset: 0; z-index: 1; opacity: 0.025; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 128px; }
-  .scanlines { position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.025) 2px, rgba(0,0,0,0.025) 4px); pointer-events: none; z-index: 999; }
-  .choice-flash { position: fixed; inset: 0; background: var(--teal); opacity: 0; pointer-events: none; z-index: 500; transition: opacity 0.1s; }
-  .choice-flash.active { opacity: 0.07; }
-  .corner-mark { position: fixed; width: 20px; height: 20px; z-index: 50; pointer-events: none; }
-  .corner-mark::before, .corner-mark::after { content: ''; position: absolute; background: var(--teal); opacity: 0.3; }
-  .corner-mark::before { width: 100%; height: 1px; top: 0; left: 0; }
-  .corner-mark::after { width: 1px; height: 100%; top: 0; left: 0; }
-
-  .corner-mark.tl { top: 20px; left: 20px; }
-
-  .corner-mark.tr { top: 20px; right: 20px; }
-
-  .corner-mark.tr::before, .corner-mark.tr::after { left: auto; right: 0; }
-
-  .corner-mark.bl { bottom: 20px; left: 20px; }
-
-  .corner-mark.bl::before { top: auto; bottom: 0; }
-
-  .corner-mark.bl::after { top: auto; bottom: 0; }
-
-  .corner-mark.br { bottom: 20px; right: 20px; }
-
-  .corner-mark.br::before { top: auto; bottom: 0; left: auto; right: 0; }
-
-  .corner-mark.br::after { top: auto; bottom: 0; left: auto; right: 0; }
-
-  .top-nav { position: fixed; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; padding: 24px 48px; z-index: 100; background: linear-gradient(to bottom, rgba(6,10,9,0.85) 0%, transparent 100%); }
-
-  .nav-logo { font-family: var(--font-display); font-size: 20px; font-weight: 400; color: var(--off-white); text-decoration: none; letter-spacing: 0.05em; }
-
-  .nav-logo span { color: var(--teal); }
-
-  .nav-right { display: flex; align-items: center; gap: 32px; }
-
-  .nav-track-indicator { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm-gray); }
-
-  .nav-restart { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--warm-gray); cursor: pointer; background: none; border: none; font-family: var(--font-body); transition: color 0.3s; }
-
-  .nav-restart:hover { color: var(--off-white); }
-
-  .btn { display: inline-flex; align-items: center; gap: 12px; padding: 16px 30px; font-family: var(--font-body); font-size: 14px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; border: none; transition: var(--transition); text-decoration: none; }
-
-  .btn-primary { background: var(--teal); color: var(--black); }
-
-  .btn-primary:hover { background: var(--teal-light); transform: translateX(4px); }
-
-  .btn-outline { background: transparent; color: var(--off-white); border: 1px solid rgba(240,236,228,0.3); }
-
-  .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
-
-  .btn-ghost { background: transparent; color: var(--warm-gray); padding: 10px 0; letter-spacing: 0.15em; font-size: 12px; }
-
-  .btn-ghost:hover { color: var(--off-white); }
-
-  .btn-group { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
-
-  .stagger > * { opacity: 0; animation: fadeUp 0.5s both; }
-
-  .stagger > *:nth-child(1) { animation-delay: 0.1s; }
-
-  .stagger > *:nth-child(2) { animation-delay: 0.2s; }
-
-  .stagger > *:nth-child(3) { animation-delay: 0.3s; }
-
-  .stagger > *:nth-child(4) { animation-delay: 0.4s; }
-
-  #screen-intro { align-items: center; justify-content: center; text-align: center; padding: 40px; }
-
-  .intro-eyebrow { font-size: 18px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.8s 0.3s forwards; }
-
-  .intro-title { font-family: var(--font-display); font-size: clamp(60px, 10vw, 116px); font-weight: 300; line-height: 0.9; letter-spacing: -0.02em; color: var(--off-white); margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s 0.5s forwards; }
-
-  .intro-title span { display: block; font-style: italic; color: var(--teal-light); }
-
-  .intro-tagline { font-family: var(--font-display); font-size: clamp(15px, 1.8vw, 21px); font-weight: 300; font-style: italic; color: var(--warm-gray); max-width: 600px; line-height: 1.65; margin-bottom: 56px; opacity: 0; animation: fadeUp 0.8s 0.7s forwards; }
-
-  .intro-cta { opacity: 0; animation: fadeUp 0.8s 0.9s forwards; }
-
-  #screen-character { flex-direction: row; }
-
-  .character-visual { width: 42%; position: relative; overflow: hidden; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 48px; }
-
-  .character-photo { position: absolute; inset: 0; background-size: cover; background-position: center top; filter: saturate(0.25) brightness(0.55); }
-
-  .character-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, var(--black) 0%, rgba(6,10,9,0.3) 55%, transparent 100%); }
-
-  .character-name-tag { position: relative; z-index: 2; text-align: center; }
-
-  .character-name-tag h2 { font-family: var(--font-display); font-size: 42px; font-weight: 600; color: var(--off-white); letter-spacing: 0.02em; }
-
-  .character-name-tag p { font-size: 18px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-top: 8px; }
-
-  .character-content { width: 58%; display: flex; flex-direction: column; justify-content: center; padding: 80px 80px 80px 56px; }
-
-  .character-label { font-size: 18px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 22px; }
-
-  .character-intro { font-family: var(--font-display); font-size: clamp(19px, 2.2vw, 28px); font-weight: 300; line-height: 1.65; color: var(--off-white); margin-bottom: 44px; }
-
-  .character-intro strong { font-weight: 600; font-style: italic; color: var(--teal-light); }
-
-  #screen-tracks { padding: 56px; align-items: center; justify-content: center; }
-
-  .tracks-header { text-align: center; margin-bottom: 44px; }
-
-  .tracks-label { font-size: 18px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 18px; }
-
-  .tracks-title { font-family: var(--font-display); font-size: clamp(30px, 4vw, 50px); font-weight: 300; color: var(--off-white); }
-
-  .tracks-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 1080px; width: 100%; }
-
-  .track-card { background: rgba(13,20,19,0.8); border: 1px solid rgba(26,155,140,0.14); cursor: pointer; position: relative; overflow: hidden; transition: var(--transition); backdrop-filter: blur(12px); }
-
-  .track-card-img { width: 100%; height: 150px; background-size: cover; background-position: center; filter: saturate(0.25) brightness(0.45); transition: filter 0.4s; }
-
-  .track-card:hover .track-card-img { filter: saturate(0.4) brightness(0.6); }
-
-  .track-card-body { padding: 24px 26px 28px; }
-
-  .track-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--teal); transition: height 0.4s; }
-
-  .track-card:hover { border-color: rgba(26,155,140,0.38); transform: translateY(-3px); }
-
-  .track-card:hover::before { height: 100%; }
-
-  .track-num { font-size: 18px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 12px; }
-
-  .track-company { font-family: var(--font-display); font-size: 26px; font-weight: 600; color: var(--off-white); line-height: 1.1; margin-bottom: 5px; }
-
-  .track-sector { font-size: 18px; letter-spacing: 0.1em; color: var(--teal); text-transform: uppercase; margin-bottom: 14px; }
-
-  .track-scandal { font-family: var(--font-display); font-size: 18px; font-style: italic; color: var(--warm-gray); line-height: 1.5; margin-bottom: 16px; }
-
-  .track-lesson { font-size: 18px; font-weight: 300; color: rgba(240,236,228,0.38); line-height: 1.6; border-top: 1px solid rgba(26,155,140,0.1); padding-top: 18px; }
-
-  #screen-game { flex-direction: row; }
-
-  .game-left { width: 52%; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
-
-  .game-scene-img { position: absolute; inset: 0; background-size: cover; background-position: center; filter: saturate(0.2) brightness(0.4); transition: background-image 0.5s; }
-
-  .game-scene-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(6,10,9,0.1) 0%, rgba(6,10,9,0.15) 35%, rgba(6,10,9,0.82) 70%, rgba(6,10,9,0.97) 100%); }
-
-  .game-left-content { position: relative; z-index: 2; padding: 60px 52px 60px 68px; }
-
-  .game-progress { display: flex; align-items: center; gap: 8px; margin-bottom: 26px; }
-
-  .progress-step { width: 28px; height: 2px; background: rgba(26,155,140,0.18); transition: background 0.4s; }
-
-  .progress-step.done { background: var(--teal-dark); }
-
-  .progress-step.active { background: var(--teal); }
-
-  .progress-label { font-size: 18px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--warm-gray); margin-left: 8px; }
-
-  .game-decision-num { font-family: var(--font-display); font-size: 96px; font-weight: 300; color: rgba(26,155,140,0.06); line-height: 1; position: absolute; top: 44px; left: 52px; user-select: none; pointer-events: none; }
-
-  .game-track-name { font-size: 18px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; }
-
-  .game-decision-title { font-family: var(--font-display); font-size: clamp(30px, 3.2vw, 48px); font-weight: 400; color: var(--off-white); line-height: 1.1; margin-bottom: 22px; }
-
-  .game-situation { font-family: var(--font-display); font-size: clamp(17px, 1.6vw, 21px); font-weight: 300; line-height: 1.8; color: rgba(240,236,228,0.75); max-width: 500px; }
-
-  .no-correct-banner { display: inline-block; margin-top: 22px; padding: 7px 15px; border: 1px solid var(--amber); color: var(--amber); font-size: 18px; letter-spacing: 0.15em; text-transform: uppercase; }
-
-  .game-right { width: 48%; display: flex; flex-direction: column; justify-content: center; padding: 80px 68px 80px 44px; gap: 14px; }
-
-  .options-label { font-size: 18px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; }
-
-  .option-card { background: rgba(13,20,19,0.75); border: 1px solid rgba(26,155,140,0.13); padding: 20px 24px; cursor: pointer; transition: var(--transition); backdrop-filter: blur(8px); }
-
-  .option-card:hover { border-color: rgba(26,155,140,0.48); background: rgba(26,155,140,0.06); transform: translateX(6px); }
-
-  .option-letter { font-size: 18px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 7px; }
-
-  .option-text { font-family: var(--font-display); font-size: 24px; font-weight: 600; color: var(--off-white); line-height: 1.2; margin-bottom: 6px; }
-
-  .option-quote { font-family: var(--font-display); font-size: 21px; font-style: italic; color: var(--warm-gray); line-height: 1.5; }
-
-  #screen-consequence { flex-direction: row; }
-
-  .consequence-img { width: 40%; position: relative; overflow: hidden; display: flex; align-items: flex-end; }
-
-  .consequence-img-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: saturate(0.18) brightness(0.38); }
-
-  .consequence-img-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(6,10,9,0.05) 0%, rgba(6,10,9,0.65) 100%); }
-
-  .consequence-img-caption { position: relative; z-index: 2; padding: 44px 36px; }
-
-  .loss-label { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,236,228,0.28); margin-bottom: 12px; }
-
-  .loss-tag { display: inline-flex; align-items: center; padding: 9px 18px; border: 1px solid rgba(192,57,43,0.45); color: var(--red); font-size: 16px; font-family: var(--font-display); font-style: italic; }
-
-  .consequence-content { width: 60%; display: flex; flex-direction: column; justify-content: center; padding: 80px 72px 80px 60px; overflow-y: auto; }
-
-  .consequence-track { font-size: 18px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 12px; }
-
-  .consequence-decision { font-family: var(--font-display); font-size: clamp(18px, 1.5vw, 19px); font-style: italic; color: var(--warm-gray); margin-bottom: 28px; }
-
-  .consequence-chosen { font-family: var(--font-display); font-size: clamp(24px, 3.2vw, 42px); font-weight: 600; color: var(--off-white); margin-bottom: 16px; line-height: 1.1; }
-
-  .consequence-quote { font-family: var(--font-display); font-size: clamp(17px, 1.6vw, 21px); font-style: italic; color: var(--warm-gray); line-height: 1.75; margin-bottom: 32px; }
-
-  .consequence-divider { width: 32px; height: 1px; background: var(--teal); margin-bottom: 28px; }
-
-  .consequence-text { font-family: var(--font-display); font-size: clamp(15px, 1.5vw, 20px); font-weight: 400; color: var(--off-white); line-height: 1.8; margin-bottom: 36px; }
-
-  #screen-gameover { align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 60px; }
-
-  #screen-gameover::before { content: ''; position: fixed; inset: 0; background: var(--red-dark); opacity: 0; z-index: -1; animation: redFlash 0.2s 0.05s ease forwards; }
-
-  @keyframes redFlash { 0% { opacity: 0; } 40% { opacity: 0.45; } 100% { opacity: 0; } }
-
-  .gameover-label { font-size: 18px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--red); margin-bottom: 18px; animation: fadeUp 0.6s 0.2s both; }
-
-  .gameover-title { font-family: var(--font-display); font-size: clamp(60px, 12vw, 132px); font-weight: 700; color: var(--red); line-height: 0.85; letter-spacing: -0.02em; margin-bottom: 28px; animation: fadeUp 0.6s 0.35s both; }
-
-  .gameover-ending { font-family: var(--font-display); font-size: clamp(18px, 1.7vw, 21px); font-style: italic; color: var(--warm-gray); margin-bottom: 18px; animation: fadeUp 0.6s 0.5s both; }
-
-  .gameover-consequence { font-family: var(--font-display); font-size: clamp(16px, 1.6vw, 20px); color: rgba(240,236,228,0.5); max-width: 580px; line-height: 1.8; margin-bottom: 44px; animation: fadeUp 0.6s 0.6s both; }
-
-  .gameover-lesson { font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(240,236,228,0.25); max-width: 460px; line-height: 1.9; border-top: 1px solid rgba(240,236,228,0.08); padding-top: 26px; margin-bottom: 40px; animation: fadeUp 0.6s 0.7s both; }
-
-  #screen-survival { align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 60px; overflow-y: auto; }
-
-  .survival-label { font-size: 18px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--teal); margin-bottom: 18px; animation: fadeUp 0.8s 0.2s both; }
-
-  .survival-title { font-family: var(--font-display); font-size: clamp(38px, 7vw, 64px); font-weight: 300; line-height: 1; color: var(--off-white); animation: fadeUp 0.8s 0.35s both; }
-
-  .survival-title span { font-style: italic; color: var(--teal-light); }
-
-  .survival-ending { font-family: var(--font-display); font-size: clamp(16px, 1.4vw, 18px); font-style: italic; color: var(--warm-gray); max-width: 620px; line-height: 1.75; margin: 20px 0 40px; animation: fadeUp 0.8s 0.5s both; }
-
-  .survival-lesson-wrap { border: 1px solid rgba(26,155,140,0.2); padding: 26px 40px; max-width: 620px; margin-bottom: 40px; animation: fadeUp 0.8s 0.65s both; }
-
-  .survival-lesson-label { font-size: 12px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal); margin-bottom: 14px; }
-
-  .survival-lesson-text { font-family: var(--font-display); font-size: clamp(15px, 1.7vw, 20px); font-style: italic; font-weight: 300; color: var(--off-white); line-height: 1.65; }
-
-  .survival-map { width: 100%; max-width: 620px; margin-bottom: 44px; animation: fadeUp 0.8s 0.8s both; }
-
-  .survival-map h3 { font-size: 18px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm-gray); margin-bottom: 18px; text-align: left; }
-
-  .map-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(240,236,228,0.06); font-size: 16px; }
-
-  .map-row:last-child { border-bottom: none; }
-
-  .map-decision { color: var(--warm-gray); font-family: var(--font-display); font-style: italic; }
-
-  .map-loss { color: var(--red); font-size: 14px; }
-
-  @media (max-width: 900px) {
-
-    #screen-character, #screen-game, #screen-consequence { flex-direction: column; overflow-y: auto; }
-
-    .character-visual, .game-left, .consequence-img { width: 100%; height: 240px; min-height: 240px; }
-
-    .character-content, .game-right, .consequence-content { width: 100%; padding: 28px 28px 48px; }
-
-    .game-left-content { padding: 20px 28px 28px; }
-
-    .tracks-grid { grid-template-columns: 1fr; }
-
-    .top-nav { padding: 18px 20px; }
-
-  }
-
+:root{--teal:#1a9b8c;--teal-light:#2dbfad;--teal-deep:#0d6b60;--ink:#0f1410;--ink-soft:#0a1210;--mist:#8a9e98;--white:#fdfcfa;--red:#c0392b;--amber:#d4a017;--font-display:'Cormorant Garamond',Georgia,serif;--font-body:'DM Sans',system-ui,sans-serif;--font-mono:'JetBrains Mono',ui-monospace,monospace;--border:rgba(255,255,255,0.08);--border-soft:rgba(255,255,255,0.06);--transition:.45s cubic-bezier(.25,.46,.45,.94);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;height:100%;background:var(--ink);color:var(--white);font-family:var(--font-body);overflow:hidden;}
+::selection{background:var(--teal);color:var(--ink);}
+.fallback-bg{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 18% 50%,rgba(26,155,140,.1) 0%,transparent 60%),radial-gradient(ellipse at 82% 15%,rgba(26,155,140,.06) 0%,transparent 50%),linear-gradient(150deg,var(--ink-soft) 0%,#0d1e1c 50%,var(--ink-soft) 100%);}
+.noise{position:fixed;inset:0;z-index:1;opacity:.03;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:128px;}
+.scanlines{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.025) 2px,rgba(0,0,0,.025) 4px);pointer-events:none;z-index:999;}
+.choice-flash{position:fixed;inset:0;background:var(--teal);opacity:0;pointer-events:none;z-index:500;transition:opacity .1s;}
+.choice-flash.active{opacity:.08;}
+.corner-mark{position:fixed;width:18px;height:18px;z-index:50;pointer-events:none;}
+.corner-mark::before,.corner-mark::after{content:'';position:absolute;background:var(--teal);opacity:.3;}
+.corner-mark::before{width:100%;height:1px;top:0;left:0;}
+.corner-mark::after{width:1px;height:100%;top:0;left:0;}
+.corner-mark.tl{top:18px;left:18px;}
+.corner-mark.tr{top:18px;right:18px;}
+.corner-mark.tr::before,.corner-mark.tr::after{left:auto;right:0;}
+.corner-mark.bl{bottom:18px;left:18px;}
+.corner-mark.bl::before{top:auto;bottom:0;}
+.corner-mark.bl::after{top:auto;bottom:0;}
+.corner-mark.br{bottom:18px;right:18px;}
+.corner-mark.br::before{top:auto;bottom:0;left:auto;right:0;}
+.corner-mark.br::after{top:auto;bottom:0;left:auto;right:0;}
+/* layout */
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .5s ease;z-index:1;overflow-y:auto;}
+.screen.active{opacity:1;pointer-events:all;z-index:10;}
+.screen.light{background:#f6f3ec;color:#1c1c1a;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.stagger>*{opacity:0;animation:fadeUp .5s both;}
+.stagger>*:nth-child(1){animation-delay:.08s;}
+.stagger>*:nth-child(2){animation-delay:.18s;}
+.stagger>*:nth-child(3){animation-delay:.28s;}
+.stagger>*:nth-child(4){animation-delay:.38s;}
+.stagger>*:nth-child(5){animation-delay:.48s;}
+/* nav */
+.top-nav{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:22px 44px;z-index:100;background:linear-gradient(to bottom,rgba(15,20,16,.85) 0%,transparent 100%);pointer-events:none;}
+.top-nav.on-light{background:linear-gradient(to bottom,rgba(246,243,236,.9) 0%,transparent 100%);}
+.top-nav>*{pointer-events:all;}
+.nav-logo{font-family:var(--font-display);font-size:19px;font-weight:400;color:var(--white);text-decoration:none;letter-spacing:.05em;}
+.top-nav.on-light .nav-logo{color:#1c1c1a;}
+.nav-logo span{color:var(--teal);}
+.nav-right{display:flex;align-items:center;gap:28px;}
+.nav-crumb{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--mist);}
+.top-nav.on-light .nav-crumb{color:#8a8880;}
+.nav-restart{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--mist);cursor:pointer;background:none;border:none;font-family:var(--font-body);transition:color .3s;}
+.nav-restart:hover{color:var(--white);}
+.top-nav.on-light .nav-restart{color:#8a8880;}
+.top-nav.on-light .nav-restart:hover{color:#1c1c1a;}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 28px;font-family:var(--font-body);font-size:13px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border:none;transition:var(--transition);text-decoration:none;}
+.btn-primary{background:var(--teal);color:var(--ink);}
+.btn-primary:hover{background:var(--teal-light);transform:translateX(4px);}
+.btn-outline{background:transparent;color:var(--white);border:1px solid rgba(253,252,250,.25);}
+.btn-outline:hover{border-color:var(--teal);color:var(--teal-light);}
+.screen.light .btn-outline{color:#1c1c1a;border-color:rgba(28,28,26,.2);}
+.btn-ghost{background:transparent;color:var(--mist);padding:10px 0;letter-spacing:.15em;font-size:12px;border:none;cursor:pointer;font-family:var(--font-body);}
+.btn-ghost:hover{color:var(--white);}
+.screen.light .btn-ghost{color:#8a8880;}
+.screen.light .btn-ghost:hover{color:#1c1c1a;}
+.btn-group{display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+.btn[disabled]{opacity:.4;pointer-events:none;}
+/* meters strip */
+.meters-strip{position:fixed;top:68px;left:0;right:0;z-index:90;display:flex;justify-content:center;gap:36px;padding:10px 44px;background:linear-gradient(to bottom,rgba(15,20,16,.7),transparent);opacity:0;pointer-events:none;transition:opacity .4s;}
+.meters-strip.show{opacity:1;}
+.meter{display:flex;align-items:center;gap:10px;}
+.meter-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mist);white-space:nowrap;}
+.meter-track{width:90px;height:3px;background:rgba(255,255,255,.08);position:relative;}
+.meter-fill{position:absolute;inset:0;width:75%;background:var(--teal);transition:width .8s cubic-bezier(.25,.46,.45,.94),background .8s;}
+.meter-value{font-family:var(--font-mono);font-size:11px;color:var(--white);width:24px;}
+@media (max-width:760px){.meters-strip{display:none;}}
+/* ============ INTRO ============ */
+#screen-intro{align-items:center;justify-content:center;text-align:center;padding:40px;}
+.intro-eyebrow{font-size:12px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--teal);margin-bottom:30px;opacity:0;animation:fadeUp .8s .2s forwards;}
+.cris-avatar{width:108px;height:108px;border-radius:50%;background:linear-gradient(135deg,var(--teal) 0%,var(--teal-deep) 100%);display:flex;align-items:center;justify-content:center;margin:0 auto 28px;opacity:0;animation:fadeUp .8s .35s forwards;box-shadow:0 0 60px rgba(26,155,140,.25);}
+.cris-avatar span{font-family:var(--font-display);font-size:42px;font-weight:600;color:var(--ink);letter-spacing:.04em;}
+.intro-title{font-family:var(--font-display);font-size:clamp(48px,8vw,92px);font-weight:300;line-height:1;letter-spacing:-.01em;color:var(--white);margin-bottom:10px;opacity:0;animation:fadeUp .8s .5s forwards;}
+.intro-title em{font-style:italic;color:var(--teal-light);}
+.intro-role{font-size:13px;letter-spacing:.28em;text-transform:uppercase;color:var(--mist);margin-bottom:34px;opacity:0;animation:fadeUp .8s .65s forwards;}
+.intro-desc{font-family:var(--font-display);font-size:clamp(17px,2vw,23px);font-weight:300;font-style:italic;color:rgba(253,252,250,.78);max-width:620px;line-height:1.7;margin-bottom:50px;opacity:0;animation:fadeUp .8s .8s forwards;}
+.intro-cta{opacity:0;animation:fadeUp .8s .95s forwards;}
+/* ============ RISK SELECT ============ */
+#screen-risk{align-items:center;justify-content:center;padding:90px 44px 60px;}
+.section-header{text-align:center;margin-bottom:48px;}
+.section-eyebrow{font-size:12px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--teal);margin-bottom:16px;}
+.section-title{font-family:var(--font-display);font-size:clamp(28px,4vw,48px);font-weight:300;color:var(--white);}
+.risk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;max-width:1100px;width:100%;background:var(--border-soft);}
+.risk-card{background:var(--ink);padding:40px 32px;cursor:pointer;transition:var(--transition);position:relative;}
+.risk-card:hover{background:rgba(26,155,140,.06);}
+.risk-num{font-family:var(--font-mono);font-size:12px;letter-spacing:.2em;color:var(--teal);margin-bottom:28px;}
+.risk-name{font-family:var(--font-display);font-size:30px;font-weight:600;color:var(--white);line-height:1.15;margin-bottom:14px;}
+.risk-tagline{font-size:14px;font-weight:300;color:var(--mist);line-height:1.6;margin-bottom:20px;}
+.risk-arrow{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);opacity:0;transform:translateX(-6px);transition:var(--transition);}
+.risk-card:hover .risk-arrow{opacity:1;transform:translateX(0);}
+@media (max-width:900px){.risk-grid{grid-template-columns:1fr;max-width:480px;}}
+/* ============ SCENARIO SELECT ============ */
+#screen-scenario{align-items:center;justify-content:center;padding:90px 44px 60px;}
+.scenario-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;max-width:980px;width:100%;background:var(--border-soft);}
+.scenario-card{background:var(--ink);padding:44px 38px;cursor:pointer;transition:var(--transition);display:flex;flex-direction:column;}
+.scenario-card:hover{background:rgba(26,155,140,.06);}
+.scenario-letter{font-family:var(--font-mono);font-size:12px;letter-spacing:.2em;color:var(--teal);margin-bottom:24px;}
+.scenario-org{font-family:var(--font-display);font-size:34px;font-weight:600;color:var(--white);line-height:1.1;margin-bottom:6px;}
+.scenario-sector{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal-light);margin-bottom:22px;}
+.scenario-setup{font-size:15px;font-weight:300;color:rgba(253,252,250,.7);line-height:1.75;margin-bottom:24px;flex-grow:1;}
+.scenario-role{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--mist);border-top:1px solid var(--border-soft);padding-top:18px;}
+.scenario-role b{color:var(--white);font-weight:500;}
+@media (max-width:860px){.scenario-grid{grid-template-columns:1fr;max-width:520px;}}
+/* ============ DECISION ============ */
+#screen-decision{flex-direction:row;padding-top:0;}
+.decision-left{width:46%;display:flex;flex-direction:column;justify-content:center;padding:110px 40px 60px 64px;border-right:1px solid var(--border-soft);}
+.decision-org{font-size:12px;letter-spacing:.25em;text-transform:uppercase;color:var(--teal);margin-bottom:18px;}
+.decision-progress{display:flex;align-items:center;gap:8px;margin-bottom:30px;}
+.dprog-step{width:32px;height:2px;background:rgba(26,155,140,.15);transition:background .4s;}
+.dprog-step.done{background:var(--teal-deep);}
+.dprog-step.active{background:var(--teal);}
+.dprog-label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mist);margin-left:6px;}
+.decision-title{font-family:var(--font-display);font-size:clamp(28px,3.4vw,46px);font-weight:400;color:var(--white);line-height:1.15;margin-bottom:24px;}
+.decision-situation{font-family:var(--font-display);font-size:clamp(16px,1.5vw,20px);font-weight:300;line-height:1.85;color:rgba(253,252,250,.78);max-width:480px;}
+.decision-right{width:54%;display:flex;flex-direction:column;justify-content:center;padding:110px 64px 60px 40px;gap:14px;}
+.options-label{font-size:12px;font-weight:500;letter-spacing:.25em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
+.option-card{background:rgba(255,255,255,.02);border:1px solid var(--border);padding:22px 26px;cursor:pointer;transition:var(--transition);}
+.option-card:hover{border-color:rgba(26,155,140,.5);background:rgba(26,155,140,.05);transform:translateX(6px);}
+.option-letter{font-family:var(--font-mono);font-size:12px;letter-spacing:.2em;color:var(--teal);margin-bottom:8px;}
+.option-text{font-family:var(--font-display);font-size:21px;font-weight:600;color:var(--white);line-height:1.25;margin-bottom:8px;}
+.option-quote{font-family:var(--font-display);font-size:16px;font-style:italic;color:var(--mist);line-height:1.55;}
+/* statement composer */
+.statement-panel{display:flex;flex-direction:column;gap:20px;opacity:0;animation:fadeUp .5s forwards;}
+.statement-strategy{font-family:var(--font-display);font-size:18px;font-style:italic;color:rgba(253,252,250,.8);line-height:1.55;padding-bottom:20px;border-bottom:1px solid var(--border-soft);}
+.statement-strategy b{font-style:normal;font-weight:600;color:var(--white);}
+.statement-input{width:100%;min-height:130px;background:rgba(255,255,255,.02);border:1px solid var(--border);color:var(--white);font-family:var(--font-display);font-size:18px;font-style:italic;line-height:1.65;padding:18px 20px;resize:vertical;transition:border-color .3s,background .3s;}
+.statement-input:focus{outline:none;border-color:var(--teal);background:rgba(26,155,140,.04);}
+.statement-hint{font-size:12px;color:var(--mist);line-height:1.7;max-width:440px;}
+/* TBC panel */
+.tbc-banner{display:inline-flex;align-items:center;gap:10px;margin-top:26px;padding:8px 16px;border:1px solid var(--amber);color:var(--amber);font-size:11px;letter-spacing:.2em;text-transform:uppercase;}
+.tbc-panel{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:24px;}
+.tbc-msg{font-family:var(--font-display);font-size:clamp(20px,2.4vw,30px);font-style:italic;font-weight:300;color:var(--mist);line-height:1.6;max-width:440px;}
+@media (max-width:900px){#screen-decision{flex-direction:column;overflow-y:auto;}.decision-left,.decision-right{width:100%;padding:100px 28px 28px;border-right:none;}.decision-right{padding-top:0;}}
+/* live loader */
+.live-loader{display:flex;align-items:center;gap:14px;}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--red);animation:pulseDot 1.1s ease-in-out infinite;flex-shrink:0;}
+@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.35;transform:scale(.8);}}
+.live-label{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--mist);font-family:var(--font-mono);white-space:nowrap;}
+.live-bar{flex-grow:1;height:2px;background:rgba(255,255,255,.08);position:relative;overflow:hidden;max-width:240px;}
+.live-bar::after{content:'';position:absolute;top:0;left:-40%;width:40%;height:100%;background:var(--teal);animation:liveSweep 1.3s ease-in-out infinite;}
+@keyframes liveSweep{0%{left:-40%;}100%{left:100%;}}
+.live-loader-wrap{display:flex;align-items:center;justify-content:center;height:100%;width:100%;padding:60px;}
+.reaction-continue{position:fixed;bottom:36px;right:48px;z-index:80;opacity:0;animation:fadeUp .5s .3s forwards;}
+@media (max-width:760px){.reaction-continue{position:static;display:flex;justify-content:center;padding:8px 20px 60px;}}
+/* ============ DEVICE FRAMES ============ */
+.device-frame{background:#141a17;border:1px solid var(--border);box-shadow:0 24px 70px rgba(0,0,0,.35);}
+.screen.light .device-frame{background:#fdfcfa;box-shadow:0 24px 70px rgba(0,0,0,.16);}
+.device-bar{display:flex;align-items:center;gap:7px;padding:11px 16px;background:#1a201d;border-bottom:1px solid var(--border-soft);}
+.screen.light .device-bar{background:#e7e4dc;border-bottom-color:#d3d1cb;}
+.device-dot{width:9px;height:9px;border-radius:50%;}
+.device-dot.r{background:#e0605a;}
+.device-dot.y{background:#e3b341;}
+.device-dot.g{background:#5fb86b;}
+.device-url{flex-grow:1;text-align:center;font-family:var(--font-mono);font-size:11px;letter-spacing:.02em;color:var(--mist);background:rgba(255,255,255,.05);border-radius:20px;padding:4px 18px;margin:0 14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.screen.light .device-url{color:#8a8880;background:rgba(28,28,26,.05);}
+.device-body{padding:32px 36px;}
+.phone-frame{max-width:380px;margin:0 auto;border:8px solid #1a201d;border-radius:34px;background:#0c100e;box-shadow:0 24px 70px rgba(0,0,0,.4);overflow:hidden;position:relative;}
+.phone-notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:90px;height:18px;background:#1a201d;border-radius:0 0 12px 12px;z-index:5;}
+.phone-status{display:flex;justify-content:space-between;align-items:center;padding:14px 22px 2px;font-family:var(--font-mono);font-size:11px;color:var(--white);}
+.phone-screen{padding:0 18px 14px;}
+.phone-home{width:100px;height:4px;background:rgba(255,255,255,.18);border-radius:2px;margin:12px auto 8px;}
+/* ============ NEWS ============ */
+.news-page{max-width:760px;margin:0 auto;padding:120px 24px 90px;width:100%;}
+.news-page .device-body{padding:36px 40px 44px;}
+.news-outlet-header{display:flex;align-items:baseline;gap:16px;border-bottom:3px solid #1c1c1a;padding-bottom:14px;margin-bottom:22px;}
+.news-outlet-name{font-family:var(--font-display);font-size:26px;font-weight:700;letter-spacing:.02em;color:#1c1c1a;}
+.news-outlet-section{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:#8a8880;}
+.news-dateline{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8a8880;font-family:var(--font-mono);margin-bottom:18px;}
+.news-headline{font-family:var(--font-display);font-size:clamp(32px,5vw,52px);font-weight:600;line-height:1.1;color:#1c1c1a;margin-bottom:28px;opacity:0;animation:fadeUp .6s .1s forwards;}
+.news-lead{font-size:17px;line-height:1.85;color:#2a2a26;margin-bottom:20px;opacity:0;animation:fadeUp .6s .25s forwards;}
+.news-lead:first-letter{font-family:var(--font-display);font-size:58px;font-weight:600;float:left;line-height:.85;padding:6px 10px 0 0;color:#1c1c1a;}
+.news-quote{font-family:var(--font-display);font-size:21px;font-style:italic;color:#3d3d38;border-left:3px solid var(--teal);padding:4px 0 4px 24px;margin:24px 0;line-height:1.6;opacity:0;animation:fadeUp .6s .4s forwards;}
+.news-byline{font-size:12px;letter-spacing:.1em;color:#8a8880;margin-top:30px;text-transform:uppercase;opacity:0;animation:fadeUp .6s .5s forwards;}
+/* ============ HEADLINES CASCADE ============ */
+.headlines-page{max-width:740px;margin:0 auto;padding:120px 24px 90px;width:100%;}
+.headlines-eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--teal);margin-bottom:28px;font-family:var(--font-mono);}
+.headline-row{display:flex;align-items:center;gap:18px;padding:18px 0;border-bottom:1px solid var(--border-soft);opacity:0;animation:fadeUp .5s forwards;}
+.headline-badge{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--ink);flex-shrink:0;}
+.headline-meta{display:flex;flex-direction:column;gap:6px;min-width:0;}
+.headline-outlet{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);font-family:var(--font-mono);}
+.headline-text{font-family:var(--font-display);font-size:clamp(17px,2.1vw,25px);font-weight:400;color:var(--white);line-height:1.35;}
+.trending-banner{margin-top:30px;padding:18px 24px;border:1px solid rgba(192,57,43,.4);display:flex;align-items:center;gap:16px;flex-wrap:wrap;opacity:0;animation:fadeUp .5s forwards;}
+.trending-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);}
+.trending-tag{font-family:var(--font-display);font-size:20px;font-style:italic;color:var(--white);}
+.trending-count{font-family:var(--font-mono);font-size:13px;color:var(--mist);margin-left:auto;}
+/* ============ PULSO FEED ============ */
+.pulso-page{max-width:380px;margin:0 auto;padding:110px 20px 90px;width:100%;}
+.pulso-header{display:flex;align-items:center;justify-content:space-between;margin:16px 0 18px;flex-wrap:wrap;gap:14px;}
+.pulso-logo{font-weight:700;font-size:18px;letter-spacing:.08em;display:flex;align-items:center;gap:10px;color:var(--white);}
+.pulso-wave{display:inline-block;width:18px;height:18px;border:2px solid var(--teal);border-radius:50%;border-top-color:transparent;border-right-color:transparent;transform:rotate(45deg);}
+.pulso-trending{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;color:var(--red);border:1px solid rgba(192,57,43,.4);padding:5px 10px;text-transform:uppercase;}
+.pulso-feed{display:flex;flex-direction:column;gap:1px;background:var(--border-soft);}
+.pulso-post{background:#0c100e;padding:16px 4px;display:flex;gap:12px;opacity:0;animation:fadeUp .5s forwards;}
+.pulso-avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--font-display);font-weight:600;font-size:14px;color:var(--ink);}
+.pulso-body{flex-grow:1;min-width:0;}
+.pulso-handle-row{display:flex;align-items:baseline;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.pulso-name{font-size:13px;font-weight:500;color:var(--white);}
+.pulso-handle{font-size:12px;color:var(--mist);}
+.pulso-time{font-size:11px;color:var(--mist);margin-left:auto;font-family:var(--font-mono);}
+.pulso-text{font-size:14px;line-height:1.6;color:rgba(253,252,250,.9);margin-bottom:10px;word-wrap:break-word;}
+.pulso-actions{display:flex;gap:20px;}
+.pulso-action{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--mist);font-family:var(--font-mono);}
+/* ============ LEAKED EMAIL ============ */
+.leak-page{max-width:680px;margin:0 auto;padding:120px 24px 90px;width:100%;}
+.leak-page .device-body{padding:0;}
+.leak-sheet{background:#e9e8e4;padding:40px 44px;position:relative;overflow:hidden;font-family:var(--font-mono);}
+.leak-watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-28deg);font-size:64px;font-weight:700;color:rgba(192,57,43,.12);letter-spacing:.2em;white-space:nowrap;pointer-events:none;font-family:var(--font-body);}
+.leak-meta{border-bottom:1px solid #c8c6c0;padding-bottom:16px;margin-bottom:20px;position:relative;}
+.leak-meta-row{display:flex;gap:12px;font-size:13px;line-height:1.9;color:#3a3a36;}
+.leak-meta-label{width:64px;flex-shrink:0;color:#8a8880;text-transform:uppercase;font-size:11px;letter-spacing:.1em;padding-top:2px;}
+.leak-body{font-size:14px;line-height:1.85;color:#2a2a26;white-space:pre-line;position:relative;}
+.leak-source{font-family:var(--font-body);font-size:12px;font-style:italic;color:#8a8880;margin-top:24px;}
+/* ============ VIRAL VIDEO ============ */
+.viral-page{max-width:380px;margin:0 auto;padding:110px 20px 90px;width:100%;}
+.viral-thumb{aspect-ratio:9/16;background:linear-gradient(160deg,var(--teal-deep) 0%,var(--ink-soft) 75%);position:relative;display:flex;align-items:flex-end;padding:24px;overflow:hidden;}
+.viral-thumb::before{content:'▶';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:48px;color:rgba(253,252,250,.18);}
+.viral-views{position:absolute;top:16px;right:16px;font-family:var(--font-mono);font-size:12px;color:var(--white);background:rgba(0,0,0,.45);padding:4px 10px;}
+.viral-thumb-title{font-family:var(--font-display);font-size:clamp(20px,3vw,30px);font-weight:600;color:var(--white);line-height:1.25;position:relative;z-index:2;text-shadow:0 2px 12px rgba(0,0,0,.5);}
+.viral-progress{position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(255,255,255,.15);}
+.viral-progress-fill{height:100%;width:34%;background:var(--red);}
+.viral-channel{font-size:12px;letter-spacing:.1em;color:var(--mist);margin:14px 0 22px;font-family:var(--font-mono);}
+.viral-comments{display:flex;flex-direction:column;gap:16px;padding-bottom:6px;}
+.viral-comment{padding:14px 0;border-top:1px solid var(--border-soft);}
+.viral-comment-author{font-size:13px;font-weight:500;color:var(--teal-light);margin-bottom:5px;}
+.viral-comment-text{font-size:14px;line-height:1.6;color:rgba(253,252,250,.85);}
+/* ============ OUTCOME ============ */
+#screen-outcome{align-items:center;}
+.outcome-page{max-width:760px;margin:0 auto;padding:130px 40px 100px;width:100%;}
+.outcome-title{font-family:var(--font-display);font-size:clamp(34px,5vw,58px);font-weight:300;color:var(--white);margin-bottom:8px;line-height:1.1;}
+.outcome-title em{font-style:italic;color:var(--teal-light);}
+.outcome-sub{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--mist);margin-bottom:36px;}
+.outcome-meters{display:flex;gap:40px;margin-bottom:48px;flex-wrap:wrap;}
+.outcome-meter{flex:1;min-width:140px;}
+.outcome-meter-label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mist);margin-bottom:10px;}
+.outcome-meter-track{height:3px;background:rgba(255,255,255,.08);margin-bottom:8px;}
+.outcome-meter-fill{height:100%;background:var(--teal);transition:width 1s cubic-bezier(.25,.46,.45,.94);}
+.outcome-meter-value{font-family:var(--font-mono);font-size:20px;color:var(--white);}
+.outcome-map{border-top:1px solid var(--border-soft);padding-top:8px;margin-bottom:44px;}
+.outcome-map-row{display:flex;justify-content:space-between;gap:24px;padding:16px 0;border-bottom:1px solid var(--border-soft);}
+.outcome-map-decision{font-family:var(--font-display);font-size:17px;font-style:italic;color:rgba(253,252,250,.85);max-width:62%;}
+.outcome-map-tag{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-light);text-align:right;flex-shrink:0;}
+.outcome-diagnosis-wrap{border:1px solid var(--border);padding:30px 34px;margin-bottom:44px;}
+.outcome-diagnosis-label{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--teal);margin-bottom:16px;}
+.outcome-diagnosis{font-family:var(--font-display);font-size:clamp(16px,1.8vw,20px);font-style:italic;font-weight:300;color:rgba(253,252,250,.9);line-height:1.75;}
+@media (max-width:760px){.news-page,.headlines-page,.pulso-page,.leak-page,.viral-page,.outcome-page{padding-top:104px;}}
 </style>
-
 </head>
-
 <body>
-
 <div class="fallback-bg"></div>
-
 <div class="noise"></div>
-
 <div class="scanlines"></div>
-
 <div class="choice-flash" id="choiceFlash"></div>
-
 <div class="corner-mark tl"></div>
-
 <div class="corner-mark tr"></div>
-
 <div class="corner-mark bl"></div>
-
 <div class="corner-mark br"></div>
 
-<nav class="top-nav">
-
+<nav class="top-nav" id="topNav">
   <a href="https://tealkin.com" class="nav-logo">Teal<span>Kin</span></a>
-
   <div class="nav-right">
-
-    <span class="nav-track-indicator" id="navTrackIndicator"></span>
-
-    <button class="nav-restart" id="navRestart" style="display:none" onclick="restartGame()">← Restart</button>
-
+    <span class="nav-crumb" id="navCrumb"></span>
+    <button class="nav-restart" id="navRestart" style="display:none" onclick="restartGame()">↺ Start over</button>
   </div>
-
 </nav>
 
+<div class="meters-strip" id="metersStrip">
+  <div class="meter"><span class="meter-label">Reputation</span><div class="meter-track"><div class="meter-fill" id="meterRepFill"></div></div><span class="meter-value" id="meterRepVal">75</span></div>
+  <div class="meter"><span class="meter-label">Narrative</span><div class="meter-track"><div class="meter-fill" id="meterNarFill"></div></div><span class="meter-value" id="meterNarVal">60</span></div>
+  <div class="meter"><span class="meter-label">Internal trust</span><div class="meter-track"><div class="meter-fill" id="meterTrustFill"></div></div><span class="meter-value" id="meterTrustVal">80</span></div>
+</div>
+
+<!-- INTRO -->
 <div class="screen active" id="screen-intro">
-
-  <p class="intro-eyebrow">TealKin / Tools</p>
-
-  <h1 class="intro-title">Crisis<span>Simulator</span></h1>
-
-  <p class="intro-tagline">Three cases. Three scenarios. One lesson: in reputation management, every hour you deny the truth is an hour you hand the crisis room to grow.</p>
-
+  <p class="intro-eyebrow">TealKin / Tools / Crisis Simulator</p>
+  <div class="cris-avatar"><span>CC</span></div>
+  <h1 class="intro-title">Cris <em>Cisneros</em></h1>
+  <p class="intro-role" id="introRole">Decision-maker · Crisis Committee</p>
+  <p class="intro-desc">You're not the spokesperson. You're the one in the room who has to decide — and everything you say to the press is just the visible edge of what you choose to do.<br>In the next ten minutes, the world will react to every call you make.</p>
   <div class="intro-cta btn-group" style="justify-content:center">
-
-    <button class="btn btn-primary" onclick="goTo('screen-character')">Start →</button>
-
-    <button class="btn btn-ghost" onclick="showInfo()">About this sim</button>
-
+    <button class="btn btn-primary" onclick="goTo('screen-risk')">Step in →</button>
   </div>
-
 </div>
 
-<div class="screen" id="screen-character">
-
-  <div class="character-visual">
-
-    <div class="character-photo" style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80&fit=crop&crop=face')"></div>
-
-    <div class="character-name-tag"><h2>Cris Cisneros</h2><p>Division Director</p></div>
-
+<!-- RISK SELECT -->
+<div class="screen" id="screen-risk">
+  <div class="section-header">
+    <p class="section-eyebrow">Choose your exposure</p>
+    <h2 class="section-title">Which risk keeps you up at night?</h2>
   </div>
+  <div class="risk-grid stagger" id="riskGrid"></div>
+</div>
 
-  <div class="character-content stagger">
+<!-- SCENARIO SELECT -->
+<div class="screen" id="screen-scenario">
+  <div class="section-header">
+    <p class="section-eyebrow" id="scenarioEyebrow">Risk selected</p>
+    <h2 class="section-title" id="scenarioTitle">Pick the organization</h2>
+  </div>
+  <div class="scenario-grid stagger" id="scenarioGrid"></div>
+  <div class="btn-group" style="margin-top:36px">
+    <button class="btn btn-ghost" onclick="goTo('screen-risk')">← Back to risks</button>
+  </div>
+</div>
 
-    <p class="character-label">Your role</p>
+<!-- DECISION -->
+<div class="screen" id="screen-decision">
+  <div class="decision-left">
+    <p class="decision-org" id="decisionOrg"></p>
+    <div class="decision-progress" id="decisionProgress"></div>
+    <h2 class="decision-title" id="decisionTitle"></h2>
+    <p class="decision-situation" id="decisionSituation"></p>
+    <div class="tbc-banner" id="tbcBanner" style="display:none">⚠ Developing situation · no options yet</div>
+  </div>
+  <div class="decision-right" id="decisionRight"></div>
+</div>
 
-    <p class="character-intro">
+<!-- REACTION: NEWS ARTICLE -->
+<div class="screen light" id="screen-react-news">
+  <div class="news-page">
+    <div class="device-frame">
+      <div class="device-bar">
+        <span class="device-dot r"></span><span class="device-dot y"></span><span class="device-dot g"></span>
+        <span class="device-url" id="newsUrl">elfinanciero.regional</span>
+      </div>
+      <div class="device-body" id="newsContent">
+        <div class="live-loader-wrap" id="newsLoader"></div>
+      </div>
+    </div>
+  </div>
+  <div class="reaction-continue"><button class="btn btn-primary" id="newsContinueBtn" onclick="nextReaction()">Continue →</button></div>
+</div>
 
-      You have spent years delivering results, leading teams, making the tough calls others avoid.<br><br>
+<!-- REACTION: HEADLINE CASCADE -->
+<div class="screen" id="screen-react-headlines">
+  <div class="headlines-page">
+    <p class="headlines-eyebrow">Wire · incoming coverage</p>
+    <div class="device-frame">
+      <div class="device-bar">
+        <span class="device-dot r"></span><span class="device-dot y"></span><span class="device-dot g"></span>
+        <span class="device-url">wire.terminal — live feed</span>
+      </div>
+      <div class="device-body" id="headlinesContent">
+        <div class="live-loader-wrap" id="headlinesLoader"></div>
+      </div>
+    </div>
+  </div>
+  <div class="reaction-continue"><button class="btn btn-primary" id="headlinesContinueBtn" onclick="nextReaction()">Continue →</button></div>
+</div>
 
-      Today you will face one of the biggest professional challenges of your career. It has nothing to do with operations.<br><br>
+<!-- REACTION: PULSO SOCIAL FEED -->
+<div class="screen" id="screen-react-social">
+  <div class="pulso-page">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span>9:41</span><span>●●●●● 📶 🔋</span></div>
+      <div class="phone-screen">
+        <div class="pulso-header">
+          <div class="pulso-logo"><span class="pulso-wave"></span>PULSO</div>
+          <div class="pulso-trending" id="pulsoTrending" style="display:none"></div>
+        </div>
+        <div id="pulsoContent">
+          <div class="live-loader-wrap" id="pulsoLoader"></div>
+        </div>
+      </div>
+      <div class="phone-home"></div>
+    </div>
+  </div>
+  <div class="reaction-continue"><button class="btn btn-primary" id="pulsoContinueBtn" onclick="nextReaction()">Continue →</button></div>
+</div>
 
-      <strong>It is about the company's reputation.</strong>
+<!-- REACTION: LEAKED EMAIL (conditional) -->
+<div class="screen light" id="screen-react-leak">
+  <div class="leak-page">
+    <div class="device-frame">
+      <div class="device-bar">
+        <span class="device-dot r"></span><span class="device-dot y"></span><span class="device-dot g"></span>
+        <span class="device-url">Mail — Inbox (Leaked)</span>
+      </div>
+      <div class="device-body" id="leakContent">
+        <div class="live-loader-wrap" id="leakLoader"></div>
+      </div>
+    </div>
+  </div>
+  <div class="reaction-continue"><button class="btn btn-primary" id="leakContinueBtn" onclick="nextReaction()">Continue →</button></div>
+</div>
 
-    </p>
+<!-- REACTION: VIRAL VIDEO (conditional) -->
+<div class="screen" id="screen-react-viral">
+  <div class="viral-page">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-status"><span>9:41</span><span>●●●●● 📶 🔋</span></div>
+      <div class="phone-screen" id="viralContent">
+        <div class="live-loader-wrap" id="viralLoader"></div>
+      </div>
+      <div class="phone-home"></div>
+    </div>
+  </div>
+  <div class="reaction-continue"><button class="btn btn-primary" id="viralContinueBtn" onclick="nextReaction()">Continue →</button></div>
+</div>
 
+<!-- OUTCOME -->
+<div class="screen" id="screen-outcome">
+  <div class="outcome-page">
+    <p class="section-eyebrow">Outcome</p>
+    <h1 class="outcome-title" id="outcomeTitle"></h1>
+    <p class="outcome-sub" id="outcomeSub"></p>
+    <div class="outcome-meters" id="outcomeMeters"></div>
+    <div class="outcome-map" id="outcomeMap"></div>
+    <div class="outcome-diagnosis-wrap">
+      <p class="outcome-diagnosis-label">Analyst diagnosis</p>
+      <p class="outcome-diagnosis" id="outcomeDiagnosis">
+        <span class="live-loader" style="display:inline-flex"><span class="live-dot"></span><span class="live-label">Compiling assessment…</span><span class="live-bar"></span></span>
+      </p>
+    </div>
     <div class="btn-group">
-
-      <button class="btn btn-primary" onclick="goTo('screen-tracks')">Choose a case →</button>
-
-      <button class="btn btn-ghost" onclick="goTo('screen-intro')">← Back</button>
-
+      <button class="btn btn-primary" onclick="contactUs()">I want this for my company →</button>
+      <button class="btn btn-outline" id="shareBtn" onclick="shareLinkedIn()">Share on LinkedIn</button>
+      <button class="btn btn-outline" onclick="restartGame()">Try another scenario →</button>
     </div>
-
   </div>
-
-</div>
-
-<div class="screen" id="screen-tracks">
-
-  <div class="tracks-header">
-
-    <p class="tracks-label">Select a case</p>
-
-    <h2 class="tracks-title">Which arena are you entering today?</h2>
-
-  </div>
-
-  <div class="tracks-grid stagger" id="tracksGrid"></div>
-
-</div>
-
-<div class="screen" id="screen-game">
-
-  <div class="game-left">
-
-    <div class="game-scene-img" id="gameSceneImg"></div>
-
-    <div class="game-left-content">
-
-      <div class="game-decision-num" id="gameDecisionNum">01</div>
-
-      <div class="game-progress" id="gameProgress"></div>
-
-      <p class="game-track-name" id="gameTrackName"></p>
-
-      <h2 class="game-decision-title" id="gameDecisionTitle"></h2>
-
-      <p class="game-situation" id="gameSituation"></p>
-
-      <div id="noCorrectBanner" class="no-correct-banner" style="display:none">⚠ No right answer. Only the least bad.</div>
-
-    </div>
-
-  </div>
-
-  <div class="game-right">
-
-    <p class="options-label">Your options</p>
-
-    <div id="optionsContainer" class="stagger"></div>
-
-  </div>
-
-</div>
-
-<div class="screen" id="screen-consequence">
-
-  <div class="consequence-img">
-
-    <div class="consequence-img-bg" id="consImgBg"></div>
-
-    <div class="consequence-img-caption">
-
-      <p class="loss-label">What you lose</p>
-
-      <div class="loss-tag" id="consLossTag" style="display:none"><span id="consLossText"></span></div>
-
-    </div>
-
-  </div>
-
-  <div class="consequence-content">
-
-    <p class="consequence-track" id="consTrack"></p>
-
-    <p class="consequence-decision" id="consDecision"></p>
-
-    <h2 class="consequence-chosen" id="consChosen"></h2>
-
-    <p class="consequence-quote" id="consQuote"></p>
-
-    <div class="consequence-divider"></div>
-
-    <p class="consequence-text" id="consText"></p>
-
-    <div class="btn-group">
-
-      <button class="btn btn-primary" id="consContinueBtn" onclick="continueFromConsequence()">Continue →</button>
-
-    </div>
-
-  </div>
-
-</div>
-
-<div class="screen" id="screen-gameover">
-
-  <p class="gameover-label" id="gameoverLabel">Terminal crisis</p>
-
-  <h1 class="gameover-title">Game<br>Over</h1>
-
-  <p class="gameover-ending" id="gameoverEnding"></p>
-
-  <p class="gameover-consequence" id="gameoverConsequence"></p>
-
-  <p class="gameover-lesson" id="gameoverLesson"></p>
-
-  <div class="btn-group" style="justify-content:center">
-
-    <button class="btn btn-outline" onclick="restartTrack()">Try again</button>
-
-    <button class="btn btn-ghost" onclick="goTo('screen-tracks')">Switch case</button>
-
-  </div>
-
-</div>
-
-<div class="screen" id="screen-survival">
-
-  <p class="survival-label" id="survivalLabel">Final outcome</p>
-
-  <h1 class="survival-title" id="survivalTitle"></h1>
-
-  <p class="survival-ending" id="survivalEnding"></p>
-
-  <div class="survival-lesson-wrap">
-
-    <p class="survival-lesson-label">Core lesson</p>
-
-    <p class="survival-lesson-text" id="survivalLesson"></p>
-
-  </div>
-
-  <div class="survival-map" id="survivalMap"></div>
-
-  <div class="btn-group" style="justify-content:center">
-
-    <button class="btn btn-primary" onclick="goTo('screen-tracks')">Play another case →</button>
-
-    <button class="btn btn-ghost" onclick="restartTrack()">Replay this case</button>
-
-  </div>
-
 </div>
 
 <script>
-
-const IMG = {
-
-  sunshine:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=70&fit=crop',
-
-  nexus:'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=800&q=70&fit=crop',
-
-  nutricare:'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=70&fit=crop',
-
-  scenes:{
-
-    sunshine:['https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1589578228447-e1a4e481c6c8?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&q=70&fit=crop'],
-
-    nexus:['https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1495020689067-958852a7765e?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&q=70&fit=crop'],
-
-    nutricare:['https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1578496479914-7ef3b0193be3?w=1200&q=70&fit=crop','https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&q=70&fit=crop']
-
-  },
-
-  consequences:{
-
-    sunshine:['https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1589578228447-e1a4e481c6c8?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=900&q=70&fit=crop'],
-
-    nexus:['https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1495020689067-958852a7765e?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=900&q=70&fit=crop'],
-
-    nutricare:['https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1578496479914-7ef3b0193be3?w=900&q=70&fit=crop','https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=900&q=70&fit=crop']
-
-  }
-
-};
-
-
-
-const GAME_DATA = { tracks: [
-
-  { id:"sunshine", name:"Sunshine Foods", sector:"B2C · Consumer goods", scandal:"Systematic sexual harassment and assault by senior executives", lesson:"Every hour you deny the truth is an hour you hand the crisis room to grow.",
-
-    reputationMap:[{decision:"D1 — You deny to the press",loss:"Credibility"},{decision:"D2 — CEO on camera",loss:"The CEO as a future card"},{decision:"D3 — PR firm",loss:"Moral authority"},{decision:"D4 — Victims speak",loss:"Narrative control"},{decision:"D5 — No full cooperation",loss:"The company"}],
-
-    decisions:[
-
-      {id:"d1",number:1,title:"The press contacts you",situation:"24 hours. You have internal evidence the allegations are true. The question is not whether this gets published — it is how you arrive at that publication.",
-
-        options:[
-
-          {id:"a",label:"A",text:"Deny everything",quote:"\"These allegations are completely false and constitute a deliberate attack against our company. We reserve the right to pursue legal action.\"",consequence:"The aggressive denial becomes the central narrative. No one in the market believes you. You lose the first reputational block: credibility.",lossIndex:0,next:"d2",gameOver:false},
-
-          {id:"b",label:"B",text:"Institutional silence",quote:"You do not respond. The outlet publishes without your statement.",consequence:"Twelve hours of silence on a safety issue is treated as tacit confirmation on social media. Brand abandonment decisions happen in real time.",lossIndex:0,next:"d2",gameOver:false},
-
-          {id:"c",label:"C",text:"Cautious response",quote:"\"We are becoming aware of these allegations and opening an internal review process. We will issue a statement in the coming days.\"",consequence:"The story breaks contained. You have 72 hours before pressure demands a real position. It is the path with the most room to maneuver.",lossIndex:null,next:"d2",gameOver:false}
-
-        ]},
-
-      {id:"d2",number:2,title:"Publication and the cascade effect",situation:"The outlet publishes with your denial included. Within 48 hours four national outlets pick up the story. Your denial is central to the narrative. There are protests outside your offices. Employees speak anonymously to journalists.",
-
-        options:[
-
-          {id:"a",label:"A",text:"CEO reiterates the denial on camera",quote:"You raise the stakes. The CEO appears on camera and denies everything personally.",consequence:"The CEO becomes personally exposed. His face is now the face of the scandal. Any future evidence destroys him directly. You lose the CEO as a future sacrifice card.",lossIndex:1,next:"d3",gameOver:false},
-
-          {id:"b",label:"B",text:"You retract the denial with no explanation",quote:"You say nothing more. The original denial hangs there without support.",consequence:"Silence after a denial reads as tactical confirmation. The outlets cover it exactly that way. You lose credibility without gaining anything.",lossIndex:1,next:"d3",gameOver:false},
-
-          {id:"c",label:"C",text:"Second statement that hedges without correcting",quote:"\"We reiterate that the company always acts in accordance with its values. We are reviewing all internal processes.\"",consequence:"Ambiguity in crisis management always reads as weakness or maneuvering. But you preserve some time for the next decision.",lossIndex:null,next:"d3",gameOver:false}
-
-        ]},
-
-      {id:"d3",number:3,title:"Government and the NGO enter",situation:"An international NGO is supporting the victims and demanding an independent investigation. A legislative committee has summoned the CEO to testify in 15 days. International outlets are picking up the story. Two supermarket chains pull the product as a precaution.",
-
-        options:[
-
-          {id:"a",label:"A",text:"You hire a crisis PR firm",quote:"You professionalize the response. The firm proposes a brand humanization strategy built around the company's legacy.",consequence:"Humanizing a brand in the middle of assault allegations reads as cynical. A journalist publishes a devastating analysis: 'Sunshine Foods would rather talk about its employees than about its victims.'",lossIndex:2,next:"d4",gameOver:false},
-
-          {id:"b",label:"B",text:"The board distances itself from the named executives",quote:"Without formally dismissing them, the board states they are 'temporarily removed from their duties while the facts are clarified.'",consequence:"Late and read as a maneuver. But it introduces a gap between the company and the accused. Outlets report: 'the company is beginning to yield.' Minimal but real reputational asset.",lossIndex:null,next:"d4",gameOver:false},
-
-          {id:"c",label:"C",text:"You leak off the record that resignations are coming",quote:"The information reaches two trusted journalists. The rumor circulates without official confirmation.",consequence:"You buy 72 hours of calm. If the resignations do not materialize, the leak becomes evidence of manipulation. The NGO uses it exactly that way in their next statement. Russian roulette.",lossIndex:2,next:"d4",gameOver:false}
-
-        ]},
-
-      {id:"d4",number:4,noCorrectAnswer:true,title:"The victims speak",situation:"The three original victims give coordinated interviews on the same day. Their testimonies include dates, locations, and names. One has text messages from an executive. Another has an internal HR email asking for 'discretion.' Four additional victims emerge within 24 hours. The company hashtag is trending globally.",
-
-        options:[
-
-          {id:"a",label:"A",text:"CEO accepts institutional responsibility",quote:"He does not admit personal knowledge. He accepts that the corporate culture failed. He announces the definitive separation of the named executives, an external audit, and a victim compensation fund.",consequence:"The most costly option financially and the least bad reputationally. But it arrives on top of a prior denial. The CEO contradicts himself. The victims reject the fund as insufficient.",lossIndex:3,next:"d5",gameOver:false},
-
-          {id:"b",label:"B",text:"Lawyers take full control",quote:"No public statements. Everything goes through legal communications. The strategy: protect legally while the media scandal burns itself out.",consequence:"Legal silence in the face of specific testimony backed by documentary evidence is not sustainable in the media. The company disappears from the debate as an actor, not as a subject.",lossIndex:3,next:"d5",gameOver:false},
-
-          {id:"c",label:"C",text:"You announce the CEO's resignation without admitting fault",quote:"The CEO steps down. An interim director is named. The statement says it is a personal decision 'to avoid being a distraction at this critical moment.'",consequence:"A resignation without admission of fault reads as a veiled confession. But it removes the CEO as a target and opens a window for the company to attempt repositioning. A sacrifice that buys time, not credibility.",lossIndex:3,next:"d5",gameOver:false}
-
-        ]},
-
-      {id:"d5",number:5,title:"Point of no return",situation:"The government confirms a criminal investigation against the executives and possibly against executives who knew about the conduct. Three countries where Sunshine Foods operates are reviewing licenses. Banks call an emergency meeting. This is no longer a reputational scandal. It is a corporate survival crisis.",
-
-        options:[
-
-          {id:"a",label:"A",text:"Full and proactive cooperation with the criminal investigation",quote:"The company proactively delivers all documentation, including unrequested evidence. It hires an independent monitor. It negotiates real compensation with victims before trial.",consequence:"Executives convicted. The company pays historic fines. It loses two international markets. But authorities acknowledge the cooperation. Three years later, under new leadership, it operates.",lossIndex:null,next:null,gameOver:false,isSurvival:true,survivalType:"damaged",ending:"REAL SURVIVAL, DESTROYED IDENTITY. It is no longer Sunshine Foods. It is something else with the same name."},
-
-          {id:"b",label:"B",text:"Selective cooperation while protecting certain files",quote:"The company cooperates with what it cannot conceal and protects what it believes it can.",consequence:"In month three, a former legal department employee delivers evidence of the obstruction. Now there are two criminal cases: the original and the active cover-up. International regulators enter. Banks execute guarantees.",lossIndex:4,next:null,gameOver:true,gameOverType:"liquidacion",ending:"FORCED LIQUIDATION."},
-
-          {id:"c",label:"C",text:"Corporate restructuring and sale of exposed divisions",quote:"Before the government acts, the company fragments. It sells the units where the conduct occurred.",consequence:"A judge issues a precautionary order freezing all transactions. Creditors file for technical bankruptcy. The liquidation process lasts four years and destroys the value of all assets.",lossIndex:4,next:null,gameOver:true,gameOverType:"colapso",ending:"GAME OVER."}
-
-        ]}
-
-    ]},
-
-  { id:"nexus", name:"Nexus Energy", sector:"B2B · Energy", scandal:"Algorithmic manipulation of energy prices for 8 years", lesson:"In B2B, reputation is a contractual asset, not an emotional one. Basic PR maneuvers backfire with sophisticated audiences.",
-
-    reputationMap:[{decision:"D1 — You deny the document",loss:"Technical credibility with a sophisticated audience"},{decision:"D2 — Generic statement",loss:"Direct relationship with institutional clients"},{decision:"D3 — Persecution narrative",loss:"Last private allies"},{decision:"D4 — Fund or pointing at others",loss:"Possibility of a negotiated agreement"},{decision:"D5 — No full cooperation",loss:"The company"}],
-
-    decisions:[
-
-      {id:"d1",number:1,title:"The Financial Times contacts you",situation:"48 hours. A leaked internal document clearly shows price manipulation in the European market. The document is real. The question is not whether this gets published — it is how you arrive at that publication.",
-
-        options:[
-
-          {id:"a",label:"A",text:"You deny the validity of the document",quote:"You issue a statement questioning the authenticity of the algorithmic analysis. You allege it is manipulated or taken out of context. You threaten legal action against the FT if they publish.",consequence:"You are betting that no one else has the document or can verify it. In today's media environment, that bet almost always loses.",lossIndex:0,next:"d2",gameOver:false},
-
-          {id:"b",label:"B",text:"Silence with legal blocking",quote:"You do not respond to the journalist. Your lawyers contact the FT to explore whether there is a legal basis to stop publication.",consequence:"The attempt to legally block a publication of this scale is news in itself. The FT has spent decades covering exactly this kind of corporate pressure.",lossIndex:0,next:"d2",gameOver:false},
-
-          {id:"c",label:"C",text:"You request an off the record meeting with the journalist",quote:"Not as a formal interview. As a conversation. The goal is to understand exactly what they have and whether there is anything you can contextualize before publication.",consequence:"The most tactically intelligent option. But a FT journalist with this material may read the meeting request as confirmation. Dangerous ground, but with more information.",lossIndex:null,next:"d2",gameOver:false}
-
-        ]},
-
-      {id:"d2",number:2,title:"The publication",situation:"The FT publishes. The headline is devastating: 'Nexus Energy manipulated prices for eight years while advising allied governments on energy security.' Within 6 hours: 400,000 reads. Bloomberg, Reuters and WSJ are calling. Three institutional clients say they are reviewing their relationship with Nexus.",
-
-        options:[
-
-          {id:"a",label:"A",text:"CEO gives an exclusive interview to Bloomberg that afternoon",quote:"Alderman appears on camera, serious, apparently undefensive. He says the company is cooperating with authorities and any irregularity will be investigated.",consequence:"Alderman is subjected to 20 minutes of questions he cannot answer cleanly because the document is real. Every evasive answer becomes a clip. His face becomes permanently associated with the scandal.",lossIndex:1,next:"d3",gameOver:false},
-
-          {id:"b",label:"B",text:"Institutional statement citing 'areas for improvement'",quote:"\"Nexus Energy takes its responsibility to its clients and to the markets very seriously. We are initiating a thorough review of our trading practices.\"",consequence:"With an irrefutable technical document already published in the FT, the statement reads as an insult to the intelligence of your institutional clients. Three suspend payments that afternoon.",lossIndex:1,next:"d3",gameOver:false},
-
-          {id:"c",label:"C",text:"You contact your 17 government clients directly",quote:"Before responding publicly, you call each government client personally. You tell them what you know, what is happening, and what you are going to do.",consequence:"Your most important clients hear it from you, not from Bloomberg. It does not save you, but it preserves a critical direct communication channel.",lossIndex:null,next:"d3",gameOver:false}
-
-        ]},
-
-      {id:"d3",number:3,title:"Regulators and allies enter",situation:"Second week. The European Commission opens a formal investigation. The US DOJ is evaluating the situation. Two senators are calling to bar Nexus from government contracts. Three government clients tell you privately they would prefer to resolve this without additional scandal.",
-
-        options:[
-
-          {id:"a",label:"A",text:"You proactively announce an international independent monitor",quote:"Before regulators impose it, you publicly hire a top-tier audit firm to review all your trading practices over the past 10 years.",consequence:"Regulators see it as cooperation but do not stop their investigations. Clients use it as grounds to avoid suspending contracts. It buys 3 weeks of operational stability.",lossIndex:null,next:"d4",gameOver:false},
-
-          {id:"b",label:"B",text:"You leak that the European investigation is politically motivated",quote:"The alternative narrative: Nexus is a victim of regulators seeking to justify greater state intervention.",consequence:"The technical document is already published and verified. Sophisticated institutional clients read this as a signal that the company will not accept responsibility. Two of three allied governments suspend contracts.",lossIndex:2,next:"d4",gameOver:false},
-
-          {id:"c",label:"C",text:"You request urgent bilateral meetings with regulators",quote:"Not as a defensive legal strategy. As institutional relationship management: we want to speak with you before this escalates further.",consequence:"Regulators agree. The meetings are not public. Outlets build a narrative about Nexus negotiating privately. But internally you define the real perimeter of legal damage.",lossIndex:null,next:"d4",gameOver:false}
-
-        ]},
-
-      {id:"d4",number:4,noCorrectAnswer:true,title:"The second layer of the scandal",situation:"The audit reveals that the three developing countries whose energy policy was designed using Nexus projections have oversized infrastructure they cannot finance. One is in partial default. The World Bank and IMF are involved. New devastating headline: 'Nexus did not just steal from rich governments. It sank poor ones.'",
-
-        options:[
-
-          {id:"a",label:"A",text:"The CEO resigns and the company announces full leadership restructuring",quote:"Alderman steps down with a statement accepting moral responsibility, though not legal. An interim CEO with a crisis management profile is named.",consequence:"The resignation is global news but opens a window. Some clients who were waiting for a clear signal of rupture with the past now have it. Regulators read the restructuring as genuine willingness to change.",lossIndex:null,next:"d5",gameOver:false},
-
-          {id:"b",label:"B",text:"The company launches a one billion dollar compensation fund",quote:"Unilateral announcement without admitting legal fault. The fund designed to cover costs of oversized infrastructure.",consequence:"The World Bank publicly rejects it as insufficient. Prosecutors use the fund as evidence that the company knew the full extent of the damage.",lossIndex:3,next:"d5",gameOver:false},
-
-          {id:"c",label:"C",text:"Nexus leaks that other players have similar practices",quote:"It is leaked to specialist outlets that energy price manipulation is widespread in the sector and that Nexus is being used as a scapegoat.",consequence:"It may be true. It does not matter. Pointing at others while your own scandal is active reads as evasion. Regulators open sector-wide investigations. Nexus is the most documented case of all.",lossIndex:3,next:"d5",gameOver:false}
-
-        ]},
-
-      {id:"d5",number:5,title:"Point of no return",situation:"Six weeks later. DOJ investigation formalized in criminal charges against three trading executives. European Commission: preliminary fine of 2.3 billion euros. Eight of 17 government clients have suspended contracts. Banks have cut unsecured credit lines. The company can operate for 90 more days on current liquidity.",
-
-        options:[
-
-          {id:"a",label:"A",text:"Full cooperation with the DOJ in exchange for a negotiated agreement",quote:"The company becomes a cooperating witness. It delivers all documentation, including evidence implicating individual executives. It negotiates an agreement with massive fines and an external monitor for five years.",consequence:"Two executives go to prison. The company pays 4.1 billion in fines and compensation. It loses eight markets permanently. Under a new name and new leadership, it operates in four markets over the next five years.",lossIndex:null,next:null,gameOver:false,isSurvival:true,survivalType:"damaged",ending:"TECHNICAL SURVIVAL, TOTAL DESTRUCTION OF THE ORIGINAL BRAND."},
-
-          {id:"b",label:"B",text:"The company fights all charges legally while selling assets",quote:"Full resistance strategy. Lawyers fight every charge. Simultaneously they attempt to sell profitable divisions to generate liquidity.",consequence:"Litigation against the DOJ with this volume of evidence is unwinnable. Each month costs between 15 and 20 million in legal fees. By month five without an agreement, banks execute guarantees.",lossIndex:4,next:null,gameOver:true,gameOverType:"liquidacion",ending:"FORCED LIQUIDATION."},
-
-          {id:"c",label:"C",text:"You seek a strategic buyer to absorb Nexus before the government acts",quote:"A private equity fund specializing in distressed assets is interested. The idea is to sell the entire company with its liabilities at an emergency price.",consequence:"The DOJ obtains a court order blocking any sale during the investigation. The move is interpreted as evasion. Prosecutors add obstruction charges. The fund publicly withdraws.",lossIndex:4,next:null,gameOver:true,gameOverType:"colapso",ending:"ACCELERATED COLLAPSE."}
-
-        ]}
-
-    ]},
-
-  { id:"nutricare", name:"NutriCare Foods", sector:"B2C · Infant nutrition", scandal:"Accusation of high sugar levels in baby products — no real technical fault", lesson:"Being right does not save you if you fail to connect humanly. Reputation is not defined by the truth but by the narrative the public builds with incomplete information.",
-
-    reputationMap:[{decision:"D1 — Silence or influencers",loss:"The critical window of the first hours"},{decision:"D2 — Educational campaign",loss:"Emotional connection with mothers"},{decision:"D3 — Defending dual formulation",loss:"Global moral coherence"},{decision:"D4 — Scientific response to mothers",loss:"The brand's humanity"},{decision:"D5 — Litigation or selling the line",loss:"The company"}],
-
-    decisions:[
-
-      {id:"d1",number:1,title:"The first five hours",situation:"An NGO published a report comparing sugar levels in infant nutrition products. BabyFirst appears with the highest indices. The report does not distinguish between added sugars and natural sugars from fruit. NutriCare does not add sugar — the levels come from fruit concentration. The headline dominating social media in 12 countries: 'NutriCare puts twice the sugar in your baby's food.' Technically false. Reputationally devastating.",
-
-        options:[
-
-          {id:"a",label:"A",text:"The CEO goes public before noon",quote:"Video recorded that morning. Caroline Mercer speaks directly to camera. She explains the difference between natural and added sugars. She uses data. She shows the labels.",consequence:"If the message is technically correct but emotionally cold, a mother who saw the headline does not hear the scientific explanation. She hears an executive defending her company.",lossIndex:0,next:"d2",gameOver:false},
-
-          {id:"b",label:"B",text:"Silence for the first 12 hours",quote:"You do not react to the headline. You let the news cycle run while you prepare a full scientific document with evidence, industry comparisons, and pediatrician endorsements.",consequence:"Twelve hours of silence on a child health issue in social media is an eternity. Every hour without a response is confirmation. Mothers make purchasing decisions in real time.",lossIndex:0,next:"d2",gameOver:false},
-
-          {id:"c",label:"C",text:"You activate contracted maternity influencers",quote:"Your marketing team contacts 340 maternity influencers in 12 countries to publish content about BabyFirst's natural ingredients.",consequence:"If it emerges that you activated a network of paid influencers in the first hours of a child health crisis, the story changes: it is no longer sugar in baby food — it is manipulation of mothers at a moment of vulnerability.",lossIndex:0,next:"d2",gameOver:false}
-
-        ]},
-
-      {id:"d2",number:2,title:"The media cycle takes hold",situation:"24 hours later. A pediatrician with 2.3 million followers publishes a video: 'Technically NutriCare is right... but why did a company with 80 years of experience never explain this before?' The video has 8 million views. In Brazil, Mexico and Colombia groups of mothers are organizing boycotts.",
-
-        options:[
-
-          {id:"a",label:"A",text:"CEO convenes press conference with independent pediatrician panel",quote:"Not just NutriCare talking about NutriCare. Five pediatricians from five different countries scientifically endorse the formulation.",consequence:"The most solid response scientifically. But if any of the five pediatricians has any historical relationship with NutriCare, outlets will find it within hours. The press conference becomes evidence that the company bought medical opinions.",lossIndex:1,next:"d3",gameOver:false},
-
-          {id:"b",label:"B",text:"Educational content campaign about natural sugars",quote:"Without directly mentioning the scandal. Useful, scientifically endorsed content distributed on social media. The goal: shift the conversation.",consequence:"Anxious mothers today do not want a nutrition class. They want the company to tell them directly whether the product they fed their baby for months is safe. The educational campaign reads as sophisticated evasion.",lossIndex:1,next:"d3",gameOver:false},
-
-          {id:"c",label:"C",text:"You respond directly to the pediatrician's video",quote:"The CEO writes to her publicly on Instagram. Not as a corporate response. As a mother and CEO simultaneously. She acknowledges the question is legitimate. She says NutriCare should have explained this before.",consequence:"The most human and most risky move. If in 48 hours the content you publish looks incomplete or calculated, the credibility you gained with the acknowledgment is destroyed multiplied.",lossIndex:null,next:"d3",gameOver:false}
-
-        ]},
-
-      {id:"d3",number:3,title:"Governments and the NGO escalate",situation:"Third week. The NGO issues a second document with two findings: in eight developing countries BabyFirst has formulations with significantly higher sugar levels than in European and North American markets. And they publish an internal 2019 email where a product director asks whether it is possible to 'optimize the sweetness profile' in emerging markets. The email does not prove bad intent but confirms the difference was a conscious decision. Five health ministries in LATAM announce standard reviews.",
-
-        options:[
-
-          {id:"a",label:"A",text:"NutriCare announces global unification of all BabyFirst formulations",quote:"All markets will have exactly the same formulation within the next 18 months, regardless of local regulation. Announced as a values decision, not a response to the scandal.",consequence:"It costs hundreds of millions in reformulation and relaunch. Some emerging markets will reject the product because local babies are accustomed to the current taste profile. But it is the only move that shows the company listened and acted.",lossIndex:null,next:"d4",gameOver:false},
-
-          {id:"b",label:"B",text:"NutriCare argues differences reflect local nutritional preferences",quote:"Technical and cultural defense: each market has its own nutritional standards. NutriCare adapted its products to those local realities.",consequence:"Saying that babies in developing countries need more sugar than European babies is a narrative no spokesperson can sustain on camera without it becoming the most shared clip of the week.",lossIndex:2,next:"d4",gameOver:false},
-
-          {id:"c",label:"C",text:"NutriCare announces an independent audit of all global formulations",quote:"You do not commit to changes yet. You commit to full transparency. The audit will take 90 days and its results will be made public without corporate editing.",consequence:"It buys time. But 90 days in an active infant health crisis is a long time. Mothers do not wait 90 days to decide whether to keep buying BabyFirst.",lossIndex:null,next:"d4",gameOver:false}
-
-        ]},
-
-      {id:"d4",number:4,noCorrectAnswer:true,title:"The victims have a face",situation:"A mother in Colombia whose 14-month-old baby was diagnosed with elevated blood sugar levels gives a national television interview. She shows BabyFirst products. The interview has 40 million combined views. Twelve more mothers in six countries with similar stories appear within three days. No case has scientific evidence of direct causality. A law firm specializing in class actions announces it is collecting cases.",
-
-        options:[
-
-          {id:"a",label:"A",text:"The CEO personally visits the first mother in Colombia",quote:"Not as a PR act. No NutriCare cameras. The CEO travels, meets with the mother, listens. If the mother decides to share the encounter on her own platforms, she will do it on her own terms.",consequence:"The most unpredictable move. If the mother receives it as a genuine gesture and shares it, NutriCare recovers some humanity. If she interprets it as a maneuver and shares it that way, it is the worst possible scenario.",lossIndex:null,next:"d5",gameOver:false},
-
-          {id:"b",label:"B",text:"NutriCare announces a free pediatric consultation program",quote:"The company funds consultations with independent pediatricians for any family with concerns about their baby's health related to nutrition.",consequence:"Generous and calculated simultaneously. The law firm will interpret it as an attempt to control the medical diagnosis of affected babies before that diagnosis becomes legal evidence.",lossIndex:3,next:"d5",gameOver:false},
-
-          {id:"c",label:"C",text:"NutriCare issues a scientific statement dismantling medical causality",quote:"Technical response to the personal stories. Data, studies, evidence that there is no demonstrable causality between BabyFirst and the reported health problems.",consequence:"Scientifically correct. Humanly catastrophic. A multinational responding with data to a mother crying while showing her sick baby is the content that destroys brands permanently.",lossIndex:3,next:"d5",gameOver:false}
-
-        ]},
-
-      {id:"d5",number:5,title:"Point of no return",situation:"Two months later. The class action lawsuit in the US has been formally admitted with 847 families. The FDA announces a review of sugar standards in infant nutrition citing the BabyFirst case. Four countries in LATAM have implemented additional warning labels specifically for BabyFirst. Global sales have fallen 34%. The board has two irreconcilable positions: fight to the end because the company is right, or reach a global agreement even if it implicitly concedes something that technically did not occur.",
-
-        options:[
-
-          {id:"a",label:"A",text:"NutriCare reaches a global agreement with all parties simultaneously",quote:"Settlement with the law firm: compensation for 847 families without admission of scientific fault. Public commitment to the FDA to adopt new standards before they become mandatory. Global reformulation announcement with a concrete date. Independent infant nutrition research fund financed by NutriCare but managed by universities.",consequence:"It costs 2.3 billion between compensation, reformulation, and the fund. Sales take 18 months to partially recover. BabyFirst loses category leadership in 12 markets. But the brand exists.",lossIndex:null,next:null,gameOver:false,isSurvival:true,survivalType:"transformed",ending:"REAL SURVIVAL WITH TRANSFORMED IDENTITY. Three years later with reformulation implemented, it recovers credibility with younger consumers who value transparency."},
-
-          {id:"b",label:"B",text:"NutriCare fights the class action arguing absence of scientific causality",quote:"The company has scientific grounds. Its lawyers are the best in food litigation. The strategy is to win in court and use that victory to rebuild the narrative.",consequence:"The litigation takes four years. During those four years every hearing is sustained negative media coverage. Sales do not recover during the litigation. NutriCare wins the case and loses the category.",lossIndex:4,next:null,gameOver:true,gameOverType:"pyrrhic",ending:"PYRRHIC VICTORY. GAME OVER."},
-
-          {id:"c",label:"C",text:"NutriCare sells the BabyFirst line to a competitor",quote:"Strategic portfolio decision: BabyFirst is the problem. Without BabyFirst there is no crisis. The company has other profitable lines.",consequence:"The sale is universally interpreted as an admission of fault. The class action strengthens. The buyer demands indemnity guarantees that NutriCare cannot provide with the litigation active. The transaction collapses.",lossIndex:4,next:null,gameOver:true,gameOverType:"abandono",ending:"COLLAPSE BY STRATEGIC ABANDONMENT. GAME OVER."}
-
-        ]}
-
-    ]}
-
+const AI_ENDPOINT = 'https://tealkin-proxy.delarbre-giorgio.workers.dev';
+const LANG = 'en';
+
+const GAME_DATA = { risks: [
+{ id:'ai', num:'01', name:'Artificial Intelligence', tagline:`Automation outran oversight. Now the work that went out the door has your name on it.`,
+  scenarios: [
+    { id:'KPNF', letter:'A', org:'KPNF Consulting', sector:'Professional Services · Strategy Consulting', role:'Managing Partner', initFlags:[],
+      setup:`KPNF is a premium strategy firm. Without the Managing Partner's knowledge, the research team automated sector report production with AI. A client discovers their "exclusive" report — the one they paid a premium for — is a patchwork of public blog content and a leaked confidential study. The story is one phone call from the financial press.`,
+      decisions:[
+        { title:'The client calls', channels:['press'], situation:`The client calls, furious. They have screenshots proving the plagiarism. They haven't gone to the press — yet.`,
+          options:[
+            { label:'A', text:'Acknowledge it, today', quote:`"We take full responsibility. Every report you've received will be re-audited at our cost, starting now."`, flags:[], meters:{reputation:-5,narrative:15,trust:10} },
+            { label:'B', text:'Ask for 48 hours to "look into it"', quote:`"Give us 48 hours to investigate properly before we say anything definitive."`, flags:['competitor_active'], meters:{reputation:-10,narrative:-12,trust:-3} },
+            { label:'C', text:'Deny it’s plagiarism', quote:`"Our methodology legitimately synthesizes publicly available intelligence. We reject the term plagiarism."`, flags:['denied_responsibility'], meters:{reputation:-20,narrative:-18,trust:-12} }
+          ]},
+        { title:'It’s in print', channels:['press'], situation:`The client went to the financial press. The piece runs this morning. By noon, three more clients have called asking whether their reports were AI-generated too.`,
+          options:[
+            { label:'A', text:'Go public, audit everything', quote:`"We used AI tools without the disclosure and oversight our clients deserve. That changes today, with an external audit of our entire portfolio."`, flags:[], meters:{reputation:-8,narrative:12,trust:8} },
+            { label:'B', text:'Handle each caller privately', quote:`Direct, case-by-case calls to worried clients — nothing on the record.`, flags:['internal_leak'], meters:{reputation:-12,narrative:-15,trust:-5} },
+            { label:'C', text:'Question the client’s motives in the press', quote:`"It's worth noting this client has an open fee dispute with our firm. We'll let readers draw their own conclusions."`, flags:['media_aggressive','legal_threat'], meters:{reputation:-22,narrative:-20,trust:-15} }
+          ]},
+        { title:'The whistleblower', tbc:true, situation:`Within 48 hours, a former KPNF analyst posts a long thread detailing the internal AI pipeline — naming which other "flagship" reports were touched. Two regional bodies that license consulting firms announce they're "looking into the matter." The board has called an emergency session for tomorrow morning.` }
+      ]},
+    { id:'novu', letter:'B', org:'Novu', sector:'Consumer Goods · Youth Brand', role:'CEO', initFlags:['influencer_viral'],
+      setup:`Novu is a youth-focused consumer brand. To cut costs, it launched its flagship campaign 100% generated by AI, replacing its agency entirely. The system produced personalized variants by audience profile — nobody reviewed all of them. The variants aimed at young men were sexist. The ones aimed at LGBTQ audiences mocked them. On Monday morning, an influencer with 2.3M followers goes viral comparing the variants side by side under #NovuSortsUs.`,
+      decisions:[
+        { title:'Four hours viral', channels:['social'], situation:`The influencer's thread has been live for four hours. #NovuSortsUs has 180K mentions. Marketing tells you these were "test variants that should never have shipped."`,
+          options:[
+            { label:'A', text:'Pull the campaign entirely, now', quote:`"We've removed the campaign in full. It does not represent who we are or who we want to be — and we're sorry."`, flags:[], meters:{reputation:-6,narrative:15,trust:10} },
+            { label:'B', text:'Pull only the offensive variants', quote:`"A subset of variants did not pass our review process and have been removed."`, flags:['internal_leak'], meters:{reputation:-12,narrative:-12,trust:-5} },
+            { label:'C', text:'Claim it’s out of context', quote:`"These images are circulating without context. At its core, this campaign celebrates diversity."`, flags:['denied_responsibility'], meters:{reputation:-22,narrative:-20,trust:-12} }
+          ]},
+        { title:'The apology demand', channels:['press','social'], situation:`Three LGBTQ organizations and two feminist collectives demand a public apology from the CEO. The agency Novu cut leaks that it "flagged this exact risk and was overruled."`,
+          options:[
+            { label:'A', text:'CEO apologizes on camera, names a review board', quote:`"This happened on my watch and I'm accountable for fixing it — with the communities we hurt at the table."`, flags:[], meters:{reputation:-8,narrative:15,trust:10} },
+            { label:'B', text:'Issue a written statement, no face attached', quote:`"Novu acknowledges the impact of these materials and is reviewing its content approval process."`, flags:['competitor_active'], meters:{reputation:-12,narrative:-10,trust:-3} },
+            { label:'C', text:'Blame the AI’s "limitations"', quote:`"Novu was, in many ways, also let down by the limitations of the technology it trusted."`, flags:['denied_responsibility','media_aggressive'], meters:{reputation:-24,narrative:-22,trust:-15} }
+          ]},
+        { title:'The agency talks', tbc:true, situation:`The leaked agency deck is now fully public — including the slide warning Novu, by name, that "unsupervised generative variants by demographic segment carry severe reputational risk." Two retail partners quietly pull Novu's in-store displays "pending review." A second influencer, this one followed by investors, starts asking why the board approved cutting the agency in the first place.` }
+      ]}
+  ]},
+{ id:'security', num:'02', name:'Security', tagline:`The threat isn't reputational at first. It's a person. The communication comes after.`,
+  scenarios: [
+    { id:'merco', letter:'A', org:'Super Coati', sector:'Retail · Supermarket Chain', role:'Director General', initFlags:['influencer_viral'],
+      setup:`Super Coati is a national retail chain in Mexico. On a Saturday afternoon, a shootout between armed groups in the parking lot of a northern store leaves a 34-year-old customer dead and four injured. Footage is circulating on social media before Super Coati even knows what happened.`,
+      decisions:[
+        { title:'600,000 views', channels:['press','social'], situation:`The video has 600K views. Media have identified the store. The victim's family hasn't been contacted. The store remains open.`,
+          options:[
+            { label:'A', text:'Close the store, call the family first', quote:`"Before anything else, our priority is reaching the family directly — not through a press release."`, flags:[], meters:{reputation:-8,narrative:12,trust:10} },
+            { label:'B', text:'Post a generic statement, keep the store open', quote:`"Super Coati deeply regrets the events that took place and is fully cooperating with the relevant authorities."`, flags:['silenced_family'], meters:{reputation:-15,narrative:-12,trust:-5} },
+            { label:'C', text:'Say nothing until you have "the full picture"', quote:`No statement issued. Staff instructed not to speak to media.`, flags:['silenced_family','media_aggressive'], meters:{reputation:-22,narrative:-20,trust:-12} }
+          ]},
+        { title:'The family speaks', channels:['press'], situation:`The family gave a national TV interview. They say no one from the company ever called them. The mayor stated that "companies must guarantee the safety of their customers."`,
+          options:[
+            { label:'A', text:'Meet the family in person, senior leader present', quote:`"We met with the family today. With their agreement, Super Coati will cover medical costs and fund a security upgrade across every store in the region."`, flags:[], meters:{reputation:-6,narrative:15,trust:10} },
+            { label:'B', text:'Send legal with a settlement offer', quote:`A private compensation offer, contingent on a confidentiality clause.`, flags:['silenced_family','legal_threat'], meters:{reputation:-14,narrative:-10,trust:-8} },
+            { label:'C', text:'Call it the government’s responsibility', quote:`"Public safety in commercial areas is fundamentally a state responsibility."`, flags:['denied_responsibility','media_aggressive'], meters:{reputation:-24,narrative:-22,trust:-15} }
+          ]},
+        { title:'The second tape', tbc:true, situation:`A second video surfaces — internal security footage, timestamped six minutes before the shooting, showing two gunmen walk past a Super Coati guard who waves them through. The guards' union says staff have "repeatedly flagged" the lack of security protocol at that location. State prosecutors announce a compliance review of all 40 stores in the region.` }
+      ]},
+    { id:'vertex', letter:'B', org:'Vértex', sector:'Manufacturing · Multinational', role:'Regional CEO', initFlags:[],
+      setup:`Vértex is a transnational manufacturing company. On a Tuesday at dawn, the Plant Director and two supervisors are intercepted on their way to work. The kidnappers demand ransom. In two hours, the 400-person shift will arrive at the plant with no idea what happened.`,
+      decisions:[
+        { title:'The shift arrives', channels:['social'], situation:`Employees are arriving. Three have already posted on social media that "something strange is happening, there are police outside." A local journalist calls the press line.`,
+          options:[
+            { label:'A', text:'Internal alert, protocol active, no comment to press', quote:`"We're managing an active security situation under established protocol. We'll share more as soon as we responsibly can."`, flags:[], meters:{reputation:-4,narrative:12,trust:8} },
+            { label:'B', text:'Suspend operations, call it a "drill"', quote:`"Today's shift is part of a scheduled security drill. Please follow your supervisor's instructions."`, flags:['internal_leak'], meters:{reputation:-10,narrative:-10,trust:-12} },
+            { label:'C', text:'Operate normally, total silence', quote:`"There's nothing to comment on at this time."`, flags:['media_aggressive','internal_leak'], meters:{reputation:-16,narrative:-18,trust:-15} }
+          ]},
+        { title:'It’s on Facebook', channels:['press','social'], situation:`A relative posted that her husband "was taken." 3,000 shares. National media are covering it. The kidnappers tighten their conditions on seeing the coverage.`,
+          options:[
+            { label:'A', text:'Confirm the incident publicly, ask for media discretion', quote:`"We can confirm a security incident affecting members of our team. For the safety of those involved, we're asking media to exercise discretion while this is resolved."`, flags:[], meters:{reputation:-5,narrative:10,trust:8} },
+            { label:'B', text:'Ask the family to delete the post', quote:`A private request to the family — no public statement yet.`, flags:['silenced_family','internal_leak'], meters:{reputation:-14,narrative:-12,trust:-10} },
+            { label:'C', text:'Deny it’s a kidnapping', quote:`"The individuals in question are currently traveling on business and reachable through normal channels."`, flags:['denied_responsibility','legal_threat'], meters:{reputation:-25,narrative:-22,trust:-18} }
+          ]},
+        { title:'Proof of life', tbc:true, situation:`36 hours in. The kidnappers' proof-of-life video leaks directly to a national outlet, bypassing the family entirely. Vértex's head office abroad issues its own statement without coordinating with the regional team — contradicting local messaging on whether negotiations are underway. The Plant Director's spouse announces she'll hold her own press conference tomorrow.` }
+      ]}
+  ]},
+{ id:'cyber', num:'03', name:'Cybersecurity', tagline:`The breach is technical. The exposure is personal — and it has names attached.`,
+  scenarios: [
+    { id:'alterra', letter:'A', org:'Alterra', sector:'Real Estate · Premium Developer', role:'CEO', initFlags:[],
+      setup:`Alterra is a premium real estate developer. An employee used an unauthorized AI tool to process contracts. The tool had a vulnerability. 847 contracts — names, addresses and amounts belonging to public figures, including a senator, two businessmen under active investigation, and a cabinet secretary — surface on a dark web forum.`,
+      decisions:[
+        { title:'Six hours to publish', channels:['press'], situation:`An investigative journalist contacts you. They have the documents. They'll publish in six hours unless they get a statement. The high-profile individuals affected haven't been notified.`,
+          options:[
+            { label:'A', text:'Notify those affected first, yourself', quote:`"We're contacting everyone affected directly, starting with those most exposed, before making any public statement."`, flags:[], meters:{reputation:-8,narrative:15,trust:8} },
+            { label:'B', text:'Send a cease-and-desist to the journalist', quote:`A legal letter, no public comment.`, flags:['media_aggressive','legal_threat'], meters:{reputation:-14,narrative:-15,trust:-3} },
+            { label:'C', text:'Wait and see if they actually publish', quote:`No response sent.`, flags:['silenced_family','denied_responsibility'], meters:{reputation:-22,narrative:-22,trust:-12} }
+          ]},
+        { title:'The investigation opens', channels:['press','social'], situation:`The story is out. Two affected public figures demand accountability. The Data Protection Institute announces an investigation. The employee who used the unauthorized tool has been identified internally.`,
+          options:[
+            { label:'A', text:'File a formal complaint, disclose it, cooperate', quote:`"We've identified the internal failure, taken formal action, and are implementing technical controls. We're cooperating fully with the Institute."`, flags:['government_involved'], meters:{reputation:-10,narrative:12,trust:5} },
+            { label:'B', text:'Quietly dismiss the employee, call it "isolated"', quote:`"This was an isolated incident attributable to human error, which has been addressed."`, flags:['government_involved','internal_leak'], meters:{reputation:-16,narrative:-12,trust:-8} },
+            { label:'C', text:'Say the employee acted in good faith, nothing foreseeable', quote:`"The employee acted in good faith, and the company had no reasonable way to anticipate the use of this tool."`, flags:['government_involved','denied_responsibility','legal_threat'], meters:{reputation:-26,narrative:-20,trust:-15} }
+          ]},
+        { title:'The senator responds', tbc:true, situation:`The senator whose contract leaked announces he'll pursue Alterra personally, calling the breach "a deliberate failure by a company that sells trust as its core product." A second dark-web post claims to hold 1,200 more documents from a separate, unrelated Alterra system — a claim Alterra's own security team can neither confirm nor rule out within the hour.` }
+      ]},
+    { id:'meridian', letter:'B', org:'Banco Meridian', sector:'Banking · Retail Bank', role:'CEO', initFlags:[],
+      setup:`Banco Meridian. A coordinated, AI-assisted attack breaches authentication systems at 2:47am on a Monday. By 8am, customers can't make transfers. At 9am, a ransom message demands payment in crypto. The banking regulator has been notified. Estimated recovery: 6 to 72 hours.`,
+      decisions:[
+        { title:'#BancoMeridianDown', channels:['social'], situation:`Social media is exploding — customers can't pay payroll or make transfers. #BancoMeridianDown is trending. You need to communicate before the narrative gets away from you.`,
+          options:[
+            { label:'A', text:'Confirm the incident, funds are safe, give a window', quote:`"We're addressing a technical security incident. Customer funds are safe and unaffected. We expect services restored within our stated window, and have activated alternative channels in the meantime."`, flags:['government_involved'], meters:{reputation:-10,narrative:15,trust:10} },
+            { label:'B', text:'Call it "scheduled maintenance"', quote:`"Some services are experiencing temporary disruptions due to scheduled maintenance."`, flags:['government_involved','denied_responsibility'], meters:{reputation:-16,narrative:-15,trust:-8} },
+            { label:'C', text:'Total silence for four hours', quote:`No response on social media.`, flags:['government_involved','media_aggressive'], meters:{reputation:-24,narrative:-22,trust:-12} }
+          ]},
+        { title:'The ransom leaks', channels:['press'], situation:`An outlet leaked the existence of the crypto ransom demand. The regulator says it's "monitoring." Three large companies with payroll accounts at the bank publicly threaten to switch institutions.`,
+          options:[
+            { label:'A', text:'CEO press conference: confirm, refuse ransom, give a roadmap', quote:`"We confirm this was a cyberattack. We will not pay any ransom. Here is exactly what happened, what we've fixed, and our timeline to full restoration."`, flags:[], meters:{reputation:-10,narrative:18,trust:12} },
+            { label:'B', text:'Written denial only, no confirmation of an attack', quote:`"We can confirm normal service will resume by end of day. We won't comment on speculation regarding third-party demands."`, flags:['internal_leak'], meters:{reputation:-16,narrative:-12,trust:-5} },
+            { label:'C', text:'Pay quietly, credit "the internal team"', quote:`"Full service has been restored by our internal technical team."`, flags:['internal_leak','legal_threat'], meters:{reputation:-20,narrative:-15,trust:-10} }
+          ]},
+        { title:'What they took', tbc:true, situation:`Forensics confirm the attackers exfiltrated a customer database before encrypting systems — ID numbers and account balances for roughly 40,000 clients. The regulator requests a formal meeting within 24 hours. A class-action firm announces it is "evaluating the bank's disclosure timeline" for potential negligence claims.` }
+      ]}
+  ]}
 ]};
 
+const AVATAR_COLORS = ['#2dbfad','#d4a017','#c0392b','#7c9eb2','#a87bc7','#e08e45'];
+const CASCADE_OUTLETS = ['El Financiero Regional','NotiClick','Sector Pro','La Voz Común'];
 
+const state = {
+  risk: null, scenario: null, decisionIndex: 0,
+  flags: new Set(), meters: { reputation:75, narrative:60, trust:80 },
+  history: [], selectedOption: null,
+  reactionQueue: [], reactionIndex: 0, reactionPromises: {}, reactionData: {}
+};
 
-const state = { currentTrack: null, currentDecisionIndex: 0, selectedOption: null };
+function clamp(v){ return Math.max(0, Math.min(100, v)); }
 
-
-
-function goTo(id) {
-
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-
-  document.getElementById(id).classList.add('active');
-
-  const showRestart = ['screen-game','screen-consequence','screen-gameover','screen-survival'].includes(id);
-
-  document.getElementById('navRestart').style.display = showRestart ? 'block' : 'none';
-
-}
-
-function flash() {
-
-  const el = document.getElementById('choiceFlash');
-
+function goTo(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el = document.getElementById(id);
   el.classList.add('active');
-
-  setTimeout(() => el.classList.remove('active'), 180);
-
+  document.getElementById('topNav').classList.toggle('on-light', el.classList.contains('light'));
+  document.getElementById('navRestart').style.display = (id==='screen-intro'||id==='screen-risk') ? 'none' : 'block';
+  const showMeters = !['screen-intro','screen-risk','screen-scenario'].includes(id);
+  document.getElementById('metersStrip').classList.toggle('show', showMeters);
+  window.scrollTo(0,0);
 }
 
-function showInfo() {
-
-  alert('Crisis Simulator is a corporate reputation management training tool. Three fictionalized real cases. Five decisions per case. Consequences are pedagogical, not prescriptive.');
-
+function flash(){
+  const el = document.getElementById('choiceFlash');
+  el.classList.add('active');
+  setTimeout(()=>el.classList.remove('active'), 180);
 }
 
-function initTracks() {
+function meterColor(v){ return v < 30 ? 'var(--red)' : v < 55 ? 'var(--amber)' : 'var(--teal)'; }
 
-  const grid = document.getElementById('tracksGrid');
+function updateMetersUI(){
+  const m = state.meters;
+  const map = [['Rep',m.reputation],['Nar',m.narrative],['Trust',m.trust]];
+  document.getElementById('meterRepFill').style.width = m.reputation+'%';
+  document.getElementById('meterRepFill').style.background = meterColor(m.reputation);
+  document.getElementById('meterRepVal').textContent = m.reputation;
+  document.getElementById('meterNarFill').style.width = m.narrative+'%';
+  document.getElementById('meterNarFill').style.background = meterColor(m.narrative);
+  document.getElementById('meterNarVal').textContent = m.narrative;
+  document.getElementById('meterTrustFill').style.width = m.trust+'%';
+  document.getElementById('meterTrustFill').style.background = meterColor(m.trust);
+  document.getElementById('meterTrustVal').textContent = m.trust;
+}
 
+function initRiskGrid(){
+  const grid = document.getElementById('riskGrid');
   grid.innerHTML = '';
-
-  GAME_DATA.tracks.forEach((track, i) => {
-
+  GAME_DATA.risks.forEach(risk=>{
     const card = document.createElement('div');
-
-    card.className = 'track-card';
-
-    card.innerHTML = '<div class="track-card-img" style="background-image:url(\''+IMG[track.id]+'\')"></div><div class="track-card-body"><p class="track-num">Track 0'+(i+1)+'</p><h3 class="track-company">'+track.name+'</h3><p class="track-sector">'+track.sector+'</p><p class="track-scandal">'+track.scandal+'</p><p class="track-lesson">'+track.lesson+'</p></div>';
-
-    card.onclick = () => startTrack(track.id);
-
+    card.className = 'risk-card';
+    card.innerHTML = `<p class="risk-num">Risk ${risk.num}</p><h3 class="risk-name">${risk.name}</h3><p class="risk-tagline">${risk.tagline}</p><p class="risk-arrow">Explore the cases →</p>`;
+    card.onclick = () => selectRisk(risk.id);
     grid.appendChild(card);
-
   });
-
 }
 
-function startTrack(trackId) {
+function selectRisk(riskId){
+  state.risk = GAME_DATA.risks.find(r=>r.id===riskId);
+  document.getElementById('navCrumb').textContent = `Risk ${state.risk.num} · ${state.risk.name}`;
+  document.getElementById('scenarioEyebrow').textContent = `Risk ${state.risk.num} · ${state.risk.name}`;
+  document.getElementById('scenarioTitle').textContent = 'Which organization is exposed?';
+  const grid = document.getElementById('scenarioGrid');
+  grid.innerHTML = '';
+  state.risk.scenarios.forEach(sc=>{
+    const card = document.createElement('div');
+    card.className = 'scenario-card';
+    card.innerHTML = `<p class="scenario-letter">Scenario ${sc.letter}</p><h3 class="scenario-org">${sc.org}</h3><p class="scenario-sector">${sc.sector}</p><p class="scenario-setup">${sc.setup}</p><p class="scenario-role">You are: <b>${sc.role}</b></p>`;
+    card.onclick = () => startScenario(sc);
+    grid.appendChild(card);
+  });
+  goTo('screen-scenario');
+}
 
-  state.currentTrack = GAME_DATA.tracks.find(t => t.id === trackId);
-
-  state.currentDecisionIndex = 0;
-
-  state.selectedOption = null;
-
-  document.getElementById('navTrackIndicator').textContent = state.currentTrack.name;
-
+function startScenario(scenario){
+  state.scenario = scenario;
+  state.decisionIndex = 0;
+  state.flags = new Set(scenario.initFlags || []);
+  state.meters = { reputation:75, narrative:60, trust:80 };
+  state.history = [];
+  document.getElementById('navCrumb').textContent = `${state.risk.name} · ${scenario.org}`;
+  updateMetersUI();
   renderDecision();
-
-  goTo('screen-game');
-
+  goTo('screen-decision');
 }
 
-function renderDecision() {
+function renderDecision(){
+  const sc = state.scenario;
+  const i = state.decisionIndex;
+  const decision = sc.decisions[i];
 
-  const track = state.currentTrack;
+  document.getElementById('decisionOrg').textContent = `${sc.org.toUpperCase()} · ${sc.sector}`;
 
-  const i = state.currentDecisionIndex;
-
-  const decision = track.decisions[i];
-
-  document.getElementById('gameSceneImg').style.backgroundImage = "url('"+IMG.scenes[track.id][i]+"')";
-
-  const prog = document.getElementById('gameProgress');
-
+  const prog = document.getElementById('decisionProgress');
   prog.innerHTML = '';
-
-  for (let j = 0; j < 5; j++) {
-
+  for (let j=0;j<3;j++){
     const step = document.createElement('div');
-
-    step.className = 'progress-step'+(j < i ? ' done' : '')+(j === i ? ' active' : '');
-
+    step.className = 'dprog-step'+(j<i?' done':'')+(j===i?' active':'');
     prog.appendChild(step);
-
   }
-
   const lbl = document.createElement('span');
-
-  lbl.className = 'progress-label';
-
-  lbl.textContent = 'Decision '+decision.number+' of 5';
-
+  lbl.className = 'dprog-label';
+  lbl.textContent = `Decision ${i+1} of 3`;
   prog.appendChild(lbl);
 
-  document.getElementById('gameDecisionNum').textContent = String(decision.number).padStart(2,'0');
+  document.getElementById('decisionTitle').textContent = decision.title;
+  document.getElementById('decisionSituation').textContent = decision.situation;
 
-  document.getElementById('gameTrackName').textContent = track.name.toUpperCase();
+  const right = document.getElementById('decisionRight');
+  const tbcBanner = document.getElementById('tbcBanner');
 
-  document.getElementById('gameDecisionTitle').textContent = decision.title;
-
-  document.getElementById('gameSituation').textContent = decision.situation;
-
-  document.getElementById('noCorrectBanner').style.display = decision.noCorrectAnswer ? 'inline-block' : 'none';
-
-  const container = document.getElementById('optionsContainer');
-
-  container.innerHTML = '';
-
-  decision.options.forEach((opt, k) => {
-
-    const card = document.createElement('div');
-
-    card.className = 'option-card';
-
-    card.style.animationDelay = (k * 0.08)+'s';
-
-    card.innerHTML = '<p class="option-letter">'+opt.label+'</p><p class="option-text">'+opt.text+'</p><p class="option-quote">'+opt.quote+'</p>';
-
-    card.onclick = () => selectOption(opt);
-
-    container.appendChild(card);
-
-  });
-
+  if (decision.tbc){
+    tbcBanner.style.display = 'inline-flex';
+    right.innerHTML = `<p class="options-label">Where this stands</p><div class="tbc-panel"><p class="tbc-msg">This is as far as the case has been mapped. Based on everything Cris has done up to this point, here's the read on where things stand.</p><div class="btn-group"><button class="btn btn-primary" onclick="goToOutcome()">See the diagnosis →</button></div></div>`;
+  } else {
+    tbcBanner.style.display = 'none';
+    right.innerHTML = `<p class="options-label">What does Cris do?</p><div id="optionsContainer" class="stagger"></div>`;
+    const container = document.getElementById('optionsContainer');
+    decision.options.forEach((opt,k)=>{
+      const card = document.createElement('div');
+      card.className = 'option-card';
+      card.style.animationDelay = (k*0.08)+'s';
+      card.innerHTML = `<p class="option-letter">Option ${opt.label}</p><p class="option-text">${opt.text}</p><p class="option-quote">${opt.quote}</p>`;
+      card.onclick = () => selectOption(opt);
+      container.appendChild(card);
+    });
+  }
 }
 
-function selectOption(option) {
-
-  state.selectedOption = option;
-
+function selectOption(opt){
+  state.selectedOption = opt;
   flash();
-
-  setTimeout(() => showConsequence(option), 150);
-
-}
-
-function showConsequence(option) {
-
-  const track = state.currentTrack;
-
-  const i = state.currentDecisionIndex;
-
-  const decision = track.decisions[i];
-
-  document.getElementById('consImgBg').style.backgroundImage = "url('"+IMG.consequences[track.id][i]+"')";
-
-  const lossTag = document.getElementById('consLossTag');
-
-  if (option.lossIndex !== null && option.lossIndex !== undefined) {
-
-    document.getElementById('consLossText').textContent = track.reputationMap[option.lossIndex].loss;
-
-    lossTag.style.display = 'inline-flex';
-
-  } else { lossTag.style.display = 'none'; }
-
-  document.getElementById('consTrack').textContent = track.name.toUpperCase()+' · DECISION '+decision.number;
-
-  document.getElementById('consDecision').textContent = decision.title;
-
-  document.getElementById('consChosen').textContent = option.text;
-
-  document.getElementById('consQuote').textContent = option.quote;
-
-  document.getElementById('consText').textContent = option.consequence;
-
-  document.getElementById('consContinueBtn').textContent = option.gameOver ? 'See outcome →' : option.isSurvival ? 'See final outcome →' : 'Next decision →';
-
-  goTo('screen-consequence');
-
-}
-
-function continueFromConsequence() {
-
-  const option = state.selectedOption;
-
-  if (option.gameOver) showGameOver(option);
-
-  else if (option.isSurvival) showSurvival(option);
-
-  else { state.currentDecisionIndex++; renderDecision(); goTo('screen-game'); }
-
-}
-
-function showGameOver(option) {
-
-  const track = state.currentTrack;
-
-  const labels = { liquidacion:'Forced liquidation', colapso:'Accelerated collapse', pyrrhic:'Pyrrhic victory', abandono:'Strategic abandonment' };
-
-  document.getElementById('gameoverLabel').textContent = labels[option.gameOverType] || 'Terminal crisis';
-
-  document.getElementById('gameoverEnding').textContent = option.ending;
-
-  document.getElementById('gameoverConsequence').textContent = option.consequence;
-
-  document.getElementById('gameoverLesson').textContent = 'Core lesson: '+track.lesson;
-
-  goTo('screen-gameover');
-
-}
-
-function showSurvival(option) {
-
-  const track = state.currentTrack;
-
-  document.getElementById('survivalLabel').textContent = 'Final outcome · '+track.name;
-
-  document.getElementById('survivalTitle').innerHTML = option.survivalType === 'transformed' ? 'The company<br><span>survives.</span>' : 'The company<br><span>persists.</span>';
-
-  document.getElementById('survivalEnding').textContent = option.ending;
-
-  document.getElementById('survivalLesson').textContent = track.lesson;
-
-  const mapEl = document.getElementById('survivalMap');
-
-  mapEl.innerHTML = '<h3>Reputation map — '+track.name+'</h3>';
-
-  track.reputationMap.forEach(row => {
-
-    const div = document.createElement('div');
-
-    div.className = 'map-row';
-
-    div.innerHTML = '<span class="map-decision">'+row.decision+'</span><span class="map-loss">'+row.loss+'</span>';
-
-    mapEl.appendChild(div);
-
+  state.meters.reputation = clamp(state.meters.reputation + opt.meters.reputation);
+  state.meters.narrative = clamp(state.meters.narrative + opt.meters.narrative);
+  state.meters.trust = clamp(state.meters.trust + opt.meters.trust);
+  (opt.flags||[]).forEach(f=>state.flags.add(f));
+  state.history.push({
+    decisionTitle: state.scenario.decisions[state.decisionIndex].title,
+    label: opt.label, text: opt.text, quote: opt.quote, meterDelta: opt.meters
   });
-
-  goTo('screen-survival');
-
+  updateMetersUI();
+  setTimeout(()=>renderStatementPanel(opt), 160);
 }
 
-function restartGame() {
-
-  state.currentTrack = null; state.currentDecisionIndex = 0;
-
-  document.getElementById('navTrackIndicator').textContent = '';
-
-  goTo('screen-tracks');
-
+function renderStatementPanel(opt){
+  const right = document.getElementById('decisionRight');
+  right.innerHTML = `<p class="options-label">Cris's public statement</p>
+    <div class="statement-panel">
+      <p class="statement-strategy">Approach — Option ${opt.label}: <b>${escapeHtml(opt.text)}</b></p>
+      <textarea class="statement-input" id="statementInput">${escapeHtml(opt.quote)}</textarea>
+      <p class="statement-hint">Make it Cris's own words. Whatever's in this box is what goes out — and it's exactly what the press and social media will react to next.</p>
+      <div class="btn-group"><button class="btn btn-primary" id="statementSendBtn" onclick="confirmStatement()">Send statement →</button></div>
+    </div>`;
+  document.getElementById('statementInput').focus();
 }
 
-function restartTrack() {
-
-  if (state.currentTrack) startTrack(state.currentTrack.id);
-
-  else goTo('screen-tracks');
-
+function confirmStatement(){
+  const btn = document.getElementById('statementSendBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  const val = document.getElementById('statementInput').value.trim();
+  if(val) state.history[state.history.length-1].quote = val;
+  setTimeout(()=>startReactions(), 200);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function goToOutcome(){
+  renderOutcome();
+  goTo('screen-outcome');
+}
 
-  initTracks();
+function restartGame(){
+  state.risk = null; state.scenario = null; state.decisionIndex = 0;
+  state.flags = new Set(); state.meters = { reputation:75, narrative:60, trust:80 };
+  state.history = []; state.reactionData = {}; state.reactionQueue = []; state.reactionIndex = 0;
+  document.getElementById('navCrumb').textContent = '';
+  updateMetersUI();
+  goTo('screen-risk');
+}
 
-  document.addEventListener('keydown', e => {
+/* ============ AI INTEGRATION ============ */
+const DATELINE_CITY = { KPNF:'Mexico City', novu:'São Paulo', merco:'Monterrey', vertex:'Querétaro', alterra:'Mexico City', meridian:'Bogotá' };
 
-    if (document.getElementById('screen-game').classList.contains('active') && ['1','2','3'].includes(e.key)) {
+const NEWS_SYSTEM = `You are the editor of El Financiero Regional, a leading LATAM business daily. Write a news item of no more than 180 words about a developing corporate crisis. Respond ONLY in this exact format, no markdown, no extra commentary:
+HEADLINE: <headline>
+LEAD: <first paragraph>||<second paragraph>
+QUOTE: <a direct quote from a relevant actor — a family member, a regulator, or a company spokesperson, chosen based on the active flags>
+BYLINE: <fictional reporter name>
+Tone: informative, neutral, no dramatic adjectives, LATAM business-press English. Never use real company or person names — invent fictional ones consistent with the organization given.`;
 
-      const opts = state.currentTrack.decisions[state.currentDecisionIndex].options;
+const HEADLINES_SYSTEM = `Generate 4 short headlines reacting to a developing corporate crisis, one from each of these outlets:
+1. El Financiero Regional — serious, economic register
+2. NotiClick — tabloid, sensationalist
+3. Sector Pro — technical, B2B trade press
+4. La Voz Común — activist, social-justice register
+Each headline max 12 words, in English. Respond ONLY with exactly 4 lines, formatted as:
+1. <headline>
+2. <headline>
+3. <headline>
+4. <headline>
+No explanations, no markdown, no real names.`;
 
-      if (opts[parseInt(e.key)-1]) selectOption(opts[parseInt(e.key)-1]);
+const SOCIAL_SYSTEM = `Generate 4 posts from different people reacting to a developing corporate crisis on a LATAM social network called PULSO. Pick actors based on which are available:
+- A victim's family member (only if the flag silenced_family is active)
+- An activist or influencer (only if the flag influencer_viral is active)
+- A rival company's CEO (only if the flag competitor_active is active)
+- An anonymous employee (only if the flag internal_leak is active)
+- An outraged ordinary citizen (always available — use to fill remaining slots)
+Each post max 240 characters, first person, realistic tone for that actor, in English. Include a fictional hashtag where it fits naturally. Respond ONLY with 4 lines, formatted exactly as:
+ACTOR | @handle | post text
+No explanations, no markdown, no real names.`;
 
-    }
+const LEAK_SYSTEM = `Write a short fragment of an internal corporate email that has leaked to the press. The sender is a mid-level executive at the organization in crisis. The content should reveal something that quietly contradicts the company's public position, consistent with the active flags. Tone: corporate, direct, written by someone who did not expect it to leak. Max 100 words, in English. Respond ONLY in this format:
+FROM: <name, title>
+TO: <name, title>
+SUBJECT: <subject line>
+BODY: <email body>
+No explanations, no markdown, no real names.`;
 
-    if (e.key === 'Enter' && document.getElementById('screen-consequence').classList.contains('active')) continueFromConsequence();
+const VIRAL_SYSTEM = `A video about a developing corporate crisis has gone viral on a LATAM video platform. Generate a sensational video title (max 12 words), a fictional channel name, and 3 short viewer comments (max 25 words each, varied tone — supportive, critical, joking), in English. Respond ONLY in this format:
+TITLE: <title>
+CHANNEL: <channel name>
+COMMENT1: <comment>
+COMMENT2: <comment>
+COMMENT3: <comment>
+No explanations, no markdown, no real names.`;
 
+const DIAGNOSIS_SYSTEM = `You are a LATAM corporate communications analyst evaluating an executive's performance during a simulated crisis. Write a diagnosis of about 120 words, analytical tone, no moralizing, no markdown, in English. Mention what worked, what was a mistake, and what would have changed the outcome. Never use real company or person names.`;
+
+function callAIWithTimeout(systemPrompt, userContent, timeoutMs=8000){
+  const controller = new AbortController();
+  const timer = setTimeout(()=>controller.abort(), timeoutMs);
+  return fetch(AI_ENDPOINT, {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ messages:[{role:'system',content:systemPrompt},{role:'user',content:userContent}], model:'deepseek-chat' }),
+    signal: controller.signal
+  }).then(r=>{
+    if(!r.ok) throw new Error('AI request failed: '+r.status);
+    return r.json();
+  }).then(d=>{
+    const content = d && d.choices && d.choices[0] && d.choices[0].message && d.choices[0].message.content;
+    if(!content) throw new Error('Empty AI response');
+    return content;
+  }).finally(()=>clearTimeout(timer));
+}
+
+function buildContext(){
+  const sc = state.scenario;
+  const last = state.history[state.history.length-1];
+  return {
+    org: sc.org, sector: sc.sector, sectorShort: sc.sector.split('·')[0].trim(),
+    riskName: state.risk.name, riskLower: state.risk.name.toLowerCase(),
+    decisionText: `${last.text} — ${last.quote}`,
+    flags: Array.from(state.flags).join(', ') || 'none yet'
+  };
+}
+function userContextBlock(ctx){
+  return `Organization in crisis: ${ctx.org} (${ctx.sector}).\nRisk category: ${ctx.riskName}.\nMost recent decision by leadership: ${ctx.decisionText}\nActive situational flags: ${ctx.flags}`;
+}
+
+function parseNews(raw){
+  const headline = (raw.match(/HEADLINE:\s*(.+)/i)||[])[1];
+  const leadMatch = raw.match(/LEAD:\s*([\s\S]*?)\s*QUOTE:/i);
+  const quote = (raw.match(/QUOTE:\s*([\s\S]*?)\s*BYLINE:/i)||raw.match(/QUOTE:\s*(.+)/i)||[])[1];
+  const byline = (raw.match(/BYLINE:\s*(.+)/i)||[])[1];
+  if(!headline||!leadMatch||!quote) throw new Error('parse fail: news');
+  const lead = leadMatch[1].trim().split('||').map(s=>s.trim()).filter(Boolean);
+  if(!lead.length) throw new Error('parse fail: news lead');
+  return { headline:headline.trim(), lead, quote:quote.trim(), byline:(byline||'Staff Report').trim() };
+}
+function parseHeadlines(raw){
+  const lines = raw.split('\n').map(l=>l.replace(/^\s*\d+[.)]\s*/,'').trim()).filter(Boolean);
+  if(lines.length<4) throw new Error('parse fail: headlines');
+  return CASCADE_OUTLETS.map((o,i)=>({ outlet:o, text:lines[i] }));
+}
+function parseSocial(raw){
+  const lines = raw.split('\n').map(l=>l.trim()).filter(l=>l.includes('|'));
+  if(lines.length<3) throw new Error('parse fail: social');
+  return lines.slice(0,4).map(l=>{
+    const parts = l.split('|').map(s=>s.trim());
+    return { actor:parts[0]||'Citizen', handle:parts[1]||'@anon', text:(parts.slice(2).join('|')||'').trim() };
   });
+}
+function parseLeak(raw){
+  const from = (raw.match(/FROM:\s*(.+)/i)||[])[1];
+  const to = (raw.match(/TO:\s*(.+)/i)||[])[1];
+  const subject = (raw.match(/SUBJECT:\s*(.+)/i)||[])[1];
+  if(!from||!to||!subject) throw new Error('parse fail: leak');
+  const bodyMatch = raw.match(/BODY:\s*([\s\S]+)/i);
+  let body;
+  if(bodyMatch){
+    body = bodyMatch[1].trim();
+  } else {
+    const idx = raw.search(/SUBJECT:.*(\r?\n|$)/i);
+    body = idx>=0 ? raw.slice(idx).replace(/^SUBJECT:.*(\r?\n|$)/i,'').trim() : '';
+  }
+  if(!body) throw new Error('parse fail: leak body');
+  return { from:from.trim(), to:to.trim(), subject:subject.trim(), body };
+}
+function parseViral(raw){
+  const title = (raw.match(/TITLE:\s*(.+)/i)||[])[1];
+  const channel = (raw.match(/CHANNEL:\s*(.+)/i)||[])[1];
+  const c1 = (raw.match(/COMMENT1:\s*(.+)/i)||[])[1];
+  const c2 = (raw.match(/COMMENT2:\s*(.+)/i)||[])[1];
+  const c3 = (raw.match(/COMMENT3:\s*(.+)/i)||[])[1];
+  if(!title||!channel||!c1) throw new Error('parse fail: viral');
+  return { title:title.trim(), channel:channel.trim(), comments:[c1,c2,c3].filter(Boolean).map(s=>s.trim()) };
+}
 
+async function fetchNews(){ return parseNews(await callAIWithTimeout(NEWS_SYSTEM, userContextBlock(buildContext()))); }
+async function fetchHeadlines(){ return parseHeadlines(await callAIWithTimeout(HEADLINES_SYSTEM, userContextBlock(buildContext()))); }
+async function fetchSocial(){ return parseSocial(await callAIWithTimeout(SOCIAL_SYSTEM, userContextBlock(buildContext()))); }
+async function fetchLeak(){ return parseLeak(await callAIWithTimeout(LEAK_SYSTEM, userContextBlock(buildContext()))); }
+async function fetchViral(){ return parseViral(await callAIWithTimeout(VIRAL_SYSTEM, userContextBlock(buildContext()))); }
+async function fetchDiagnosis(){
+  const ctx = buildOutcomeContext();
+  const user = `Risk category: ${ctx.riskName}. Organization: ${ctx.org} (${ctx.sector}). Cris Cisneros's role: ${ctx.role}.\nDecisions made:\n${ctx.historyText}\nActive flags: ${ctx.flags}\nFinal meters — Reputation: ${ctx.meters.reputation}/100, Narrative control: ${ctx.meters.narrative}/100, Internal trust: ${ctx.meters.trust}/100.`;
+  return await callAIWithTimeout(DIAGNOSIS_SYSTEM, user, 9000);
+}
+
+/* ============ FALLBACK CONTENT ============ */
+function fallbackNews(ctx){
+  return {
+    headline: `${ctx.org} under pressure as ${ctx.riskLower} crisis escalates`,
+    lead: [
+      `${ctx.org} is facing intensifying scrutiny following its latest response to an unfolding crisis, according to sources familiar with the situation.`,
+      `The company's handling of the matter has drawn attention from regulators, partners and the public alike, with stakeholders calling for greater clarity in the hours ahead.`
+    ],
+    quote: `"We're monitoring the situation closely and expect more clarity soon," a person close to the matter told this outlet.`,
+    byline: 'Staff Report — El Financiero Regional'
+  };
+}
+function fallbackHeadlines(ctx){
+  return [
+    { outlet:'El Financiero Regional', text:`${ctx.org} faces fresh questions after latest move` },
+    { outlet:'NotiClick', text:`What ${ctx.org} just said has everyone talking` },
+    { outlet:'Sector Pro', text:`${ctx.sectorShort} watchers scrutinize ${ctx.org}'s next step` },
+    { outlet:'La Voz Común', text:`Communities affected by ${ctx.org} demand real answers` }
+  ];
+}
+function fallbackSocial(ctx){
+  const pool = [];
+  if(state.flags.has('silenced_family')) pool.push({ actor:'Worried Relative', handle:'@still_waiting_mx', text:`Still no call from ${ctx.org}. Not one person from that company has reached out to us directly.` });
+  if(state.flags.has('influencer_viral')) pool.push({ actor:'Independent Analyst', handle:'@latam_signal', text:`Watching the ${ctx.org} story closely. The next move is the one that actually matters.` });
+  if(state.flags.has('competitor_active')) pool.push({ actor:'Industry Observer', handle:'@sector_watch', text:`Noticing competitors of ${ctx.org} quietly adjusting their own messaging this week. Draw your own conclusions.` });
+  if(state.flags.has('internal_leak')) pool.push({ actor:'Anonymous Employee', handle:'@inside_anon', text:`Can't say much, but what ${ctx.org} is saying publicly isn't the full picture. People here know.` });
+  const citizens = [
+    { actor:'Concerned Citizen', handle:'@citizen_says', text:`Everyone's talking about ${ctx.org} today. Curious whether this actually changes anything.` },
+    { actor:'Local Resident', handle:'@ground_view', text:`This is hitting close to home. Hoping ${ctx.org} does the right thing here, not just the easy thing.` },
+    { actor:'Frequent Customer', handle:'@longtime_user', text:`Been with ${ctx.org} for years. First time I've genuinely questioned that.` },
+    { actor:'Industry Watcher', handle:'@plain_view_mx', text:`${ctx.org}'s next 48 hours will say more than any statement they've put out so far.` }
+  ];
+  let ci = 0;
+  while(pool.length<4){ pool.push(citizens[ci % citizens.length]); ci++; }
+  return pool.slice(0,4);
+}
+function fallbackLeak(ctx){
+  return {
+    from:'Internal Communications Lead',
+    to:'Senior Leadership — Crisis Committee',
+    subject:'Re: external messaging — internal only',
+    body:`Just so we're aligned before this goes further: the line we're giving externally isn't the full picture, and a few people on this thread already know why. Let's keep this distribution list small until we've agreed on next steps.`
+  };
+}
+function fallbackViral(ctx){
+  return {
+    title:`${ctx.org}: what's really going on`,
+    channel:'@LatamWatch',
+    comments:[
+      `Hard to believe a company this size handled it this way.`,
+      `Let's wait for more facts before piling on.`,
+      `Following this closely — hope the people affected get real answers.`
+    ]
+  };
+}
+function fallbackDiagnosis(ctx){
+  const m = ctx.meters;
+  const avg = (m.reputation+m.narrative+m.trust)/3;
+  if(avg>=55) return `The choices here consistently traded short-term comfort for long-term credibility — acknowledging the problem early, going to affected people directly, and getting ${ctx.org}'s own account ahead of the leaks. The cost was real and visible on every meter. What it bought was a narrative the company still controls. The pattern to watch: even the strongest moves came after the world already knew something was wrong. The next test for ${ctx.org} is getting ahead of a story before it breaks, not just after.`;
+  if(avg>=35) return `${ctx.org}'s response mixed real accountability with hesitation — moments of disclosure undercut by delays, hedged language, or calls made for legal comfort rather than public trust. The flags that accumulated here (${ctx.flags}) mark exactly where the story slipped out of Cris's hands. A faster, more direct first move would likely have changed how everything afterward was read.`;
+  return `This reads as a slow-motion collapse from the inside. Each individual call may have felt defensible in the moment — buy time, protect the legal position, avoid admitting more than necessary — but together they form a pattern of denial and delay that the public, regulators and ${ctx.org}'s own people all noticed. By the time any concession arrived, it landed as confession rather than leadership. The lesson isn't which words were used. It's how late the truth showed up.`;
+}
+function getFallback(type){
+  const ctx = buildContext();
+  if(type==='news') return fallbackNews(ctx);
+  if(type==='headlines') return fallbackHeadlines(ctx);
+  if(type==='social') return fallbackSocial(ctx);
+  if(type==='leak') return fallbackLeak(ctx);
+  if(type==='viral') return fallbackViral(ctx);
+}
+
+/* ============ REACTION FLOW ============ */
+function startReactions(){
+  state.reactionData = {};
+  state.reactionIndex = 0;
+  const channels = state.scenario.decisions[state.decisionIndex].channels;
+  state.reactionQueue = [];
+  if(channels.includes('press')) state.reactionQueue.push('news','headlines');
+  if(channels.includes('social')) state.reactionQueue.push('social');
+  if(state.flags.has('internal_leak')) state.reactionQueue.push('leak');
+  if(state.flags.has('influencer_viral')) state.reactionQueue.push('viral');
+
+  state.reactionPromises = {};
+  if(state.reactionQueue.includes('news')) state.reactionPromises.news = fetchNews();
+  if(state.reactionQueue.includes('headlines')) state.reactionPromises.headlines = fetchHeadlines();
+  if(state.reactionQueue.includes('social')) state.reactionPromises.social = fetchSocial();
+  if(state.reactionQueue.includes('leak')) state.reactionPromises.leak = fetchLeak();
+  if(state.reactionQueue.includes('viral')) state.reactionPromises.viral = fetchViral();
+
+  showReactionScreen(state.reactionQueue[0]);
+}
+
+async function showReactionScreen(type){
+  goTo('screen-react-'+type);
+  showLoader(type);
+  updateContinueLabel(type);
+  let data;
+  try { data = await state.reactionPromises[type]; }
+  catch(e){ data = getFallback(type); }
+  state.reactionData[type] = data;
+  if(type==='news') renderNews(data);
+  else if(type==='headlines') renderHeadlines(data);
+  else if(type==='social') renderSocial(data);
+  else if(type==='leak') renderLeak(data);
+  else if(type==='viral') renderViral(data);
+}
+
+function showLoader(type){
+  const labels = {
+    news:'Live transmission · El Financiero Regional',
+    headlines:'Wire feed · incoming coverage',
+    social:'PULSO · updating feed',
+    leak:'Secure channel · incoming document',
+    viral:'Live transmission · video platform'
+  };
+  const targets = { news:'newsContent', headlines:'headlinesContent', social:'pulsoContent', leak:'leakContent', viral:'viralContent' };
+  document.getElementById(targets[type]).innerHTML = `<div class="live-loader-wrap"><div class="live-loader"><span class="live-dot"></span><span class="live-label">${labels[type]}</span><span class="live-bar"></span></div></div>`;
+  if(type==='social') document.getElementById('pulsoTrending').style.display = 'none';
+}
+
+function updateContinueLabel(type){
+  const ids = { news:'newsContinueBtn', headlines:'headlinesContinueBtn', social:'pulsoContinueBtn', leak:'leakContinueBtn', viral:'viralContinueBtn' };
+  const btn = document.getElementById(ids[type]);
+  const isLast = state.reactionIndex === state.reactionQueue.length-1;
+  if(!isLast){ btn.textContent = 'Continue →'; return; }
+  const next = state.scenario.decisions[state.decisionIndex+1];
+  btn.textContent = !next ? 'See the diagnosis →' : (next.tbc ? 'See where this goes →' : 'Next decision →');
+}
+
+function nextReaction(){
+  state.reactionIndex++;
+  if(state.reactionIndex < state.reactionQueue.length){
+    showReactionScreen(state.reactionQueue[state.reactionIndex]);
+  } else {
+    state.decisionIndex++;
+    renderDecision();
+    goTo('screen-decision');
+  }
+}
+
+/* ============ REACTION RENDERERS ============ */
+function escapeHtml(s){
+  return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function slugify(s){
+  return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,60);
+}
+function animateCounter(id, target, suffix){
+  const el = document.getElementById(id);
+  if(!el) return;
+  const start = performance.now(); const duration = 1100;
+  function step(now){
+    const p = Math.min((now-start)/duration, 1);
+    el.textContent = formatCount(Math.floor(p*target)) + (suffix||'');
+    if(p<1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+function formatCount(n){
+  if(n>=1000000) return (n/1000000).toFixed(1)+'M';
+  if(n>=1000) return (n/1000).toFixed(1)+'K';
+  return String(n);
+}
+function bloombergLine(){
+  return `${state.scenario.org} faces mounting investor scrutiny as ${state.risk.name.toLowerCase()} crisis widens`;
+}
+function influencerHandle(){
+  const handles = { novu:'StyleNotSilence', merco:'JusticeForClients', meridian:'FinTechWatchLatam' };
+  return handles[state.scenario.id] || 'LatamCallsItOut';
+}
+function influencerLine(){
+  if(state.scenario.id==='novu') return `Thread: I lined up every ${state.scenario.org} variant side by side. You need to see this.`;
+  return `Thread on ${state.scenario.org}: people deserve to know what's actually happening here.`;
+}
+function hashtagFor(){
+  const tags = { novu:'NovuSortsUs', merco:'WhatDidSuperCoatiKnow', meridian:'BancoMeridianDown' };
+  return tags[state.scenario.id] || (state.scenario.org.replace(/[^A-Za-z0-9]/g,'')+'Crisis');
+}
+function anonHandle(){
+  const handles = ['user_4471','latam_voice','realtalk_mx','ground_view','watchingthis22','no_filter_co'];
+  return handles[Math.floor(Math.random()*handles.length)];
+}
+
+function renderNews(d){
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-US',{ day:'numeric', month:'long', year:'numeric' });
+  const timeStr = now.toLocaleTimeString('en-US',{ hour:'2-digit', minute:'2-digit' });
+  const city = DATELINE_CITY[state.scenario.id] || 'Mexico City';
+  document.getElementById('newsContent').innerHTML = `
+    <div class="news-outlet-header"><span class="news-outlet-name">El Financiero Regional</span><span class="news-outlet-section">Companies &amp; Markets</span></div>
+    <div class="news-dateline">${city} · ${dateStr} · ${timeStr}</div>
+    <h1 class="news-headline">${escapeHtml(d.headline)}</h1>
+    ${d.lead.map(p=>`<p class="news-lead">${escapeHtml(p)}</p>`).join('')}
+    <blockquote class="news-quote">${escapeHtml(d.quote)}</blockquote>
+    <p class="news-byline">${escapeHtml(d.byline)}</p>`;
+  const urlEl = document.getElementById('newsUrl');
+  if(urlEl) urlEl.textContent = `elfinanciero.regional/companies/${slugify(d.headline)}`;
+}
+
+function renderHeadlines(items){
+  const rows = items.map(h=>({ outlet:h.outlet, text:h.text }));
+  if(state.flags.has('influencer_viral')){
+    rows[0] = { outlet:'@'+influencerHandle(), text: influencerLine(), viral:true };
+  }
+  rows.push({ outlet:'Bloomberg LATAM', text: bloombergLine() });
+  const html = rows.map((h,i)=>{
+    const color = AVATAR_COLORS[i % AVATAR_COLORS.length];
+    const badge = h.viral ? '@' : (h.outlet||'#').trim().charAt(0).toUpperCase();
+    return `<div class="headline-row" style="animation-delay:${(i*0.45)}s"><span class="headline-badge" style="background:${color}">${escapeHtml(badge)}</span><span class="headline-meta"><span class="headline-outlet">${escapeHtml(h.outlet)}</span><span class="headline-text">${escapeHtml(h.text)}${h.viral?` <span id="shareCounter" style="font-family:var(--font-mono);font-size:12px;color:var(--mist);">· 0 shares</span>`:''}</span></span></div>`;
+  }).join('');
+  let bannerHtml = '';
+  if(state.flags.has('influencer_viral')){
+    bannerHtml = `<div class="trending-banner" style="animation-delay:${(rows.length*0.45)}s"><span class="trending-label">Trending on PULSO</span><span class="trending-tag">#${escapeHtml(hashtagFor())}</span><span class="trending-count" id="trendingCount">0 mentions</span></div>`;
+  }
+  document.getElementById('headlinesContent').innerHTML = html + bannerHtml;
+  if(state.flags.has('influencer_viral')){
+    setTimeout(()=>{
+      animateCounter('shareCounter', Math.floor(Math.random()*120000)+40000, ' shares');
+      animateCounter('trendingCount', Math.floor(Math.random()*200000)+80000, ' mentions');
+    }, 50);
+  }
+}
+
+function renderSocial(items){
+  const html = items.map((p,i)=>{
+    const initials = (p.actor||'').trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase() || '?';
+    const color = AVATAR_COLORS[i % AVATAR_COLORS.length];
+    return `<div class="pulso-post" style="animation-delay:${(i*0.5)}s">
+      <div class="pulso-avatar" style="background:${color}">${initials}</div>
+      <div class="pulso-body">
+        <div class="pulso-handle-row"><span class="pulso-name">${escapeHtml(p.actor)}</span><span class="pulso-handle">${escapeHtml(p.handle)}</span><span class="pulso-time">${(i+1)*4}m</span></div>
+        <p class="pulso-text">${escapeHtml(p.text)}</p>
+        <div class="pulso-actions"><span class="pulso-action">↻ ${Math.floor(Math.random()*300)+20}</span><span class="pulso-action">♡ <span id="pulsoLike${i}">0</span></span><span class="pulso-action">↗ ${Math.floor(Math.random()*120)+5}</span></div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('pulsoContent').innerHTML = html;
+  setTimeout(()=>items.forEach((_,i)=>animateCounter('pulsoLike'+i, Math.floor(Math.random()*1800)+150)), 50);
+  const trending = document.getElementById('pulsoTrending');
+  if(state.flags.has('influencer_viral')){
+    trending.style.display = 'inline-block';
+    trending.textContent = '#'+hashtagFor()+' · trending';
+  } else {
+    trending.style.display = 'none';
+  }
+}
+
+function renderLeak(d){
+  const now = new Date();
+  document.getElementById('leakContent').innerHTML = `
+    <div class="leak-sheet">
+      <div class="leak-watermark">CONFIDENTIAL</div>
+      <div class="leak-meta">
+        <div class="leak-meta-row"><span class="leak-meta-label">From</span><span>${escapeHtml(d.from)}</span></div>
+        <div class="leak-meta-row"><span class="leak-meta-label">To</span><span>${escapeHtml(d.to)}</span></div>
+        <div class="leak-meta-row"><span class="leak-meta-label">Date</span><span>${now.toLocaleDateString('en-US')}, ${now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}</span></div>
+        <div class="leak-meta-row"><span class="leak-meta-label">Subject</span><span>${escapeHtml(d.subject)}</span></div>
+      </div>
+      <div class="leak-body">${escapeHtml(d.body)}</div>
+      <p class="leak-source">— forwarded anonymously to three newsrooms</p>
+    </div>`;
+}
+
+function renderViral(d){
+  document.getElementById('viralContent').innerHTML = `
+    <div class="viral-thumb">
+      <div class="viral-views" id="viralViewsCounter">0 views</div>
+      <h2 class="viral-thumb-title">${escapeHtml(d.title)}</h2>
+      <div class="viral-progress"><div class="viral-progress-fill"></div></div>
+    </div>
+    <p class="viral-channel">${escapeHtml(d.channel)} · trending now</p>
+    <div class="viral-comments">${d.comments.map(c=>`<div class="viral-comment"><p class="viral-comment-author">@${anonHandle()}</p><p class="viral-comment-text">${escapeHtml(c)}</p></div>`).join('')}</div>`;
+  setTimeout(()=>animateCounter('viralViewsCounter', Math.floor(Math.random()*900000)+150000, ' views'), 50);
+}
+
+/* ============ OUTCOME ============ */
+function outcomeHeadline(m){
+  const avg = (m.reputation+m.narrative+m.trust)/3;
+  if(avg>=55) return `Cris held the <em>line</em>.`;
+  if(avg>=35) return `Cris is still <em>standing</em>.`;
+  return `Cris is out of <em>room</em>.`;
+}
+function tagFor(d){
+  if(d.reputation>=-8) return 'Least-bad call';
+  if(d.reputation<=-20) return 'Costly mistake';
+  return 'Mixed result';
+}
+function buildOutcomeContext(){
+  const sc = state.scenario;
+  return {
+    org: sc.org, sector: sc.sector, role: sc.role, riskName: state.risk.name,
+    historyText: state.history.map((h,i)=>`D${i+1}: ${h.text} — ${h.quote}`).join('\n'),
+    flags: Array.from(state.flags).join(', ') || 'none',
+    meters: state.meters
+  };
+}
+function renderOutcome(){
+  const m = state.meters;
+  const sc = state.scenario;
+  document.getElementById('outcomeTitle').innerHTML = outcomeHeadline(m);
+  document.getElementById('outcomeSub').textContent = `${sc.org} · ${state.risk.name} · Cris Cisneros, ${sc.role}`;
+  document.getElementById('outcomeMeters').innerHTML = [
+    ['Reputation', m.reputation], ['Narrative control', m.narrative], ['Internal trust', m.trust]
+  ].map(([label,val])=>`<div class="outcome-meter"><p class="outcome-meter-label">${label}</p><div class="outcome-meter-track"><div class="outcome-meter-fill" style="width:${val}%;background:${meterColor(val)}"></div></div><p class="outcome-meter-value">${val}</p></div>`).join('');
+  document.getElementById('outcomeMap').innerHTML = state.history.map((h,i)=>`<div class="outcome-map-row"><span class="outcome-map-decision">D${i+1} · ${escapeHtml(h.text)}</span><span class="outcome-map-tag">${tagFor(h.meterDelta)}</span></div>`).join('');
+
+  const diagEl = document.getElementById('outcomeDiagnosis');
+  diagEl.innerHTML = `<span class="live-loader" style="display:inline-flex"><span class="live-dot"></span><span class="live-label">Compiling assessment…</span><span class="live-bar"></span></span>`;
+  fetchDiagnosis().then(text=>{ diagEl.textContent = text.trim(); }).catch(()=>{ diagEl.textContent = fallbackDiagnosis(buildOutcomeContext()); });
+}
+function shareLinkedIn(){
+  const m = state.meters; const sc = state.scenario;
+  const text = `I just ran the TealKin Crisis Simulator as ${sc.org}'s ${sc.role} during a ${state.risk.name.toLowerCase()} crisis.\n\nFinal scores — Reputation: ${m.reputation}/100 · Narrative control: ${m.narrative}/100 · Internal trust: ${m.trust}/100.\n\nTry it yourself: https://tealkin.com/tools/crisis-simulator/`;
+  if(navigator.clipboard) navigator.clipboard.writeText(text).catch(()=>{});
+  const url = 'https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent('https://tealkin.com/tools/crisis-simulator/');
+  window.open(url, '_blank', 'noopener');
+}
+function contactUs(){
+  const m = state.meters; const sc = state.scenario;
+  const subject = `Crisis Simulator — interested for ${sc.org}`;
+  const body = `Hi TealKin team,\n\nI just ran the Crisis Simulator — ${state.risk.name} track, playing ${sc.org}'s ${sc.role}.\nFinal scores — Reputation: ${m.reputation}/100 · Narrative control: ${m.narrative}/100 · Internal trust: ${m.trust}/100.\n\nI'd like to talk about a tailored version of this for my company.\n\n`;
+  window.location.href = `mailto:jdelarbrel@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+/* ============ INIT ============ */
+document.addEventListener('DOMContentLoaded', ()=>{
+  initRiskGrid();
+  updateMetersUI();
 });
-
 </script>
-
 </body>
-
-</html> 
-
+</html>

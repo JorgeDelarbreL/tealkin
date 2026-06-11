@@ -74,8 +74,10 @@
   .area-category { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mist); margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 0.5px solid rgba(255,255,255,0.08); }
   .area-body { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.85; margin-bottom: 1.75rem; }
   .area-services { display: flex; flex-direction: column; gap: 8px; }
-  .area-service { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.35); display: flex; align-items: center; gap: 10px; }
-  .area-service::before { content: ''; width: 16px; height: 0.5px; background: var(--teal); flex-shrink: 0; }
+  .area-service { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.35); display: flex; align-items: center; gap: 10px; background: none; border: none; padding: 4px 0; font-family: inherit; text-align: left; cursor: pointer; width: 100%; transition: color 0.25s; }
+  .area-service::before { content: ''; width: 16px; height: 0.5px; background: var(--teal); flex-shrink: 0; transition: width 0.25s ease; }
+  .area-service:hover, .area-service:focus-visible { color: var(--white); outline: none; }
+  .area-service:hover::before, .area-service:focus-visible::before { width: 26px; }
 
   /* ── COLOR ACCENTS PER AREA ── */
   .area-card.pekkin .area-maya em { color: var(--teal-light); }
@@ -85,6 +87,29 @@
   .area-card.akin .area-service::before { background: #6ab0de; }
   .area-card.ha .area-service::before { background: #72c472; }
   .area-card.sakha .area-service::before { background: #d97070; }
+
+  /* ── SERVICE DETAIL MODAL ── */
+  .service-modal-overlay { position: fixed; inset: 0; z-index: 500; background: rgba(5,10,8,0.75); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
+  .service-modal-overlay.open { opacity: 1; visibility: visible; }
+  .service-modal { background: #10201b; border: 0.5px solid rgba(255,255,255,0.1); max-width: 540px; width: 100%; padding: 3rem; position: relative; max-height: 85vh; overflow-y: auto; transform: translateY(16px) scale(0.98); transition: transform 0.35s ease; }
+  .service-modal:focus { outline: none; }
+  .service-modal-overlay.open .service-modal { transform: translateY(0) scale(1); }
+  .service-modal-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: var(--mist); font-size: 22px; line-height: 1; cursor: pointer; padding: 6px; transition: color 0.2s; }
+  .service-modal-close:hover, .service-modal-close:focus-visible { color: var(--white); outline: none; }
+  .service-modal-icon { width: 56px; height: 56px; border: 0.5px solid rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.75rem; color: var(--teal-light); }
+  .service-modal-icon.akin { color: #6ab0de; }
+  .service-modal-icon.ha { color: #72c472; }
+  .service-modal-icon.sakha { color: #d97070; }
+  .service-modal-eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mist); margin-bottom: 0.75rem; }
+  .service-modal-title { font-family: var(--font-display); font-size: clamp(28px,4vw,38px); font-weight: 300; color: var(--white); margin-bottom: 1.25rem; line-height: 1.15; }
+  .service-modal-summary { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.65); line-height: 1.85; margin-bottom: 2rem; }
+  .service-modal-includes-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mist); margin-bottom: 0.9rem; }
+  .service-modal-include { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.6); display: flex; align-items: flex-start; gap: 10px; line-height: 1.6; margin-bottom: 8px; }
+  .service-modal-include::before { content: ''; width: 14px; height: 0.5px; background: var(--teal-light); flex-shrink: 0; margin-top: 9px; }
+  body.modal-open { overflow: hidden; }
+  @media (max-width: 600px) {
+    .service-modal { padding: 2.5rem 1.5rem; max-height: 90vh; }
+  }
 
   /* ── FOOTER ── */
   footer { background: var(--ink); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; border-top: 0.5px solid rgba(255,255,255,0.06); }
@@ -109,6 +134,29 @@
 </style>
 </head>
 <body>
+
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <symbol id="icon-reputation-strategy" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="icon-media-relations" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="11" rx="1"/><path d="M8 16v4l4-4"/><path d="M7 9h10M7 12.5h6"/></symbol>
+  <symbol id="icon-stakeholder-mapping" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="12" cy="18" r="2.2"/><path d="M7.8 7.3L11 16M16.2 7.3L13 16M8.2 6h7.6"/></symbol>
+  <symbol id="icon-esg-communications" viewBox="0 0 24 24"><circle cx="9" cy="9" r="5"/><circle cx="15" cy="9" r="5"/><circle cx="12" cy="15" r="5"/></symbol>
+  <symbol id="icon-executive-positioning" viewBox="0 0 24 24"><circle cx="12" cy="9" r="3"/><path d="M5 21c0-4 3-6 7-6s7 2 7 6"/><path d="M12 2v1.6M7.5 3.2l.9 1.4M16.5 3.2l-.9 1.4"/></symbol>
+  <symbol id="icon-brand-narrative" viewBox="0 0 24 24"><path d="M3 5c2-1 5-1 9 0v14c-4-1-7-1-9 0V5z"/><path d="M21 5c-2-1-5-1-9 0v14c4-1 7-1 9 0V5z"/></symbol>
+  <symbol id="icon-launch-communications" viewBox="0 0 24 24"><path d="M12 2c3 2 5 6 5 10 0 2-1 4-2 5l-1-3h-4l-1 3c-1-1-2-3-2-5 0-4 2-8 5-10z"/><circle cx="12" cy="9" r="1.4"/><path d="M9 17l-1.5 3.5M15 17l1.5 3.5"/></symbol>
+  <symbol id="icon-influencer-strategy" viewBox="0 0 24 24"><path d="M12 3l2.2 4.6L19 8.3l-3.5 3.5.8 4.9L12 14.4l-4.3 2.3.8-4.9L5 8.3l4.8-.7L12 3z"/></symbol>
+  <symbol id="icon-community-management" viewBox="0 0 24 24"><circle cx="8" cy="8" r="2.5"/><circle cx="17" cy="9" r="2.2"/><path d="M2.5 19.5c0-3.3 2.4-5.5 5.5-5.5s5.5 2.2 5.5 5.5"/><path d="M14 14.3c2.6.2 4.5 2.2 4.5 5.2"/></symbol>
+  <symbol id="icon-cultural-positioning" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5 5-2z"/></symbol>
+  <symbol id="icon-change-management" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0114-5.3M20 12a8 8 0 01-14 5.3"/><path d="M18 3.7v3.4h-3.4M6 20.3v-3.4h3.4"/></symbol>
+  <symbol id="icon-culture-communications" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="1"/><path d="M8 16v4l4-4"/><path d="M12 11.8c-1.8-2.2-5 .2-2.7 2.5.9 1 2.7 2.1 2.7 2.1s1.8-1.1 2.7-2.1c2.3-2.3-.9-4.7-2.7-2.5z"/></symbol>
+  <symbol id="icon-leadership-messaging" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3M9 21h6"/></symbol>
+  <symbol id="icon-employee-engagement" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6"/><path d="M18 5.5v6M15 8.5h6"/></symbol>
+  <symbol id="icon-organizational-narrative" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="4" rx=".5"/><rect x="2" y="14" width="6" height="4" rx=".5"/><rect x="16" y="14" width="6" height="4" rx=".5"/><path d="M12 6v4M12 10H5v4M12 10h7v4"/></symbol>
+  <symbol id="icon-crisis-protocol-design" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M12 8v4.5"/><circle cx="12" cy="16" r=".6" fill="currentColor"/></symbol>
+  <symbol id="icon-risk-monitoring" viewBox="0 0 24 24"><path d="M2 12C4 7 8 4 12 4s8 3 10 8c-2 5-6 8-10 8S4 17 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="icon-spokesperson-training" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M3 20c0-4 2.7-6.5 6-6.5s6 2.5 6 6.5"/><rect x="16.5" y="3" width="4" height="6.5" rx="2"/><path d="M14.5 8a4 4 0 008 0M18.5 12v2"/></symbol>
+  <symbol id="icon-issue-management" viewBox="0 0 24 24"><path d="M5 21V3"/><path d="M5 4h13l-2.5 3.5L18 11H5"/></symbol>
+  <symbol id="icon-post-crisis-recovery" viewBox="0 0 24 24"><path d="M3 8l4 5 3-2 5 2.5 5-6.5"/><path d="M16 6.5h4v4"/></symbol>
+</svg>
 
 <!-- ── NAV ── -->
 <nav id="main-nav">
@@ -165,11 +213,11 @@
       <p class="area-category">Comunicación Corporativa</p>
       <p class="area-body">Cómo las organizaciones se posicionan frente a medios, inversionistas, reguladores y comunidades. Gestión de reputación, narrativa corporativa, relaciones con grupos de interés y la arquitectura comunicacional que sostiene a una institución a lo largo del tiempo.</p>
       <div class="area-services">
-        <span class="area-service">Estrategia de reputación</span>
-        <span class="area-service">Relaciones con medios</span>
-        <span class="area-service">Mapeo de stakeholders</span>
-        <span class="area-service">Comunicación ESG</span>
-        <span class="area-service">Posicionamiento ejecutivo</span>
+        <button class="area-service" data-service="reputation-strategy">Estrategia de reputación</button>
+        <button class="area-service" data-service="media-relations">Relaciones con medios</button>
+        <button class="area-service" data-service="stakeholder-mapping">Mapeo de stakeholders</button>
+        <button class="area-service" data-service="esg-communications">Comunicación ESG</button>
+        <button class="area-service" data-service="executive-positioning">Posicionamiento ejecutivo</button>
       </div>
     </div>
 
@@ -179,11 +227,11 @@
       <p class="area-category">Comunicación de Marca</p>
       <p class="area-body">La relación entre una marca y sus audiencias — construida a través de coherencia narrativa, relevancia cultural y visibilidad sostenida. La comunicación de marca no es publicidad: es la orquestación estratégica del significado en todos los puntos de contacto.</p>
       <div class="area-services">
-        <span class="area-service">Narrativa de marca</span>
-        <span class="area-service">Comunicación de lanzamiento</span>
-        <span class="area-service">Estrategia con influencers</span>
-        <span class="area-service">Gestión de comunidades</span>
-        <span class="area-service">Posicionamiento cultural</span>
+        <button class="area-service" data-service="brand-narrative">Narrativa de marca</button>
+        <button class="area-service" data-service="launch-communications">Comunicación de lanzamiento</button>
+        <button class="area-service" data-service="influencer-strategy">Estrategia con influencers</button>
+        <button class="area-service" data-service="community-management">Gestión de comunidades</button>
+        <button class="area-service" data-service="cultural-positioning">Posicionamiento cultural</button>
       </div>
     </div>
 
@@ -193,11 +241,11 @@
       <p class="area-category">Comunicación Interna</p>
       <p class="area-body">La infraestructura comunicacional que mantiene cohesionadas a las organizaciones: alineación, cultura, gestión del cambio y mensajes de liderazgo. La comunicación interna determina si la estrategia permanece en papel o vive en la forma en que las personas trabajan.</p>
       <div class="area-services">
-        <span class="area-service">Gestión del cambio</span>
-        <span class="area-service">Comunicación de cultura</span>
-        <span class="area-service">Mensajes de liderazgo</span>
-        <span class="area-service">Vinculación del empleado</span>
-        <span class="area-service">Narrativa organizacional</span>
+        <button class="area-service" data-service="change-management">Gestión del cambio</button>
+        <button class="area-service" data-service="culture-communications">Comunicación de cultura</button>
+        <button class="area-service" data-service="leadership-messaging">Mensajes de liderazgo</button>
+        <button class="area-service" data-service="employee-engagement">Vinculación del empleado</button>
+        <button class="area-service" data-service="organizational-narrative">Narrativa organizacional</button>
       </div>
     </div>
 
@@ -207,16 +255,28 @@
       <p class="area-category">Crisis y Gestión del Riesgo</p>
       <p class="area-body">Cómo las organizaciones navegan la disrupción sin perder credibilidad. La comunicación en crisis no es control de daños — es la capacidad de actuar con claridad, velocidad y coherencia cuando la confianza institucional está bajo presión.</p>
       <div class="area-services">
-        <span class="area-service">Diseño de protocolos de crisis</span>
-        <span class="area-service">Monitoreo de riesgos</span>
-        <span class="area-service">Entrenamiento de voceros</span>
-        <span class="area-service">Gestión de issues</span>
-        <span class="area-service">Recuperación post-crisis</span>
+        <button class="area-service" data-service="crisis-protocol-design">Diseño de protocolos de crisis</button>
+        <button class="area-service" data-service="risk-monitoring">Monitoreo de riesgos</button>
+        <button class="area-service" data-service="spokesperson-training">Entrenamiento de voceros</button>
+        <button class="area-service" data-service="issue-management">Gestión de issues</button>
+        <button class="area-service" data-service="post-crisis-recovery">Recuperación post-crisis</button>
       </div>
     </div>
 
   </div>
 </section>
+
+<!-- ── SERVICE DETAIL MODAL ── -->
+<div class="service-modal-overlay" id="serviceModalOverlay">
+  <div class="service-modal" role="dialog" aria-modal="true" aria-labelledby="serviceModalTitle" tabindex="-1">
+    <button class="service-modal-close" id="serviceModalClose" aria-label="Cerrar">&times;</button>
+    <div class="service-modal-icon" id="serviceModalIcon"></div>
+    <p class="service-modal-eyebrow" id="serviceModalEyebrow"></p>
+    <h3 class="service-modal-title" id="serviceModalTitle"></h3>
+    <p class="service-modal-summary" id="serviceModalSummary"></p>
+    <div id="serviceModalIncludes"></div>
+  </div>
+</div>
 
 <footer>
   <a href="/es/index.html" class="footer-logo">Teal<span>Kin</span></a>
@@ -241,6 +301,150 @@ window.addEventListener('scroll', () => {
   document.getElementById('main-nav').style.background =
     window.scrollY > 60 ? 'rgba(10,18,12,0.97)' : 'rgba(15,20,16,0.9)';
 });
+
+const SERVICE_DETAILS = {
+  'reputation-strategy': {
+    icon: 'reputation-strategy',
+    summary: "La forma en que una organización es percibida por quienes deciden su futuro (inversionistas, reguladores, socios, talento) rara vez ocurre por accidente. Construimos la arquitectura narrativa y los argumentos que sustentan esa percepción de manera deliberada, y damos seguimiento a cómo evoluciona con el tiempo.",
+    includes: ['Auditorías de reputación y mapeo de percepción', 'Arquitectura narrativa y mensajes clave', 'Programas de thought leadership', 'Monitoreo y benchmarking de reputación']
+  },
+  'media-relations': {
+    icon: 'media-relations',
+    summary: "Relaciones estratégicas y sostenidas con los periodistas, editores y medios que importan para tu sector, construidas antes de necesitarlas, no cuando la noticia ya estalló. Desde colocación proactiva hasta reportajes a profundidad que construyen autoridad con el tiempo.",
+    includes: ['Estrategia de prensa y calendarios editoriales', 'Gestión de relaciones con periodistas', 'Artículos de opinión y columnas firmadas', 'Materiales y documentos para prensa']
+  },
+  'stakeholder-mapping': {
+    icon: 'stakeholder-mapping',
+    summary: "Toda organización opera dentro de una red de personas e instituciones cuya percepción define su margen de acción. Mapeamos esa red (influencia, alineación, riesgo) y diseñamos un plan de relacionamiento específico para cada grupo.",
+    includes: ['Mapeo de influencia e intereses', 'Planes de relacionamiento por audiencia', 'Comunicación con inversionistas y reguladores', 'Construcción de coaliciones y alianzas']
+  },
+  'esg-communications': {
+    icon: 'esg-communications',
+    summary: "Los compromisos ambientales, sociales y de gobernanza solo generan confianza cuando se comunican con el mismo rigor que los resultados financieros: sustentados, consistentes y capaces de resistir el escrutinio. Ayudamos a traducir la estrategia ESG en una narrativa pública creíble.",
+    includes: ['Narrativa ESG y apoyo en reportes', 'Estrategia de campañas de sostenibilidad', 'Revisión de riesgo de greenwashing', 'Mensajes ESG por tipo de stakeholder']
+  },
+  'executive-positioning': {
+    icon: 'executive-positioning',
+    summary: "Un CEO o fundador suele ser el activo más visible de una organización, y también el más expuesto. Construimos el perfil público, la voz y la plataforma que convierten a un líder en un vocero creíble de la historia de la empresa.",
+    includes: ['Estrategia de visibilidad ejecutiva', 'Entrenamiento en medios y vocería', 'Thought leadership y ghostwriting', 'Auditorías de marca personal']
+  },
+  'brand-narrative': {
+    icon: 'brand-narrative',
+    summary: "La historia que una marca cuenta sobre sí misma y la que sus audiencias realmente creen no siempre coinciden. Construimos marcos narrativos que cierran esa brecha y le dan a cada campaña un hilo conductor coherente.",
+    includes: ['Historia de marca y marcos de mensajes', 'Lineamientos de tono de voz', 'Auditorías de narrativa', 'Arquitectura de mensajes multicanal']
+  },
+  'launch-communications': {
+    icon: 'launch-communications',
+    summary: "Un lanzamiento es un momento único e irrepetible para definir cómo se entenderá algo nuevo. Planeamos la secuencia, los canales y los voceros para que esa primera impresión cumpla el objetivo que necesita cumplir.",
+    includes: ['Estrategia y cronograma de lanzamiento', 'Siembra con prensa e influencers', 'Gestión de embargos y exclusivas', 'Plan de continuidad post-lanzamiento']
+  },
+  'influencer-strategy': {
+    icon: 'influencer-strategy',
+    summary: "Hoy la influencia está distribuida entre creadores, comunidades y plataformas, y una sola alianza mal evaluada puede deshacer meses de trabajo de marca. Identificamos a las voces correctas, definimos los términos y gestionamos la relación de principio a fin.",
+    includes: ['Identificación y validación de creadores', 'Briefs de campaña y derechos de uso', 'Seguimiento de desempeño', 'Acuerdos de colaboración a prueba de crisis']
+  },
+  'community-management': {
+    icon: 'community-management',
+    summary: "La comunidad de una marca es donde su reputación se pone a prueba todos los días, en público y en tiempo real. Diseñamos el tono, los protocolos de respuesta y los estándares de moderación que mantienen esa conversación alineada con la marca, incluso bajo presión.",
+    includes: ['Escucha social y marcos de respuesta', 'Lineamientos y moderación de comunidad', 'Tono de voz aplicado', 'Protocolos de escalamiento']
+  },
+  'cultural-positioning': {
+    icon: 'cultural-positioning',
+    summary: "Las marcas culturalmente relevantes no solo anuncian en un momento determinado, lo entienden lo suficiente como para participar de forma creíble. Ayudamos a las marcas a leer los cambios culturales y a decidir dónde, y si conviene, sumarse.",
+    includes: ['Análisis cultural y de tendencias', 'Evaluación de relevancia y riesgo', 'Estrategia de alianzas y patrocinios', 'Localización para mercados de LATAM']
+  },
+  'change-management': {
+    icon: 'change-management',
+    summary: "La mayoría de las iniciativas de cambio fallan no porque la estrategia esté mal, sino porque nunca se involucró a las personas que la viven. Diseñamos las comunicaciones que convierten un programa de cambio de un simple anuncio en algo que las personas entienden y adoptan.",
+    includes: ['Hojas de ruta de comunicación del cambio', 'Kits para mandos medios y cascadas de mensajes', 'Monitoreo del clima durante la transición', 'Comunicación de fusiones y reestructuras']
+  },
+  'culture-communications': {
+    icon: 'culture-communications',
+    summary: "La cultura no es una diapositiva en un manual de bienvenida, es lo que las personas viven todos los días. Ayudamos a traducir los valores declarados en el lenguaje, los rituales y los mensajes cotidianos que hacen visible la cultura en toda la organización.",
+    includes: ['Traducción de valores en mensajes', 'Campañas internas y rituales', 'Auditorías de cultura', 'Programas de reconocimiento y storytelling']
+  },
+  'leadership-messaging': {
+    icon: 'leadership-messaging',
+    summary: "Lo que dicen los líderes (con qué frecuencia y en qué tono) define cómo entiende toda la organización hacia dónde se dirige. Ayudamos a los ejecutivos a comunicarse con claridad y consistencia, desde town halls hasta actualizaciones de una sola línea.",
+    includes: ['Contenido para town halls y all-hands', 'Marcos para memos y correos ejecutivos', 'Coaching de voz de liderazgo', 'Arquitectura de mensajes en cascada']
+  },
+  'employee-engagement': {
+    icon: 'employee-engagement',
+    summary: "Los empleados comprometidos son los voceros más creíbles de una organización, y también sus críticos más honestos. Construimos los mecanismos de escucha y los momentos de comunicación que mantienen esa relación bidireccional y confiable.",
+    includes: ['Encuestas de clima y rondas de escucha', 'Diseño de campañas internas', 'Comunicación de reconocimiento', 'Diseño de mecanismos de retroalimentación']
+  },
+  'organizational-narrative': {
+    icon: 'organizational-narrative',
+    summary: "Toda organización tiene una historia interna sobre de dónde viene y hacia dónde va, la haya escrito alguien o no. Ayudamos a articular esa narrativa para que estrategia, cultura y comunicación apunten en la misma dirección.",
+    includes: ['Articulación de misión y visión', 'Marcos de storytelling interno', 'Comunicación de cascada de estrategia', 'Narrativas de aniversarios e hitos']
+  },
+  'crisis-protocol-design': {
+    icon: 'crisis-protocol-design',
+    summary: "La primera hora de una crisis se decide mucho antes de que ocurra: en los protocolos, roles y árboles de decisión construidos con anticipación. Diseñamos los playbooks que permiten a una organización actuar rápido sin actuar con descuido.",
+    includes: ['Playbooks y árboles de decisión', 'Roles y cadenas de escalamiento', 'Banco de comunicados de contención', 'Simulacros y ejercicios de mesa']
+  },
+  'risk-monitoring': {
+    icon: 'risk-monitoring',
+    summary: "La mayoría de las crisis de reputación fueron visibles como una señal mucho antes de convertirse en titular. Construimos los sistemas de monitoreo que detectan riesgos emergentes en medios, redes sociales y canales regulatorios, con tiempo suficiente para actuar.",
+    includes: ['Configuración de escucha en medios y redes', 'Scoring de riesgo y alertas tempranas', 'Monitoreo regulatorio y sectorial', 'Reportes trimestrales de riesgo']
+  },
+  'spokesperson-training': {
+    icon: 'spokesperson-training',
+    summary: "Bajo presión, la preparación de un vocero se nota de inmediato: en su lenguaje, su aplomo y lo que decide no decir. Entrenamos a las personas que enfrentarán a medios, reguladores o al público en los momentos que más importan.",
+    includes: ['Entrenamiento en medios y entrevistas simuladas', 'Disciplina de mensaje', 'Preparación para cámara y eventos en vivo', 'Simulacros de escenarios de crisis']
+  },
+  'issue-management': {
+    icon: 'issue-management',
+    summary: "Un issue es una crisis que todavía no ha ocurrido, y la ventana para gestionarlo en silencio suele ser corta. Damos seguimiento a los issues emergentes y construimos la estrategia de respuesta antes de que lleguen a medios o a la conversación en redes.",
+    includes: ['Identificación y seguimiento de issues', 'Documentos de postura y estrategia de respuesta', 'Equipos de trabajo multidisciplinarios', 'Briefings preventivos a stakeholders']
+  },
+  'post-crisis-recovery': {
+    icon: 'post-crisis-recovery',
+    summary: "Lo que una organización hace en los meses posteriores a una crisis suele determinar si se le recuerda como un fracaso o como un punto de inflexión. Diseñamos la narrativa de recuperación y reconstruimos la confianza que la crisis puso en riesgo.",
+    includes: ['Narrativa y cronograma de recuperación', 'Campañas de reconstrucción de confianza', 'Reactivación del relacionamiento con stakeholders', 'Lecciones aprendidas y actualización de protocolos']
+  }
+};
+
+(function(){
+  const overlay = document.getElementById('serviceModalOverlay');
+  const modal = overlay.querySelector('.service-modal');
+  const iconEl = document.getElementById('serviceModalIcon');
+  const eyebrowEl = document.getElementById('serviceModalEyebrow');
+  const titleEl = document.getElementById('serviceModalTitle');
+  const summaryEl = document.getElementById('serviceModalSummary');
+  const includesEl = document.getElementById('serviceModalIncludes');
+  const includesLabel = 'En la práctica';
+  let lastFocused = null;
+
+  document.querySelectorAll('.area-service').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const data = SERVICE_DETAILS[btn.dataset.service];
+      if (!data) return;
+      const card = btn.closest('.area-card');
+      eyebrowEl.textContent = card.querySelector('.area-maya').textContent.trim() + ' · ' + card.querySelector('.area-category').textContent.trim();
+      titleEl.textContent = btn.textContent.trim();
+      summaryEl.textContent = data.summary;
+      iconEl.className = 'service-modal-icon';
+      ['akin','ha','sakha'].forEach(c => { if (card.classList.contains(c)) iconEl.classList.add(c); });
+      iconEl.innerHTML = '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-' + data.icon + '"></use></svg>';
+      includesEl.innerHTML = '<p class="service-modal-includes-label">' + includesLabel + '</p>' +
+        data.includes.map(i => '<div class="service-modal-include">' + i + '</div>').join('');
+      lastFocused = btn;
+      overlay.classList.add('open');
+      document.body.classList.add('modal-open');
+      modal.focus();
+    });
+  });
+
+  function closeServiceModal(){
+    overlay.classList.remove('open');
+    document.body.classList.remove('modal-open');
+    if (lastFocused) lastFocused.focus();
+  }
+  document.getElementById('serviceModalClose').addEventListener('click', closeServiceModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeServiceModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open')) closeServiceModal(); });
+})();
 </script>
 
 </body>
