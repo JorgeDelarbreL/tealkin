@@ -107,8 +107,11 @@
   .form-row input::placeholder, .form-row textarea::placeholder { color: rgba(255,255,255,0.25); }
   .contact-submit { display: inline-flex; align-items: center; justify-content: center; gap: 10px; align-self: flex-start; font-family: var(--font-body); font-size: 12px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink); background: var(--teal-light); border: none; border-radius: 2px; padding: 0.9rem 2rem; cursor: pointer; transition: background 0.3s; }
   .contact-submit:hover { background: var(--teal); }
+  .contact-submit:disabled { opacity: 0.6; cursor: default; }
   .contact-submit svg { width: 16px; height: 16px; }
   .contact-note { font-size: 12px; color: var(--mist); }
+  .contact-note.success { color: var(--teal-light); }
+  .contact-note.error { color: #d97070; }
 
   footer { background: var(--ink); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; border-top: 0.5px solid rgba(255,255,255,0.06); }
   .footer-logo { font-family: var(--font-display); font-size: 18px; font-weight: 300; letter-spacing: 0.1em; color: var(--white); text-decoration: none; }
@@ -300,6 +303,10 @@
     </div>
 
     <form class="contact-form" id="contactForm">
+      <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+      <input type="hidden" name="subject" value="Nuevo mensaje desde el sitio de TealKin">
+      <input type="hidden" name="from_name" value="Formulario de contacto de TealKin">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
       <div class="form-row">
         <label for="contactName">Nombre</label>
         <input type="text" id="contactName" name="name" placeholder="Tu nombre" required>
@@ -312,11 +319,11 @@
         <label for="contactMessage">Mensaje</label>
         <textarea id="contactMessage" name="message" rows="5" placeholder="¿Sobre qué te gustaría hablar?" required></textarea>
       </div>
-      <button type="submit" class="contact-submit">
+      <button type="submit" class="contact-submit" id="contactSubmit">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-send"></use></svg>
-        Enviar mensaje
+        <span id="contactSubmitLabel">Enviar mensaje</span>
       </button>
-      <p class="contact-note">Esto abrirá tu cliente de correo con el mensaje listo para enviar.</p>
+      <p class="contact-note" id="contactStatus" role="status">Tu mensaje llega directo a mi bandeja de entrada.</p>
     </form>
   </div>
 </section>
@@ -345,14 +352,40 @@ window.addEventListener('scroll', () => {
     window.scrollY > 60 ? 'rgba(10,18,12,0.97)' : 'rgba(15,20,16,0.9)';
 });
 
-document.getElementById('contactForm').addEventListener('submit', e => {
+document.getElementById('contactForm').addEventListener('submit', async e => {
   e.preventDefault();
-  const name = document.getElementById('contactName').value.trim();
-  const email = document.getElementById('contactEmail').value.trim();
-  const message = document.getElementById('contactMessage').value.trim();
-  const subject = 'Contacto desde el sitio de TealKin: ' + name;
-  const body = message + '\n\nEnviado por ' + name + ' (' + email + ')';
-  window.location.href = 'mailto:jdelarbrel@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  const form = e.target;
+  const submitBtn = document.getElementById('contactSubmit');
+  const submitLabel = document.getElementById('contactSubmitLabel');
+  const status = document.getElementById('contactStatus');
+
+  submitBtn.disabled = true;
+  submitLabel.textContent = 'Enviando...';
+  status.textContent = 'Enviando tu mensaje...';
+  status.classList.remove('success', 'error');
+
+  try {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    });
+    const result = await response.json();
+
+    if (result.success) {
+      form.reset();
+      status.textContent = 'Gracias, tu mensaje va en camino. Te responderé pronto.';
+      status.classList.add('success');
+    } else {
+      throw new Error(result.message || 'Submission failed');
+    }
+  } catch (err) {
+    status.textContent = 'Algo salió mal. Por favor escríbeme directamente a jdelarbrel@gmail.com.';
+    status.classList.add('error');
+  } finally {
+    submitBtn.disabled = false;
+    submitLabel.textContent = 'Enviar mensaje';
+  }
 });
 </script>
 
