@@ -383,30 +383,39 @@ headers: { 'Content-Type': 'application/json' },
   }
 }
 
+function escapeHtml(s) {
+  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// Allows the AI's verdict to use <em> for emphasis while escaping everything else
+function allowEm(s) {
+  return escapeHtml(s).replace(/&lt;(\/?)em&gt;/g, '<$1em>');
+}
+
 function renderResult(result) {
-  document.getElementById('score-number').innerHTML = result.score + '<span>%</span>';
-  document.getElementById('score-verdict').innerHTML = result.verdict;
+  document.getElementById('score-number').innerHTML = escapeHtml(result.score) + '<span>%</span>';
+  document.getElementById('score-verdict').innerHTML = allowEm(result.verdict);
   document.getElementById('score-summary').textContent = result.summary;
 
   // Comparators
   document.getElementById('compared-list').innerHTML = result.comparators.map(c =>
     `<div class="compared-item">
       <div>
-        <div class="compared-name">${c.name}</div>
-        <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">${c.note}</div>
+        <div class="compared-name">${escapeHtml(c.name)}</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:2px;">${escapeHtml(c.note)}</div>
       </div>
-      <div class="compared-sim">Similarity <strong>${c.similarity}</strong></div>
+      <div class="compared-sim">Similarity <strong>${escapeHtml(c.similarity)}</strong></div>
     </div>`
   ).join('');
 
   // Patterns
   document.getElementById('pattern-list').innerHTML = result.patterns.map(p =>
-    `<div class="pattern-item">${p}</div>`
+    `<div class="pattern-item">${escapeHtml(p)}</div>`
   ).join('');
 
   // Hints
   document.getElementById('hint-list').innerHTML = result.hints.map(h =>
-    `<div class="hint-item"><span class="hint-bullet">→</span><span>${h}</span></div>`
+    `<div class="hint-item"><span class="hint-bullet">→</span><span>${escapeHtml(h)}</span></div>`
   ).join('');
 }
 
