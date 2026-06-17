@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conexión — TealKin</title>
+<meta name="description" content="Un recorrido interactivo de scrollytelling por la historia de la conexión humana — desde la primera mirada hasta la era de la IA, y de vuelta a las palabras auténticas.">
+<link rel="canonical" href="https://tealkin.com/tools/connection/index-es.html">
+<link rel="alternate" hreflang="en" href="https://tealkin.com/tools/connection/index.html">
+<link rel="alternate" hreflang="es" href="https://tealkin.com/tools/connection/index-es.html">
+<link rel="alternate" hreflang="x-default" href="https://tealkin.com/tools/connection/index.html">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4Y4JT3R4WK"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4Y4JT3R4WK');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+:root{
+  --teal:#1a9b8c;
+  --teal-light:#2dbfad;
+  --orange:#e8843a;
+  --dark:#0a1628;
+  --white:#f5f3ee;
+  --font-display:'Cormorant Garamond',Georgia,serif;
+  --font-body:'DM Sans',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;height:100%;background:var(--dark);overflow:hidden;font-family:var(--font-body);}
+body{position:relative;}
+::selection{background:var(--teal);color:var(--dark);}
+
+.back-link{position:fixed;top:22px;left:28px;z-index:200;font-family:var(--font-display);font-size:16px;letter-spacing:.04em;color:var(--white);text-decoration:none;opacity:.85;transition:opacity .3s;mix-blend-mode:difference;}
+.back-link:hover{opacity:1;}
+
+.scroll-spacer{position:relative;width:100%;}
+
+#bg-layer{position:fixed;inset:0;z-index:0;background:var(--dark);transition:none;}
+
+.pin-wrap{position:relative;width:100%;height:100vh;overflow:hidden;z-index:1;}
+.track{position:absolute;top:0;left:0;height:100vh;display:flex;will-change:transform;}
+.scene{position:relative;width:100vw;height:100vh;flex:0 0 100vw;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.scene-inner{position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 6vw;}
+
+.scene svg{position:absolute;inset:0;width:100%;height:100%;}
+
+.caption{position:relative;z-index:5;max-width:760px;text-align:center;font-family:var(--font-display);font-weight:300;font-style:italic;font-size:clamp(22px,3.4vw,40px);line-height:1.4;color:var(--white);text-shadow:0 2px 24px rgba(0,0,0,.4);padding:0 20px;}
+
+.scene-tag{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(245,243,238,.45);z-index:5;}
+
+/* bubble */
+.sbubble{position:absolute;font-family:var(--font-body);font-size:13px;font-weight:500;color:var(--dark);background:var(--white);border-radius:18px;padding:6px 14px;opacity:0;}
+
+/* matrix scene text columns */
+.matrix-layer{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;z-index:2;}
+.bin-row{font-family:'DM Sans',monospace;font-size:clamp(11px,1.6vw,18px);letter-spacing:.08em;color:rgba(26,155,140,.85);white-space:nowrap;}
+
+/* closing scene */
+.brand-mark{font-family:var(--font-body);font-weight:500;font-size:22px;letter-spacing:.06em;color:var(--dark);opacity:0;}
+.brand-mark span{color:var(--teal);}
+.close-sub{font-family:var(--font-body);font-weight:400;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:rgba(10,22,40,.6);margin-top:10px;opacity:0;}
+
+@media (max-width:760px){
+  .caption{font-size:20px;}
+  .scene-tag{font-size:9px;}
+}
+</style>
+</head>
+<body>
+
+<a href="/es/lab.html" class="back-link">&larr; TealKin</a>
+
+<div id="bg-layer"></div>
+
+<div class="scroll-spacer" id="spacer">
+  <div class="pin-wrap">
+    <div class="track" id="track">
+
+      <!-- SCENE 1 — DAWN -->
+      <section class="scene" id="s1">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#0a1628"/>
+              <stop offset="100%" stop-color="#10202f"/>
+            </linearGradient>
+          </defs>
+          <rect width="1000" height="600" fill="url(#skyGrad)"/>
+          <rect id="s1-orange" width="1000" height="600" fill="#e8843a" opacity="0"/>
+          <circle id="s1-sun" cx="500" cy="430" r="10" fill="#f5f3ee" opacity="0.95"/>
+          <polygon points="0,430 1000,430 1000,600 0,600" fill="#0d2a36"/>
+          <polygon points="0,430 1000,420 1000,600 0,600" fill="#0a2330" opacity="0.6"/>
+          <!-- figure from behind -->
+          <g id="s1-figure" transform="translate(500,430)">
+            <circle cx="0" cy="-94" r="14" fill="#f5f3ee"/>
+            <path d="M -16 -78 L -20 -10 L -8 -10 L -4 -50 L 4 -50 L 8 -10 L 20 -10 L 16 -78 Z" fill="#f5f3ee"/>
+          </g>
+        </svg>
+        <div class="scene-inner">
+          <p class="caption">Antes de la primera palabra, ya existía la conexión.</p>
+        </div>
+        <span class="scene-tag">01 — El amanecer</span>
+      </section>
+
+      <!-- SCENE 2 — JUNGLE -->
+      <section class="scene" id="s2">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <rect width="1000" height="600" fill="#0f3530"/>
+          <g id="s2-trees" stroke="#1a9b8c" stroke-width="3" fill="none">
+            <path d="M120 600 L120 320 M120 320 L60 260 M120 320 L180 260 M120 380 L70 330 M120 380 L170 330"/>
+            <path d="M280 600 L280 260 M280 260 L210 190 M280 260 L350 190 M280 340 L220 280 M280 340 L340 280"/>
+            <path d="M780 600 L780 290 M780 290 L710 220 M780 290 L850 220 M780 360 L720 300 M780 360 L840 300"/>
+            <path d="M900 600 L900 340 M900 340 L840 280 M900 340 L960 280"/>
+          </g>
+          <g id="s2-coati" stroke="#e8843a" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="220" stroke-dashoffset="220">
+            <path d="M180 540 Q210 520 240 540 Q260 545 280 530 M195 535 L195 520 M225 535 L225 520 M275 528 Q300 510 310 480"/>
+          </g>
+          <g id="s2-turtle" stroke="#2dbfad" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="200" stroke-dashoffset="200">
+            <ellipse cx="450" cy="560" rx="36" ry="22"/>
+            <path d="M414 560 Q400 555 392 562 M486 560 Q500 555 508 562 M430 580 Q425 595 418 598 M470 580 Q475 595 482 598"/>
+          </g>
+          <g id="s2-snake" stroke="#1a9b8c" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="260" stroke-dashoffset="260">
+            <path d="M600 580 Q630 540 600 510 Q570 480 600 450 Q630 420 610 395"/>
+          </g>
+          <g id="s2-bird" stroke="#e8843a" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="180" stroke-dashoffset="180">
+            <path d="M760 200 Q790 180 820 200 M770 198 L790 185 L810 198"/>
+          </g>
+        </svg>
+        <div class="scene-inner">
+          <p class="caption">Los vestigios de la comunicación están presentes desde el inicio.</p>
+        </div>
+        <span class="scene-tag">02 — La selva despierta</span>
+      </section>
+
+      <!-- SCENE 3 — THE FIGURE OBSERVES -->
+      <section class="scene" id="s3">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <rect width="1000" height="600" fill="#123a35"/>
+          <g transform="translate(220,420)">
+            <circle cx="0" cy="-94" r="14" fill="#f5f3ee"/>
+            <path d="M -16 -78 L -20 -10 L -8 -10 L -4 -50 L 4 -50 L 8 -10 L 20 -10 L 16 -78 Z" fill="#f5f3ee"/>
+          </g>
+          <g id="s3-animals" fill="#e8843a">
+            <ellipse cx="760" cy="470" rx="30" ry="18"/>
+            <circle cx="800" cy="380" r="14"/>
+            <ellipse cx="700" cy="340" rx="22" ry="12"/>
+          </g>
+          <path id="s3-gaze" d="M240 350 L740 400" stroke="#f5f3ee" stroke-width="2" stroke-dasharray="520" stroke-dashoffset="520" fill="none"/>
+        </svg>
+        <div class="scene-inner">
+          <p class="caption">En nuestra mirada siempre hay una intención: establecer conexión. La comunicación es una acción.</p>
+        </div>
+        <span class="scene-tag">03 — El personaje observa</span>
+      </section>
+
+      <!-- SCENE 4 — THE DRIFT -->
+      <section class="scene" id="s4">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <rect width="1000" height="600" fill="#1c2b2a"/>
+          <g id="s4-roots" stroke="#3f6b62" stroke-width="3" fill="none">
+            <path d="M0 600 L60 520 L20 460 M150 600 L190 530"/>
+          </g>
+          <g id="s4-blocks" fill="#445" opacity="0">
+            <rect x="500" y="480" width="90" height="120"/>
+            <rect x="610" y="440" width="70" height="160"/>
+            <rect x="700" y="500" width="100" height="100"/>
+          </g>
+          <g id="s4-people" fill="#f5f3ee" opacity="0">
+            <g transform="translate(540,470)">
+              <circle cx="0" cy="-12" r="9"/>
+              <path d="M -8 0 Q 10 10 18 22 L 4 22 L -10 8 Z"/>
+              <rect x="14" y="14" width="20" height="14" fill="#1a9b8c"/>
+            </g>
+            <g transform="translate(660,440)">
+              <circle cx="0" cy="-12" r="9"/>
+              <path d="M -8 0 Q 10 10 18 22 L 4 22 L -10 8 Z"/>
+              <rect x="14" y="14" width="20" height="14" fill="#1a9b8c"/>
+            </g>
+          </g>
+        </svg>
+        <div class="scene-inner">
+          <p class="caption">Pero en algún momento, la acción se volvió transacción.</p>
+        </div>
+        <span class="scene-tag">04 — La deriva</span>
+      </section>
+
+      <!-- SCENE 4B — TECH IRRUPTION -->
+      <section class="scene" id="s4b">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <rect width="1000" height="600" fill="#13242b"/>
+          <line x1="100" y1="500" x2="900" y2="500" stroke="#2dbfad" stroke-width="2" opacity="0.4"/>
+          <g id="s4b-telegraph" opacity="0" transform="translate(220,420)">
+            <rect x="-50" y="0" width="100" height="60" fill="none" stroke="#e8843a" stroke-width="3"/>
+            <line x1="0" y1="0" x2="30" y2="-40" stroke="#e8843a" stroke-width="4" stroke-linecap="round"/>
+          </g>
+          <g id="s4b-tv" opacity="0" transform="translate(500,400)">
+            <rect x="-60" y="0" width="120" height="80" fill="none" stroke="#2dbfad" stroke-width="3"/>
+            <line x1="-20" y1="0" x2="-40" y2="-40" stroke="#2dbfad" stroke-width="3"/>
+            <line x1="20" y1="0" x2="40" y2="-40" stroke="#2dbfad" stroke-width="3"/>
+          </g>
+          <g id="s4b-phone" opacity="0" transform="translate(780,380)">
+            <rect x="-25" y="0" width="50" height="100" rx="8" fill="none" stroke="#f5f3ee" stroke-width="3"/>
+            <line x1="-25" y1="80" x2="25" y2="80" stroke="#f5f3ee" stroke-width="2"/>
+          </g>
+        </svg>
+        <div class="scene-inner">
+          <p class="caption">An acceleration that started long before.</p>
+        </div>
+        <span class="scene-tag">04B — Technological irruption</span>
+      </section>
+
+      <!-- SCENE 4C — AI EMERGES -->
+      <section class="scene" id="s4c">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <rect width="1000" height="600" fill="#0b1c22"/>
+          <g id="s4c-figure" opacity="0.85" transform="translate(500,440)">
+            <circle cx="0" cy="-100" r="16" fill="none" stroke="#1a9b8c" stroke-width="3"/>
+            <path d="M -18 -82 L -22 -10 L -8 -10 L -4 -55 L 4 -55 L 8 -10 L 22 -10 L 18 -82 Z" fill="none" stroke="#1a9b8c" stroke-width="3"/>
+          </g>
+          <g id="s4c-nodes" stroke="#2dbfad" stroke-width="1.5" fill="#2dbfad">
+            <line x1="500" y1="340" x2="380" y2="240" stroke-dasharray="160" stroke-dashoffset="160"/>
+            <line x1="500" y1="340" x2="500" y2="200" stroke-dasharray="160" stroke-dashoffset="160"/>
+            <line x1="500" y1="340" x2="620" y2="240" stroke-dasharray="160" stroke-dashoffset="160"/>
+            <line x1="380" y1="240" x2="500" y2="200" stroke-dasharray="160" stroke-dashoffset="160"/>
+            <line x1="620" y1="240" x2="500" y2="200" stroke-dasharray="160" stroke-dashoffset="160"/>
+            <circle cx="500" cy="340" r="7"/>
+            <circle cx="380" cy="240" r="6"/>
+            <circle cx="500" cy="200" r="6"/>
+            <circle cx="620" cy="240" r="6"/>
+          </g>
+        </svg>
+        <div class="scene-inner">
+          <p class="caption">And underwent its greatest transformation yet.</p>
+        </div>
+        <span class="scene-tag">04C — AI emerges</span>
+      </section>
+
+      <!-- SCENE 4D — CONSULTING BEFORE SPEAKING -->
+      <section class="scene" id="s4d">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <rect width="1000" height="600" fill="#101d24"/>
+          <g transform="translate(280,420)">
+            <circle cx="0" cy="-94" r="14" fill="#f5f3ee"/>
+            <path d="M -16 -78 L -20 -10 L -8 -10 L -4 -50 L 4 -50 L 8 -10 L 20 -10 L 16 -78 Z" fill="#f5f3ee"/>
+            <rect x="-10" y="-35" width="20" height="28" fill="#0a1628" stroke="#1a9b8c" stroke-width="1.5"/>
+          </g>
+          <g transform="translate(720,420) scale(-1,1)">
+            <circle cx="0" cy="-94" r="14" fill="#f5f3ee"/>
+            <path d="M -16 -78 L -20 -10 L -8 -10 L -4 -50 L 4 -50 L 8 -10 L 20 -10 L 16 -78 Z" fill="#f5f3ee"/>
+            <rect x="-10" y="-35" width="20" height="28" fill="#0a1628" stroke="#1a9b8c" stroke-width="1.5"/>
+          </g>
+          <circle id="s4d-ai" cx="500" cy="300" r="20" fill="none" stroke="#2dbfad" stroke-width="2"/>
+          <path id="s4d-bubble" d="M280 360 Q500 300 720 360" stroke="#e8843a" stroke-width="2" fill="none" stroke-dasharray="500" stroke-dashoffset="500"/>
+        </svg>
+        <div class="scene-inner">
+          <p class="caption">Now even the simplest words go through its filter.</p>
+        </div>
+        <span class="scene-tag">04D — Consulting before speaking</span>
+      </section>
+
+      <!-- SCENE 5 — THE MATRIX -->
+      <section class="scene" id="s5">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <rect width="1000" height="600" fill="#0a1628"/>
+          <g id="s5-facets" stroke="#1a9b8c" stroke-width="1" fill="none" opacity="0.5">
+            <polygon points="200,150 350,200 300,350 150,300"/>
+            <polygon points="450,120 600,180 580,330 420,280"/>
+            <polygon points="650,200 800,260 760,400 620,360"/>
+          </g>
+          <g id="s5-clones" fill="#f5f3ee" opacity="0.7">
+            <g transform="translate(250,260) scale(.5)"><circle cx="0" cy="-94" r="14"/><path d="M -16 -78 L -20 -10 L -8 -10 L -4 -50 L 4 -50 L 8 -10 L 20 -10 L 16 -78 Z"/></g>
+            <g transform="translate(520,230) scale(.5)"><circle cx="0" cy="-94" r="14"/><path d="M -16 -78 L -20 -10 L -8 -10 L -4 -50 L 4 -50 L 8 -10 L 20 -10 L 16 -78 Z"/></g>
+            <g transform="translate(720,310) scale(.5)"><circle cx="0" cy="-94" r="14"/><path d="M -16 -78 L -20 -10 L -8 -10 L -4 -50 L 4 -50 L 8 -10 L 20 -10 L 16 -78 Z"/></g>
+          </g>
+        </svg>
+        <div class="matrix-layer">
+          <div class="bin-row" id="bin1"></div>
+          <div class="bin-row" id="bin2"></div>
+        </div>
+        <div class="scene-inner">
+          <p class="caption">When everyone says the same thing, no one is saying anything.</p>
+        </div>
+        <span class="scene-tag">05 — The matrix</span>
+      </section>
+
+      <!-- SCENE 6 — THE RUPTURE -->
+      <section class="scene" id="s6">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <rect width="1000" height="600" fill="#0a1628"/>
+          <g id="s6-noise" stroke="#1a9b8c" stroke-width="1" opacity="0.25">
+            <line x1="0" y1="100" x2="1000" y2="100"/>
+            <line x1="0" y1="200" x2="1000" y2="200"/>
+            <line x1="0" y1="300" x2="1000" y2="300"/>
+            <line x1="0" y1="400" x2="1000" y2="400"/>
+            <line x1="0" y1="500" x2="1000" y2="500"/>
+          </g>
+          <path id="s6-trail" d="M0 500 Q250 350 500 480 T1000 420" stroke="#e8843a" stroke-width="3" fill="none" stroke-dasharray="1400" stroke-dashoffset="1400" opacity="0.6"/>
+          <circle id="s6-ball" cx="0" cy="500" r="22" fill="#e8843a"/>
+        </svg>
+        <div class="scene-inner">
+          <p class="caption">But in the middle of the chaos, life goes on.</p>
+        </div>
+        <span class="scene-tag">06 — The rupture</span>
+      </section>
+
+      <!-- SCENE 7 — THE CHILDREN -->
+      <section class="scene" id="s7">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <rect width="1000" height="600" fill="#2a1c12"/>
+          <circle cx="650" cy="480" r="20" fill="#e8843a"/>
+          <g id="s7-kid1" fill="#f5f3ee" transform="translate(250,470)">
+            <circle cx="0" cy="-70" r="11"/>
+            <path d="M -12 -58 L -14 -10 L -4 -10 L 0 -36 L 4 -10 L 14 -10 L 12 -58 Z"/>
+          </g>
+          <g id="s7-kid2" fill="#f5f3ee" transform="translate(380,470)">
+            <circle cx="0" cy="-70" r="11"/>
+            <path d="M -12 -58 L -14 -10 L -4 -10 L 0 -36 L 4 -10 L 14 -10 L 12 -58 Z"/>
+          </g>
+          <g id="s7-kid3" fill="#f5f3ee" transform="translate(150,490)">
+            <circle cx="0" cy="-70" r="11"/>
+            <path d="M -12 -58 L -14 -10 L -4 -10 L 0 -36 L 4 -10 L 14 -10 L 12 -58 Z"/>
+          </g>
+        </svg>
+        <div class="sbubble" id="s7-b1">here!</div>
+        <div class="sbubble" id="s7-b2">run!</div>
+        <div class="sbubble" id="s7-b3">pass it!</div>
+        <div class="scene-inner">
+          <p class="caption">Because at our core, what we need is connection.</p>
+        </div>
+        <span class="scene-tag">07 — The children</span>
+      </section>
+
+      <!-- SCENE 8 — THE REBIRTH -->
+      <section class="scene" id="s8">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="s8grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#e8843a"/>
+              <stop offset="100%" stop-color="#f3b27a"/>
+            </linearGradient>
+          </defs>
+          <rect width="1000" height="600" fill="url(#s8grad)"/>
+          <circle cx="500" cy="420" r="60" fill="#f5f3ee" opacity="0.9"/>
+          <polygon points="0,430 1000,430 1000,600 0,600" fill="#0f3530"/>
+          <g id="s8-trees" stroke="#1a9b8c" stroke-width="3" fill="none" opacity="0">
+            <path d="M120 600 L120 460 M120 460 L70 410 M120 460 L170 410"/>
+            <path d="M880 600 L880 450 M880 450 L830 400 M880 450 L930 400"/>
+          </g>
+          <g id="s8-animals" fill="#1a9b8c" opacity="0">
+            <ellipse cx="200" cy="560" rx="22" ry="13"/>
+            <circle cx="800" cy="540" r="12"/>
+          </g>
+          <g transform="translate(500,430)">
+            <circle cx="0" cy="-94" r="14" fill="#0a1628"/>
+            <path d="M -16 -78 L -20 -10 L -8 -10 L -4 -50 L 4 -50 L 8 -10 L 20 -10 L 16 -78 Z" fill="#0a1628"/>
+          </g>
+        </svg>
+        <div class="scene-inner">
+          <p class="caption">The words that connect are the authentic ones. The ones that set us apart.</p>
+        </div>
+        <span class="scene-tag">08 — The rebirth</span>
+      </section>
+
+      <!-- SCENE 9 — THE CLOSE -->
+      <section class="scene" id="s9">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <rect width="1000" height="600" fill="#f5f3ee"/>
+          <circle cx="500" cy="430" r="120" fill="#fdf9f0"/>
+          <polygon points="0,430 1000,430 1000,600 0,600" fill="#dce9e6"/>
+          <g transform="translate(500,430)">
+            <circle cx="0" cy="-94" r="14" fill="#0a1628"/>
+            <path d="M -16 -78 L -20 -10 L -8 -10 L -4 -50 L 4 -50 L 8 -10 L 20 -10 L 16 -78 Z" fill="#0a1628"/>
+          </g>
+        </svg>
+        <div class="scene-inner" style="gap:28px;">
+          <p class="caption" style="color:#0a1628;font-size:clamp(26px,4vw,52px);text-shadow:none;">When was the last time your brand sounded like you?</p>
+          <div class="brand-mark" id="s9-brand">Teal<span>Kin</span></div>
+          <div class="close-sub" id="s9-sub">TealKin / Strategic Communications</div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const track = document.getElementById('track');
+const scenes = track.querySelectorAll('.scene');
+const sceneCount = scenes.length;
+
+function getTotalWidth(){ return scenes.length * window.innerWidth; }
+
+let scrollTween;
+
+function buildScroll(){
+  if (scrollTween) scrollTween.scrollTrigger.kill();
+  const totalWidth = getTotalWidth();
+  const distance = totalWidth - window.innerWidth;
+
+  scrollTween = gsap.to(track, {
+    x: () => -distance,
+    ease: 'none',
+    scrollTrigger: {
+      id: 'horiz',
+      trigger: '#spacer',
+      start: 'top top',
+      end: () => '+=' + distance,
+      scrub: true,
+      pin: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true
+    }
+  });
+
+  document.getElementById('spacer').style.height = (window.innerHeight + distance) + 'px';
+
+  buildSceneAnimations();
+}
+
+function sceneProgressTrigger(id, onUpdate, opts){
+  ScrollTrigger.create(Object.assign({
+    trigger: '#' + id,
+    containerAnimation: scrollTween,
+    start: 'left center',
+    end: 'right center',
+    onUpdate: self => onUpdate(self.progress)
+  }, opts || {}));
+}
+
+const bgColors = {
+  s1:'#0a1628', s2:'#0f3530', s3:'#123a35', s4:'#1c2b2a', s4b:'#13242b',
+  s4c:'#0b1c22', s4d:'#101d24', s5:'#0a1628', s6:'#0a1628', s7:'#2a1c12',
+  s8:'#e8843a', s9:'#f5f3ee'
+};
+
+function buildSceneAnimations(){
+  // background color transitions per scene
+  scenes.forEach(scene => {
+    sceneProgressTrigger(scene.id, p => {
+      // handled by enter triggers below for discreteness
+    });
+  });
+
+  Object.keys(bgColors).forEach(id => {
+    ScrollTrigger.create({
+      trigger: '#'+id,
+      containerAnimation: scrollTween,
+      start: 'left 60%',
+      end: 'right 40%',
+      onEnter: () => gsap.to('#bg-layer', {backgroundColor: bgColors[id], duration: .6, overwrite:'auto'}),
+      onEnterBack: () => gsap.to('#bg-layer', {backgroundColor: bgColors[id], duration: .6, overwrite:'auto'})
+    });
+  });
+
+  // Scene 1 — dawn
+  sceneProgressTrigger('s1', p => {
+    gsap.set('#s1-orange', {opacity: Math.min(p*1.1, 0.85)});
+    gsap.set('#s1-sun', {cy: 430 - p*150, r: 10 + p*40});
+  });
+
+  // Scene 2 — animals draw in, staggered
+  const s2anims = [
+    {sel:'#s2-coati', range:[0.05,0.35]},
+    {sel:'#s2-turtle', range:[0.25,0.55]},
+    {sel:'#s2-snake', range:[0.45,0.75]},
+    {sel:'#s2-bird', range:[0.65,0.95]}
+  ];
+  sceneProgressTrigger('s2', p => {
+    s2anims.forEach(a => {
+      const [s,e] = a.range;
+      const local = gsap.utils.clamp(0,1, (p-s)/(e-s));
+      const len = a.sel === '#s2-coati' ? 220 : a.sel === '#s2-turtle' ? 200 : a.sel === '#s2-snake' ? 260 : 180;
+      document.querySelectorAll(a.sel + ' *').forEach(el=>{
+        if (el.tagName === 'path' || el.tagName === 'ellipse') el.setAttribute('stroke-dashoffset', len*(1-local));
+      });
+    });
+  });
+
+  // Scene 3 — gaze line draw
+  sceneProgressTrigger('s3', p => {
+    const line = document.getElementById('s3-gaze');
+    line.setAttribute('stroke-dashoffset', 520*(1-Math.min(p*1.5,1)));
+  });
+
+  // Scene 4 — drift: desaturate + figures/blocks appear
+  sceneProgressTrigger('s4', p => {
+    gsap.set('#s4-blocks', {opacity: Math.min(p*1.4,1)});
+    gsap.set('#s4-people', {opacity: Math.min(p*1.6,1)});
+    document.getElementById('s4').querySelector('svg').style.filter = `saturate(${1-p*0.7})`;
+  });
+
+  // Scene 4B — tech timeline
+  const s4bItems = [
+    {sel:'#s4b-telegraph', range:[0.05,0.3]},
+    {sel:'#s4b-tv', range:[0.35,0.6]},
+    {sel:'#s4b-phone', range:[0.65,0.9]}
+  ];
+  sceneProgressTrigger('s4b', p => {
+    s4bItems.forEach(it => {
+      const [s,e] = it.range;
+      const local = gsap.utils.clamp(0,1,(p-s)/(e-s));
+      gsap.set(it.sel, {opacity: local, scale: 0.7+local*0.3, transformOrigin:'center'});
+    });
+  });
+
+  // Scene 4C — neural net
+  sceneProgressTrigger('s4c', p => {
+    document.querySelectorAll('#s4c-nodes line').forEach((l,i)=>{
+      const local = gsap.utils.clamp(0,1,(p - i*0.08)*1.8);
+      l.setAttribute('stroke-dashoffset', 160*(1-local));
+    });
+    const pulse = 1 + Math.sin(p*Math.PI*4)*0.15;
+    gsap.set('#s4c-nodes circle', {scale: p>0.1? pulse:1, transformOrigin:'center'});
+  });
+
+  // Scene 4D — bubble routes through AI icon
+  sceneProgressTrigger('s4d', p => {
+    document.getElementById('s4d-bubble').setAttribute('stroke-dashoffset', 500*(1-p));
+    gsap.set('#s4d-ai', {scale: 1+Math.sin(p*Math.PI)*0.3, transformOrigin:'center'});
+  });
+
+  // Scene 5 — matrix binary decode
+  initMatrixScene();
+
+  // Scene 6 — ball bounce + trail
+  sceneProgressTrigger('s6', p => {
+    const x = p*1000;
+    const bounce = Math.abs(Math.sin(p*Math.PI*5))*120;
+    gsap.set('#s6-ball', {x, y: -bounce});
+    document.getElementById('s6-trail').setAttribute('stroke-dashoffset', 1400*(1-p));
+  });
+
+  // Scene 7 — kids running + bubbles
+  sceneProgressTrigger('s7', p => {
+    gsap.set('#s7-kid1', {x: p*120, y: Math.abs(Math.sin(p*Math.PI*6))*-20});
+    gsap.set('#s7-kid2', {x: p*160, y: Math.abs(Math.sin(p*Math.PI*6+1))*-25});
+    gsap.set('#s7-kid3', {x: p*90,  y: Math.abs(Math.sin(p*Math.PI*6+2))*-18});
+    gsap.set('#s7-b1', {opacity: p>0.2 && p<0.5 ? 1:0, left:'22%', top:'58%'});
+    gsap.set('#s7-b2', {opacity: p>0.4 && p<0.7 ? 1:0, left:'38%', top:'52%'});
+    gsap.set('#s7-b3', {opacity: p>0.6 && p<0.95 ? 1:0, left:'30%', top:'46%'});
+  });
+
+  // Scene 8 — rebirth richness
+  sceneProgressTrigger('s8', p => {
+    gsap.set('#s8-trees', {opacity: Math.min(p*1.5,1)});
+    gsap.set('#s8-animals', {opacity: Math.min(p*1.5,1)});
+  });
+
+  // Scene 9 — brand fade in
+  sceneProgressTrigger('s9', p => {
+    gsap.set('#s9-brand', {opacity: Math.min(p*1.6,1), y: 10-Math.min(p*1.6,1)*10});
+    gsap.set('#s9-sub', {opacity: Math.min((p-0.2)*1.6,1)});
+  });
+
+  ScrollTrigger.refresh();
+}
+
+function initMatrixScene(){
+  const targets = [
+    {el: document.getElementById('bin1'), text:'01100011 01101111 01101101 01110101 01101110 01101001 01100011 01100001 01110100'},
+    {el: document.getElementById('bin2'), text:'01100011 01101111 01101110 01101110 01100101 01100011 01110100'}
+  ];
+  const chars = '01';
+  let active = false;
+  let frame = 0;
+  let rafId = null;
+
+  function scramble(){
+    frame++;
+    targets.forEach(t=>{
+      const revealCount = Math.min(t.text.length, Math.floor(frame*1.2));
+      let out = '';
+      for (let i=0;i<t.text.length;i++){
+        if (t.text[i] === ' ') { out += ' '; continue; }
+        out += i < revealCount ? t.text[i] : chars[Math.floor(Math.random()*chars.length)];
+      }
+      t.el.textContent = out;
+    });
+    if (frame*1.2 < Math.max(...targets.map(t=>t.text.length)) + 20){
+      rafId = requestAnimationFrame(scramble);
+    }
+  }
+
+  ScrollTrigger.create({
+    trigger: '#s5',
+    containerAnimation: scrollTween,
+    start: 'left 70%',
+    end: 'right 30%',
+    onEnter: () => { if(!active){active=true; frame=0; scramble();} },
+    onEnterBack: () => { if(!active){active=true; frame=0; scramble();} },
+    onLeave: () => { active=false; if(rafId) cancelAnimationFrame(rafId); },
+    onLeaveBack: () => { active=false; if(rafId) cancelAnimationFrame(rafId); }
+  });
+}
+
+window.addEventListener('load', buildScroll);
+window.addEventListener('resize', () => { ScrollTrigger.refresh(); });
+</script>
+</body>
+</html>
