@@ -89,22 +89,25 @@ body{position:relative;}
           </defs>
           <rect width="1000" height="600" fill="url(#skyGrad)"/>
           <rect id="s1-orange" width="1000" height="600" fill="#e8843a" opacity="0"/>
-          <circle id="s1-sun" cx="500" cy="460" r="0" fill="#f5f3ee" opacity="0"/>
+          <circle id="s1-sun" cx="500" cy="480" r="0" fill="#f5f3ee" opacity="0"/>
           <polygon points="0,440 1000,440 1000,600 0,600" fill="#0d2a36"/>
           <g id="s1-sea" stroke="#1a9b8c" stroke-width="2" fill="none" opacity="0.5">
             <path d="M-20 460 Q60 448 140 460 T300 460 T460 460 T620 460 T780 460 T940 460 T1100 460"/>
             <path d="M-20 488 Q60 476 140 488 T300 488 T460 488 T620 488 T780 488 T940 488 T1100 488"/>
-            <path d="M-20 516 Q60 504 140 516 T300 516 T460 516 T620 516 T780 516 T940 516 T1100 516"/>
           </g>
-          <ellipse cx="500" cy="558" rx="130" ry="16" fill="#3a2f22" opacity="0.55"/>
+          <polygon points="0,520 1000,520 1000,600 0,600" fill="#3a2f22"/>
+          <g id="s1-sand-texture" stroke="#241a10" stroke-width="1.5" fill="none" opacity="0.5">
+            <path d="M-20 540 Q60 534 140 540 T300 540 T460 540 T620 540 T780 540 T940 540 T1100 540"/>
+            <path d="M-20 566 Q60 560 140 566 T300 566 T460 566 T620 566 T780 566 T940 566 T1100 566"/>
+          </g>
           <!-- figure seated in lotus position on the sand, facing the sea -->
           <g id="s1-figure" transform="translate(500,558)">
             <circle cx="0" cy="-104" r="14" fill="#f5f3ee"/>
             <path d="M -18 -88 Q -20 -50 -10 -34 L 10 -34 Q 20 -50 18 -88 Z" fill="#f5f3ee"/>
             <path id="s1-legs" d="M -10 -34 Q -34 -24 -30 -12 L 30 -12 Q 34 -24 10 -34 Z" fill="#f5f3ee"/>
           </g>
-          <!-- figure stands and walks off to the right as the sun rises -->
-          <g id="s1-figure-stand" opacity="0" transform="translate(620,440)">
+          <!-- figure stands and walks across the sand to the right as the sun rises -->
+          <g id="s1-figure-stand" opacity="0">
             <circle cx="0" cy="-94" r="14" fill="#f5f3ee"/>
             <path d="M -16 -78 L -20 -10 L -8 -10 L -4 -50 L 4 -50 L 8 -10 L 20 -10 L 16 -78 Z" fill="#f5f3ee"/>
           </g>
@@ -430,6 +433,10 @@ function buildScroll(){
       onUpdate: self => {
         const color = gsap.utils.interpolate(bgColorStops, self.progress);
         gsap.set(bgLayer, {backgroundColor: color});
+        sceneCallbacks.forEach(({segStart, segEnd, onUpdate}) => {
+          const local = Math.min(1, Math.max(0, (self.progress - segStart) / (segEnd - segStart)));
+          onUpdate(local);
+        });
       }
     }
   });
@@ -437,25 +444,24 @@ function buildScroll(){
   buildSceneAnimations();
 }
 
-function sceneProgressTrigger(id, onUpdate, opts){
-  ScrollTrigger.create(Object.assign({
-    trigger: '#' + id,
-    containerAnimation: scrollTween,
-    start: 'left center',
-    end: 'right center',
-    onUpdate: self => onUpdate(self.progress)
-  }, opts || {}));
+const sceneCallbacks = [];
+function sceneProgressTrigger(id, onUpdate){
+  const idx = Array.from(scenes).indexOf(document.getElementById(id));
+  sceneCallbacks.push({segStart: idx / sceneCount, segEnd: (idx + 1) / sceneCount, onUpdate});
 }
 
 function buildSceneAnimations(){
   // Scene 1 — dawn
   sceneProgressTrigger('s1', p => {
-    gsap.set('#s1-orange', {opacity: Math.min(p*0.9, 0.6)});
-    gsap.set('#s1-sun', {cy: 460 - p*210, r: Math.min(p*2.2,1)*26, opacity: Math.min(p*2.2,1)});
-    const standUp = Math.max(0, (p-0.75)/0.25);
+    const sunRise = Math.min(p/0.6, 1);
+    gsap.set('#s1-orange', {opacity: Math.min(sunRise*0.9, 0.6)});
+    gsap.set('#s1-sun', {cy: 480 - sunRise*290, r: sunRise*42, opacity: Math.min(sunRise*3,1)});
+    const standUp = Math.max(0, Math.min((p-0.55)/0.15, 1));
+    // once standing, he keeps pace with the scroll so he stays visible and always walking
+    const leadX = 1000*p + 90;
     gsap.set('#s1-figure', {opacity: 1-standUp});
-    gsap.set('#s1-figure-stand', {opacity: standUp});
-  }, {start: 'left left', end: 'right center'});
+    gsap.set('#s1-figure-stand', {opacity: standUp, x: leadX, y: 558});
+  });
 
   // Scene 2 — animals draw in, staggered
   const s2anims = [
@@ -555,7 +561,7 @@ function buildSceneAnimations(){
   sceneProgressTrigger('s9', p => {
     gsap.set('#s9-brand', {opacity: Math.min(p*1.6,1), y: 10-Math.min(p*1.6,1)*10});
     gsap.set('#s9-sub', {opacity: Math.min((p-0.2)*1.6,1)});
-  }, {start: 'left center', end: 'right right'});
+  });
 
   ScrollTrigger.refresh();
 }
