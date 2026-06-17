@@ -47,7 +47,7 @@ body{position:relative;}
 
 .caption{position:relative;z-index:5;max-width:760px;text-align:center;font-family:var(--font-display);font-weight:300;font-style:italic;font-size:clamp(22px,3.4vw,40px);line-height:1.4;color:var(--white);text-shadow:0 2px 24px rgba(0,0,0,.4);padding:0 20px;}
 
-.scene-tag{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(245,243,238,.45);z-index:5;}
+.scene-tag{position:absolute;top:34%;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(245,243,238,.55);z-index:5;text-shadow:0 1px 6px rgba(0,0,0,.5);}
 
 /* bubble */
 .sbubble{position:absolute;font-family:var(--font-body);font-size:13px;font-weight:500;color:var(--dark);background:var(--white);border-radius:18px;padding:6px 14px;opacity:0;white-space:nowrap;}
@@ -90,32 +90,28 @@ body{position:relative;}
           <rect width="1000" height="600" fill="url(#skyGrad)"/>
           <rect id="s1-orange" width="1000" height="600" fill="#e8843a" opacity="0"/>
           <circle id="s1-sun" cx="500" cy="480" r="0" fill="#f5f3ee" opacity="0"/>
-          <polygon points="0,440 1000,440 1000,600 0,600" fill="#0d2a36"/>
+          <polygon id="s1-sea-bg" points="0,440 1000,440 1000,600 0,600" fill="#0d2a36"/>
           <g id="s1-sea" stroke="#1a9b8c" stroke-width="2" fill="none" opacity="0.5">
             <path d="M-20 460 Q60 448 140 460 T300 460 T460 460 T620 460 T780 460 T940 460 T1100 460"/>
             <path d="M-20 488 Q60 476 140 488 T300 488 T460 488 T620 488 T780 488 T940 488 T1100 488"/>
           </g>
-          <polygon points="0,520 1000,520 1000,600 0,600" fill="#3a2f22"/>
+          <g id="s1-sea-dots" fill="#1a9b8c" opacity="0"></g>
+          <polygon id="s1-sand-bg" points="0,520 1000,520 1000,600 0,600" fill="#3a2f22"/>
           <g id="s1-sand-texture" stroke="#241a10" stroke-width="1.5" fill="none" opacity="0.5">
             <path d="M-20 540 Q60 534 140 540 T300 540 T460 540 T620 540 T780 540 T940 540 T1100 540"/>
             <path d="M-20 566 Q60 560 140 566 T300 566 T460 566 T620 566 T780 566 T940 566 T1100 566"/>
           </g>
-          <!-- figure seated in lotus position on the sand, facing the sea -->
-          <g id="s1-figure" transform="translate(500,558)">
-            <circle cx="0" cy="-104" r="14" fill="#f5f3ee"/>
-            <path d="M -18 -88 Q -20 -50 -10 -34 L 10 -34 Q 20 -50 18 -88 Z" fill="#f5f3ee"/>
-            <path id="s1-legs" d="M -10 -34 Q -34 -24 -30 -12 L 30 -12 Q 34 -24 10 -34 Z" fill="#f5f3ee"/>
-          </g>
-          <!-- figure stands and walks across the sand to the right as the sun rises -->
-          <g id="s1-figure-stand" opacity="0">
-            <circle cx="0" cy="-94" r="14" fill="#f5f3ee"/>
-            <path d="M -16 -78 L -20 -10 L -8 -10 L -4 -50 L 4 -50 L 8 -10 L 20 -10 L 16 -78 Z" fill="#f5f3ee"/>
+          <g id="s1-sand-dots" fill="#8a6a42" opacity="0"></g>
+          <!-- single figure: morphs continuously from seated lotus pose to standing, then walks -->
+          <g id="s1-figure">
+            <polygon id="s1-body" points="-10,-88 10,-88 18,-50 30,-12 -30,-12 -18,-50" fill="#f5f3ee"/>
+            <circle id="s1-head" cx="0" cy="-104" r="14" fill="#f5f3ee"/>
           </g>
         </svg>
         <div class="scene-inner">
-          <p class="caption">Antes de la primera palabra, ya existía la conexión.</p>
+          <p class="caption" id="s1-caption" style="opacity:0;">Antes de la primera palabra, ya existía la conexión.</p>
         </div>
-        <span class="scene-tag">01 — El amanecer</span>
+        <span class="scene-tag" id="s1-tag" style="opacity:0;">01 — El amanecer</span>
       </section>
 
       <!-- SCENE 2 — JUNGLE -->
@@ -452,15 +448,51 @@ function sceneProgressTrigger(id, onUpdate){
 
 function buildSceneAnimations(){
   // Scene 1 — dawn
+  const s1SeatedBody = [[-10,-88],[10,-88],[18,-50],[30,-12],[-30,-12],[-18,-50]];
+  const s1StandBody  = [[-16,-108],[16,-108],[8,-50],[16,-10],[-16,-10],[-8,-50]];
+  function s1BodyPoints(t){
+    return s1SeatedBody.map(([sx,sy],i) => {
+      const [ex,ey] = s1StandBody[i];
+      return (sx+(ex-sx)*t).toFixed(1) + ',' + (sy+(ey-sy)*t).toFixed(1);
+    }).join(' ');
+  }
+  function s1Dots(container, n, xMin, xMax, yMin, yMax, r, seed){
+    let html = '';
+    for (let i = 0; i < n; i++) {
+      const rx = Math.sin(i*12.9898 + seed) * 43758.5453 % 1;
+      const ry = Math.sin(i*78.233 + seed) * 12345.678 % 1;
+      const x = xMin + Math.abs(rx) * (xMax-xMin);
+      const y = yMin + Math.abs(ry) * (yMax-yMin);
+      html += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}"/>`;
+    }
+    container.innerHTML = html;
+  }
+  s1Dots(document.getElementById('s1-sea-dots'), 40, 0, 1000, 442, 518, 1.6, 7);
+  s1Dots(document.getElementById('s1-sand-dots'), 60, 0, 1000, 522, 600, 1.6, 41);
+
   sceneProgressTrigger('s1', p => {
     const sunRise = Math.min(p/0.6, 1);
     gsap.set('#s1-orange', {opacity: Math.min(sunRise*0.9, 0.6)});
     gsap.set('#s1-sun', {cy: 480 - sunRise*290, r: sunRise*42, opacity: Math.min(sunRise*3,1)});
-    const standUp = Math.max(0, Math.min((p-0.55)/0.15, 1));
-    // once standing, he keeps pace with the scroll so he stays visible and always walking
+
+    const seaColor = gsap.utils.interpolate('#0d2a36', '#1a9b8c', sunRise);
+    const sandColor = gsap.utils.interpolate('#3a2f22', '#d9c08c', sunRise);
+    gsap.set('#s1-sea-bg', {fill: seaColor});
+    gsap.set('#s1-sand-bg', {fill: sandColor});
+    const textureFade = Math.max(0, (sunRise-0.15)/0.5);
+    gsap.set('#s1-sea-dots', {opacity: textureFade*0.4});
+    gsap.set('#s1-sand-dots', {opacity: textureFade*0.5});
+
+    const standUp = Math.max(0, Math.min((p-0.55)/0.2, 1));
     const leadX = 1000*p + 90;
-    gsap.set('#s1-figure', {opacity: 1-standUp});
-    gsap.set('#s1-figure-stand', {opacity: standUp, x: leadX, y: 558});
+    const x = 500 + standUp*(leadX-500);
+    document.getElementById('s1-body').setAttribute('points', s1BodyPoints(standUp));
+    gsap.set('#s1-head', {cy: -104 - standUp*18});
+    gsap.set('#s1-figure', {x, y: 558});
+
+    const textIn = Math.min(p/0.08, 1);
+    gsap.set('#s1-caption', {opacity: textIn});
+    gsap.set('#s1-tag', {opacity: textIn*0.55});
   });
 
   // Scene 2 — animals draw in, staggered
