@@ -159,6 +159,8 @@ body{position:relative;}
               <text x="14" y="358">♫</text>
             </g>
           </g>
+          <!-- the rock spreads to swallow the rest of the sea, bridging into the jungle scene -->
+          <rect id="s2-rock-extend" x="2390" y="438" width="0" height="162" fill="#6b6358"/>
 
           <!-- the persistent walking figure -->
           <g id="s2-figure">
@@ -172,24 +174,24 @@ body{position:relative;}
         <span class="scene-tag" id="s2-tag" style="top:24%;opacity:0;">02 — Along the shore</span>
       </section>
 
-      <!-- SCENE 3 — THE FIGURE OBSERVES -->
-      <section class="scene" id="s3">
-        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
-          <g transform="translate(220,420)">
-            <circle cx="0" cy="-94" r="14" fill="#f5f3ee"/>
-            <path d="M -16 -78 L -20 -10 L -8 -10 L -4 -50 L 4 -50 L 8 -10 L 20 -10 L 16 -78 Z" fill="#f5f3ee"/>
+      <!-- SCENE 3 — INTO THE JUNGLE: sand gives way to soil, trunks and hanging lianas -->
+      <section class="scene" id="s3" style="--w:2;">
+        <svg viewBox="0 0 2000 600" preserveAspectRatio="xMidYMid slice">
+          <rect width="2000" height="600" fill="#6b6358"/>
+          <rect id="s3-soil" width="2000" height="600" fill="#3a2a1c" opacity="0"/>
+          <polygon id="s3-ground" points="0,520 2000,520 2000,600 0,600" fill="#4a3324"/>
+          <g id="s3-ground-dots" fill="#241a10" opacity="0.5"></g>
+          <!-- trunks with gaps between them, no canopy in view, hanging lianas -->
+          <g id="s3-trunks"></g>
+          <g id="s3-figure">
+            <polygon points="-16,-108 16,-108 8,-50 16,-10 -16,-10 -8,-50" fill="#f5f3ee"/>
+            <circle cx="0" cy="-122" r="14" fill="#f5f3ee"/>
           </g>
-          <g id="s3-animals" fill="#e8843a">
-            <ellipse cx="760" cy="470" rx="30" ry="18"/>
-            <circle cx="800" cy="380" r="14"/>
-            <ellipse cx="700" cy="340" rx="22" ry="12"/>
-          </g>
-          <path id="s3-gaze" d="M240 350 L740 400" stroke="#f5f3ee" stroke-width="2" stroke-dasharray="520" stroke-dashoffset="520" fill="none"/>
         </svg>
         <div class="scene-inner">
-          <p class="caption">In our gaze there is always an intention: to connect. Communication is an act.</p>
+          <p class="caption" id="s3-caption" style="opacity:0;">The shore gives way to root and shadow.</p>
         </div>
-        <span class="scene-tag">03 — The figure observes</span>
+        <span class="scene-tag" id="s3-tag" style="top:24%;opacity:0;">03 — Into the jungle</span>
       </section>
 
       <!-- SCENE 4 — THE DRIFT -->
@@ -584,18 +586,59 @@ function buildSceneAnimations(){
     gsap.set('#s2-bubbles1', {opacity: turtleIn*(1-turtleOut)*bubblePulse});
     gsap.set('#s2-bubbles2', {opacity: turtleIn*(1-turtleOut)*(1-bubblePulse)});
 
+    // the rock surfaces and stays — it becomes the solid ground that bridges into
+    // the jungle scene, so once revealed it does not fade back out
     const rockMeet = s2MeetP(2300);
     const rockIn = gsap.utils.clamp(0,1,(p-(rockMeet-0.08))/0.08);
-    const rockOut = gsap.utils.clamp(0,1,(p-(rockMeet+0.08))/0.08);
-    gsap.set('#s2-rock-group', {opacity: rockIn*(1-rockOut)});
+    gsap.set('#s2-rock-group', {opacity: rockIn});
+    const songIn = gsap.utils.clamp(0,1,(p-(rockMeet-0.04))/0.06);
+    const songOut = gsap.utils.clamp(0,1,(p-(rockMeet+0.12))/0.08);
     const notePulse = (Math.sin(p*50)+1)/2;
-    gsap.set('#s2-notes', {opacity: rockIn*(1-rockOut)*(0.4+notePulse*0.6)});
+    gsap.set('#s2-notes', {opacity: songIn*(1-songOut)*(0.4+notePulse*0.6)});
+
+    // near the end the rock spreads out to cover the whole sea, a solid mass
+    // that bridges straight into the jungle floor of the next scene; the growth
+    // finishes by p=0.9 so the solid fill is already in view, not just at the trailing edge
+    const rockSpread = gsap.utils.clamp(0,1,(p-0.7)/0.2);
+    document.getElementById('s2-rock-extend').setAttribute('width', rockSpread*610);
   });
 
-  // Scene 3 — gaze line draw
+  // Scene 3 — into the jungle: tenuous fade from shore tones to soil, trunks with lianas
+  s1Dots(document.getElementById('s3-ground-dots'), 90, 0, 2000, 530, 600, 1.6, 67);
+
+  const s3TrunkXs = [120, 340, 760, 980, 1340, 1620, 1880]; // gaps left between clusters
+  let s3TrunkHtml = '';
+  s3TrunkXs.forEach((tx, i) => {
+    const w = 22 + (i%3)*6;
+    s3TrunkHtml += `<rect x="${tx-w/2}" y="-40" width="${w}" height="640" fill="#2c2018"/>`;
+    const lianaCount = 1 + (i%2);
+    for (let l = 0; l < lianaCount; l++){
+      const lx = tx + (l===0 ? -w*1.6 : w*1.8);
+      const sway = 14 + (l*6);
+      const len = 220 + (i*17)%140;
+      s3TrunkHtml += `<path d="M${lx} -40 Q${lx+sway} ${len*0.5} ${lx} ${len}" stroke="#1f160f" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+    }
+  });
+  document.getElementById('s3-trunks').innerHTML = s3TrunkHtml;
+
+  const s3Seg = sceneOffsets['s3'];
+  const s3SegWidth = s3Seg.end - s3Seg.start;
+  const s3W = parseFloat(document.getElementById('s3').style.getPropertyValue('--w')) || 1;
+  const s3AnchorP = 0.5 - 1/(2*s3W);
+  const s3OffsetAhead = 150;
+
   sceneProgressTrigger('s3', p => {
-    const line = document.getElementById('s3-gaze');
-    line.setAttribute('stroke-dashoffset', 520*(1-Math.min(p*1.5,1)));
+    // the shore's rock tone tenuously dissolves into jungle soil as we walk in
+    gsap.set('#s3-soil', {opacity: Math.min(p/0.4, 1)});
+
+    const leadX = 1000*s3W*p + s3OffsetAhead;
+    gsap.set('#s3-figure', {x: leadX, y: 558});
+
+    const captionIn = gsap.utils.clamp(0,1,(p-0.1)/0.08);
+    const captionOut = gsap.utils.clamp(0,1,(p-0.85)/0.1);
+    const s3PinX = currentDistance*s3SegWidth*(p-s3AnchorP);
+    gsap.set('#s3-caption', {opacity: captionIn*(1-captionOut), x: s3PinX});
+    gsap.set('#s3-tag', {opacity: captionIn*(1-captionOut)*0.55, x: s3PinX});
   });
 
   // Scene 4 — drift: desaturate + figures/blocks appear
