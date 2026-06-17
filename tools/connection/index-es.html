@@ -83,8 +83,8 @@ body{position:relative;}
         <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
           <defs>
             <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#0a0f28"/>
-              <stop offset="100%" stop-color="#1c1442"/>
+              <stop id="s1-sky-stop1" offset="0%" stop-color="#0a0f28"/>
+              <stop id="s1-sky-stop2" offset="100%" stop-color="#1c1442"/>
             </linearGradient>
           </defs>
           <rect width="1000" height="600" fill="url(#skyGrad)"/>
@@ -101,11 +101,6 @@ body{position:relative;}
             <path d="M-20 566 Q60 560 140 566 T300 566 T460 566 T620 566 T780 566 T940 566 T1100 566"/>
           </g>
           <g id="s1-sand-dots" fill="#8a6a42" opacity="0"></g>
-          <!-- single figure: morphs continuously from seated lotus pose to standing, then walks -->
-          <g id="s1-figure">
-            <polygon id="s1-body" points="-10,-88 10,-88 18,-50 30,-12 -30,-12 -18,-50" fill="#f5f3ee"/>
-            <circle id="s1-head" cx="0" cy="-104" r="14" fill="#f5f3ee"/>
-          </g>
         </svg>
         <div class="scene-inner">
           <p class="caption" id="s1-caption" style="opacity:0;">Antes de la primera palabra, ya existía la conexión.</p>
@@ -132,12 +127,24 @@ body{position:relative;}
           <!-- dos tortugas asoman, conversando con burbujas -->
           <g id="s2-turtles" opacity="0">
             <g transform="translate(650,478)">
-              <ellipse cx="0" cy="0" rx="40" ry="24" fill="#2dbfad"/>
-              <circle cx="-34" cy="4" r="10" fill="#2dbfad"/>
+              <path d="M-34 4 Q-34 -20 -2 -22 Q30 -22 34 2 Q34 18 6 20 Q-26 22 -34 4 Z" fill="#bfe3b0" stroke="#2a2118" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M-20 -18 L-14 18 M0 -22 L2 20 M20 -16 L22 18 M-30 -2 L34 -2" stroke="#2a2118" stroke-width="1.4" fill="none" opacity="0.55"/>
+              <ellipse cx="-44" cy="2" rx="11" ry="9" fill="#bfe3b0" stroke="#2a2118" stroke-width="3"/>
+              <circle cx="-49" cy="-1" r="1.5" fill="#2a2118"/>
+              <circle cx="-45" cy="-4" r="1.2" fill="#2a2118"/>
+              <path d="M-28 14 Q-38 28 -54 24" stroke="#2a2118" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M16 18 Q22 28 16 34" stroke="#2a2118" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M30 8 Q40 12 40 22" stroke="#2a2118" stroke-width="4" fill="none" stroke-linecap="round"/>
             </g>
-            <g transform="translate(770,488)">
-              <ellipse cx="0" cy="0" rx="34" ry="20" fill="#249a8d"/>
-              <circle cx="30" cy="2" r="9" fill="#249a8d"/>
+            <g transform="translate(772,488) scale(0.78)">
+              <path d="M-34 4 Q-34 -20 -2 -22 Q30 -22 34 2 Q34 18 6 20 Q-26 22 -34 4 Z" fill="#a9d99a" stroke="#2a2118" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M-20 -18 L-14 18 M0 -22 L2 20 M20 -16 L22 18 M-30 -2 L34 -2" stroke="#2a2118" stroke-width="1.4" fill="none" opacity="0.55"/>
+              <ellipse cx="-44" cy="2" rx="11" ry="9" fill="#a9d99a" stroke="#2a2118" stroke-width="3"/>
+              <circle cx="-49" cy="-1" r="1.5" fill="#2a2118"/>
+              <circle cx="-45" cy="-4" r="1.2" fill="#2a2118"/>
+              <path d="M-28 14 Q-38 28 -54 24" stroke="#2a2118" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M16 18 Q22 28 16 34" stroke="#2a2118" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M30 8 Q40 12 40 22" stroke="#2a2118" stroke-width="4" fill="none" stroke-linecap="round"/>
             </g>
             <g id="s2-bubbles1" fill="#f5f3ee" opacity="0">
               <circle cx="608" cy="448" r="4"/><circle cx="600" cy="434" r="6"/><circle cx="590" cy="416" r="8"/>
@@ -150,10 +157,18 @@ body{position:relative;}
           <!-- roca emergiendo a la derecha con garzas cantando -->
           <g id="s2-rock-group" opacity="0" transform="translate(2300,0)">
             <path d="M-90 600 L-70 470 Q-40 440 0 450 Q40 442 70 470 L90 600 Z" fill="#6b6358"/>
-            <path d="M-30 440 Q-36 400 -26 370 Q-20 356 -6 354" stroke="#f5f3ee" stroke-width="5" fill="none" stroke-linecap="round"/>
-            <ellipse cx="-30" cy="444" rx="14" ry="22" fill="#f5f3ee"/>
-            <path d="M28 448 Q34 414 26 388 Q20 376 8 372" stroke="#e7e2d6" stroke-width="5" fill="none" stroke-linecap="round"/>
-            <ellipse cx="28" cy="450" rx="12" ry="19" fill="#e7e2d6"/>
+            <g transform="translate(-30,442)">
+              <ellipse cx="0" cy="6" rx="15" ry="22" fill="#f5f3ee"/>
+              <path d="M-4 -14 Q-14 -34 -4 -50 Q4 -62 16 -60" stroke="#f5f3ee" stroke-width="7" fill="none" stroke-linecap="round"/>
+              <path d="M16 -60 L31 -65 L17 -55 Z" fill="#f5f3ee"/>
+              <path d="M-6 26 L-8 41 M4 26 L6 41" stroke="#f5f3ee" stroke-width="2.5" stroke-linecap="round"/>
+            </g>
+            <g transform="translate(30,450) scale(0.86)">
+              <ellipse cx="0" cy="6" rx="15" ry="22" fill="#e7e2d6"/>
+              <path d="M4 -14 Q14 -34 4 -50 Q-4 -62 -16 -60" stroke="#e7e2d6" stroke-width="7" fill="none" stroke-linecap="round"/>
+              <path d="M-16 -60 L-31 -65 L-17 -55 Z" fill="#e7e2d6"/>
+              <path d="M6 26 L8 41 M-4 26 L-6 41" stroke="#e7e2d6" stroke-width="2.5" stroke-linecap="round"/>
+            </g>
             <g id="s2-notes" opacity="0" fill="#e8843a" font-size="30" font-family="Georgia, serif">
               <text x="-12" y="346">♪</text>
               <text x="14" y="358">♫</text>
@@ -161,15 +176,9 @@ body{position:relative;}
           </g>
           <!-- la roca se expande hasta cubrir el resto del mar, uniendo la escena con la selva -->
           <rect id="s2-rock-extend" x="2390" y="438" width="0" height="162" fill="#6b6358"/>
-
-          <!-- el personaje persistente que camina -->
-          <g id="s2-figure">
-            <polygon points="-16,-108 16,-108 8,-50 16,-10 -16,-10 -8,-50" fill="#f5f3ee"/>
-            <circle cx="0" cy="-122" r="14" fill="#f5f3ee"/>
-          </g>
         </svg>
         <div class="scene-inner">
-          <p class="caption" id="s2-caption" style="opacity:0;">Algunos aún hablan sin palabras — burbujas para los lentos, canto para los que tienen alas.</p>
+          <p class="caption" id="s2-caption" style="opacity:0;">Los vestigios de la comunicación están presentes desde el inicio.</p>
         </div>
         <span class="scene-tag" id="s2-tag" style="top:24%;opacity:0;">02 — A lo largo de la costa</span>
       </section>
@@ -183,10 +192,6 @@ body{position:relative;}
           <g id="s3-ground-dots" fill="#241a10" opacity="0.5"></g>
           <!-- troncos con huecos entre ellos, sin copa visible, lianas colgantes -->
           <g id="s3-trunks"></g>
-          <g id="s3-figure">
-            <polygon points="-16,-108 16,-108 8,-50 16,-10 -16,-10 -8,-50" fill="#f5f3ee"/>
-            <circle cx="0" cy="-122" r="14" fill="#f5f3ee"/>
-          </g>
         </svg>
         <div class="scene-inner">
           <p class="caption" id="s3-caption" style="opacity:0;">La orilla da paso a raíces y sombra.</p>
@@ -421,6 +426,14 @@ body{position:relative;}
       </section>
 
     </div>
+    <!-- la figura persistente y única: vive fuera de las escenas que se desplazan, así nunca
+         hay más de una en pantalla, sin importar cómo se superpongan las escenas en las transiciones -->
+    <svg id="walker" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;opacity:0;">
+      <g id="walker-figure">
+        <polygon id="walker-body" points="-10,-88 10,-88 18,-50 30,-12 -30,-12 -18,-50" fill="#f5f3ee"/>
+        <circle id="walker-head" cx="0" cy="-104" r="14" fill="#f5f3ee"/>
+      </g>
+    </svg>
   </div>
 </div>
 
@@ -452,6 +465,33 @@ const bgColorStops = [
   '#0a1628', '#2e1f14', '#7a4a28', '#f5f3ee'
 ];
 
+// the persistent figure: one shared element, positioned purely from global scroll
+// progress, so it can never appear twice during a scene handoff
+const s1SeatedBody = [[-10,-88],[10,-88],[18,-50],[30,-12],[-30,-12],[-18,-50]];
+const s1StandBody  = [[-16,-108],[16,-108],[8,-50],[16,-10],[-16,-10],[-8,-50]];
+function s1BodyPoints(t){
+  return s1SeatedBody.map(([sx,sy],i) => {
+    const [ex,ey] = s1StandBody[i];
+    return (sx+(ex-sx)*t).toFixed(1) + ',' + (sy+(ey-sy)*t).toFixed(1);
+  }).join(' ');
+}
+const WALK_OFFSET = 150; // viewBox units ahead of the left edge once standing — 15% of the screen width, constant across every scene
+const walkerBody = document.getElementById('walker-body');
+function updateWalker(gp){
+  const s1 = sceneOffsets['s1'], s3 = sceneOffsets['s3'];
+  if (!s1 || !s3) return;
+  const fadeIn = gsap.utils.clamp(0,1, gp/0.01);
+  const fadeOut = gsap.utils.clamp(0,1, (gp-(s3.end-0.04))/0.04);
+  gsap.set('#walker', {opacity: fadeIn*(1-fadeOut)});
+
+  const p1 = gsap.utils.clamp(0,1, (gp-s1.start)/(s1.end-s1.start));
+  const standUp = gsap.utils.clamp(0,1,(p1-0.55)/0.2);
+  walkerBody.setAttribute('points', s1BodyPoints(standUp));
+  gsap.set('#walker-head', {cy: -104 - standUp*18});
+  const x = 500 + standUp*(WALK_OFFSET-500);
+  gsap.set('#walker-figure', {x, y: 558});
+}
+
 function buildScroll(){
   if (scrollTween) scrollTween.scrollTrigger.kill();
   const totalWidth = getTotalWidth();
@@ -474,6 +514,7 @@ function buildScroll(){
       onUpdate: self => {
         const color = gsap.utils.interpolate(bgColorStops, self.progress);
         gsap.set(bgLayer, {backgroundColor: color});
+        updateWalker(self.progress);
         sceneCallbacks.forEach(({segStart, segEnd, onUpdate}) => {
           const local = Math.min(1, Math.max(0, (self.progress - segStart) / (segEnd - segStart)));
           onUpdate(local);
@@ -493,14 +534,6 @@ function sceneProgressTrigger(id, onUpdate){
 
 function buildSceneAnimations(){
   // Scene 1 — dawn
-  const s1SeatedBody = [[-10,-88],[10,-88],[18,-50],[30,-12],[-30,-12],[-18,-50]];
-  const s1StandBody  = [[-16,-108],[16,-108],[8,-50],[16,-10],[-16,-10],[-8,-50]];
-  function s1BodyPoints(t){
-    return s1SeatedBody.map(([sx,sy],i) => {
-      const [ex,ey] = s1StandBody[i];
-      return (sx+(ex-sx)*t).toFixed(1) + ',' + (sy+(ey-sy)*t).toFixed(1);
-    }).join(' ');
-  }
   function s1Dots(container, n, xMin, xMax, yMin, yMax, r, seed){
     let html = '';
     for (let i = 0; i < n; i++) {
@@ -514,9 +547,16 @@ function buildSceneAnimations(){
   }
   s1Dots(document.getElementById('s1-sand-dots'), 60, 0, 1000, 522, 600, 1.6, 41);
 
+  const s1Seg = sceneOffsets['s1'];
+  const s1SegWidth = s1Seg.end - s1Seg.start;
+  const s1AnchorP = 0; // w=1 -> 0.5 - 1/(2*1) = 0: the centered layout is already on-screen at p=0
+
   sceneProgressTrigger('s1', p => {
     const sunRise = Math.min(p/0.6, 1);
-    gsap.set('#s1-orange', {opacity: Math.min(sunRise*0.9, 0.6)});
+    // the dawn glow rises then settles back down as full daylight takes over, so the
+    // warm tint doesn't linger as a flat color block into the next scene
+    const glowFade = 1 - gsap.utils.clamp(0,1,(p-0.8)/0.2);
+    gsap.set('#s1-orange', {opacity: Math.min(sunRise*0.9, 0.6)*glowFade});
     gsap.set('#s1-sun', {cy: 480 - sunRise*290, r: sunRise*42, opacity: Math.min(sunRise*3,1)});
 
     const seaColor = gsap.utils.interpolate('#0d2a36', '#1a9b8c', sunRise);
@@ -526,19 +566,22 @@ function buildSceneAnimations(){
     const textureFade = Math.max(0, (sunRise-0.15)/0.5);
     gsap.set('#s1-sand-dots', {opacity: textureFade*0.5});
 
-    const standUp = Math.max(0, Math.min((p-0.55)/0.2, 1));
-    const leadX = 1000*p + 90;
-    const x = 500 + standUp*(leadX-500);
-    document.getElementById('s1-body').setAttribute('points', s1BodyPoints(standUp));
-    gsap.set('#s1-head', {cy: -104 - standUp*18});
-    gsap.set('#s1-figure', {x, y: 558});
+    // the night sky itself brightens into the shore scene's cream tone, so there is no
+    // dark-to-light hard cut at the boundary
+    const skyColor = gsap.utils.interpolate('#0a0f28', '#f3e3c4', sunRise);
+    const skyColor2 = gsap.utils.interpolate('#1c1442', '#f3e3c4', sunRise);
+    gsap.set('#s1-sky-stop1', {attr:{'stop-color': skyColor}});
+    gsap.set('#s1-sky-stop2', {attr:{'stop-color': skyColor2}});
 
+    // the caption stays pinned and readable while the figure is still seated, then
+    // drifts away and dissolves exactly as the figure rises and starts to walk
     const textIn = Math.min(p/0.08, 1);
-    const textOut = Math.max(0, Math.min((p-0.55)/0.2, 1));
-    const textOpacity = textIn * (1-textOut);
-    const textDrift = -Math.min(p, 0.7) * 160;
-    gsap.set('#s1-caption', {opacity: textOpacity, x: textDrift});
-    gsap.set('#s1-tag', {opacity: textOpacity*0.55, x: textDrift});
+    const standUp = gsap.utils.clamp(0,1,(p-0.55)/0.2);
+    const textOpacity = textIn * (1-standUp);
+    const s1PinX = currentDistance*s1SegWidth*(p-s1AnchorP);
+    const textDrift = -standUp*220;
+    gsap.set('#s1-caption', {opacity: textOpacity, x: s1PinX+textDrift});
+    gsap.set('#s1-tag', {opacity: textOpacity*0.55, x: s1PinX+textDrift});
   });
 
   // Scene 2 — a lo largo de la costa: tortugas, luego garzas en la roca
@@ -557,15 +600,12 @@ function buildSceneAnimations(){
   const s2SegWidth = s2Seg.end - s2Seg.start;
   const s2W = parseFloat(document.getElementById('s2').style.getPropertyValue('--w')) || 1;
   const s2AnchorP = 0.5 - 1/(2*s2W); // posición local donde el caption centrado ya está visible en pantalla
-  // el personaje se mantiene a una distancia fija por delante del borde izquierdo visible,
-  // así siempre se lee como "sigue caminando" mientras el mundo se desplaza a su alrededor
+  // la figura persistente vive en el overlay compartido y se posiciona por progreso global;
+  // offsetAhead solo se usa aquí para calcular el punto de "encuentro" con tortugas y rocas
   const s2OffsetAhead = 150;
   const s2MeetP = x => (x - s2OffsetAhead) / (1000*s2W);
 
   sceneProgressTrigger('s2', p => {
-    const leadX = 1000*s2W*p + s2OffsetAhead;
-    gsap.set('#s2-figure', {x: leadX, y: 558});
-
     // contrarresta el scroll horizontal propio de la sección para que el caption se quede
     // fijo y legible en pantalla durante toda la caminata, en vez de pasar volando
     const captionIn = gsap.utils.clamp(0,1,p/0.06);
@@ -620,14 +660,10 @@ function buildSceneAnimations(){
   const s3SegWidth = s3Seg.end - s3Seg.start;
   const s3W = parseFloat(document.getElementById('s3').style.getPropertyValue('--w')) || 1;
   const s3AnchorP = 0.5 - 1/(2*s3W);
-  const s3OffsetAhead = 150;
 
   sceneProgressTrigger('s3', p => {
     // el tono de roca de la orilla se disuelve tenuemente en tierra de selva mientras avanzamos
     gsap.set('#s3-soil', {opacity: Math.min(p/0.4, 1)});
-
-    const leadX = 1000*s3W*p + s3OffsetAhead;
-    gsap.set('#s3-figure', {x: leadX, y: 558});
 
     const captionIn = gsap.utils.clamp(0,1,(p-0.1)/0.08);
     const captionOut = gsap.utils.clamp(0,1,(p-0.85)/0.1);
