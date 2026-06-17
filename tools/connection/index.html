@@ -43,11 +43,15 @@ body{position:relative;}
 .scene{position:relative;width:calc(var(--w,1)*100vw);height:100vh;flex:0 0 calc(var(--w,1)*100vw);display:flex;align-items:center;justify-content:center;overflow:hidden;}
 .scene-inner{position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 6vw;}
 
-.scene svg{position:absolute;inset:0;width:100%;height:100%;}
+.scene svg{position:absolute;inset:0;width:100%;height:100%;z-index:0;}
 
-.caption{position:relative;z-index:5;max-width:760px;text-align:center;font-family:var(--font-display);font-weight:300;font-style:italic;font-size:clamp(22px,3.4vw,40px);line-height:1.4;color:var(--white);text-shadow:0 2px 24px rgba(0,0,0,.4);padding:0 20px;}
+.scene-inner{z-index:10;}
 
-.scene-tag{position:absolute;top:34%;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(245,243,238,.55);z-index:5;text-shadow:0 1px 6px rgba(0,0,0,.5);}
+.caption{position:relative;z-index:10;max-width:760px;text-align:center;font-family:var(--font-display);font-weight:300;font-style:italic;font-size:clamp(22px,3.4vw,40px);line-height:1.4;color:var(--white);text-shadow:0 2px 24px rgba(0,0,0,.4);padding:14px 28px;background:rgba(5,8,14,.4);border-radius:14px;backdrop-filter:blur(3px);}
+.caption.caption-light{color:#241a10;text-shadow:none;background:rgba(243,227,196,.55);}
+
+.scene-tag{position:absolute;top:34%;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(245,243,238,.55);z-index:10;text-shadow:0 1px 6px rgba(0,0,0,.5);background:rgba(5,8,14,.35);padding:4px 12px;border-radius:8px;}
+.scene-tag.scene-tag-light{color:rgba(36,26,16,.65);text-shadow:none;background:rgba(243,227,196,.5);}
 
 /* bubble */
 .sbubble{position:absolute;font-family:var(--font-body);font-size:13px;font-weight:500;color:var(--dark);background:var(--white);border-radius:18px;padding:6px 14px;opacity:0;white-space:nowrap;}
@@ -112,8 +116,8 @@ body{position:relative;}
       <section class="scene" id="s2" style="--w:3;">
         <svg viewBox="0 0 3000 600" preserveAspectRatio="xMidYMid slice">
           <rect width="3000" height="600" fill="#f3e3c4"/>
-          <polygon points="0,440 3000,440 3000,600 0,600" fill="#1a9b8c"/>
-          <g stroke="#3aa89a" stroke-width="2" fill="none" opacity="0.5">
+          <polygon id="s2-sea-bg" points="0,440 3000,440 3000,600 0,600" fill="#1a9b8c"/>
+          <g id="s2-sea-waves" stroke="#3aa89a" stroke-width="2" fill="none" opacity="0.5">
             <path id="s2-sea-wave1"/>
             <path id="s2-sea-wave2"/>
           </g>
@@ -124,20 +128,19 @@ body{position:relative;}
           </g>
           <g id="s2-sand-dots" fill="#8a6a42" opacity="0.5"></g>
 
-          <!-- two turtles just breaking the surface, solid dark minimalist silhouettes
-               (no green fill), facing each other as if mid-conversation -->
-          <g id="s2-turtles" opacity="0">
-            <g transform="translate(670,440)">
-              <ellipse cx="0" cy="6" rx="40" ry="6" fill="#3aa89a" opacity="0.3"/>
-              <path d="M-32 4 Q-34 -18 -10 -24 Q8 -28 22 -20 Q34 -16 30 -4 Q38 -6 36 2 Q28 8 18 4 Q4 10 -12 6 Q-24 10 -32 4 Z" fill="#241a10"/>
-              <circle cx="31" cy="-9" r="1.5" fill="#f5f3ee"/>
-              <path d="M-20 6 Q-30 16 -40 12" stroke="#241a10" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <!-- two dolphins surfacing, just their heads breaking the water, facing each other -->
+          <g id="s2-dolphins" opacity="0">
+            <g transform="translate(670,448)">
+              <ellipse cx="0" cy="14" rx="44" ry="7" fill="#3aa89a" opacity="0.3"/>
+              <path d="M-34 8 Q-38 -10 -20 -20 Q0 -28 14 -18 Q26 -10 22 2 Q30 0 28 8 Q20 14 8 10 Q-6 16 -20 12 Q-28 14 -34 8 Z" fill="#54707c"/>
+              <circle cx="9" cy="-10" r="2" fill="#1a242a"/>
+              <path d="M14 -2 Q20 3 27 1" stroke="#1a242a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
             </g>
-            <g transform="translate(802,440) scale(-0.86,0.86)">
-              <ellipse cx="0" cy="6" rx="40" ry="6" fill="#3aa89a" opacity="0.3"/>
-              <path d="M-32 4 Q-34 -18 -10 -24 Q8 -28 22 -20 Q34 -16 30 -4 Q38 -6 36 2 Q28 8 18 4 Q4 10 -12 6 Q-24 10 -32 4 Z" fill="#241a10"/>
-              <circle cx="31" cy="-9" r="1.5" fill="#f5f3ee"/>
-              <path d="M-20 6 Q-30 16 -40 12" stroke="#241a10" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <g transform="translate(802,448) scale(-0.9,0.9)">
+              <ellipse cx="0" cy="14" rx="44" ry="7" fill="#3aa89a" opacity="0.3"/>
+              <path d="M-34 8 Q-38 -10 -20 -20 Q0 -28 14 -18 Q26 -10 22 2 Q30 0 28 8 Q20 14 8 10 Q-6 16 -20 12 Q-28 14 -34 8 Z" fill="#54707c"/>
+              <circle cx="9" cy="-10" r="2" fill="#1a242a"/>
+              <path d="M14 -2 Q20 3 27 1" stroke="#1a242a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
             </g>
             <g id="s2-bubbles1" fill="#f5f3ee" opacity="0">
               <circle cx="724" cy="420" r="3"/><circle cx="730" cy="408" r="4.5"/><circle cx="736" cy="394" r="6"/>
@@ -147,11 +150,9 @@ body{position:relative;}
             </g>
           </g>
 
-          <!-- rock emerging on the right with herons singing -->
-          <g id="s2-rock-group" opacity="0" transform="translate(1750,0)">
-            <path d="M-90 600 L-70 470 Q-40 440 0 450 Q40 442 70 470 L90 600 Z" fill="#6b6358"/>
-            <!-- two herons, sleek silhouettes facing each other mid-song -->
-            <g transform="translate(-28,446)">
+          <!-- herons standing right on the sand, no separate rock landmass -->
+          <g id="s2-rock-group" opacity="0" transform="translate(1300,0)">
+            <g transform="translate(-28,516)">
               <ellipse cx="0" cy="0" rx="11" ry="20" fill="#241a10"/>
               <path d="M-2 -16 Q-13 -34 -3 -49 Q4 -59 15 -57" stroke="#241a10" stroke-width="6" fill="none" stroke-linecap="round"/>
               <path d="M15 -57 L29 -61 L16 -52 Z" fill="#241a10"/>
@@ -159,7 +160,7 @@ body{position:relative;}
               <path d="M-5 18 L-7 34 M3 18 L5 34" stroke="#241a10" stroke-width="2.5" stroke-linecap="round"/>
               <path d="M-13 34 L-2 34 M2 34 L11 34" stroke="#241a10" stroke-width="2" stroke-linecap="round"/>
             </g>
-            <g transform="translate(28,450) scale(-0.86,0.86)">
+            <g transform="translate(28,520) scale(-0.86,0.86)">
               <ellipse cx="0" cy="0" rx="11" ry="20" fill="#3a2a1c"/>
               <path d="M-2 -16 Q-13 -34 -3 -49 Q4 -59 15 -57" stroke="#3a2a1c" stroke-width="6" fill="none" stroke-linecap="round"/>
               <path d="M15 -57 L29 -61 L16 -52 Z" fill="#3a2a1c"/>
@@ -168,8 +169,8 @@ body{position:relative;}
               <path d="M-13 34 L-2 34 M2 34 L11 34" stroke="#3a2a1c" stroke-width="2" stroke-linecap="round"/>
             </g>
             <g id="s2-notes" opacity="0" fill="#e8843a" font-size="28" font-family="Georgia, serif">
-              <text x="-10" y="372">♪</text>
-              <text x="12" y="384">♫</text>
+              <text x="-10" y="442">♪</text>
+              <text x="12" y="454">♫</text>
             </g>
           </g>
           <!-- the shore tones dissolve smoothly into the jungle floor's earthy color, no hard edge -->
@@ -182,9 +183,9 @@ body{position:relative;}
           <rect id="s2-dissolve" x="2400" y="0" width="600" height="600" fill="url(#s2-dissolve-grad)" opacity="0"/>
         </svg>
         <div class="scene-inner">
-          <p class="caption" id="s2-caption" style="opacity:0;color:#241a10;text-shadow:none;">The vestiges of communication have always been here.</p>
+          <p class="caption caption-light" id="s2-caption" style="opacity:0;">The vestiges of communication have always been here.</p>
         </div>
-        <span class="scene-tag" id="s2-tag" style="top:24%;opacity:0;color:#241a10;">02 — Along the shore</span>
+        <span class="scene-tag scene-tag-light" id="s2-tag" style="top:24%;opacity:0;">02 — Along the shore</span>
       </section>
 
       <!-- SCENE 3 — INTO THE JUNGLE: sand gives way to soil, trunks and hanging lianas -->
@@ -199,41 +200,42 @@ body{position:relative;}
           <g id="s3-ferns" opacity="0" fill="#2f5c2a"></g>
           <!-- trunks with gaps between them, no canopy in view, hanging lianas -->
           <g id="s3-trunks"></g>
-          <!-- coatis crossing in pairs, looking at one another -->
-          <g id="s3-coati-a" opacity="0" transform="translate(550,560)">
+          <!-- coatis crossing in pairs, looking at one another; lighter rust tones so they
+               stay visible against the darkening soil and canopy -->
+          <g id="s3-coati-a" opacity="0" transform="translate(820,560)">
             <g transform="scale(1.1)">
-              <ellipse cx="0" cy="0" rx="22" ry="12" fill="#1a1410"/>
-              <path d="M-20 -4 Q-32 -8 -38 -1 Q-34 5 -24 3 Z" fill="#1a1410"/>
+              <ellipse cx="0" cy="0" rx="22" ry="12" fill="#8a5a3a"/>
+              <path d="M-20 -4 Q-32 -8 -38 -1 Q-34 5 -24 3 Z" fill="#8a5a3a"/>
               <circle cx="-34" cy="-2" r="1.3" fill="#f5f3ee"/>
-              <path d="M-14 -10 L-10 -18 L-6 -10 Z" fill="#1a1410"/>
-              <path d="M20 -4 Q34 -10 30 -26 Q26 -40 10 -42" fill="none" stroke="#1a1410" stroke-width="9" stroke-linecap="round"/>
-              <path d="M20 -4 Q34 -10 30 -26 Q26 -40 10 -42" fill="none" stroke="#d8d2c4" stroke-width="9" stroke-dasharray="6 6" opacity="0.85"/>
-              <g stroke="#1a1410" stroke-width="5" stroke-linecap="round">
+              <path d="M-14 -10 L-10 -18 L-6 -10 Z" fill="#8a5a3a"/>
+              <path d="M20 -4 Q34 -10 30 -26 Q26 -40 10 -42" fill="none" stroke="#8a5a3a" stroke-width="9" stroke-linecap="round"/>
+              <path d="M20 -4 Q34 -10 30 -26 Q26 -40 10 -42" fill="none" stroke="#e8dcc8" stroke-width="9" stroke-dasharray="6 6" opacity="0.85"/>
+              <g stroke="#8a5a3a" stroke-width="5" stroke-linecap="round">
                 <line x1="-12" y1="10" x2="-14" y2="20"/>
                 <line x1="10" y1="10" x2="12" y2="20"/>
               </g>
             </g>
             <g transform="translate(56,4) scale(-0.92,0.92)">
-              <ellipse cx="0" cy="0" rx="22" ry="12" fill="#241a10"/>
-              <path d="M-20 -4 Q-32 -8 -38 -1 Q-34 5 -24 3 Z" fill="#241a10"/>
+              <ellipse cx="0" cy="0" rx="22" ry="12" fill="#7a4d30"/>
+              <path d="M-20 -4 Q-32 -8 -38 -1 Q-34 5 -24 3 Z" fill="#7a4d30"/>
               <circle cx="-34" cy="-2" r="1.3" fill="#f5f3ee"/>
-              <path d="M-14 -10 L-10 -18 L-6 -10 Z" fill="#241a10"/>
-              <path d="M20 -4 Q34 -10 30 -26 Q26 -40 10 -42" fill="none" stroke="#241a10" stroke-width="9" stroke-linecap="round"/>
-              <path d="M20 -4 Q34 -10 30 -26 Q26 -40 10 -42" fill="none" stroke="#d8d2c4" stroke-width="9" stroke-dasharray="6 6" opacity="0.85"/>
-              <g stroke="#241a10" stroke-width="5" stroke-linecap="round">
+              <path d="M-14 -10 L-10 -18 L-6 -10 Z" fill="#7a4d30"/>
+              <path d="M20 -4 Q34 -10 30 -26 Q26 -40 10 -42" fill="none" stroke="#7a4d30" stroke-width="9" stroke-linecap="round"/>
+              <path d="M20 -4 Q34 -10 30 -26 Q26 -40 10 -42" fill="none" stroke="#e8dcc8" stroke-width="9" stroke-dasharray="6 6" opacity="0.85"/>
+              <g stroke="#7a4d30" stroke-width="5" stroke-linecap="round">
                 <line x1="-12" y1="10" x2="-14" y2="20"/>
                 <line x1="10" y1="10" x2="12" y2="20"/>
               </g>
             </g>
           </g>
-          <g id="s3-coati-b" opacity="0" transform="translate(1500,560) scale(-1,1)">
-            <ellipse cx="0" cy="0" rx="22" ry="12" fill="#1a1410"/>
-            <path d="M-20 -4 Q-32 -8 -38 -1 Q-34 5 -24 3 Z" fill="#1a1410"/>
+          <g id="s3-coati-b" opacity="0" transform="translate(1750,560) scale(-1,1)">
+            <ellipse cx="0" cy="0" rx="22" ry="12" fill="#8a5a3a"/>
+            <path d="M-20 -4 Q-32 -8 -38 -1 Q-34 5 -24 3 Z" fill="#8a5a3a"/>
             <circle cx="-34" cy="-2" r="1.3" fill="#f5f3ee"/>
-            <path d="M-14 -10 L-10 -18 L-6 -10 Z" fill="#1a1410"/>
-            <path d="M20 -4 Q34 -10 30 -26 Q26 -40 10 -42" fill="none" stroke="#1a1410" stroke-width="9" stroke-linecap="round"/>
-            <path d="M20 -4 Q34 -10 30 -26 Q26 -40 10 -42" fill="none" stroke="#d8d2c4" stroke-width="9" stroke-dasharray="6 6" opacity="0.85"/>
-            <g stroke="#1a1410" stroke-width="5" stroke-linecap="round">
+            <path d="M-14 -10 L-10 -18 L-6 -10 Z" fill="#8a5a3a"/>
+            <path d="M20 -4 Q34 -10 30 -26 Q26 -40 10 -42" fill="none" stroke="#8a5a3a" stroke-width="9" stroke-linecap="round"/>
+            <path d="M20 -4 Q34 -10 30 -26 Q26 -40 10 -42" fill="none" stroke="#e8dcc8" stroke-width="9" stroke-dasharray="6 6" opacity="0.85"/>
+            <g stroke="#8a5a3a" stroke-width="5" stroke-linecap="round">
               <line x1="-12" y1="10" x2="-14" y2="20"/>
               <line x1="10" y1="10" x2="12" y2="20"/>
             </g>
@@ -465,7 +467,7 @@ body{position:relative;}
           </g>
         </svg>
         <div class="scene-inner" style="gap:28px;">
-          <p class="caption" style="color:#0a1628;font-size:clamp(26px,4vw,52px);text-shadow:none;">When was the last time your brand sounded like you?</p>
+          <p class="caption caption-light" style="font-size:clamp(26px,4vw,52px);">When was the last time your brand sounded like you?</p>
           <div class="brand-mark" id="s9-brand">Teal<span>Kin</span></div>
           <div class="close-sub" id="s9-sub">TealKin / Strategic Communications</div>
         </div>
@@ -614,6 +616,12 @@ function buildSceneAnimations(){
     const seaColor = gsap.utils.interpolate('#0d2a36', '#1a9b8c', sunRise);
     const sandColor = gsap.utils.interpolate('#3a2f22', '#d9c08c', sunRise);
     gsap.set('#s1-sea-bg', {fill: seaColor});
+    // the wave-line stroke must stay a different hue than the sea fill it sits on —
+    // it starts at the same teal as the night-sea stroke but slides to the lighter
+    // highlight teal scene 2 uses, so the lines never blend invisibly into the
+    // brightening background
+    const seaLineColor = gsap.utils.interpolate('#1a9b8c', '#3aa89a', sunRise);
+    gsap.set('#s1-sea', {stroke: seaLineColor});
     gsap.set('#s1-sand-bg', {fill: sandColor});
     const textureFade = Math.max(0, (sunRise-0.15)/0.5);
     gsap.set('#s1-sand-dots', {opacity: textureFade*0.5});
@@ -652,10 +660,27 @@ function buildSceneAnimations(){
   const s2SegWidth = s2Seg.end - s2Seg.start;
   const s2W = parseFloat(document.getElementById('s2').style.getPropertyValue('--w')) || 1;
   const s2AnchorP = 0.5 - 1/(2*s2W); // local progress where the caption's centered layout position is already on-screen
-  // the shared walker overlay sits at a fixed 15vw lead position on screen; matched here
-  // so the "meet" points (turtles, rock) line up with where the figure actually is
-  const s2OffsetAhead = 150;
-  const s2MeetP = x => (x - s2OffsetAhead) / (1000*s2W);
+
+  // generic "on-screen window" for a static element of a given scene: the local progress
+  // at which its right edge first touches the viewport's right edge (entering) and the
+  // local progress at which its left edge clears the viewport's left edge (exiting) —
+  // this makes every creature travel naturally from the right edge to the left edge,
+  // fully visible the whole time it crosses, instead of popping in mid-screen
+  function edgeWindow(x, halfWidth, w, fadeMargin){
+    const pEnter = (x + halfWidth - 1000) / (1000*w);
+    const pExit = (x - halfWidth) / (1000*w);
+    return {pEnter, pExit, fadeMargin};
+  }
+  function edgeOpacity(p, win){
+    const fadeIn = gsap.utils.clamp(0,1,(p-(win.pEnter-win.fadeMargin))/win.fadeMargin);
+    const fadeOut = gsap.utils.clamp(0,1,(p-win.pExit)/win.fadeMargin);
+    return fadeIn*(1-fadeOut);
+  }
+
+  // dolphins cross first, herons cross later — positioned so one is still exiting the
+  // left edge as the next is just entering the right edge, with both on screen together
+  const dolphinsWin = edgeWindow(736, 140, s2W, 0.03);
+  const heronsWin = edgeWindow(1300, 110, s2W, 0.04);
 
   sceneProgressTrigger('s2', p => {
     // counter the section's own horizontal scroll so the caption stays pinned and
@@ -666,30 +691,29 @@ function buildSceneAnimations(){
     gsap.set('#s2-caption', {opacity: captionIn*(1-captionOut), x: s2PinX});
     gsap.set('#s2-tag', {opacity: captionIn*(1-captionOut)*0.55, x: s2PinX});
 
-    // turtles surface quickly and don't linger — just a brief exchange, just heads and
-    // shell-tops above the waterline, then they're gone before the rock arrives
-    const turtleMeet = s2MeetP(710);
-    const turtleIn = gsap.utils.clamp(0,1,(p-(turtleMeet-0.02))/0.02);
-    const turtleOut = gsap.utils.clamp(0,1,(p-(turtleMeet+0.05))/0.05);
-    gsap.set('#s2-turtles', {opacity: turtleIn*(1-turtleOut)});
+    // dolphins surface and travel fully across the screen, right edge to left edge
+    const dolphinsOpacity = edgeOpacity(p, dolphinsWin);
+    gsap.set('#s2-dolphins', {opacity: dolphinsOpacity});
     const bubblePulse = (Math.sin(p*60)+1)/2;
-    gsap.set('#s2-bubbles1', {opacity: turtleIn*(1-turtleOut)*bubblePulse});
-    gsap.set('#s2-bubbles2', {opacity: turtleIn*(1-turtleOut)*(1-bubblePulse)});
+    gsap.set('#s2-bubbles1', {opacity: dolphinsOpacity*bubblePulse});
+    gsap.set('#s2-bubbles2', {opacity: dolphinsOpacity*(1-bubblePulse)});
 
-    // the rock with its singing herons now arrives much earlier in the walk
-    const rockMeet = s2MeetP(1750);
-    const rockIn = gsap.utils.clamp(0,1,(p-(rockMeet-0.05))/0.05);
-    const songIn = gsap.utils.clamp(0,1,(p-(rockMeet-0.02))/0.05);
-    const songOut = gsap.utils.clamp(0,1,(p-(rockMeet+0.18))/0.1);
+    // herons enter from the right just as the dolphins are leaving on the left
+    const heronsOpacity = edgeOpacity(p, heronsWin);
+    gsap.set('#s2-rock-group', {opacity: heronsOpacity});
     const notePulse = (Math.sin(p*50)+1)/2;
-    gsap.set('#s2-notes', {opacity: songIn*(1-songOut)*(0.4+notePulse*0.6)});
+    gsap.set('#s2-notes', {opacity: heronsOpacity*(0.4+notePulse*0.6)});
+
+    // the sea recedes gradually well before the boundary, instead of vanishing all at
+    // once behind the dissolve overlay right at the very end
+    const seaRecede = gsap.utils.clamp(0,1,(p-0.62)/0.33);
+    gsap.set('#s2-sea-bg', {opacity: 1-seaRecede});
+    gsap.set('#s2-sea-waves', {opacity: (1-seaRecede)*0.5});
 
     // near the end the shore tones dissolve smoothly into the jungle floor's earthy
-    // color — no rigid pillar, just a soft gradient fade — and the rock/herons melt
-    // away into it rather than persisting as a hard physical bridge
+    // color — no rigid pillar, just a soft gradient fade
     const dissolveIn = gsap.utils.clamp(0,1,(p-0.78)/0.18);
     gsap.set('#s2-dissolve', {opacity: dissolveIn});
-    gsap.set('#s2-rock-group', {opacity: rockIn*(1-dissolveIn)});
   });
 
   // Scene 3 — into the jungle: tenuous fade from shore tones to soil, trunks with lianas
@@ -728,7 +752,8 @@ function buildSceneAnimations(){
   const s3SegWidth = s3Seg.end - s3Seg.start;
   const s3W = parseFloat(document.getElementById('s3').style.getPropertyValue('--w')) || 1;
   const s3AnchorP = 0.5 - 1/(2*s3W);
-  const s3MeetP = x => (x - WALK_OFFSET) / (1000*s3W);
+  const coatiAWin = edgeWindow(820, 90, s3W, 0.04);
+  const coatiBWin = edgeWindow(1750, 60, s3W, 0.04);
 
   sceneProgressTrigger('s3', p => {
     // the shore's rock tone tenuously dissolves into jungle soil as we walk in
@@ -743,15 +768,8 @@ function buildSceneAnimations(){
 
     // a pair of coatis, then a third further along — each arriving just as the
     // previous group is leaving, so the jungle never feels empty
-    const coatiAMeet = s3MeetP(550);
-    const coatiAIn = gsap.utils.clamp(0,1,(p-(coatiAMeet-0.04))/0.04);
-    const coatiAOut = gsap.utils.clamp(0,1,(p-(coatiAMeet+0.1))/0.07);
-    gsap.set('#s3-coati-a', {opacity: coatiAIn*(1-coatiAOut)});
-
-    const coatiBMeet = s3MeetP(1500);
-    const coatiBIn = gsap.utils.clamp(0,1,(p-(coatiBMeet-0.04))/0.04);
-    const coatiBOut = gsap.utils.clamp(0,1,(p-(coatiBMeet+0.1))/0.07);
-    gsap.set('#s3-coati-b', {opacity: coatiBIn*(1-coatiBOut)});
+    gsap.set('#s3-coati-a', {opacity: edgeOpacity(p, coatiAWin)});
+    gsap.set('#s3-coati-b', {opacity: edgeOpacity(p, coatiBWin)});
 
     const captionIn = gsap.utils.clamp(0,1,(p-0.1)/0.08);
     const captionOut = gsap.utils.clamp(0,1,(p-0.85)/0.1);
