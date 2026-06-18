@@ -40,14 +40,15 @@ body{position:relative;}
 
 .pin-wrap{position:relative;width:100%;height:100vh;overflow:hidden;z-index:1;}
 .track{position:absolute;top:0;left:0;height:100vh;display:flex;will-change:transform;}
-.scene{position:relative;width:calc(var(--w,1)*100vw);height:100vh;flex:0 0 calc(var(--w,1)*100vw);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.scene{position:relative;width:calc(var(--w,1)*100vw);height:100vh;flex:0 0 calc(var(--w,1)*100vw);display:flex;align-items:center;justify-content:center;overflow:visible;}
+.scene svg{clip-path:inset(0);}
 .scene-inner{position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 6vw;}
 
 .scene svg{position:absolute;inset:0;width:100%;height:100%;z-index:0;}
 
 .scene-inner{z-index:10;}
 
-.caption{position:relative;z-index:10;max-width:760px;text-align:center;font-family:var(--font-display);font-weight:300;font-style:italic;font-size:clamp(22px,3.4vw,40px);line-height:1.4;color:var(--white);text-shadow:0 2px 24px rgba(0,0,0,.4);padding:14px 28px;background:rgba(5,8,14,.4);border-radius:14px;backdrop-filter:blur(3px);}
+.caption{position:relative;z-index:10;max-width:min(760px,88vw);text-align:center;font-family:var(--font-display);font-weight:300;font-style:italic;font-size:clamp(20px,3.4vw,40px);line-height:1.4;color:var(--white);text-shadow:0 2px 24px rgba(0,0,0,.4);padding:14px 28px;background:rgba(5,8,14,.4);border-radius:14px;backdrop-filter:blur(3px);}
 .caption.caption-light{color:#241a10;text-shadow:none;background:rgba(243,227,196,.55);}
 
 .scene-tag{position:absolute;top:34%;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(245,243,238,.55);z-index:10;text-shadow:0 1px 6px rgba(0,0,0,.5);background:rgba(5,8,14,.35);padding:4px 12px;border-radius:8px;}
@@ -84,7 +85,7 @@ body{position:relative;}
 
       <!-- SCENE 1 — DAWN -->
       <section class="scene" id="s1">
-        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMax slice">
           <defs>
             <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
               <stop id="s1-sky-stop1" offset="0%" stop-color="#0a0f28"/>
@@ -96,8 +97,8 @@ body{position:relative;}
           <circle id="s1-sun" cx="500" cy="480" r="0" fill="#f5f3ee" opacity="0"/>
           <polygon id="s1-sea-bg" points="0,440 1000,440 1000,600 0,600" fill="#0d2a36"/>
           <g id="s1-sea" stroke="#1a9b8c" stroke-width="2" fill="none" opacity="0.5">
-            <path d="M-20 460 Q60 448 140 460 T300 460 T460 460 T620 460 T780 460 T940 460 T1100 460"/>
-            <path d="M-20 488 Q60 476 140 488 T300 488 T460 488 T620 488 T780 488 T940 488 T1100 488"/>
+            <path id="s1-sea-wave1"/>
+            <path id="s1-sea-wave2"/>
           </g>
           <polygon id="s1-sand-bg" points="0,520 1000,520 1000,600 0,600" fill="#3a2f22"/>
           <g id="s1-sand-texture" stroke="#241a10" stroke-width="1.5" fill="none" opacity="0.5">
@@ -112,46 +113,49 @@ body{position:relative;}
         <span class="scene-tag" id="s1-tag" style="opacity:0;">01 — Dawn</span>
       </section>
 
-      <!-- SCENE 2 — ALONG THE SHORE: TURTLES, THEN HERONS ON THE ROCK -->
-      <section class="scene" id="s2" style="--w:3;">
-        <svg viewBox="0 0 3000 600" preserveAspectRatio="xMidYMid slice">
-          <rect width="3000" height="600" fill="#f3e3c4"/>
-          <polygon id="s2-sea-bg" points="0,440 3000,440 3000,600 0,600" fill="#1a9b8c"/>
+      <!-- SCENE 2 — ALONG THE SHORE: DOLPHINS, HERONS, THEN COATIS, ALL ON THE SAND -->
+      <section class="scene" id="s2" style="--w:4;">
+        <svg viewBox="0 0 4000 600" preserveAspectRatio="xMidYMax slice">
+          <rect width="4000" height="600" fill="#f3e3c4"/>
+          <polygon id="s2-sea-bg" points="0,440 4000,440 4000,600 0,600" fill="#1a9b8c"/>
           <g id="s2-sea-waves" stroke="#3aa89a" stroke-width="2" fill="none" opacity="0.5">
             <path id="s2-sea-wave1"/>
             <path id="s2-sea-wave2"/>
           </g>
-          <polygon points="0,520 3000,520 3000,600 0,600" fill="#d9c08c"/>
+          <polygon points="0,520 4000,520 4000,600 0,600" fill="#d9c08c"/>
           <g stroke="#241a10" stroke-width="1.5" fill="none" opacity="0.5">
             <path id="s2-sand-wave1"/>
             <path id="s2-sand-wave2"/>
           </g>
           <g id="s2-sand-dots" fill="#8a6a42" opacity="0.5"></g>
 
-          <!-- two dolphins surfacing, just their heads breaking the water, facing each other -->
+          <!-- two dolphins surfacing, rounder melon-and-snout heads, both breathing
+               bubble trails continuously while they're on screen -->
           <g id="s2-dolphins" opacity="0">
             <g transform="translate(670,448)">
-              <ellipse cx="0" cy="14" rx="44" ry="7" fill="#3aa89a" opacity="0.3"/>
-              <path d="M-34 8 Q-38 -10 -20 -20 Q0 -28 14 -18 Q26 -10 22 2 Q30 0 28 8 Q20 14 8 10 Q-6 16 -20 12 Q-28 14 -34 8 Z" fill="#54707c"/>
-              <circle cx="9" cy="-10" r="2" fill="#1a242a"/>
-              <path d="M14 -2 Q20 3 27 1" stroke="#1a242a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+              <ellipse cx="0" cy="16" rx="46" ry="7" fill="#3aa89a" opacity="0.3"/>
+              <path d="M-36 6 Q-42 -14 -22 -26 Q-2 -36 16 -28 Q32 -20 30 -4 Q40 -6 38 4 Q34 12 22 9 Q18 18 4 16 Q-10 20 -22 14 Q-30 16 -36 6 Z" fill="#54707c"/>
+              <path d="M16 -28 Q26 -30 30 -22 Q24 -18 16 -20 Z" fill="#3f5a64"/>
+              <circle cx="11" cy="-13" r="2.4" fill="#1a242a"/>
+              <path d="M18 -1 Q24 4 31 2" stroke="#1a242a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
             </g>
             <g transform="translate(802,448) scale(-0.9,0.9)">
-              <ellipse cx="0" cy="14" rx="44" ry="7" fill="#3aa89a" opacity="0.3"/>
-              <path d="M-34 8 Q-38 -10 -20 -20 Q0 -28 14 -18 Q26 -10 22 2 Q30 0 28 8 Q20 14 8 10 Q-6 16 -20 12 Q-28 14 -34 8 Z" fill="#54707c"/>
-              <circle cx="9" cy="-10" r="2" fill="#1a242a"/>
-              <path d="M14 -2 Q20 3 27 1" stroke="#1a242a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+              <ellipse cx="0" cy="16" rx="46" ry="7" fill="#3aa89a" opacity="0.3"/>
+              <path d="M-36 6 Q-42 -14 -22 -26 Q-2 -36 16 -28 Q32 -20 30 -4 Q40 -6 38 4 Q34 12 22 9 Q18 18 4 16 Q-10 20 -22 14 Q-30 16 -36 6 Z" fill="#54707c"/>
+              <path d="M16 -28 Q26 -30 30 -22 Q24 -18 16 -20 Z" fill="#3f5a64"/>
+              <circle cx="11" cy="-13" r="2.4" fill="#1a242a"/>
+              <path d="M18 -1 Q24 4 31 2" stroke="#1a242a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
             </g>
-            <g id="s2-bubbles1" fill="#f5f3ee" opacity="0">
-              <circle cx="724" cy="420" r="3"/><circle cx="730" cy="408" r="4.5"/><circle cx="736" cy="394" r="6"/>
+            <g id="s2-bubbles1" fill="#f5f3ee">
+              <circle cx="700" cy="416" r="3"/><circle cx="694" cy="402" r="4.5"/><circle cx="688" cy="386" r="6"/>
             </g>
-            <g id="s2-bubbles2" fill="#f5f3ee" opacity="0">
-              <circle cx="748" cy="426" r="3"/><circle cx="742" cy="414" r="4.5"/><circle cx="736" cy="400" r="6"/>
+            <g id="s2-bubbles2" fill="#f5f3ee">
+              <circle cx="778" cy="416" r="3"/><circle cx="784" cy="402" r="4.5"/><circle cx="790" cy="386" r="6"/>
             </g>
           </g>
 
-          <!-- herons standing right on the sand, no separate rock landmass -->
-          <g id="s2-rock-group" opacity="0" transform="translate(1300,0)">
+          <!-- herons standing right on the sand -->
+          <g id="s2-rock-group" opacity="0" transform="translate(1500,0)">
             <g transform="translate(-28,516)">
               <ellipse cx="0" cy="0" rx="11" ry="20" fill="#241a10"/>
               <path d="M-2 -16 Q-13 -34 -3 -49 Q4 -59 15 -57" stroke="#241a10" stroke-width="6" fill="none" stroke-linecap="round"/>
@@ -173,36 +177,10 @@ body{position:relative;}
               <text x="12" y="454">♫</text>
             </g>
           </g>
-          <!-- the shore tones dissolve smoothly into the jungle floor's earthy color, no hard edge -->
-          <defs>
-            <linearGradient id="s2-dissolve-grad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stop-color="#6b6358" stop-opacity="0"/>
-              <stop offset="100%" stop-color="#6b6358" stop-opacity="1"/>
-            </linearGradient>
-          </defs>
-          <rect id="s2-dissolve" x="2400" y="0" width="600" height="600" fill="url(#s2-dissolve-grad)" opacity="0"/>
-        </svg>
-        <div class="scene-inner">
-          <p class="caption caption-light" id="s2-caption" style="opacity:0;">The vestiges of communication have always been here.</p>
-        </div>
-        <span class="scene-tag scene-tag-light" id="s2-tag" style="top:24%;opacity:0;">02 — Along the shore</span>
-      </section>
 
-      <!-- SCENE 3 — INTO THE JUNGLE: sand gives way to soil, trunks and hanging lianas -->
-      <section class="scene" id="s3" style="--w:2;">
-        <svg viewBox="0 0 2000 600" preserveAspectRatio="xMidYMid slice">
-          <rect width="2000" height="600" fill="#6b6358"/>
-          <rect id="s3-soil" width="2000" height="600" fill="#3a2a1c" opacity="0"/>
-          <polygon id="s3-ground" points="0,520 2000,520 2000,600 0,600" fill="#4a3324" opacity="0"/>
-          <g id="s3-ground-dots" fill="#241a10" opacity="0.5"></g>
-          <!-- the jungle's green slowly takes over as the soil settles in -->
-          <rect id="s3-canopy" width="2000" height="600" fill="#1f3d1a" opacity="0"/>
-          <g id="s3-ferns" opacity="0" fill="#2f5c2a"></g>
-          <!-- trunks with gaps between them, no canopy in view, hanging lianas -->
-          <g id="s3-trunks"></g>
-          <!-- coatis crossing in pairs, looking at one another; lighter rust tones so they
-               stay visible against the darkening soil and canopy -->
-          <g id="s3-coati-a" opacity="0" transform="translate(820,560)">
+          <!-- coatis crossing the sand last, right after the herons, closing out the
+               beach scene before the cave entrance arrives -->
+          <g id="s2-coati-a" opacity="0" transform="translate(2350,560)">
             <g transform="scale(1.1)">
               <ellipse cx="0" cy="0" rx="22" ry="12" fill="#8a5a3a"/>
               <path d="M-20 -4 Q-32 -8 -38 -1 Q-34 5 -24 3 Z" fill="#8a5a3a"/>
@@ -228,7 +206,7 @@ body{position:relative;}
               </g>
             </g>
           </g>
-          <g id="s3-coati-b" opacity="0" transform="translate(1750,560) scale(-1,1)">
+          <g id="s2-coati-b" opacity="0" transform="translate(3150,560) scale(-1,1)">
             <ellipse cx="0" cy="0" rx="22" ry="12" fill="#8a5a3a"/>
             <path d="M-20 -4 Q-32 -8 -38 -1 Q-34 5 -24 3 Z" fill="#8a5a3a"/>
             <circle cx="-34" cy="-2" r="1.3" fill="#f5f3ee"/>
@@ -240,11 +218,38 @@ body{position:relative;}
               <line x1="10" y1="10" x2="12" y2="20"/>
             </g>
           </g>
+
+          <!-- the sea sinks into a hazy distance and the sand gives way to bare rock as
+               the big cave mouth ahead swallows the horizon -->
+          <rect id="s2-cave-fog" x="3200" y="0" width="800" height="600" fill="#23211e" opacity="0"/>
+          <path id="s2-cave-mouth" d="M3500 600 Q3520 360 3700 300 Q3880 360 3900 600 Z" fill="#1a1714" opacity="0"/>
         </svg>
         <div class="scene-inner">
-          <p class="caption" id="s3-caption" style="opacity:0;">The shore gives way to root and shadow.</p>
+          <p class="caption caption-light" id="s2-caption" style="opacity:0;">The vestiges of communication have always been here.</p>
         </div>
-        <span class="scene-tag" id="s3-tag" style="top:24%;opacity:0;">03 — Into the jungle</span>
+        <span class="scene-tag scene-tag-light" id="s2-tag" style="top:24%;opacity:0;">02 — Along the shore</span>
+      </section>
+
+      <!-- SCENE 3 — THE CENOTE: the cave mouth swallows the horizon, then opens onto a
+           glowing underground pool, alive with its own quiet bioluminescence -->
+      <section class="scene" id="s3" style="--w:2;">
+        <svg viewBox="0 0 2000 600" preserveAspectRatio="xMidYMax slice">
+          <rect id="s3-outer" width="2000" height="600" fill="#1a1714"/>
+          <!-- cave walls close in from both sides as we walk deeper -->
+          <path id="s3-wall-l" d="M-10 600 L-10 -10 L120 -10 Q40 300 120 610 Z" fill="#0f0d0b"/>
+          <path id="s3-wall-r" d="M2010 600 L2010 -10 L1880 -10 Q1960 300 1880 610 Z" fill="#0f0d0b"/>
+          <!-- the cavern interior brightens in once we're fully inside -->
+          <rect id="s3-cavern" width="2000" height="600" fill="#2a2c2e" opacity="0"/>
+          <g id="s3-stalactites" fill="#1a1714"></g>
+          <!-- the cenote pool: a glowing teal floor, the cave's own quiet life -->
+          <polygon id="s3-pool" points="0,500 2000,500 2000,600 0,600" fill="#0a3a3a" opacity="0"/>
+          <ellipse id="s3-pool-glow" cx="1000" cy="520" rx="900" ry="50" fill="#2dbfad" opacity="0"/>
+          <g id="s3-glints" fill="#7fe3d4" opacity="0"></g>
+        </svg>
+        <div class="scene-inner">
+          <p class="caption" id="s3-caption" style="opacity:0;">The shore gives way to stone, and a quiet, glowing dark.</p>
+        </div>
+        <span class="scene-tag" id="s3-tag" style="top:24%;opacity:0;">03 — The cenote</span>
       </section>
 
       <!-- SCENE 4 — THE DRIFT -->
@@ -476,7 +481,7 @@ body{position:relative;}
     </div>
     <!-- the single persistent figure: lives outside the sliding scenes so there is
          never more than one on screen, regardless of how scenes overlap during transitions -->
-    <svg id="walker" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;opacity:0;">
+    <svg id="walker" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMax slice" style="position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;opacity:0;">
       <g id="walker-figure">
         <polygon id="walker-body" points="-10,-88 10,-88 18,-50 30,-12 -30,-12 -18,-50" fill="#f5f3ee"/>
         <circle id="walker-head" cx="0" cy="-104" r="14" fill="#f5f3ee"/>
@@ -509,7 +514,7 @@ function computeSceneOffsets(distance){
 
 const bgLayer = document.getElementById('bg-layer');
 const bgColorStops = [
-  '#0a1628', '#8a4a28', '#0f3530', '#1a2620', '#0d1f24',
+  '#0a1628', '#8a4a28', '#0f3530', '#23282a', '#0d1f24',
   '#0a1628', '#2e1f14', '#7a4a28', '#f5f3ee'
 ];
 
@@ -594,6 +599,10 @@ function buildSceneAnimations(){
     container.innerHTML = html;
   }
   s1Dots(document.getElementById('s1-sand-dots'), 60, 0, 1000, 522, 600, 1.6, 41);
+  // same step/amplitude as scene 2's waves, generated from the same local-x=0 phase,
+  // so the wave-line pattern continues unbroken across the scene 1/2 seam
+  document.getElementById('s1-sea-wave1').setAttribute('d', wavePath(1000, 460, 80, 12));
+  document.getElementById('s1-sea-wave2').setAttribute('d', wavePath(1000, 488, 80, 12));
 
   const s1Seg = sceneOffsets['s1'];
   const s1SegWidth = s1Seg.end - s1Seg.start;
@@ -644,17 +653,17 @@ function buildSceneAnimations(){
     gsap.set('#s1-tag', {opacity: textOpacity*0.55, x: s1PinX+textDrift});
   });
 
-  // Scene 2 — along the shore: turtles, then herons on the rock
+  // Scene 2 — along the shore: dolphins, then herons on the rock, then coatis on the sand
   function wavePath(width, y, step, amp){
     let d = `M-20 ${y} Q${step/2} ${y-amp} ${step} ${y}`;
     for (let x = step*2; x <= width+step; x += step) d += ` T${x} ${y}`;
     return d;
   }
-  document.getElementById('s2-sea-wave1').setAttribute('d', wavePath(3000, 460, 80, 12));
-  document.getElementById('s2-sea-wave2').setAttribute('d', wavePath(3000, 488, 80, 12));
-  document.getElementById('s2-sand-wave1').setAttribute('d', wavePath(3000, 540, 80, 6));
-  document.getElementById('s2-sand-wave2').setAttribute('d', wavePath(3000, 566, 80, 6));
-  s1Dots(document.getElementById('s2-sand-dots'), 180, 0, 3000, 522, 600, 1.6, 23);
+  document.getElementById('s2-sea-wave1').setAttribute('d', wavePath(4000, 460, 80, 12));
+  document.getElementById('s2-sea-wave2').setAttribute('d', wavePath(4000, 488, 80, 12));
+  document.getElementById('s2-sand-wave1').setAttribute('d', wavePath(4000, 540, 80, 6));
+  document.getElementById('s2-sand-wave2').setAttribute('d', wavePath(4000, 566, 80, 6));
+  s1Dots(document.getElementById('s2-sand-dots'), 240, 0, 4000, 522, 600, 1.6, 23);
 
   const s2Seg = sceneOffsets['s2'];
   const s2SegWidth = s2Seg.end - s2Seg.start;
@@ -677,10 +686,13 @@ function buildSceneAnimations(){
     return fadeIn*(1-fadeOut);
   }
 
-  // dolphins cross first, herons cross later — positioned so one is still exiting the
-  // left edge as the next is just entering the right edge, with both on screen together
+  // dolphins cross first, then herons, then coatis on the sand — each arriving just as
+  // the previous group is leaving, so the shore never feels empty
   const dolphinsWin = edgeWindow(736, 140, s2W, 0.03);
-  const heronsWin = edgeWindow(1300, 110, s2W, 0.04);
+  const heronsWin = edgeWindow(1500, 110, s2W, 0.04);
+  const coatiAWin = edgeWindow(2350, 110, s2W, 0.03);
+  const coatiBWin = edgeWindow(3150, 110, s2W, 0.03);
+  const caveWin = {pEnter: (3200-1000)/(1000*s2W)};
 
   sceneProgressTrigger('s2', p => {
     // counter the section's own horizontal scroll so the caption stays pinned and
@@ -691,12 +703,13 @@ function buildSceneAnimations(){
     gsap.set('#s2-caption', {opacity: captionIn*(1-captionOut), x: s2PinX});
     gsap.set('#s2-tag', {opacity: captionIn*(1-captionOut)*0.55, x: s2PinX});
 
-    // dolphins surface and travel fully across the screen, right edge to left edge
+    // dolphins surface and travel fully across the screen, right edge to left edge —
+    // both of them breathe, so bubbles rise from both at once
     const dolphinsOpacity = edgeOpacity(p, dolphinsWin);
     gsap.set('#s2-dolphins', {opacity: dolphinsOpacity});
     const bubblePulse = (Math.sin(p*60)+1)/2;
-    gsap.set('#s2-bubbles1', {opacity: dolphinsOpacity*bubblePulse});
-    gsap.set('#s2-bubbles2', {opacity: dolphinsOpacity*(1-bubblePulse)});
+    gsap.set('#s2-bubbles1', {opacity: dolphinsOpacity*(0.4+bubblePulse*0.6)});
+    gsap.set('#s2-bubbles2', {opacity: dolphinsOpacity*(0.4+bubblePulse*0.6)});
 
     // herons enter from the right just as the dolphins are leaving on the left
     const heronsOpacity = edgeOpacity(p, heronsWin);
@@ -704,74 +717,76 @@ function buildSceneAnimations(){
     const notePulse = (Math.sin(p*50)+1)/2;
     gsap.set('#s2-notes', {opacity: heronsOpacity*(0.4+notePulse*0.6)});
 
-    // the sea recedes gradually well before the boundary, instead of vanishing all at
-    // once behind the dissolve overlay right at the very end
+    // coatis cross the sand last, right to left, just as the herons clear the screen
+    gsap.set('#s2-coati-a', {opacity: edgeOpacity(p, coatiAWin)});
+    gsap.set('#s2-coati-b', {opacity: edgeOpacity(p, coatiBWin)});
+
+    // the sea recedes gradually well before the boundary, sinking into the distance as
+    // the cave mouth ahead swallows the horizon
     const seaRecede = gsap.utils.clamp(0,1,(p-0.62)/0.33);
     gsap.set('#s2-sea-bg', {opacity: 1-seaRecede});
     gsap.set('#s2-sea-waves', {opacity: (1-seaRecede)*0.5});
 
-    // near the end the shore tones dissolve smoothly into the jungle floor's earthy
-    // color — no rigid pillar, just a soft gradient fade
-    const dissolveIn = gsap.utils.clamp(0,1,(p-0.78)/0.18);
-    gsap.set('#s2-dissolve', {opacity: dissolveIn});
+    // the cave entrance rises ahead near the very end of the walk, fog thickening as
+    // we approach its mouth
+    const caveIn = gsap.utils.clamp(0,1,(p-caveWin.pEnter)/0.18);
+    gsap.set('#s2-cave-mouth', {opacity: caveIn});
+    gsap.set('#s2-cave-fog', {opacity: caveIn*0.7});
   });
 
-  // Scene 3 — into the jungle: tenuous fade from shore tones to soil, trunks with lianas
-  s1Dots(document.getElementById('s3-ground-dots'), 90, 0, 2000, 530, 600, 1.6, 67);
-
-  const s3TrunkXs = [120, 340, 760, 980, 1340, 1620, 1880]; // gaps left between clusters
-  let s3TrunkHtml = '';
-  s3TrunkXs.forEach((tx, i) => {
-    const w = 22 + (i%3)*6;
-    s3TrunkHtml += `<rect x="${tx-w/2}" y="-40" width="${w}" height="640" fill="#2c2018"/>`;
-    const lianaCount = 1 + (i%2);
-    for (let l = 0; l < lianaCount; l++){
-      const lx = tx + (l===0 ? -w*1.6 : w*1.8);
-      const sway = 14 + (l*6);
-      const len = 220 + (i*17)%140;
-      s3TrunkHtml += `<path d="M${lx} -40 Q${lx+sway} ${len*0.5} ${lx} ${len}" stroke="#1f160f" stroke-width="3" fill="none" stroke-linecap="round"/>`;
-    }
+  // Scene 3 — the cenote: the cave mouth swallows the horizon, walls close in, then the
+  // cavern opens onto a glowing underground pool with its own quiet bioluminescence
+  const s3StalXs = [140, 380, 640, 920, 1180, 1460, 1720, 1900];
+  let s3StalHtml = '';
+  s3StalXs.forEach((sx, i) => {
+    const w = 26 + (i%3)*10;
+    const len = 70 + (i*23)%90;
+    s3StalHtml += `<path d="M${sx-w/2} 0 Q${sx} ${len*0.6} ${sx} ${len} Q${sx} ${len*0.6} ${sx+w/2} 0 Z"/>`;
   });
-  document.getElementById('s3-trunks').innerHTML = s3TrunkHtml;
+  document.getElementById('s3-stalactites').innerHTML = s3StalHtml;
 
-  // small fern clusters scattered along the ground, fading in as the green takes over
-  let s3FernHtml = '';
-  const s3FernXs = [60, 260, 480, 640, 900, 1120, 1380, 1560, 1780, 1940];
-  s3FernXs.forEach((fx, i) => {
-    const fy = 545 + (i%3)*15;
-    const s = 0.7 + (i%4)*0.15;
-    s3FernHtml += `<g transform="translate(${fx},${fy}) scale(${s})">
-      <path d="M0 0 Q-14 -6 -22 -22" stroke="#2f5c2a" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <path d="M0 0 Q0 -10 -4 -26" stroke="#2f5c2a" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <path d="M0 0 Q14 -6 20 -20" stroke="#2f5c2a" stroke-width="3" fill="none" stroke-linecap="round"/>
-    </g>`;
+  // small bioluminescent glints scattered over the pool surface, each twinkling on its
+  // own offset so the pool feels quietly alive rather than static
+  const s3GlintXs = [120, 340, 560, 780, 980, 1180, 1380, 1580, 1780, 1900];
+  let s3GlintHtml = '';
+  s3GlintXs.forEach((gx, i) => {
+    const gy = 520 + (i%4)*16;
+    s3GlintHtml += `<circle class="s3-glint" data-offset="${i*0.7}" cx="${gx}" cy="${gy}" r="${2+(i%3)}"/>`;
   });
-  document.getElementById('s3-ferns').innerHTML = s3FernHtml;
+  document.getElementById('s3-glints').innerHTML = s3GlintHtml;
+  const s3GlintEls = [...document.querySelectorAll('.s3-glint')];
 
   const s3Seg = sceneOffsets['s3'];
   const s3SegWidth = s3Seg.end - s3Seg.start;
   const s3W = parseFloat(document.getElementById('s3').style.getPropertyValue('--w')) || 1;
   const s3AnchorP = 0.5 - 1/(2*s3W);
-  const coatiAWin = edgeWindow(820, 90, s3W, 0.04);
-  const coatiBWin = edgeWindow(1750, 60, s3W, 0.04);
 
   sceneProgressTrigger('s3', p => {
-    // the shore's rock tone tenuously dissolves into jungle soil as we walk in
-    gsap.set('#s3-soil', {opacity: Math.min(p/0.4, 1)});
-    gsap.set('#s3-ground', {opacity: Math.min(p/0.4, 1)});
+    // the cave walls close in from both sides as we pass through the mouth
+    const wallsIn = gsap.utils.clamp(0,1,p/0.3);
+    gsap.set('#s3-wall-l', {x: -wallsIn*90});
+    gsap.set('#s3-wall-r', {x: wallsIn*90});
 
-    // green arrives gradually, after the soil — ferns and a faint canopy wash build
-    // up through the rest of the walk rather than being there from the first frame
-    const greenIn = gsap.utils.clamp(0,1,(p-0.15)/0.55);
-    gsap.set('#s3-canopy', {opacity: greenIn*0.4});
-    gsap.set('#s3-ferns', {opacity: greenIn});
+    // once inside, the background lifts from black to the cavern's grey stone
+    const cavernIn = gsap.utils.clamp(0,1,(p-0.2)/0.35);
+    gsap.set('#s3-cavern', {opacity: cavernIn*0.85});
+    gsap.set('#s3-stalactites', {opacity: cavernIn});
 
-    // a pair of coatis, then a third further along — each arriving just as the
-    // previous group is leaving, so the jungle never feels empty
-    gsap.set('#s3-coati-a', {opacity: edgeOpacity(p, coatiAWin)});
-    gsap.set('#s3-coati-b', {opacity: edgeOpacity(p, coatiBWin)});
+    // the pool reveals itself after the cavern brightens, glowing teal against the stone
+    const poolIn = gsap.utils.clamp(0,1,(p-0.4)/0.35);
+    gsap.set('#s3-pool', {opacity: poolIn});
+    gsap.set('#s3-pool-glow', {opacity: poolIn*0.6});
 
-    const captionIn = gsap.utils.clamp(0,1,(p-0.1)/0.08);
+    // bioluminescent glints twinkle once the pool is visible, each on its own phase
+    const glintsIn = gsap.utils.clamp(0,1,(p-0.55)/0.3);
+    gsap.set('#s3-glints', {opacity: glintsIn});
+    s3GlintEls.forEach(el => {
+      const offset = parseFloat(el.dataset.offset);
+      const twinkle = 0.3 + 0.7*((Math.sin(p*40 + offset*10)+1)/2);
+      gsap.set(el, {opacity: twinkle});
+    });
+
+    const captionIn = gsap.utils.clamp(0,1,(p-0.45)/0.12);
     const captionOut = gsap.utils.clamp(0,1,(p-0.85)/0.1);
     const s3PinX = currentDistance*s3SegWidth*(p-s3AnchorP);
     gsap.set('#s3-caption', {opacity: captionIn*(1-captionOut), x: s3PinX});
