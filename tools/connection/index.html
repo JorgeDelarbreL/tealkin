@@ -44,7 +44,11 @@ body{position:relative;}
 .scene{position:relative;width:100vw;height:100vh;flex:0 0 100vw;display:flex;align-items:center;justify-content:center;background:var(--dark);}
 .scene-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;}
 .scene-fx{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;}
-.scene-animal{position:absolute;bottom:6%;left:50%;transform:translateX(-50%);max-width:40%;max-height:55%;width:auto;height:auto;z-index:2;opacity:0;}
+/* centering's translateX(-50%) is applied via GSAP (xPercent) below, not here, so the
+   coati idle-sway animation can layer an extra x offset on top without fighting this */
+.scene-animal{position:absolute;bottom:6%;left:50%;max-width:40%;max-height:55%;width:auto;height:auto;z-index:2;opacity:0;}
+/* dolphins: 1/4 of the viewport height higher and 1/3 smaller than the shared default above */
+#s2 .scene-animal{bottom:31%;max-width:26.7%;max-height:36.7%;}
 
 .scene-text{position:relative;z-index:10;max-width:min(820px,86vw);text-align:center;padding:0 24px;}
 .text-es{font-family:var(--font-display);font-style:italic;font-weight:400;font-size:clamp(24px,4vw,48px);line-height:1.35;color:var(--white);text-shadow:0 2px 22px rgba(0,0,0,.55),0 1px 4px rgba(0,0,0,.5);opacity:0;}
@@ -185,6 +189,19 @@ const pinTargets = scenes.map(s => [s.querySelector('.scene-text'), s.querySelec
 // seam between scenes reads as a soft fade rather than a hard graphic edge
 const bgFadeEls = scenes.map(s => [s.querySelector('.scene-bg'), s.querySelector('.scene-animal')].filter(Boolean));
 
+// .scene-animal is centered through GSAP's xPercent instead of a CSS transform, so the
+// coati sway below can add a plain x offset on top without overwriting the centering
+gsap.set('.scene-animal', {xPercent: -50});
+
+// scene 3 — the coatis sway gently side to side as you scroll past them, like they're
+// mid-conversation, instead of standing perfectly still
+const coatiEl = document.querySelector('#s3 .scene-animal');
+function updateCoatis(local){
+  if (!coatiEl) return;
+  const sway = Math.sin(local*Math.PI*6)*10;
+  gsap.set(coatiEl, {x: sway});
+}
+
 // scene 1 — sun rises from the horizon, a warm orange wash builds in behind it
 function updateDawn(local){
   gsap.set('#s1-orange', {opacity: local*0.2});
@@ -231,15 +248,24 @@ function buildScroll(){
           fadeEls[i].forEach(el => gsap.set(el, {opacity}));
           pinTargets[i].forEach(el => gsap.set(el, {x: pinX}));
 
-          // the photo dissolves in/out over a wider window than the text, so it has
-          // already settled by the time the caption appears on top of it
-          const bgArrival = (i === lastIndex) ? arrivalLocal : local;
-          const bgFadeIn = gsap.utils.clamp(0, 1, bgArrival/0.3);
-          const bgFadeOut = (i === lastIndex) ? 0 : gsap.utils.clamp(0, 1, (local-0.7)/0.3);
+          // true crossfade between photos: unlike "local" above, rawLocal is left
+          // unclamped (negative before this scene arrives, >1 once it's long gone) so
+          // this scene's fade-IN window exactly overlaps the previous scene's fade-OUT
+          // window (and same on the other side) — they cross-dissolve into each other
+          // instead of both fading toward the dark page background one after another,
+          // which is what was reading as a black "break" at every cut. It also means
+          // scene 1 needs no special case to be fully visible at scroll position zero:
+          // its fade-in window sits entirely before scenePos can ever be negative, so
+          // it's already-complete (opacity 1) from the very first frame.
+          const bgFadeWidth = 0.3;
+          const rawLocal = scenePos - i;
+          const bgFadeIn = gsap.utils.clamp(0, 1, (rawLocal+bgFadeWidth)/bgFadeWidth);
+          const bgFadeOut = gsap.utils.clamp(0, 1, (rawLocal-(1-bgFadeWidth))/bgFadeWidth);
           const bgOpacity = bgFadeIn*(1-bgFadeOut);
           bgFadeEls[i].forEach(el => gsap.set(el, {opacity: bgOpacity}));
 
           if (i === 0) updateDawn(local);
+          if (i === 2) updateCoatis(local);
         });
       }
     }
