@@ -253,20 +253,21 @@ function buildScroll(){
           fadeEls[i].forEach(el => gsap.set(el, {opacity}));
           pinTargets[i].forEach(el => gsap.set(el, {x: pinX}));
 
-          // true crossfade between photos: unlike "local" above, rawLocal is left
-          // unclamped (negative before this scene arrives, >1 once it's long gone) so
-          // this scene's fade-IN window exactly overlaps the previous scene's fade-OUT
-          // window (and same on the other side) — they cross-dissolve into each other
-          // instead of both fading toward the dark page background one after another,
-          // which is what was reading as a black "break" at every cut. It also means
-          // scene 1 needs no special case to be fully visible at scroll position zero:
-          // its fade-in window sits entirely before scenePos can ever be negative, so
-          // it's already-complete (opacity 1) from the very first frame.
-          const bgFadeWidth = 0.3;
+          // true crossfade between photos, proportional to how much of the screen this
+          // scene actually occupies at this instant — not just how long it's had to
+          // fade. Each scene's own width is exactly one viewport, so while it's the
+          // current one its on-screen fraction is (1-|rawLocal|): 100% the moment it's
+          // perfectly framed (rawLocal=0), shrinking to 0% as it's fully handed off in
+          // either direction. Tying opacity to that same fraction means the two photos
+          // always sum to ~1 of combined coverage throughout the handoff — a fixed-
+          // duration fade (the previous approach) reaches full opacity long after the
+          // incoming photo already covers most of the screen, leaving it washed out
+          // toward the dark page background over a wide, visible area: the "black
+          // block" this was reported as. This also still needs no special case for
+          // scene 1 or the last scene — rawLocal is 0 exactly at each one's own edge of
+          // the scrollable range, so opacity is already 1 there.
           const rawLocal = scenePos - i;
-          const bgFadeIn = gsap.utils.clamp(0, 1, (rawLocal+bgFadeWidth)/bgFadeWidth);
-          const bgFadeOut = gsap.utils.clamp(0, 1, (rawLocal-(1-bgFadeWidth))/bgFadeWidth);
-          const bgOpacity = bgFadeIn*(1-bgFadeOut);
+          const bgOpacity = gsap.utils.clamp(0, 1, 1 - Math.abs(rawLocal));
           bgFadeEls[i].forEach(el => gsap.set(el, {opacity: bgOpacity}));
 
           if (i === 0) updateDawn(local);
