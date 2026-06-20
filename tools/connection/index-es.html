@@ -76,9 +76,10 @@ body{position:relative;}
   <div class="pin-wrap">
     <div class="track" id="track">
 
-      <!-- SCENE 1 — NIGHT BEACH / DAWN -->
+      <!-- SCENE 1 — NIGHT BEACH DISSOLVING INTO DAWN -->
       <section class="scene" id="s1">
-        <img class="scene-bg" src="img/bg-02-playa-amanecer.png" alt="" aria-hidden="true">
+        <img class="scene-bg" src="img/scene-01-dawn.png" alt="" aria-hidden="true">
+        <img class="scene-bg" id="s1-dawn-overlay" src="img/bg-02-playa-amanecer.png" alt="" aria-hidden="true">
         <svg class="scene-fx" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
           <rect id="s1-orange" width="1600" height="900" fill="#e8843a" opacity="0"/>
           <circle id="s1-sun" cx="1000" cy="450" r="0" fill="#f0a84a" opacity="0"/>
@@ -202,8 +203,12 @@ function updateCoatis(local){
   gsap.set(coatiEl, {x: sway});
 }
 
-// scene 1 — sun rises from the horizon, a warm orange wash builds in behind it
+// scene 1 — the night photo dissolves into the dawn photo as you scroll (the night
+// shot stays put underneath at full opacity; the dawn shot, layered on top, is what
+// actually fades 0->1), while the sun rises and a warm orange wash builds in over both
+const s1DawnOverlay = document.getElementById('s1-dawn-overlay');
 function updateDawn(local){
+  gsap.set(s1DawnOverlay, {opacity: local});
   gsap.set('#s1-orange', {opacity: local*0.2});
   // starts at mid-screen (y=450 of the 1600x900 viewBox), 1/8 of the width to the
   // right of center (cx=1000 instead of 800), and rises straight up from there
