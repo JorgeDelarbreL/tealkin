@@ -99,7 +99,7 @@ body{position:relative;}
           <rect width="1000" height="600" fill="url(#skyGrad)" opacity="0"/>
           <g id="s1-stars" fill="#f5f3ee"></g>
           <rect id="s1-orange" width="1000" height="600" fill="#e8843a" opacity="0"/>
-          <circle id="s1-sun" cx="500" cy="480" r="0" fill="#f0a84a" opacity="0"/>
+          <circle id="s1-sun" cx="500" cy="300" r="0" fill="#f0a84a" opacity="0"/>
           <polygon id="s1-sea-bg" points="0,440 1000,440 1000,600 0,600" fill="#0d2a36" opacity="0"/>
           <g id="s1-sea" stroke="#1a9b8c" stroke-width="2" fill="none" opacity="0">
             <path id="s1-sea-wave1"/>
@@ -832,7 +832,9 @@ function buildSceneAnimations(){
     // lingers as a flat color block clashing against scene 2
     const glowFade = 1 - gsap.utils.clamp(0,1,(p-0.18)/0.12);
     gsap.set('#s1-orange', {opacity: sunRise*0.25*glowFade});
-    gsap.set('#s1-sun', {cy: 480 - sunRise*290, r: sunRise*42, opacity: Math.min(sunRise*3,1)});
+    // the sun starts already at mid-screen (well above the sea band, which sits below
+    // y=440) instead of climbing up out of the water, so the disk never overlaps the sea
+    gsap.set('#s1-sun', {cy: 300 - sunRise*110, r: sunRise*42, opacity: Math.min(sunRise*3,1)});
 
     // stars fade out as the sun climbs, each twinkling on its own offset
     const starsFade = Math.max(0, 1 - sunRise*1.3);
