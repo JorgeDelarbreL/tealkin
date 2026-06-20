@@ -42,13 +42,36 @@ body{position:relative;}
    edge to stay pinned to the viewport while the scene slides under them (see pinTargets
    in the script below); clipping at the scene boundary would cut them off mid-transition */
 .scene{position:relative;width:100vw;height:100vh;flex:0 0 100vw;display:flex;align-items:center;justify-content:center;background:var(--dark);}
-.scene-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;}
+/* a static edge mask, not a scroll-driven opacity fade, softens the seam between two
+   adjacent scenes: each photo is full-strength everywhere except a narrow band at its
+   own left/right edge, which is exactly where it meets the neighboring scene's photo.
+   (A scroll-driven crossfade was tried first, but a scene's on-screen width shrinks
+   continuously across its entire active range, not just at the edges — tying opacity
+   to that meant every scene sat at or below 50% opacity for most of the time it was
+   being read, not just at the cut.) #s1-dawn-overlay overrides this back to opacity:0
+   below since it runs its own separate within-scene dissolve, unrelated to this mask. */
+.scene-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:1;-webkit-mask-image:linear-gradient(to right,transparent 0%,#000 6%,#000 94%,transparent 100%);mask-image:linear-gradient(to right,transparent 0%,#000 6%,#000 94%,transparent 100%);}
+/* scene 1 has nothing before it and scene 9 has nothing after — only mask the edge
+   that actually borders another scene, or the outer edge shows a sliver of the dark
+   page background instead of photo at the very start/end of the whole scroll */
+#s1 .scene-bg{-webkit-mask-image:linear-gradient(to right,#000 0%,#000 94%,transparent 100%);mask-image:linear-gradient(to right,#000 0%,#000 94%,transparent 100%);}
+#s9 .scene-bg{-webkit-mask-image:linear-gradient(to right,transparent 0%,#000 6%,#000 100%);mask-image:linear-gradient(to right,transparent 0%,#000 6%,#000 100%);}
+#s1-dawn-overlay{opacity:0;}
 .scene-fx{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;}
 /* centering's translateX(-50%) is applied via GSAP (xPercent) below, not here, so the
    coati idle-sway animation can layer an extra x offset on top without fighting this */
 .scene-animal{position:absolute;bottom:6%;left:50%;max-width:40%;max-height:55%;width:auto;height:auto;z-index:2;opacity:0;}
-/* dolphins: 1/4 of the viewport height higher and 1/3 smaller than the shared default above */
-#s2 .scene-animal{bottom:31%;max-width:26.7%;max-height:36.7%;}
+/* dolphins: 1/4 of the viewport height higher and 1/3 smaller than the shared default
+   above, and shifted left so they don't sit on top of the coatis sharing this scene */
+#s2-dolphins{bottom:31%;left:50%;max-width:24%;max-height:34%;}
+/* coatis: low on the sand, off to the right, away from the dolphins overhead */
+#s2-coatis{bottom:5%;left:75%;max-width:42%;max-height:24%;}
+/* sentados/reconectando are tight seated groups — shifted right so the walking figure
+   passing through at screen-left doesn't read as it joining the circle */
+#s3 .scene-animal, #s7 .scene-animal{left:72%;}
+
+.walker{position:absolute;left:0;bottom:8%;height:30vh;z-index:5;pointer-events:none;}
+.walker-img{position:absolute;left:0;bottom:0;height:100%;width:auto;opacity:0;}
 
 .scene-text{position:relative;z-index:10;max-width:min(820px,86vw);text-align:center;padding:0 24px;}
 .text-es{font-family:var(--font-display);font-style:italic;font-weight:400;font-size:clamp(24px,4vw,48px);line-height:1.35;color:var(--white);text-shadow:0 2px 22px rgba(0,0,0,.55),0 1px 4px rgba(0,0,0,.5);opacity:0;}
@@ -90,47 +113,51 @@ body{position:relative;}
         </div>
       </section>
 
-      <!-- SCENE 2 — DAWN BEACH, DOLPHINS -->
+      <!-- SCENE 2 — DAWN BEACH, DOLPHINS AND COATIS -->
       <section class="scene" id="s2">
         <img class="scene-bg" src="img/bg-02-playa-amanecer.png" alt="" aria-hidden="true">
-        <img class="scene-animal" src="img/animal-delfines.png" alt="" aria-hidden="true">
+        <img class="scene-animal fade-in" id="s2-dolphins" src="img/animal-delfines.png" alt="" aria-hidden="true">
+        <img class="scene-animal fade-in" id="s2-coatis" src="img/animal-coaties.png" alt="" aria-hidden="true">
         <div class="scene-text">
           <p class="text-es fade-in">Los vestigios de la comunicación están presentes desde el inicio.</p>
           <p class="text-en fade-in">The vestiges of communication have always been here.</p>
         </div>
       </section>
 
-      <!-- SCENE 3 — JUNGLE / SHORE, COATIS -->
+      <!-- SCENE 3 — JUNGLE / SHORE, TWO PEOPLE SEATED -->
       <section class="scene" id="s3">
         <img class="scene-bg" src="img/bg-03-selva.png" alt="" aria-hidden="true">
-        <img class="scene-animal" src="img/animal-coaties.png" alt="" aria-hidden="true">
+        <img class="scene-animal fade-in" src="img/sentados.png" alt="" aria-hidden="true">
         <div class="scene-text">
           <p class="text-es fade-in">En nuestra mirada siempre hay una intención: establecer conexión. La comunicación es una acción.</p>
           <p class="text-en fade-in">In our gaze there is always an intention: to connect. Communication is an act.</p>
         </div>
       </section>
 
-      <!-- SCENE 4 — JUNGLE GIVES WAY TO CONCRETE -->
+      <!-- SCENE 4 — JUNGLE GIVES WAY TO CONCRETE, ADVERTISING -->
       <section class="scene" id="s4">
         <img class="scene-bg" src="img/bg-04-selva-concreto.png" alt="" aria-hidden="true">
+        <img class="scene-animal fade-in" src="img/publicidad.png" alt="" aria-hidden="true">
         <div class="scene-text">
           <p class="text-es fade-in">Pero en algún momento, la acción se volvió transacción.</p>
           <p class="text-en fade-in">But somewhere along the way, the act became a transaction.</p>
         </div>
       </section>
 
-      <!-- SCENE 5 — CITY -->
+      <!-- SCENE 5 — CITY, EVERYONE ON THEIR PHONES -->
       <section class="scene" id="s5">
         <img class="scene-bg" src="img/bg-05-ciudad.png" alt="" aria-hidden="true">
+        <img class="scene-animal fade-in" src="img/viendo-celulares.png" alt="" aria-hidden="true">
         <div class="scene-text">
           <p class="text-es fade-in">Una aceleración que comenzó mucho antes.</p>
           <p class="text-en fade-in">An acceleration that started long before.</p>
         </div>
       </section>
 
-      <!-- SCENE 6 — THE MATRIX -->
+      <!-- SCENE 6 — THE MATRIX, AI SCREEN HEADS -->
       <section class="scene" id="s6">
         <img class="scene-bg" src="img/bg-06-matrix.png" alt="" aria-hidden="true">
+        <img class="scene-animal fade-in" src="img/pantallas-IA.png" alt="" aria-hidden="true">
         <div class="binary-layer" id="s6-binary"></div>
         <div class="scene-text">
           <p class="text-es fade-in">Cuando todos dicen lo mismo, nadie dice nada.</p>
@@ -138,9 +165,10 @@ body{position:relative;}
         </div>
       </section>
 
-      <!-- SCENE 7 — RUPTURE -->
+      <!-- SCENE 7 — RUPTURE, RECONNECTING -->
       <section class="scene" id="s7">
         <img class="scene-bg" src="img/bg-07-ruptura.png" alt="" aria-hidden="true">
+        <img class="scene-animal fade-in" src="img/reconectando.png" alt="" aria-hidden="true">
         <div class="scene-text">
           <p class="text-es fade-in">Pero en medio del caos, sigue existiendo la vida.</p>
           <p class="text-en fade-in">But in the middle of the chaos, life goes on.</p>
@@ -169,6 +197,16 @@ body{position:relative;}
         </div>
       </section>
 
+      <!-- PERSISTENT WALKING FIGURE — anchored near the left edge of the viewport
+           (not any one scene), walking through scenes 2-7, swapping to the back view
+           for scene 8 instead. Lives inside #track so it shares the same scroll-driven
+           stacking context as everything else, but its x position is computed every
+           frame to cancel the track's own slide, the same trick used for captions. -->
+      <div class="walker" id="walker">
+        <img class="walker-img" id="walker-perfil" src="img/perfil.png" alt="" aria-hidden="true">
+        <img class="walker-img" id="walker-espalda" src="img/espalda.png" alt="" aria-hidden="true">
+      </div>
+
     </div>
   </div>
 </div>
@@ -185,22 +223,40 @@ const fadeEls = scenes.map(s => [...s.querySelectorAll('.fade-in')]);
 // the same amount, in the opposite direction) to stay centered on screen instead of
 // drifting off with the photo underneath
 const pinTargets = scenes.map(s => [s.querySelector('.scene-text'), s.querySelector('.binary-layer')].filter(Boolean));
-// the photo and any animal overlay cross-dissolve through the dark page background at
-// each end of a scene's window, instead of cutting straight to the next photo, so the
-// seam between scenes reads as a soft fade rather than a hard graphic edge
-const bgFadeEls = scenes.map(s => [s.querySelector('.scene-bg'), s.querySelector('.scene-animal')].filter(Boolean));
 
 // .scene-animal is centered through GSAP's xPercent instead of a CSS transform, so the
 // coati sway below can add a plain x offset on top without overwriting the centering
 gsap.set('.scene-animal', {xPercent: -50});
 
-// scene 3 — the coatis sway gently side to side as you scroll past them, like they're
+// scene 2 — the coatis sway gently side to side as you scroll past them, like they're
 // mid-conversation, instead of standing perfectly still
-const coatiEl = document.querySelector('#s3 .scene-animal');
+const coatiEl = document.getElementById('s2-coatis');
 function updateCoatis(local){
   if (!coatiEl) return;
   const sway = Math.sin(local*Math.PI*6)*10;
   gsap.set(coatiEl, {x: sway});
+}
+
+// the persistent walking figure: anchored ~16% from the left edge of the viewport
+// (not tied to any single scene), it walks through scenes 2-7 as "perfil" and swaps to
+// the back view ("espalda") for scene 8 instead, crossfading between the two — the
+// same role the old abstract vector walker played, now with real illustrated art
+const walkerEl = document.getElementById('walker');
+const walkerPerfil = document.getElementById('walker-perfil');
+const walkerEspalda = document.getElementById('walker-espalda');
+function updateWalker(scenePos, vw){
+  const fadeW = 0.3;
+  const perfilIn = gsap.utils.clamp(0, 1, (scenePos-1+fadeW)/fadeW);
+  const perfilOut = gsap.utils.clamp(0, 1, (scenePos-(7-fadeW))/fadeW);
+  gsap.set(walkerPerfil, {opacity: perfilIn*(1-perfilOut)});
+
+  const espaldaIn = gsap.utils.clamp(0, 1, (scenePos-(7-fadeW))/fadeW);
+  const espaldaOut = gsap.utils.clamp(0, 1, (scenePos-(8-fadeW))/fadeW);
+  gsap.set(walkerEspalda, {opacity: espaldaIn*(1-espaldaOut)});
+
+  const leftFraction = 0.16;
+  const bob = -Math.abs(Math.sin(scenePos*Math.PI*4))*6;
+  gsap.set(walkerEl, {x: (scenePos+leftFraction)*vw, y: bob});
 }
 
 // scene 1 — the night photo dissolves into the dawn photo as you scroll (the night
@@ -253,26 +309,10 @@ function buildScroll(){
           fadeEls[i].forEach(el => gsap.set(el, {opacity}));
           pinTargets[i].forEach(el => gsap.set(el, {x: pinX}));
 
-          // true crossfade between photos, proportional to how much of the screen this
-          // scene actually occupies at this instant — not just how long it's had to
-          // fade. Each scene's own width is exactly one viewport, so while it's the
-          // current one its on-screen fraction is (1-|rawLocal|): 100% the moment it's
-          // perfectly framed (rawLocal=0), shrinking to 0% as it's fully handed off in
-          // either direction. Tying opacity to that same fraction means the two photos
-          // always sum to ~1 of combined coverage throughout the handoff — a fixed-
-          // duration fade (the previous approach) reaches full opacity long after the
-          // incoming photo already covers most of the screen, leaving it washed out
-          // toward the dark page background over a wide, visible area: the "black
-          // block" this was reported as. This also still needs no special case for
-          // scene 1 or the last scene — rawLocal is 0 exactly at each one's own edge of
-          // the scrollable range, so opacity is already 1 there.
-          const rawLocal = scenePos - i;
-          const bgOpacity = gsap.utils.clamp(0, 1, 1 - Math.abs(rawLocal));
-          bgFadeEls[i].forEach(el => gsap.set(el, {opacity: bgOpacity}));
-
           if (i === 0) updateDawn(local);
-          if (i === 2) updateCoatis(local);
+          if (i === 1) updateCoatis(local);
         });
+        updateWalker(scenePos, vw);
       }
     }
   });
