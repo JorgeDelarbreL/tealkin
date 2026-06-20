@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connection — TealKin</title>
+<meta name="description" content="An interactive scrollytelling journey through the history of human connection — from the first gaze to the age of AI, and back to authentic words.">
+<link rel="canonical" href="https://tealkin.com/tools/connection/index.html">
+<link rel="alternate" hreflang="en" href="https://tealkin.com/tools/connection/index.html">
+<link rel="alternate" hreflang="es" href="https://tealkin.com/tools/connection/index-es.html">
+<link rel="alternate" hreflang="x-default" href="https://tealkin.com/tools/connection/index.html">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4Y4JT3R4WK"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4Y4JT3R4WK');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<style>
+:root{
+  --teal:#1a9b8c;
+  --teal-light:#2dbfad;
+  --orange:#e8843a;
+  --dark:#0a1628;
+  --white:#f5f3ee;
+  --font-display:'Cormorant Garamond',Georgia,serif;
+  --font-body:'DM Sans',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;background:var(--dark);overflow-x:hidden;font-family:var(--font-body);}
+body{position:relative;}
+::selection{background:var(--teal);color:var(--dark);}
+
+.back-link{position:fixed;top:22px;left:28px;z-index:200;font-family:var(--font-display);font-size:16px;letter-spacing:.04em;color:var(--white);text-decoration:none;opacity:.85;transition:opacity .3s;mix-blend-mode:difference;}
+.back-link:hover{opacity:1;}
+
+.scroll-spacer{position:relative;width:100%;}
+
+#bg-layer{position:fixed;inset:0;z-index:0;background:var(--dark);transition:none;}
+
+.pin-wrap{position:relative;width:100%;height:100vh;overflow:hidden;z-index:1;}
+.track{position:absolute;top:0;left:0;height:100vh;display:flex;will-change:transform;}
+.scene{position:relative;width:calc(var(--w,1)*100vw);height:100vh;flex:0 0 calc(var(--w,1)*100vw);display:flex;align-items:center;justify-content:center;overflow:visible;}
+.scene svg{clip-path:inset(0);}
+.scene-inner{position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 6vw;}
+
+.scene svg{position:absolute;inset:0;width:100%;height:100%;z-index:0;}
+
+.scene-inner{z-index:10;}
+
+.caption{position:relative;z-index:10;max-width:min(760px,88vw);text-align:center;font-family:var(--font-display);font-weight:300;font-style:italic;font-size:clamp(20px,3.4vw,40px);line-height:1.4;color:var(--white);text-shadow:0 2px 24px rgba(0,0,0,.4);padding:14px 28px;background:rgba(5,8,14,.4);border-radius:14px;backdrop-filter:blur(3px);}
+.caption.caption-light{color:#241a10;text-shadow:none;background:rgba(243,227,196,.55);}
+
+.scene-tag{position:absolute;top:34%;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(245,243,238,.55);z-index:10;text-shadow:0 1px 6px rgba(0,0,0,.5);background:rgba(5,8,14,.35);padding:4px 12px;border-radius:8px;}
+.scene-tag.scene-tag-light{color:rgba(36,26,16,.65);text-shadow:none;background:rgba(243,227,196,.5);}
+
+/* bubble */
+.sbubble{position:absolute;font-family:var(--font-body);font-size:13px;font-weight:500;color:var(--dark);background:var(--white);border-radius:18px;padding:6px 14px;opacity:0;white-space:nowrap;}
+.sbubble::after{content:'';position:absolute;left:50%;bottom:-6px;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:7px solid var(--white);transform:translateX(-50%);}
+
+/* matrix scene text columns */
+.matrix-layer{position:absolute;left:0;right:0;top:14%;display:flex;align-items:center;justify-content:flex-start;flex-direction:column;gap:14px;z-index:2;}
+.bin-row{font-family:'DM Sans',monospace;font-size:clamp(11px,1.6vw,18px);letter-spacing:.08em;color:rgba(26,155,140,.85);white-space:nowrap;}
+
+/* closing scene */
+.brand-mark{font-family:var(--font-body);font-weight:500;font-size:22px;letter-spacing:.06em;color:var(--dark);opacity:0;}
+.brand-mark span{color:var(--teal);}
+.close-sub{font-family:var(--font-body);font-weight:400;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:rgba(10,22,40,.6);margin-top:10px;opacity:0;}
+
+@media (max-width:760px){
+  .caption{font-size:20px;}
+  .scene-tag{font-size:9px;}
+}
+</style>
+</head>
+<body>
+
+<a href="/lab.html" class="back-link">&larr; TealKin</a>
+
+<div id="bg-layer"></div>
+
+<div class="scroll-spacer" id="spacer">
+  <div class="pin-wrap">
+    <div class="track" id="track">
+
+      <!-- SCENE 1 — DAWN -->
+      <section class="scene" id="s1">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMax slice">
+          <defs>
+            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop id="s1-sky-stop1" offset="0%" stop-color="#0a0f28"/>
+              <stop id="s1-sky-stop2" offset="100%" stop-color="#1c1442"/>
+            </linearGradient>
+          </defs>
+          <rect width="1000" height="600" fill="url(#skyGrad)"/>
+          <rect id="s1-orange" width="1000" height="600" fill="#e8843a" opacity="0"/>
+          <circle id="s1-sun" cx="500" cy="480" r="0" fill="#f5f3ee" opacity="0"/>
+          <polygon id="s1-sea-bg" points="0,440 1000,440 1000,600 0,600" fill="#0d2a36"/>
+          <g id="s1-sea" stroke="#1a9b8c" stroke-width="2" fill="none" opacity="0.5">
+            <path id="s1-sea-wave1"/>
+            <path id="s1-sea-wave2"/>
+          </g>
+          <polygon id="s1-sand-bg" points="0,520 1000,520 1000,600 0,600" fill="#3a2f22"/>
+          <g id="s1-sand-texture" stroke="#241a10" stroke-width="1.5" fill="none" opacity="0.5">
+            <path d="M-20 540 Q60 534 140 540 T300 540 T460 540 T620 540 T780 540 T940 540 T1100 540"/>
+            <path d="M-20 566 Q60 560 140 566 T300 566 T460 566 T620 566 T780 566 T940 566 T1100 566"/>
+          </g>
+          <g id="s1-sand-dots" fill="#8a6a42" opacity="0"></g>
+        </svg>
+        <div class="scene-inner">
+          <p class="caption" id="s1-caption" style="opacity:0;">Before the first word, there was already connection.</p>
+        </div>
+        <span class="scene-tag" id="s1-tag" style="opacity:0;">01 — Dawn</span>
+      </section>
+
+      <!-- SCENE 2 — ALONG THE SHORE: DOLPHINS, HERONS, THEN COATIS, ALL ON THE SAND -->
+      <section class="scene" id="s2" style="--w:4;">
+        <svg viewBox="0 0 4000 600" preserveAspectRatio="xMidYMax slice">
+          <rect width="4000" height="600" fill="#f3e3c4"/>
+          <polygon id="s2-sea-bg" points="0,440 4000,440 4000,600 0,600" fill="#1a9b8c"/>
+          <g id="s2-sea-waves" stroke="#3aa89a" stroke-width="2" fill="none" opacity="0.5">
+            <path id="s2-sea-wave1"/>
+            <path id="s2-sea-wave2"/>
+          </g>
+          <polygon points="0,520 4000,520 4000,600 0,600" fill="#d9c08c"/>
+          <g stroke="#241a10" stroke-width="1.5" fill="none" opacity="0.5">
+            <path id="s2-sand-wave1"/>
+            <path id="s2-sand-wave2"/>
+          </g>
+          <g id="s2-sand-dots" fill="#8a6a42" opacity="0.5"></g>
+
+          <!-- two dolphins surface head-on, leaning in toward each other so their
+               rounded snouts nearly meet at the bottom and their melons fan outward
+               at the top, forming a V — flat geometric shapes, no gradients/shadows -->
+          <g id="s2-dolphins" opacity="0">
+            <ellipse id="s2-dolphin-ripple1" cx="736" cy="441" rx="92" ry="16" fill="#1a9b8c" opacity="0.35"/>
+            <ellipse id="s2-dolphin-ripple2" cx="736" cy="441" rx="64" ry="11" fill="#3aa89a" opacity="0.4"/>
+            <g transform="translate(706,444) rotate(-25)">
+              <path d="M-28 -45 Q-30 -62 -14 -70 Q0 -76 14 -70 Q30 -62 28 -45 Q26 -25 14 -8 Q12 -6 8 0 Q4 4 0 4 Q-4 4 -8 0 Q-12 -6 -14 -8 Q-26 -25 -28 -45 Z" fill="#6b8cae"/>
+              <path d="M2 -10 Q14 -14 18 -28 Q20 -36 14 -42 Q8 -32 4 -20 Q1 -14 2 -10 Z" fill="#c8dce8"/>
+              <circle cx="12" cy="-26" r="2.6" fill="#1a242a"/>
+            </g>
+            <g transform="translate(766,444) scale(-1,1) rotate(-25)">
+              <path d="M-28 -45 Q-30 -62 -14 -70 Q0 -76 14 -70 Q30 -62 28 -45 Q26 -25 14 -8 Q12 -6 8 0 Q4 4 0 4 Q-4 4 -8 0 Q-12 -6 -14 -8 Q-26 -25 -28 -45 Z" fill="#6b8cae"/>
+              <path d="M2 -10 Q14 -14 18 -28 Q20 -36 14 -42 Q8 -32 4 -20 Q1 -14 2 -10 Z" fill="#c8dce8"/>
+              <circle cx="12" cy="-26" r="2.6" fill="#1a242a"/>
+            </g>
+            <g id="s2-bubbles1" fill="#f5f3ee">
+              <circle cx="684" cy="406" r="3"/><circle cx="678" cy="392" r="4.5"/><circle cx="672" cy="376" r="6"/>
+            </g>
+            <g id="s2-bubbles2" fill="#f5f3ee">
+              <circle cx="788" cy="406" r="3"/><circle cx="794" cy="392" r="4.5"/><circle cx="800" cy="376" r="6"/>
+            </g>
+          </g>
+
+          <!-- herons standing right on the sand -->
+          <g id="s2-rock-group" opacity="0" transform="translate(1500,0)">
+            <g transform="translate(-28,516)">
+              <ellipse cx="0" cy="0" rx="11" ry="20" fill="#241a10"/>
+              <path d="M-2 -16 Q-13 -34 -3 -49 Q4 -59 15 -57" stroke="#241a10" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <path d="M15 -57 L29 -61 L16 -52 Z" fill="#241a10"/>
+              <circle cx="11" cy="-55" r="1.3" fill="#f5f3ee"/>
+              <path d="M-5 18 L-7 34 M3 18 L5 34" stroke="#241a10" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M-13 34 L-2 34 M2 34 L11 34" stroke="#241a10" stroke-width="2" stroke-linecap="round"/>
+            </g>
+            <g transform="translate(28,520) scale(-0.86,0.86)">
+              <ellipse cx="0" cy="0" rx="11" ry="20" fill="#3a2a1c"/>
+              <path d="M-2 -16 Q-13 -34 -3 -49 Q4 -59 15 -57" stroke="#3a2a1c" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <path d="M15 -57 L29 -61 L16 -52 Z" fill="#3a2a1c"/>
+              <circle cx="11" cy="-55" r="1.3" fill="#f5f3ee"/>
+              <path d="M-5 18 L-7 34 M3 18 L5 34" stroke="#3a2a1c" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M-13 34 L-2 34 M2 34 L11 34" stroke="#3a2a1c" stroke-width="2" stroke-linecap="round"/>
+            </g>
+            <g id="s2-notes" opacity="0" fill="#e8843a" font-size="28" font-family="Georgia, serif">
+              <text x="-10" y="442">♪</text>
+              <text x="12" y="454">♫</text>
+            </g>
+          </g>
+
+          <!-- a pair of coatis stand on the sand facing each other, mid-conversation —
+               warm brown bodies, masked faces, elongated pointed snouts with mouths
+               held open as if mid-word, long ringed tails trailing out behind them -->
+          <g id="s2-coati-a" opacity="0" transform="translate(2350,560)">
+            <g transform="translate(-46,0)">
+              <path d="M-20 -33 Q-36 -29 -42 -17 Q-46 -7 -40 1 Q-36 6 -28 6" stroke="#5a2d0c" stroke-width="10" fill="none" stroke-linecap="round"/>
+              <g stroke="#a0612a" stroke-width="10" stroke-linecap="round">
+                <line x1="-26" y1="-30" x2="-29" y2="-28"/>
+                <line x1="-38" y1="-21" x2="-40" y2="-18"/>
+                <line x1="-44" y1="-11" x2="-45" y2="-8"/>
+                <line x1="-39" y1="-1" x2="-36" y2="2"/>
+              </g>
+              <ellipse cx="-2" cy="-31" rx="20" ry="15" fill="#8b4e1f"/>
+              <path d="M-20 -39 Q-10 -49 6 -47 Q18 -45 20 -35 Q12 -41 -2 -42 Q-12 -42 -20 -39 Z" fill="#6b3510"/>
+              <path d="M-14 -21 Q-6 -25 4 -21 Q8 -17 2 -13 Q-8 -9 -16 -15 Q-18 -19 -14 -21 Z" fill="#c47a3a"/>
+              <path d="M-10 -17 L-12 -3 Q-12 0 -8 0 L-5 0 Q-2 0 -2 -3 L-3 -17 Z" fill="#6b3510"/>
+              <path d="M4 -17 L3 -3 Q3 0 7 0 L10 0 Q13 0 13 -3 L11 -17 Z" fill="#6b3510"/>
+              <path d="M8 -47 Q16 -53 26 -49 Q36 -46 46 -38 Q52 -33 50 -29 Q48 -26 42 -28 Q32 -32 22 -38 Q12 -42 6 -39 Q4 -44 8 -47 Z" fill="#8b4e1f"/>
+              <path d="M14 -47 Q20 -51 26 -48 Q24 -43 18 -42 Q14 -43 14 -47 Z" fill="#d4956a"/>
+              <circle cx="22" cy="-45" r="1.8" fill="#2a1608"/>
+              <circle cx="22.6" cy="-45.6" r="0.6" fill="#f5f3ee"/>
+              <path d="M38 -33 Q43 -30 46 -27" stroke="#3a1f0a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            </g>
+            <g transform="translate(46,0) scale(-1,1)">
+              <path d="M-20 -33 Q-36 -29 -42 -17 Q-46 -7 -40 1 Q-36 6 -28 6" stroke="#5a2d0c" stroke-width="10" fill="none" stroke-linecap="round"/>
+              <g stroke="#a0612a" stroke-width="10" stroke-linecap="round">
+                <line x1="-26" y1="-30" x2="-29" y2="-28"/>
+                <line x1="-38" y1="-21" x2="-40" y2="-18"/>
+                <line x1="-44" y1="-11" x2="-45" y2="-8"/>
+                <line x1="-39" y1="-1" x2="-36" y2="2"/>
+              </g>
+              <ellipse cx="-2" cy="-31" rx="20" ry="15" fill="#8b4e1f"/>
+              <path d="M-20 -39 Q-10 -49 6 -47 Q18 -45 20 -35 Q12 -41 -2 -42 Q-12 -42 -20 -39 Z" fill="#6b3510"/>
+              <path d="M-14 -21 Q-6 -25 4 -21 Q8 -17 2 -13 Q-8 -9 -16 -15 Q-18 -19 -14 -21 Z" fill="#c47a3a"/>
+              <path d="M-10 -17 L-12 -3 Q-12 0 -8 0 L-5 0 Q-2 0 -2 -3 L-3 -17 Z" fill="#6b3510"/>
+              <path d="M4 -17 L3 -3 Q3 0 7 0 L10 0 Q13 0 13 -3 L11 -17 Z" fill="#6b3510"/>
+              <path d="M8 -47 Q16 -53 26 -49 Q36 -46 46 -38 Q52 -33 50 -29 Q48 -26 42 -28 Q32 -32 22 -38 Q12 -42 6 -39 Q4 -44 8 -47 Z" fill="#8b4e1f"/>
+              <path d="M14 -47 Q20 -51 26 -48 Q24 -43 18 -42 Q14 -43 14 -47 Z" fill="#d4956a"/>
+              <circle cx="22" cy="-45" r="1.8" fill="#2a1608"/>
+              <circle cx="22.6" cy="-45.6" r="0.6" fill="#f5f3ee"/>
+              <path d="M38 -33 Q43 -30 46 -27" stroke="#3a1f0a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            </g>
+            <g id="s2-coati-chat" opacity="0" fill="#4a3324">
+              <circle cx="-8" cy="-40" r="1.8"/>
+              <circle cx="0" cy="-45" r="1.8"/>
+              <circle cx="8" cy="-40" r="1.8"/>
+            </g>
+          </g>
+
+          <!-- the sea sinks into a hazy distance and the rock face rises on the
+               final stretch of shore; the formation itself stays in warm daylight
+               stone tones — only the arch's interior is dark — so the screen does
+               not read as "gone dark" until the fog wash actually arrives -->
+          <rect id="s2-cave-fog" x="3000" y="0" width="1000" height="600" fill="#1a1714" opacity="0"/>
+          <g id="s2-cave-mouth" opacity="0">
+            <path d="M3460 600 L3490 330 L3600 260 L3720 240 L3850 270 L3940 360 L3960 600 Z" fill="#8b7355"/>
+            <path d="M3460 600 L3490 330 L3560 290 L3560 600 Z" fill="#7a6a55"/>
+            <path d="M3720 240 L3850 270 L3820 380 L3700 400 Z" fill="#7a6a55"/>
+            <path d="M3850 270 L3940 360 L3900 460 L3820 380 Z" fill="#5a4a35"/>
+            <path d="M3600 260 L3720 240 L3700 400 L3600 420 Z" fill="#5a4a35"/>
+            <path d="M3900 460 L3960 600 L3870 600 L3820 380 Z" fill="#8b7355"/>
+            <path d="M3590 420 Q3600 320 3700 290 Q3800 300 3830 400 Q3840 470 3800 540 L3800 600 L3640 600 L3640 540 Q3580 480 3590 420 Z" fill="#1a1a1a"/>
+            <path d="M3636 420 L3656 466 L3616 466 Z" fill="#5a4a35"/>
+            <path d="M3690 396 L3706 446 L3674 446 Z" fill="#5a4a35"/>
+            <path d="M3750 402 L3766 450 L3734 450 Z" fill="#5a4a35"/>
+            <ellipse cx="3560" cy="592" rx="22" ry="10" fill="#7a6a55"/>
+            <ellipse cx="3610" cy="598" rx="16" ry="8" fill="#8b7355"/>
+            <ellipse cx="3850" cy="596" rx="20" ry="9" fill="#5a4a35"/>
+            <ellipse cx="3900" cy="600" rx="26" ry="10" fill="#7a6a55"/>
+          </g>
+        </svg>
+        <div class="scene-inner">
+          <p class="caption caption-light" id="s2-caption" style="opacity:0;">The vestiges of communication have always been here.</p>
+        </div>
+        <span class="scene-tag scene-tag-light" id="s2-tag" style="top:24%;opacity:0;">02 — Along the shore</span>
+      </section>
+
+      <!-- SCENE 3 — THE CENOTE: the cave mouth swallows the horizon, then opens onto a
+           glowing underground pool, alive with its own quiet bioluminescence -->
+      <section class="scene" id="s3" style="--w:2;">
+        <svg viewBox="0 0 2000 600" preserveAspectRatio="xMidYMax slice">
+          <rect id="s3-outer" width="2000" height="600" fill="#1a1714"/>
+          <!-- cave walls close in from both sides as we walk deeper -->
+          <path id="s3-wall-l" d="M-10 600 L-10 -10 L120 -10 Q40 300 120 610 Z" fill="#0f0d0b"/>
+          <path id="s3-wall-r" d="M2010 600 L2010 -10 L1880 -10 Q1960 300 1880 610 Z" fill="#0f0d0b"/>
+          <!-- the cavern interior brightens in once we're fully inside -->
+          <rect id="s3-cavern" width="2000" height="600" fill="#2a2c2e" opacity="0"/>
+          <g id="s3-stalactites" fill="#1a1714"></g>
+          <!-- the cenote pool: a glowing teal floor, the cave's own quiet life -->
+          <polygon id="s3-pool" points="0,560 2000,560 2000,600 0,600" fill="#0a3a3a" opacity="0"/>
+          <ellipse id="s3-pool-glow" cx="1000" cy="580" rx="900" ry="40" fill="#2dbfad" opacity="0"/>
+          <g id="s3-glints" fill="#7fe3d4" opacity="0"></g>
+
+          <!-- a wooden plank walkway carries the figure over the pool, instead of it
+               appearing to float on the water -->
+          <rect id="s3-bridge" x="-20" y="538" width="2040" height="20" fill="#5a4530" opacity="0"/>
+          <rect id="s3-bridge-edge" x="-20" y="536" width="2040" height="3" fill="#6e5640" opacity="0"/>
+          <g id="s3-planks" stroke="#3a2c1c" stroke-width="2" opacity="0"></g>
+
+          <!-- deeper in, four figures sit cross-legged in a circle around a stone-ringed
+               fire, trading stories; a sinuous teal line — language itself — rises from
+               each speaker's mouth in turn -->
+          <g id="s3-campfire" opacity="0">
+            <g class="s3-gathering" transform="translate(1700,478) scale(1.45)">
+              <ellipse cx="0" cy="-4" rx="50" ry="14" fill="#f0a84a" opacity="0.15"/>
+              <g id="s3-stones" fill="#6a6a7a">
+                <ellipse cx="0" cy="-22" rx="5" ry="4"/>
+                <ellipse cx="19" cy="-16" rx="5" ry="4"/>
+                <ellipse cx="30" cy="-2" rx="5" ry="4"/>
+                <ellipse cx="19" cy="12" rx="5" ry="4"/>
+                <ellipse cx="0" cy="18" rx="5" ry="4"/>
+                <ellipse cx="-19" cy="12" rx="5" ry="4"/>
+                <ellipse cx="-30" cy="-2" rx="5" ry="4"/>
+                <ellipse cx="-19" cy="-16" rx="5" ry="4"/>
+              </g>
+              <g id="s3-flame-outer">
+                <polygon points="-10,-2 10,-2 0,-34" fill="#e06030"/>
+              </g>
+              <g id="s3-flame-mid">
+                <polygon points="-9,-3 3,-3 -3,-28" fill="#f0a84a"/>
+                <polygon points="-3,-3 9,-3 3,-26" fill="#f0a84a"/>
+              </g>
+              <g id="s3-flame-inner">
+                <polygon points="-5,-4 5,-4 0,-20" fill="#f5d06a"/>
+              </g>
+
+              <g id="s3-person-1" transform="translate(0,16) scale(0.95)">
+                <ellipse cx="-12" cy="-10" rx="4" ry="4" fill="#c47a3a"/>
+                <ellipse cx="12" cy="-10" rx="4" ry="4" fill="#c47a3a"/>
+                <path d="M-15 -4 Q0 7 15 -4 L15 2 Q0 12 -15 2 Z" fill="#6b5a42"/>
+                <rect x="-9" y="-22" width="18" height="18" rx="3" fill="#6b5a42"/>
+                <circle cx="0" cy="-30" r="8" fill="#c47a3a"/>
+                <g id="s3-vir-1" opacity="0" fill="none" stroke="#3aada0" stroke-width="4" stroke-linecap="round" stroke-opacity="0.8">
+                  <path d="M6 -33 Q16 -36 14 -46 Q13 -52 20 -56"/>
+                </g>
+              </g>
+              <g id="s3-person-2" transform="translate(-62,-6) scale(0.85)">
+                <ellipse cx="-12" cy="-10" rx="4" ry="4" fill="#8b5a2b"/>
+                <ellipse cx="12" cy="-10" rx="4" ry="4" fill="#8b5a2b"/>
+                <path d="M-15 -4 Q0 7 15 -4 L15 2 Q0 12 -15 2 Z" fill="#7a6a52"/>
+                <rect x="-9" y="-22" width="18" height="18" rx="3" fill="#7a6a52"/>
+                <circle cx="0" cy="-30" r="8" fill="#8b5a2b"/>
+                <g id="s3-vir-2" opacity="0" fill="none" stroke="#3aada0" stroke-width="4" stroke-linecap="round" stroke-opacity="0.8">
+                  <path d="M6 -33 Q16 -36 14 -46 Q13 -52 20 -56"/>
+                </g>
+              </g>
+              <g id="s3-person-3" transform="translate(60,-8) scale(0.82)">
+                <ellipse cx="-12" cy="-10" rx="4" ry="4" fill="#d4956a"/>
+                <ellipse cx="12" cy="-10" rx="4" ry="4" fill="#d4956a"/>
+                <path d="M-15 -4 Q0 7 15 -4 L15 2 Q0 12 -15 2 Z" fill="#5a4a36"/>
+                <rect x="-9" y="-22" width="18" height="18" rx="3" fill="#5a4a36"/>
+                <circle cx="0" cy="-30" r="8" fill="#d4956a"/>
+                <g id="s3-vir-3" opacity="0" fill="none" stroke="#3aada0" stroke-width="4" stroke-linecap="round" stroke-opacity="0.8">
+                  <path d="M-6 -33 Q-16 -36 -14 -46 Q-13 -52 -20 -56"/>
+                </g>
+              </g>
+              <g id="s3-person-4" transform="translate(-4,-46) scale(0.55)">
+                <ellipse cx="-12" cy="-10" rx="4" ry="4" fill="#6b3d1e"/>
+                <ellipse cx="12" cy="-10" rx="4" ry="4" fill="#6b3d1e"/>
+                <path d="M-15 -4 Q0 7 15 -4 L15 2 Q0 12 -15 2 Z" fill="#8a7558"/>
+                <rect x="-9" y="-22" width="18" height="18" rx="3" fill="#8a7558"/>
+                <circle cx="0" cy="-30" r="8" fill="#6b3d1e"/>
+                <g id="s3-vir-4" opacity="0" fill="none" stroke="#3aada0" stroke-width="4" stroke-linecap="round" stroke-opacity="0.8">
+                  <path d="M-6 -33 Q-16 -36 -14 -46 Q-13 -52 -20 -56"/>
+                </g>
+              </g>
+            </g>
+
+            <g class="s3-gathering" transform="translate(1840,205) scale(0.62)">
+              <ellipse cx="0" cy="-4" rx="50" ry="14" fill="#f0a84a" opacity="0.15"/>
+              <g fill="#6a6a7a">
+                <ellipse cx="0" cy="-22" rx="5" ry="4"/>
+                <ellipse cx="19" cy="-16" rx="5" ry="4"/>
+                <ellipse cx="30" cy="-2" rx="5" ry="4"/>
+                <ellipse cx="19" cy="12" rx="5" ry="4"/>
+                <ellipse cx="0" cy="18" rx="5" ry="4"/>
+                <ellipse cx="-19" cy="12" rx="5" ry="4"/>
+                <ellipse cx="-30" cy="-2" rx="5" ry="4"/>
+                <ellipse cx="-19" cy="-16" rx="5" ry="4"/>
+              </g>
+              <g id="s3-flame-outer">
+                <polygon points="-10,-2 10,-2 0,-34" fill="#e06030"/>
+              </g>
+              <g id="s3-flame-mid">
+                <polygon points="-9,-3 3,-3 -3,-28" fill="#f0a84a"/>
+                <polygon points="-3,-3 9,-3 3,-26" fill="#f0a84a"/>
+              </g>
+              <g id="s3-flame-inner">
+                <polygon points="-5,-4 5,-4 0,-20" fill="#f5d06a"/>
+              </g>
+
+              <g id="s3-person-1" transform="translate(0,16) scale(0.95)">
+                <ellipse cx="-12" cy="-10" rx="4" ry="4" fill="#c47a3a"/>
+                <ellipse cx="12" cy="-10" rx="4" ry="4" fill="#c47a3a"/>
+                <path d="M-15 -4 Q0 7 15 -4 L15 2 Q0 12 -15 2 Z" fill="#6b5a42"/>
+                <rect x="-9" y="-22" width="18" height="18" rx="3" fill="#6b5a42"/>
+                <circle cx="0" cy="-30" r="8" fill="#c47a3a"/>
+                <g id="s3-vir-1" opacity="0" fill="none" stroke="#3aada0" stroke-width="4" stroke-linecap="round" stroke-opacity="0.8">
+                  <path d="M6 -33 Q16 -36 14 -46 Q13 -52 20 -56"/>
+                </g>
+              </g>
+              <g id="s3-person-2" transform="translate(-62,-6) scale(0.85)">
+                <ellipse cx="-12" cy="-10" rx="4" ry="4" fill="#8b5a2b"/>
+                <ellipse cx="12" cy="-10" rx="4" ry="4" fill="#8b5a2b"/>
+                <path d="M-15 -4 Q0 7 15 -4 L15 2 Q0 12 -15 2 Z" fill="#7a6a52"/>
+                <rect x="-9" y="-22" width="18" height="18" rx="3" fill="#7a6a52"/>
+                <circle cx="0" cy="-30" r="8" fill="#8b5a2b"/>
+                <g id="s3-vir-2" opacity="0" fill="none" stroke="#3aada0" stroke-width="4" stroke-linecap="round" stroke-opacity="0.8">
+                  <path d="M6 -33 Q16 -36 14 -46 Q13 -52 20 -56"/>
+                </g>
+              </g>
+              <g id="s3-person-3" transform="translate(60,-8) scale(0.82)">
+                <ellipse cx="-12" cy="-10" rx="4" ry="4" fill="#d4956a"/>
+                <ellipse cx="12" cy="-10" rx="4" ry="4" fill="#d4956a"/>
+                <path d="M-15 -4 Q0 7 15 -4 L15 2 Q0 12 -15 2 Z" fill="#5a4a36"/>
+                <rect x="-9" y="-22" width="18" height="18" rx="3" fill="#5a4a36"/>
+                <circle cx="0" cy="-30" r="8" fill="#d4956a"/>
+                <g id="s3-vir-3" opacity="0" fill="none" stroke="#3aada0" stroke-width="4" stroke-linecap="round" stroke-opacity="0.8">
+                  <path d="M-6 -33 Q-16 -36 -14 -46 Q-13 -52 -20 -56"/>
+                </g>
+              </g>
+              <g id="s3-person-4" transform="translate(-4,-46) scale(0.55)">
+                <ellipse cx="-12" cy="-10" rx="4" ry="4" fill="#6b3d1e"/>
+                <ellipse cx="12" cy="-10" rx="4" ry="4" fill="#6b3d1e"/>
+                <path d="M-15 -4 Q0 7 15 -4 L15 2 Q0 12 -15 2 Z" fill="#8a7558"/>
+                <rect x="-9" y="-22" width="18" height="18" rx="3" fill="#8a7558"/>
+                <circle cx="0" cy="-30" r="8" fill="#6b3d1e"/>
+                <g id="s3-vir-4" opacity="0" fill="none" stroke="#3aada0" stroke-width="4" stroke-linecap="round" stroke-opacity="0.8">
+                  <path d="M-6 -33 Q-16 -36 -14 -46 Q-13 -52 -20 -56"/>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+        <div class="scene-inner">
+          <p class="caption" id="s3-caption" style="opacity:0;">The shore gives way to stone, and a quiet, glowing dark.</p>
+        </div>
+        <span class="scene-tag" id="s3-tag" style="top:24%;opacity:0;">03 — The cenote</span>
+      </section>
+
+      <!-- SCENE 4 — THE DRIFT -->
+      <section class="scene" id="s4">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <g id="s4-roots" stroke="#3f6b62" stroke-width="3" fill="none">
+            <path d="M0 540 L60 460 L20 400 M150 540 L190 470"/>
+          </g>
+          <g id="s4-blocks" fill="#445" opacity="0">
+            <rect x="500" y="380" width="90" height="100"/>
+            <rect x="610" y="340" width="70" height="140"/>
+            <rect x="700" y="400" width="100" height="80"/>
+          </g>
+          <g id="s4-people" fill="#f5f3ee" opacity="0">
+            <g transform="translate(540,400)">
+              <circle cx="0" cy="-12" r="9"/>
+              <path d="M -8 0 Q 10 10 18 22 L 4 22 L -10 8 Z"/>
+              <rect x="14" y="14" width="20" height="14" fill="#1a9b8c"/>
+            </g>
+            <g transform="translate(660,370)">
+              <circle cx="0" cy="-12" r="9"/>
+              <path d="M -8 0 Q 10 10 18 22 L 4 22 L -10 8 Z"/>
+              <rect x="14" y="14" width="20" height="14" fill="#1a9b8c"/>
+            </g>
+          </g>
+        </svg>
+        <div class="scene-inner">
+          <p class="caption">But somewhere along the way, the act became a transaction.</p>
+        </div>
+        <span class="scene-tag">04 — The drift</span>
+      </section>
+
+      <!-- SCENE 4B — TECH IRRUPTION -->
+      <section class="scene" id="s4b">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <line x1="100" y1="500" x2="900" y2="500" stroke="#2dbfad" stroke-width="2" opacity="0.4"/>
+          <g id="s4b-telegraph" opacity="0" transform="translate(220,420)">
+            <rect x="-50" y="0" width="100" height="60" fill="none" stroke="#e8843a" stroke-width="3"/>
+            <line x1="0" y1="0" x2="30" y2="-40" stroke="#e8843a" stroke-width="4" stroke-linecap="round"/>
+          </g>
+          <g id="s4b-tv" opacity="0" transform="translate(500,400)">
+            <rect x="-60" y="0" width="120" height="80" fill="none" stroke="#2dbfad" stroke-width="3"/>
+            <line x1="-20" y1="0" x2="-40" y2="-40" stroke="#2dbfad" stroke-width="3"/>
+            <line x1="20" y1="0" x2="40" y2="-40" stroke="#2dbfad" stroke-width="3"/>
+          </g>
+          <g id="s4b-phone" opacity="0" transform="translate(780,380)">
+            <rect x="-25" y="0" width="50" height="100" rx="8" fill="none" stroke="#f5f3ee" stroke-width="3"/>
+            <line x1="-25" y1="80" x2="25" y2="80" stroke="#f5f3ee" stroke-width="2"/>
+          </g>
+        </svg>
+        <div class="scene-inner">
+          <p class="caption">An acceleration that started long before.</p>
+        </div>
+        <span class="scene-tag">04B — Technological irruption</span>
+      </section>
+
+      <!-- SCENE 4C — AI EMERGES -->
+      <section class="scene" id="s4c">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <g id="s4c-figure" opacity="0.85" transform="translate(500,440)">
+            <circle cx="0" cy="-100" r="16" fill="none" stroke="#1a9b8c" stroke-width="3"/>
+            <path d="M -18 -82 L -22 -10 L -8 -10 L -4 -55 L 4 -55 L 8 -10 L 22 -10 L 18 -82 Z" fill="none" stroke="#1a9b8c" stroke-width="3"/>
+          </g>
+          <g id="s4c-nodes" stroke="#2dbfad" stroke-width="1.5" fill="#2dbfad">
+            <line x1="500" y1="340" x2="380" y2="240" stroke-dasharray="160" stroke-dashoffset="160"/>
+            <line x1="500" y1="340" x2="500" y2="200" stroke-dasharray="160" stroke-dashoffset="160"/>
+            <line x1="500" y1="340" x2="620" y2="240" stroke-dasharray="160" stroke-dashoffset="160"/>
+            <line x1="380" y1="240" x2="500" y2="200" stroke-dasharray="160" stroke-dashoffset="160"/>
+            <line x1="620" y1="240" x2="500" y2="200" stroke-dasharray="160" stroke-dashoffset="160"/>
+            <circle cx="500" cy="340" r="7"/>
+            <circle cx="380" cy="240" r="6"/>
+            <circle cx="500" cy="200" r="6"/>
+            <circle cx="620" cy="240" r="6"/>
+          </g>
+        </svg>
+        <div class="scene-inner">
+          <p class="caption">And underwent its greatest transformation yet.</p>
+        </div>
+        <span class="scene-tag">04C — AI emerges</span>
+      </section>
+
+      <!-- SCENE 4D — CONSULTING BEFORE SPEAKING -->
+      <section class="scene" id="s4d">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <g transform="translate(280,420)">
+            <circle cx="0" cy="-94" r="14" fill="#f5f3ee"/>
+            <path d="M -16 -78 L -20 -10 L -8 -10 L -4 -50 L 4 -50 L 8 -10 L 20 -10 L 16 -78 Z" fill="#f5f3ee"/>
+            <rect x="-10" y="-35" width="20" height="28" fill="#0a1628" stroke="#1a9b8c" stroke-width="1.5"/>
+          </g>
+          <g transform="translate(720,420) scale(-1,1)">
+            <circle cx="0" cy="-94" r="14" fill="#f5f3ee"/>
+            <path d="M -16 -78 L -20 -10 L -8 -10 L -4 -50 L 4 -50 L 8 -10 L 20 -10 L 16 -78 Z" fill="#f5f3ee"/>
+            <rect x="-10" y="-35" width="20" height="28" fill="#0a1628" stroke="#1a9b8c" stroke-width="1.5"/>
+          </g>
+          <circle id="s4d-ai" cx="500" cy="300" r="20" fill="none" stroke="#2dbfad" stroke-width="2"/>
+          <path id="s4d-bubble" d="M280 360 Q500 300 720 360" stroke="#e8843a" stroke-width="2" fill="none" stroke-dasharray="500" stroke-dashoffset="500"/>
+        </svg>
+        <div class="scene-inner">
+          <p class="caption">Now even the simplest words go through its filter.</p>
+        </div>
+        <span class="scene-tag">04D — Consulting before speaking</span>
+      </section>
+
+      <!-- SCENE 5 — THE MATRIX -->
+      <section class="scene" id="s5">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <g id="s5-facets" stroke="#1a9b8c" stroke-width="1" fill="none" opacity="0.5">
+            <polygon points="200,150 350,200 300,350 150,300"/>
+            <polygon points="450,120 600,180 580,330 420,280"/>
+            <polygon points="650,200 800,260 760,400 620,360"/>
+          </g>
+          <g id="s5-clones" fill="#f5f3ee" opacity="0.35">
+            <g transform="translate(220,485) scale(.4)"><circle cx="0" cy="-94" r="14"/><path d="M -16 -78 L -20 -10 L -8 -10 L -4 -50 L 4 -50 L 8 -10 L 20 -10 L 16 -78 Z"/></g>
+            <g transform="translate(500,500) scale(.4)"><circle cx="0" cy="-94" r="14"/><path d="M -16 -78 L -20 -10 L -8 -10 L -4 -50 L 4 -50 L 8 -10 L 20 -10 L 16 -78 Z"/></g>
+            <g transform="translate(770,488) scale(.4)"><circle cx="0" cy="-94" r="14"/><path d="M -16 -78 L -20 -10 L -8 -10 L -4 -50 L 4 -50 L 8 -10 L 20 -10 L 16 -78 Z"/></g>
+          </g>
+        </svg>
+        <div class="matrix-layer">
+          <div class="bin-row" id="bin1"></div>
+          <div class="bin-row" id="bin2"></div>
+        </div>
+        <div class="scene-inner">
+          <p class="caption">When everyone says the same thing, no one is saying anything.</p>
+        </div>
+        <span class="scene-tag">05 — The matrix</span>
+      </section>
+
+      <!-- SCENE 6 — THE RUPTURE -->
+      <section class="scene" id="s6">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <g id="s6-noise" stroke="#1a9b8c" stroke-width="1" opacity="0.25">
+            <line x1="0" y1="100" x2="1000" y2="100"/>
+            <line x1="0" y1="200" x2="1000" y2="200"/>
+            <line x1="0" y1="300" x2="1000" y2="300"/>
+            <line x1="0" y1="400" x2="1000" y2="400"/>
+            <line x1="0" y1="500" x2="1000" y2="500"/>
+          </g>
+          <path id="s6-trail" d="M0 500 Q250 350 500 480 T1000 420" stroke="#e8843a" stroke-width="3" fill="none" stroke-dasharray="1400" stroke-dashoffset="1400" opacity="0.6"/>
+          <g id="s6-cracks" stroke="#f5f3ee" stroke-width="2" fill="none" opacity="0">
+            <path d="M860 300 L780 200" stroke-dasharray="128" stroke-dashoffset="128"/>
+            <path d="M860 300 L960 210" stroke-dasharray="135" stroke-dashoffset="135"/>
+            <path d="M860 300 L980 330" stroke-dasharray="122" stroke-dashoffset="122"/>
+            <path d="M860 300 L900 430" stroke-dasharray="133" stroke-dashoffset="133"/>
+            <path d="M860 300 L760 400" stroke-dasharray="141" stroke-dashoffset="141"/>
+            <path d="M860 300 L820 430" stroke-dasharray="138" stroke-dashoffset="138"/>
+          </g>
+          <circle id="s6-ball" cx="0" cy="500" r="22" fill="#e8843a"/>
+        </svg>
+        <div class="scene-inner">
+          <p class="caption">But in the middle of the chaos, life goes on.</p>
+        </div>
+        <span class="scene-tag">06 — The rupture</span>
+      </section>
+
+      <!-- SCENE 7 — THE CHILDREN -->
+      <section class="scene" id="s7">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <circle cx="650" cy="480" r="20" fill="#e8843a"/>
+          <g id="s7-kid1" fill="#f5f3ee">
+            <circle id="s7-kid1-h" cx="0" cy="-70" r="11"/>
+            <path d="M -12 -58 L -14 -10 L -4 -10 L 0 -36 L 4 -10 L 14 -10 L 12 -58 Z"/>
+          </g>
+          <g id="s7-kid2" fill="#f5f3ee">
+            <circle id="s7-kid2-h" cx="0" cy="-70" r="11"/>
+            <path d="M -12 -58 L -14 -10 L -4 -10 L 0 -36 L 4 -10 L 14 -10 L 12 -58 Z"/>
+          </g>
+          <g id="s7-kid3" fill="#f5f3ee">
+            <circle id="s7-kid3-h" cx="0" cy="-70" r="11"/>
+            <path d="M -12 -58 L -14 -10 L -4 -10 L 0 -36 L 4 -10 L 14 -10 L 12 -58 Z"/>
+          </g>
+        </svg>
+        <div class="sbubble" id="s7-b1">here!</div>
+        <div class="sbubble" id="s7-b2">run!</div>
+        <div class="sbubble" id="s7-b3">pass it!</div>
+        <div class="scene-inner">
+          <p class="caption">Because at our core, what we need is connection.</p>
+        </div>
+        <span class="scene-tag">07 — The children</span>
+      </section>
+
+      <!-- SCENE 8 — THE REBIRTH -->
+      <section class="scene" id="s8">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="s8grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#e8843a"/>
+              <stop offset="100%" stop-color="#f3b27a"/>
+            </linearGradient>
+          </defs>
+          <rect width="1000" height="600" fill="url(#s8grad)" opacity="0.4"/>
+          <circle cx="500" cy="420" r="60" fill="#f5f3ee" opacity="0.9"/>
+          <polygon points="0,430 1000,430 1000,600 0,600" fill="#0f3530"/>
+          <g id="s8-trees" stroke="#1a9b8c" stroke-width="3" fill="none" opacity="0">
+            <path d="M120 600 L120 460 M120 460 L70 410 M120 460 L170 410"/>
+            <path d="M880 600 L880 450 M880 450 L830 400 M880 450 L930 400"/>
+          </g>
+          <g id="s8-animals" fill="#1a9b8c" opacity="0">
+            <ellipse cx="200" cy="540" rx="22" ry="13"/>
+            <circle cx="800" cy="525" r="12"/>
+          </g>
+          <g transform="translate(500,430)">
+            <circle cx="0" cy="-94" r="14" fill="#0a1628"/>
+            <path d="M -16 -78 L -20 -10 L -8 -10 L -4 -50 L 4 -50 L 8 -10 L 20 -10 L 16 -78 Z" fill="#0a1628"/>
+          </g>
+        </svg>
+        <div class="scene-inner">
+          <p class="caption">The words that connect are the authentic ones. The ones that set us apart.</p>
+        </div>
+        <span class="scene-tag">08 — The rebirth</span>
+      </section>
+
+      <!-- SCENE 9 — THE CLOSE -->
+      <section class="scene" id="s9">
+        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+          <circle cx="500" cy="90" r="70" fill="#fdf9f0" opacity="0.9"/>
+          <polygon points="0,560 1000,560 1000,600 0,600" fill="#dce9e6"/>
+          <g transform="translate(500,160) scale(0.55)">
+            <circle cx="0" cy="-94" r="14" fill="#0a1628"/>
+            <path d="M -16 -78 L -20 -10 L -8 -10 L -4 -50 L 4 -50 L 8 -10 L 20 -10 L 16 -78 Z" fill="#0a1628"/>
+          </g>
+        </svg>
+        <div class="scene-inner" style="gap:28px;">
+          <p class="caption caption-light" style="font-size:clamp(26px,4vw,52px);">When was the last time your brand sounded like you?</p>
+          <div class="brand-mark" id="s9-brand">Teal<span>Kin</span></div>
+          <div class="close-sub" id="s9-sub">TealKin / Strategic Communications</div>
+        </div>
+      </section>
+
+    </div>
+    <!-- the single persistent figure: lives outside the sliding scenes so there is
+         never more than one on screen, regardless of how scenes overlap during transitions -->
+    <svg id="walker" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMax slice" style="position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;opacity:0;">
+      <g id="walker-figure">
+        <polygon id="walker-body" points="-10,-88 10,-88 18,-50 30,-12 -30,-12 -18,-50" fill="#f5f3ee"/>
+        <circle id="walker-head" cx="0" cy="-104" r="14" fill="#f5f3ee"/>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+const track = document.getElementById('track');
+const scenes = track.querySelectorAll('.scene');
+const sceneCount = scenes.length;
+
+function getSceneWidth(el){ return (parseFloat(el.style.getPropertyValue('--w')) || 1) * window.innerWidth; }
+function getTotalWidth(){ return Array.from(scenes).reduce((sum, el) => sum + getSceneWidth(el), 0); }
+
+let scrollTween;
+let currentDistance = 0;
+let sceneOffsets = {};
+function computeSceneOffsets(distance){
+  let acc = 0;
+  scenes.forEach(el => {
+    const w = getSceneWidth(el);
+    sceneOffsets[el.id] = {start: acc/distance, end: (acc+w)/distance};
+    acc += w;
+  });
+}
+
+const bgLayer = document.getElementById('bg-layer');
+const bgColorStops = [
+  '#0a1628', '#8a4a28', '#0f3530', '#23282a', '#0d1f24',
+  '#0a1628', '#2e1f14', '#7a4a28', '#f5f3ee'
+];
+
+// the persistent figure: one shared element, positioned purely from global scroll
+// progress, so it can never appear twice during a scene handoff
+const s1SeatedBody = [[-10,-88],[10,-88],[18,-50],[30,-12],[-30,-12],[-18,-50]];
+const s1StandBody  = [[-16,-108],[16,-108],[8,-50],[16,-10],[-16,-10],[-8,-50]];
+function s1BodyPoints(t){
+  return s1SeatedBody.map(([sx,sy],i) => {
+    const [ex,ey] = s1StandBody[i];
+    return (sx+(ex-sx)*t).toFixed(1) + ',' + (sy+(ey-sy)*t).toFixed(1);
+  }).join(' ');
+}
+const WALK_OFFSET = 150; // viewBox units ahead of the left edge once standing — 15% of the screen width, constant across every scene
+const walkerBody = document.getElementById('walker-body');
+function updateWalker(gp){
+  const s1 = sceneOffsets['s1'], s3 = sceneOffsets['s3'];
+  if (!s1 || !s3) return;
+  // visible (seated) from the very first frame, no fade-in delay
+  const fadeOut = gsap.utils.clamp(0,1, (gp-(s3.end-0.04))/0.04);
+  gsap.set('#walker', {opacity: 1-fadeOut});
+
+  const p1 = gsap.utils.clamp(0,1, (gp-s1.start)/(s1.end-s1.start));
+  const standUp = gsap.utils.clamp(0,1,(p1-0.55)/0.2);
+  walkerBody.setAttribute('points', s1BodyPoints(standUp));
+  gsap.set('#walker-head', {cy: -104 - standUp*18});
+  const x = 500 + standUp*(WALK_OFFSET-500);
+  gsap.set('#walker-figure', {x, y: 558});
+}
+
+function buildScroll(){
+  if (scrollTween) scrollTween.scrollTrigger.kill();
+  const totalWidth = getTotalWidth();
+  const distance = totalWidth - window.innerWidth;
+  currentDistance = distance;
+  computeSceneOffsets(distance);
+
+  scrollTween = gsap.to(track, {
+    x: () => -distance,
+    ease: 'none',
+    scrollTrigger: {
+      id: 'horiz',
+      trigger: '#spacer',
+      start: 'top top',
+      end: () => '+=' + distance,
+      scrub: true,
+      pin: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+      onUpdate: self => {
+        const color = gsap.utils.interpolate(bgColorStops, self.progress);
+        gsap.set(bgLayer, {backgroundColor: color});
+        updateWalker(self.progress);
+        sceneCallbacks.forEach(({segStart, segEnd, onUpdate}) => {
+          const local = Math.min(1, Math.max(0, (self.progress - segStart) / (segEnd - segStart)));
+          onUpdate(local);
+        });
+      }
+    }
+  });
+
+  buildSceneAnimations();
+}
+
+const sceneCallbacks = [];
+function sceneProgressTrigger(id, onUpdate){
+  const {start, end} = sceneOffsets[id];
+  sceneCallbacks.push({segStart: start, segEnd: end, onUpdate});
+}
+
+// the campfire scene's flicker, gentle rocking and speech-volutes run on their
+// own clock, independent of scroll, so the gathering feels alive even when the
+// page is still
+let campfireLoopsStarted = false;
+function startCampfireLoops(){
+  if (campfireLoopsStarted) return;
+  campfireLoopsStarted = true;
+  gsap.to('#s3-flame-outer', {scaleY: 0.7, scaleX: 1.25, transformOrigin: '0px -2px', duration: 0.45, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+  gsap.to('#s3-flame-mid', {scaleY: 0.65, scaleX: 1.3, transformOrigin: '0px -3px', duration: 0.38, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 0.15});
+  gsap.to('#s3-flame-inner', {scaleY: 0.6, scaleX: 1.35, transformOrigin: '0px -4px', duration: 0.3, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 0.1});
+  gsap.to('#s3-person-1', {rotation: 2, transformOrigin: '0px 2px', duration: 2.0, repeat: -1, yoyo: true, ease: 'sine.inOut'});
+  gsap.to('#s3-person-2', {rotation: -2, transformOrigin: '0px 2px', duration: 2.3, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 0.3});
+  gsap.to('#s3-person-3', {rotation: 2, transformOrigin: '0px 2px', duration: 1.9, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 0.6});
+  gsap.to('#s3-person-4', {rotation: -2, transformOrigin: '0px 2px', duration: 2.1, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 0.9});
+  const virTl = (sel, delay) => gsap.timeline({repeat: -1, delay})
+    .to(sel, {opacity: 1, duration: 0.3, ease: 'sine.out'})
+    .to(sel, {opacity: 0, duration: 0.5, ease: 'sine.in'})
+    .to(sel, {opacity: 0, duration: 1.6});
+  virTl('#s3-vir-1', 0);
+  virTl('#s3-vir-2', 1.1);
+  virTl('#s3-vir-3', 2.2);
+  virTl('#s3-vir-4', 3.3);
+}
+
+function buildSceneAnimations(){
+  // Scene 1 — dawn
+  function s1Dots(container, n, xMin, xMax, yMin, yMax, r, seed){
+    let html = '';
+    for (let i = 0; i < n; i++) {
+      const rx = Math.sin(i*12.9898 + seed) * 43758.5453 % 1;
+      const ry = Math.sin(i*78.233 + seed) * 12345.678 % 1;
+      const x = xMin + Math.abs(rx) * (xMax-xMin);
+      const y = yMin + Math.abs(ry) * (yMax-yMin);
+      html += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}"/>`;
+    }
+    container.innerHTML = html;
+  }
+  s1Dots(document.getElementById('s1-sand-dots'), 60, 0, 1000, 522, 600, 1.6, 41);
+  // same step/amplitude as scene 2's waves, generated from the same local-x=0 phase,
+  // so the wave-line pattern continues unbroken across the scene 1/2 seam
+  document.getElementById('s1-sea-wave1').setAttribute('d', wavePath(1000, 460, 80, 12));
+  document.getElementById('s1-sea-wave2').setAttribute('d', wavePath(1000, 488, 80, 12));
+
+  const s1Seg = sceneOffsets['s1'];
+  const s1SegWidth = s1Seg.end - s1Seg.start;
+  const s1AnchorP = 0; // w=1 -> 0.5 - 1/(2*1) = 0: the centered layout is already on-screen at p=0
+
+  sceneProgressTrigger('s1', p => {
+    // the scene-1/scene-2 boundary becomes visible on screen from very early in this
+    // scene's own progress (a w=1 scene starts revealing scene 2's right edge almost
+    // immediately), so the whole dawn transition must finish quickly — well before
+    // scene 1 is half scrolled away — or the seam between the two scenes shows mismatched colors
+    const sunRise = Math.min(p/0.18, 1);
+    // the dawn glow rises then settles back down right away, so the warm tint never
+    // lingers as a flat color block clashing against scene 2
+    const glowFade = 1 - gsap.utils.clamp(0,1,(p-0.18)/0.12);
+    gsap.set('#s1-orange', {opacity: Math.min(sunRise*0.9, 0.6)*glowFade});
+    gsap.set('#s1-sun', {cy: 480 - sunRise*290, r: sunRise*42, opacity: Math.min(sunRise*3,1)});
+
+    // sea and sand brighten from night tones to clear teal / warm sand as the sun comes up —
+    // landing on the exact same colors the shore scene opens with, so the cut is seamless
+    const seaColor = gsap.utils.interpolate('#0d2a36', '#1a9b8c', sunRise);
+    const sandColor = gsap.utils.interpolate('#3a2f22', '#d9c08c', sunRise);
+    gsap.set('#s1-sea-bg', {fill: seaColor});
+    // the wave-line stroke must stay a different hue than the sea fill it sits on —
+    // it starts at the same teal as the night-sea stroke but slides to the lighter
+    // highlight teal scene 2 uses, so the lines never blend invisibly into the
+    // brightening background
+    const seaLineColor = gsap.utils.interpolate('#1a9b8c', '#3aa89a', sunRise);
+    gsap.set('#s1-sea', {stroke: seaLineColor});
+    gsap.set('#s1-sand-bg', {fill: sandColor});
+    const textureFade = Math.max(0, (sunRise-0.15)/0.5);
+    gsap.set('#s1-sand-dots', {opacity: textureFade*0.5});
+
+    // the night sky itself brightens into the shore scene's cream tone, so there is no
+    // dark-to-light hard cut at the boundary
+    const skyColor = gsap.utils.interpolate('#0a0f28', '#f3e3c4', sunRise);
+    const skyColor2 = gsap.utils.interpolate('#1c1442', '#f3e3c4', sunRise);
+    gsap.set('#s1-sky-stop1', {attr:{'stop-color': skyColor}});
+    gsap.set('#s1-sky-stop2', {attr:{'stop-color': skyColor2}});
+
+    // the caption stays pinned and readable while the figure is still seated, then
+    // drifts away and dissolves exactly as the figure rises and starts to walk
+    const textIn = Math.min(p/0.08, 1);
+    const standUp = gsap.utils.clamp(0,1,(p-0.55)/0.2);
+    const textOpacity = textIn * (1-standUp);
+    const s1PinX = currentDistance*s1SegWidth*(p-s1AnchorP);
+    const textDrift = -standUp*220;
+    gsap.set('#s1-caption', {opacity: textOpacity, x: s1PinX+textDrift});
+    gsap.set('#s1-tag', {opacity: textOpacity*0.55, x: s1PinX+textDrift});
+  });
+
+  // Scene 2 — along the shore: dolphins, then herons on the rock, then coatis on the sand
+  function wavePath(width, y, step, amp){
+    let d = `M-20 ${y} Q${step/2} ${y-amp} ${step} ${y}`;
+    for (let x = step*2; x <= width+step; x += step) d += ` T${x} ${y}`;
+    return d;
+  }
+  document.getElementById('s2-sea-wave1').setAttribute('d', wavePath(4000, 460, 80, 12));
+  document.getElementById('s2-sea-wave2').setAttribute('d', wavePath(4000, 488, 80, 12));
+  document.getElementById('s2-sand-wave1').setAttribute('d', wavePath(4000, 540, 80, 6));
+  document.getElementById('s2-sand-wave2').setAttribute('d', wavePath(4000, 566, 80, 6));
+  s1Dots(document.getElementById('s2-sand-dots'), 240, 0, 4000, 522, 600, 1.6, 23);
+
+  const s2Seg = sceneOffsets['s2'];
+  const s2SegWidth = s2Seg.end - s2Seg.start;
+  const s2W = parseFloat(document.getElementById('s2').style.getPropertyValue('--w')) || 1;
+  const s2AnchorP = 0.5 - 1/(2*s2W); // local progress where the caption's centered layout position is already on-screen
+
+  // generic "on-screen window" for a static element of a given scene: the local progress
+  // at which its right edge first touches the viewport's right edge (entering) and the
+  // local progress at which its left edge clears the viewport's left edge (exiting) —
+  // this makes every creature travel naturally from the right edge to the left edge,
+  // fully visible the whole time it crosses, instead of popping in mid-screen
+  function edgeWindow(x, halfWidth, w, fadeMargin){
+    const pEnter = (x + halfWidth - 1000) / (1000*w);
+    const pExit = (x - halfWidth) / (1000*w);
+    return {pEnter, pExit, fadeMargin};
+  }
+  function edgeOpacity(p, win){
+    const fadeIn = gsap.utils.clamp(0,1,(p-(win.pEnter-win.fadeMargin))/win.fadeMargin);
+    const fadeOut = gsap.utils.clamp(0,1,(p-win.pExit)/win.fadeMargin);
+    return fadeIn*(1-fadeOut);
+  }
+
+  // dolphins cross first, then herons, then a pair of coatis pause on the sand — each
+  // arriving just as the previous group is leaving, so the shore never feels empty
+  const dolphinsWin = edgeWindow(736, 140, s2W, 0.03);
+  const heronsWin = edgeWindow(1500, 110, s2W, 0.04);
+  const coatiAWin = edgeWindow(2350, 110, s2W, 0.03);
+
+  sceneProgressTrigger('s2', p => {
+    // counter the section's own horizontal scroll so the caption stays pinned and
+    // readable on screen for the whole walk, instead of flying by in one viewport-width
+    const captionIn = gsap.utils.clamp(0,1,p/0.06);
+    const captionOut = gsap.utils.clamp(0,1,(p-0.88)/0.1);
+    const s2PinX = currentDistance*s2SegWidth*(p-s2AnchorP);
+    gsap.set('#s2-caption', {opacity: captionIn*(1-captionOut), x: s2PinX});
+    gsap.set('#s2-tag', {opacity: captionIn*(1-captionOut)*0.55, x: s2PinX});
+
+    // dolphins surface and travel fully across the screen, right edge to left edge —
+    // both of them breathe, so bubbles rise from both at once
+    const dolphinsOpacity = edgeOpacity(p, dolphinsWin);
+    gsap.set('#s2-dolphins', {opacity: dolphinsOpacity});
+    const bubblePulse = (Math.sin(p*60)+1)/2;
+    gsap.set('#s2-bubbles1', {opacity: dolphinsOpacity*(0.4+bubblePulse*0.6)});
+    gsap.set('#s2-bubbles2', {opacity: dolphinsOpacity*(0.4+bubblePulse*0.6)});
+
+    // herons enter from the right just as the dolphins are leaving on the left
+    const heronsOpacity = edgeOpacity(p, heronsWin);
+    gsap.set('#s2-rock-group', {opacity: heronsOpacity});
+    const notePulse = (Math.sin(p*50)+1)/2;
+    gsap.set('#s2-notes', {opacity: heronsOpacity*(0.4+notePulse*0.6)});
+
+    // the coati pair pauses on the sand, facing each other, with small marks
+    // drifting between their snouts to read as a quiet exchange
+    const coatiOpacity = edgeOpacity(p, coatiAWin);
+    gsap.set('#s2-coati-a', {opacity: coatiOpacity});
+    const chatPulse = (Math.sin(p*45)+1)/2;
+    gsap.set('#s2-coati-chat', {opacity: coatiOpacity*(0.3+chatPulse*0.7)});
+
+    // the sea recedes well clear of the cave threshold, so the shore has already
+    // turned fully to sand/rock — no water still visible alongside the cave mouth —
+    // before anything starts to darken
+    const seaRecede = gsap.utils.clamp(0,1,(p-0.42)/0.25);
+    gsap.set('#s2-sea-bg', {opacity: 1-seaRecede});
+    gsap.set('#s2-sea-waves', {opacity: (1-seaRecede)*0.5});
+
+    // the cave mouth's silhouette rises first, in full daylight, and stays plainly
+    // visible for a good stretch on its own — only right at the threshold of
+    // actually reaching/entering it does the fog thicken into full darkness, so the
+    // change never reads as abrupt, and it lands fully black with no gap exactly as
+    // scene 3's dark cavern begins
+    const archIn = gsap.utils.clamp(0,1,(p-0.40)/0.20);
+    gsap.set('#s2-cave-mouth', {opacity: archIn});
+    const fogIn = gsap.utils.clamp(0,1,(p-0.78)/0.16);
+    gsap.set('#s2-cave-fog', {opacity: fogIn});
+  });
+
+  // Scene 3 — the cenote: the cave mouth swallows the horizon, walls close in, then the
+  // cavern opens onto a glowing underground pool with its own quiet bioluminescence
+  const s3StalXs = [140, 380, 640, 920, 1180, 1460, 1720, 1900];
+  let s3StalHtml = '';
+  s3StalXs.forEach((sx, i) => {
+    const w = 26 + (i%3)*10;
+    const len = 70 + (i*23)%90;
+    s3StalHtml += `<path d="M${sx-w/2} 0 Q${sx} ${len*0.6} ${sx} ${len} Q${sx} ${len*0.6} ${sx+w/2} 0 Z"/>`;
+  });
+  document.getElementById('s3-stalactites').innerHTML = s3StalHtml;
+
+  // small bioluminescent glints scattered over the pool surface, each twinkling on its
+  // own offset so the pool feels quietly alive rather than static
+  const s3GlintXs = [120, 340, 560, 780, 980, 1180, 1380, 1580, 1780, 1900];
+  let s3GlintHtml = '';
+  s3GlintXs.forEach((gx, i) => {
+    const gy = 520 + (i%4)*16;
+    s3GlintHtml += `<circle class="s3-glint" data-offset="${i*0.7}" cx="${gx}" cy="${gy}" r="${2+(i%3)}"/>`;
+  });
+  document.getElementById('s3-glints').innerHTML = s3GlintHtml;
+  const s3GlintEls = [...document.querySelectorAll('.s3-glint')];
+
+  // plank lines across the wooden walkway, so the figure reads as crossing a built
+  // bridge over the pool rather than standing on the water itself
+  let s3PlankHtml = '';
+  for (let x = 0; x <= 2000; x += 40) s3PlankHtml += `<line x1="${x}" y1="538" x2="${x}" y2="558"/>`;
+  document.getElementById('s3-planks').innerHTML = s3PlankHtml;
+
+  const s3Seg = sceneOffsets['s3'];
+  const s3SegWidth = s3Seg.end - s3Seg.start;
+  const s3W = parseFloat(document.getElementById('s3').style.getPropertyValue('--w')) || 1;
+  const s3AnchorP = 0.5 - 1/(2*s3W);
+
+  sceneProgressTrigger('s3', p => {
+    // the cave walls close in from both sides as we pass through the mouth
+    const wallsIn = gsap.utils.clamp(0,1,p/0.3);
+    gsap.set('#s3-wall-l', {x: -wallsIn*90});
+    gsap.set('#s3-wall-r', {x: wallsIn*90});
+
+    // once inside, the background lifts from black to the cavern's grey stone
+    const cavernIn = gsap.utils.clamp(0,1,(p-0.2)/0.35);
+    gsap.set('#s3-cavern', {opacity: cavernIn*0.85});
+    gsap.set('#s3-stalactites', {opacity: cavernIn});
+
+    // the pool reveals itself after the cavern brightens, glowing teal against the stone
+    const poolIn = gsap.utils.clamp(0,1,(p-0.4)/0.35);
+    gsap.set('#s3-pool', {opacity: poolIn});
+    gsap.set('#s3-pool-glow', {opacity: poolIn*0.6});
+
+    // bioluminescent glints twinkle once the pool is visible, each on its own phase
+    const glintsIn = gsap.utils.clamp(0,1,(p-0.55)/0.3);
+    gsap.set('#s3-glints', {opacity: glintsIn});
+    s3GlintEls.forEach(el => {
+      const offset = parseFloat(el.dataset.offset);
+      const twinkle = 0.3 + 0.7*((Math.sin(p*40 + offset*10)+1)/2);
+      gsap.set(el, {opacity: twinkle});
+    });
+
+    // the wooden walkway appears quickly, right as we enter — the figure always
+    // walks on the bridge, never on the water itself
+    const bridgeIn = gsap.utils.clamp(0,1,p/0.1);
+    gsap.set('#s3-bridge', {opacity: bridgeIn});
+    gsap.set('#s3-bridge-edge', {opacity: bridgeIn});
+    gsap.set('#s3-planks', {opacity: bridgeIn*0.7});
+
+    // further along, a small group rests around a fire, trading stories — the flames
+    // flicker and each person rocks gently, as if mid-conversation, with quiet
+    // speech-volutes drifting from their mouths in turn
+    const campfireIn = gsap.utils.clamp(0,1,(p-0.42)/0.15);
+    gsap.set('#s3-campfire', {opacity: campfireIn});
+    startCampfireLoops();
+
+    const captionIn = gsap.utils.clamp(0,1,(p-0.45)/0.12);
+    const captionOut = gsap.utils.clamp(0,1,(p-0.85)/0.1);
+    const s3PinX = currentDistance*s3SegWidth*(p-s3AnchorP);
+    gsap.set('#s3-caption', {opacity: captionIn*(1-captionOut), x: s3PinX});
+    gsap.set('#s3-tag', {opacity: captionIn*(1-captionOut)*0.55, x: s3PinX});
+  });
+
+  // Scene 4 — drift: desaturate + figures/blocks appear
+  sceneProgressTrigger('s4', p => {
+    gsap.set('#s4-blocks', {opacity: Math.min(p*1.4,1)});
+    gsap.set('#s4-people', {opacity: Math.min(p*1.6,1)});
+    document.getElementById('s4').querySelector('svg').style.filter = `saturate(${1-p*0.7})`;
+  });
+
+  // Scene 4B — tech timeline
+  const s4bItems = [
+    {sel:'#s4b-telegraph', range:[0.05,0.3]},
+    {sel:'#s4b-tv', range:[0.35,0.6]},
+    {sel:'#s4b-phone', range:[0.65,0.9]}
+  ];
+  sceneProgressTrigger('s4b', p => {
+    s4bItems.forEach(it => {
+      const [s,e] = it.range;
+      const local = gsap.utils.clamp(0,1,(p-s)/(e-s));
+      gsap.set(it.sel, {opacity: local, scale: 0.7+local*0.3, transformOrigin:'center'});
+    });
+  });
+
+  // Scene 4C — neural net
+  sceneProgressTrigger('s4c', p => {
+    document.querySelectorAll('#s4c-nodes line').forEach((l,i)=>{
+      const local = gsap.utils.clamp(0,1,(p - i*0.08)*1.8);
+      l.setAttribute('stroke-dashoffset', 160*(1-local));
+    });
+    const pulse = 1 + Math.sin(p*Math.PI*4)*0.15;
+    gsap.set('#s4c-nodes circle', {scale: p>0.1? pulse:1, transformOrigin:'center'});
+  });
+
+  // Scene 4D — bubble routes through AI icon
+  sceneProgressTrigger('s4d', p => {
+    document.getElementById('s4d-bubble').setAttribute('stroke-dashoffset', 500*(1-p));
+    gsap.set('#s4d-ai', {scale: 1+Math.sin(p*Math.PI)*0.3, transformOrigin:'center'});
+  });
+
+  // Scene 5 — matrix binary decode
+  initMatrixScene();
+
+  // Scene 6 — ball bounce + trail
+  sceneProgressTrigger('s6', p => {
+    const x = p*1000;
+    const bounce = Math.abs(Math.sin(p*Math.PI*5))*120;
+    gsap.set('#s6-ball', {x, y: -bounce});
+    document.getElementById('s6-trail').setAttribute('stroke-dashoffset', 1400*(1-p));
+    const shatter = Math.max(0, (p-0.78)/0.22);
+    gsap.set('#s6-cracks', {opacity: Math.min(shatter*1.6,1)});
+    document.querySelectorAll('#s6-cracks path').forEach(el=>{
+      const len = parseFloat(el.getAttribute('stroke-dasharray'));
+      el.setAttribute('stroke-dashoffset', len*(1-shatter));
+    });
+  });
+
+  // Scene 7 — kids running + bubbles anchored to each kid's head
+  sceneProgressTrigger('s7', p => {
+    gsap.set('#s7-kid1', {x: 250+p*120, y: 470+Math.abs(Math.sin(p*Math.PI*6))*-20});
+    gsap.set('#s7-kid2', {x: 380+p*160, y: 470+Math.abs(Math.sin(p*Math.PI*6+1))*-25});
+    gsap.set('#s7-kid3', {x: 150+p*90,  y: 490+Math.abs(Math.sin(p*Math.PI*6+2))*-18});
+    positionBubble('s7-kid1-h', 's7-b1', p>0.15 && p<0.5);
+    positionBubble('s7-kid2-h', 's7-b2', p>0.4 && p<0.7);
+    positionBubble('s7-kid3-h', 's7-b3', p>0.6 && p<0.95);
+  });
+
+  // Scene 8 — rebirth richness
+  sceneProgressTrigger('s8', p => {
+    gsap.set('#s8-trees', {opacity: Math.min(p*1.5,1)});
+    gsap.set('#s8-animals', {opacity: Math.min(p*1.5,1)});
+  });
+
+  // Scene 9 — brand fade in
+  sceneProgressTrigger('s9', p => {
+    gsap.set('#s9-brand', {opacity: Math.min(p*1.6,1), y: 10-Math.min(p*1.6,1)*10});
+    gsap.set('#s9-sub', {opacity: Math.min((p-0.2)*1.6,1)});
+  });
+
+  ScrollTrigger.refresh();
+}
+
+function positionBubble(headId, bubbleId, visible){
+  const head = document.getElementById(headId);
+  const bubble = document.getElementById(bubbleId);
+  const scene = document.getElementById('s7');
+  if (!visible){ gsap.set(bubble, {opacity: 0}); return; }
+  const hr = head.getBoundingClientRect();
+  const sr = scene.getBoundingClientRect();
+  bubble.style.left = (hr.left + hr.width/2 - sr.left) + 'px';
+  bubble.style.top = (hr.top - sr.top - 14) + 'px';
+  bubble.style.transform = 'translate(-50%,-100%)';
+  gsap.set(bubble, {opacity: 1});
+}
+
+function initMatrixScene(){
+  const targets = [
+    {el: document.getElementById('bin1'), text:'01100011 01101111 01101101 01110101 01101110 01101001 01100011 01100001 01110100'},
+    {el: document.getElementById('bin2'), text:'01100011 01101111 01101110 01101110 01100101 01100011 01110100'}
+  ];
+  const chars = '01';
+  let active = false;
+  let frame = 0;
+  let rafId = null;
+
+  function scramble(){
+    frame++;
+    targets.forEach(t=>{
+      const revealCount = Math.min(t.text.length, Math.floor(frame*1.2));
+      let out = '';
+      for (let i=0;i<t.text.length;i++){
+        if (t.text[i] === ' ') { out += ' '; continue; }
+        out += i < revealCount ? t.text[i] : chars[Math.floor(Math.random()*chars.length)];
+      }
+      t.el.textContent = out;
+    });
+    if (frame*1.2 < Math.max(...targets.map(t=>t.text.length)) + 20){
+      rafId = requestAnimationFrame(scramble);
+    }
+  }
+
+  ScrollTrigger.create({
+    trigger: '#s5',
+    containerAnimation: scrollTween,
+    start: 'left 70%',
+    end: 'right 30%',
+    onEnter: () => { if(!active){active=true; frame=0; scramble();} },
+    onEnterBack: () => { if(!active){active=true; frame=0; scramble();} },
+    onLeave: () => { active=false; if(rafId) cancelAnimationFrame(rafId); },
+    onLeaveBack: () => { active=false; if(rafId) cancelAnimationFrame(rafId); }
+  });
+}
+
+window.addEventListener('load', buildScroll);
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(() => ScrollTrigger.refresh());
+}
+
+window.addEventListener('keydown', (e) => {
+  const forward = ['ArrowDown','ArrowRight','PageDown',' '];
+  const backward = ['ArrowUp','ArrowLeft','PageUp'];
+  if (forward.includes(e.key) || backward.includes(e.key)) {
+    e.preventDefault();
+    const step = window.innerWidth * (forward.includes(e.key) ? 1 : -1);
+    window.scrollBy({ top: step, behavior: 'smooth' });
+  }
+});
+window.addEventListener('resize', () => { ScrollTrigger.refresh(); });
+</script>
+</body>
+</html>
