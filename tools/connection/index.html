@@ -38,10 +38,13 @@ body{position:relative;}
 .pin-wrap{position:relative;width:100%;height:100vh;overflow:hidden;}
 .track{position:absolute;top:0;left:0;height:100vh;display:flex;will-change:transform;}
 
-.scene{position:relative;width:100vw;height:100vh;flex:0 0 100vw;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--dark);}
-.scene-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
+/* no overflow:hidden here — the text/binary layers are translated past this box's own
+   edge to stay pinned to the viewport while the scene slides under them (see pinTargets
+   in the script below); clipping at the scene boundary would cut them off mid-transition */
+.scene{position:relative;width:100vw;height:100vh;flex:0 0 100vw;display:flex;align-items:center;justify-content:center;background:var(--dark);}
+.scene-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0;}
 .scene-fx{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;}
-.scene-animal{position:absolute;bottom:6%;left:50%;transform:translateX(-50%);max-width:40%;max-height:55%;width:auto;height:auto;z-index:2;}
+.scene-animal{position:absolute;bottom:6%;left:50%;transform:translateX(-50%);max-width:40%;max-height:55%;width:auto;height:auto;z-index:2;opacity:0;}
 
 .scene-text{position:relative;z-index:10;max-width:min(820px,86vw);text-align:center;padding:0 24px;}
 .text-es{font-family:var(--font-display);font-style:italic;font-weight:400;font-size:clamp(24px,4vw,48px);line-height:1.35;color:var(--white);text-shadow:0 2px 22px rgba(0,0,0,.55),0 1px 4px rgba(0,0,0,.5);opacity:0;}
@@ -74,7 +77,7 @@ body{position:relative;}
         <img class="scene-bg" src="img/bg-02-playa-amanecer.png" alt="" aria-hidden="true">
         <svg class="scene-fx" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
           <rect id="s1-orange" width="1600" height="900" fill="#e8843a" opacity="0"/>
-          <circle id="s1-sun" cx="800" cy="508" r="0" fill="#f0a84a" opacity="0"/>
+          <circle id="s1-sun" cx="1000" cy="450" r="0" fill="#f0a84a" opacity="0"/>
         </svg>
         <div class="scene-text">
           <p class="text-es fade-in">Antes de la primera palabra, ya existía la conexión.</p>
@@ -82,9 +85,9 @@ body{position:relative;}
         </div>
       </section>
 
-      <!-- SCENE 2 — JUNGLE / SHORE, DOLPHINS -->
+      <!-- SCENE 2 — DAWN BEACH, DOLPHINS -->
       <section class="scene" id="s2">
-        <img class="scene-bg" src="img/bg-03-selva.png" alt="" aria-hidden="true">
+        <img class="scene-bg" src="img/bg-02-playa-amanecer.png" alt="" aria-hidden="true">
         <img class="scene-animal" src="img/animal-delfines.png" alt="" aria-hidden="true">
         <div class="scene-text">
           <p class="text-es fade-in">Los vestigios de la comunicación están presentes desde el inicio.</p>
@@ -177,12 +180,17 @@ const fadeEls = scenes.map(s => [...s.querySelectorAll('.fade-in')]);
 // the same amount, in the opposite direction) to stay centered on screen instead of
 // drifting off with the photo underneath
 const pinTargets = scenes.map(s => [s.querySelector('.scene-text'), s.querySelector('.binary-layer')].filter(Boolean));
+// the photo and any animal overlay cross-dissolve through the dark page background at
+// each end of a scene's window, instead of cutting straight to the next photo, so the
+// seam between scenes reads as a soft fade rather than a hard graphic edge
+const bgFadeEls = scenes.map(s => [s.querySelector('.scene-bg'), s.querySelector('.scene-animal')].filter(Boolean));
 
 // scene 1 — sun rises from the horizon, a warm orange wash builds in behind it
 function updateDawn(local){
   gsap.set('#s1-orange', {opacity: local*0.2});
-  // horizon sits at y=508 in the 1600x900 viewBox (measured from the actual photo)
-  gsap.set('#s1-sun', {cy: 508 - local*360, r: local*72, opacity: Math.min(local*3,1)});
+  // starts at mid-screen (y=450 of the 1600x900 viewBox), 1/8 of the width to the
+  // right of center (cx=1000 instead of 800), and rises straight up from there
+  gsap.set('#s1-sun', {cy: 450 - local*360, r: local*72, opacity: Math.min(local*3,1)});
 }
 
 let scrollTween;
@@ -222,6 +230,15 @@ function buildScroll(){
           const pinX = local*vw;
           fadeEls[i].forEach(el => gsap.set(el, {opacity}));
           pinTargets[i].forEach(el => gsap.set(el, {x: pinX}));
+
+          // the photo dissolves in/out over a wider window than the text, so it has
+          // already settled by the time the caption appears on top of it
+          const bgArrival = (i === lastIndex) ? arrivalLocal : local;
+          const bgFadeIn = gsap.utils.clamp(0, 1, bgArrival/0.3);
+          const bgFadeOut = (i === lastIndex) ? 0 : gsap.utils.clamp(0, 1, (local-0.7)/0.3);
+          const bgOpacity = bgFadeIn*(1-bgFadeOut);
+          bgFadeEls[i].forEach(el => gsap.set(el, {opacity: bgOpacity}));
+
           if (i === 0) updateDawn(local);
         });
       }
