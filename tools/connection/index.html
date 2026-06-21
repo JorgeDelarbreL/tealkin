@@ -35,13 +35,18 @@ body{position:relative;}
 .back-link:hover{opacity:1;}
 
 .scroll-spacer{position:relative;width:100%;}
-.pin-wrap{position:relative;width:100%;height:100vh;overflow:hidden;}
-.track{position:absolute;top:0;left:0;height:100vh;display:flex;will-change:transform;}
+/* on a narrower-than-16:9 screen (a phone held upright) the stage below is shrunk to a
+   16:9 box so the horizontal photo story isn't squashed into a tall sliver — this wrap
+   just centers that box and fills the leftover top/bottom strip with the dark background,
+   like a letterboxed video. On anything 16:9 or wider it fills the full height as before */
+.pin-wrap{position:relative;width:100%;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--dark);}
+.stage{position:relative;width:100%;height:100%;overflow:hidden;}
+.track{position:absolute;top:0;left:0;height:100%;display:flex;will-change:transform;}
 
 /* no overflow:hidden here — the text/binary layers are translated past this box's own
    edge to stay pinned to the viewport while the scene slides under them (see pinTargets
    in the script below); clipping at the scene boundary would cut them off mid-transition */
-.scene{position:relative;width:100vw;height:100vh;flex:0 0 100vw;display:flex;align-items:center;justify-content:center;background:var(--dark);}
+.scene{position:relative;width:100vw;height:100%;flex:0 0 100vw;display:flex;align-items:center;justify-content:center;background:var(--dark);}
 /* a static edge mask, not a scroll-driven opacity fade, softens the seam between two
    adjacent scenes: each photo is full-strength everywhere except a narrow band at its
    own left/right edge, which is exactly where it meets the neighboring scene's photo.
@@ -63,19 +68,29 @@ body{position:relative;}
 .scene-animal{position:absolute;bottom:6%;left:50%;max-width:40%;max-height:55%;width:auto;height:auto;z-index:2;opacity:0;}
 /* dolphins: 1/4 of the viewport height higher and 1/3 smaller than the shared default
    above, and shifted left so they don't sit on top of the coatis sharing this scene */
-#s2-dolphins{bottom:31%;left:50%;max-width:24%;max-height:34%;}
+#s2-dolphins{bottom:31%;left:50%;max-width:26.7%;max-height:36.7%;}
 /* coatis: low on the sand, off to the right, away from the dolphins overhead */
-#s2-coatis{bottom:5%;left:75%;max-width:42%;max-height:24%;}
-/* sentados/reconectando are tight seated groups — shifted right so the walking figure
-   passing through at screen-left doesn't read as it joining the circle */
-#s3 .scene-animal, #s7 .scene-animal{left:72%;}
+#s2-coatis{bottom:5%;left:75%;}
+/* reconectando is a tight seated group — shifted right so the espalda figure
+   standing at screen-left doesn't read as it joining the circle */
+#s8 .scene-animal{left:72%;}
+/* sentados: centered, an eighth up, at half the shared size */
+#s3 .scene-animal{bottom:18.5%;max-width:20%;max-height:27.5%;}
+/* viendo-celulares: a touch under half the shared size, an eighth up from center */
+#s5 .scene-animal{bottom:18.5%;max-width:18%;max-height:24%;}
+/* pantallas-IA: an eighth smaller than the shared size, an eighth up from center */
+#s6 .scene-animal{bottom:18.5%;max-width:35%;max-height:48%;}
+/* publicidad: nudged down from the shared default */
+#s4 .scene-animal{bottom:0%;}
 
-.walker{position:absolute;left:0;bottom:8%;height:30vh;z-index:5;pointer-events:none;}
+.walker{position:absolute;left:0;bottom:8%;height:30%;z-index:5;pointer-events:none;}
 .walker-img{position:absolute;left:0;bottom:0;height:100%;width:auto;opacity:0;}
 
 .scene-text{position:relative;z-index:10;max-width:min(820px,86vw);text-align:center;padding:0 24px;}
 .text-es{font-family:var(--font-display);font-style:italic;font-weight:400;font-size:clamp(24px,4vw,48px);line-height:1.35;color:var(--white);text-shadow:0 2px 22px rgba(0,0,0,.55),0 1px 4px rgba(0,0,0,.5);opacity:0;}
 .text-en{font-family:var(--font-display);font-style:italic;font-weight:300;font-size:clamp(15px,1.8vw,21px);line-height:1.5;color:rgba(245,243,238,.8);text-shadow:0 1px 14px rgba(0,0,0,.5);margin-top:16px;opacity:0;}
+/* this is the English page — only the English line shows, not a bilingual pair */
+.text-es{display:none;}
 
 .binary-layer{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;}
 .binary-row{position:absolute;font-family:'DM Sans',monospace;font-size:14px;letter-spacing:.08em;color:rgba(45,191,173,.55);white-space:nowrap;opacity:0;text-shadow:0 1px 6px rgba(0,0,0,.4);}
@@ -97,6 +112,7 @@ body{position:relative;}
 
 <div class="scroll-spacer" id="spacer">
   <div class="pin-wrap">
+    <div class="stage" id="stage">
     <div class="track" id="track">
 
       <!-- SCENE 1 — NIGHT BEACH DISSOLVING INTO DAWN -->
@@ -105,7 +121,7 @@ body{position:relative;}
         <img class="scene-bg" id="s1-dawn-overlay" src="img/bg-02-playa-amanecer.png" alt="" aria-hidden="true">
         <svg class="scene-fx" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
           <rect id="s1-orange" width="1600" height="900" fill="#e8843a" opacity="0"/>
-          <circle id="s1-sun" cx="1000" cy="450" r="0" fill="#f0a84a" opacity="0"/>
+          <circle id="s1-sun" cx="1000" cy="562.5" r="0" fill="#f0a84a" opacity="0"/>
         </svg>
         <div class="scene-text">
           <p class="text-es fade-in">Antes de la primera palabra, ya existía la conexión.</p>
@@ -168,7 +184,7 @@ body{position:relative;}
       <!-- SCENE 7 — RUPTURE, RECONNECTING -->
       <section class="scene" id="s7">
         <img class="scene-bg" src="img/bg-07-ruptura.png" alt="" aria-hidden="true">
-        <img class="scene-animal fade-in" src="img/reconectando.png" alt="" aria-hidden="true">
+        <img class="scene-animal fade-in" src="img/libro.png" alt="" aria-hidden="true">
         <div class="scene-text">
           <p class="text-es fade-in">Pero en medio del caos, sigue existiendo la vida.</p>
           <p class="text-en fade-in">But in the middle of the chaos, life goes on.</p>
@@ -178,6 +194,7 @@ body{position:relative;}
       <!-- SCENE 8 — CHILDREN -->
       <section class="scene" id="s8">
         <img class="scene-bg" src="img/bg-08-ninos.png" alt="" aria-hidden="true">
+        <img class="scene-animal fade-in" src="img/reconectando.png" alt="" aria-hidden="true">
         <div class="scene-text">
           <p class="text-es fade-in">Porque en lo más profundo, lo que necesitamos es conexión.</p>
           <p class="text-en fade-in">Because at our core, what we need is connection.</p>
@@ -208,11 +225,25 @@ body{position:relative;}
       </div>
 
     </div>
+    </div>
   </div>
 </div>
 
 <script>
 gsap.registerPlugin(ScrollTrigger);
+
+// the stage is always full width, but on a narrower-than-16:9 screen (a phone held
+// upright) its height is capped to a 16:9 box instead of the full (much taller) real
+// viewport height, letterboxing the rest with the dark background — see .pin-wrap/.stage
+const stageEl = document.getElementById('stage');
+function computeStage(){
+  const vw = window.innerWidth, vh = window.innerHeight;
+  // only letterbox in true portrait orientation — any landscape window, even one a
+  // little narrower than 16:9, keeps the full height it always had
+  const stageH = vw < vh ? Math.round(vw*9/16) : vh;
+  stageEl.style.height = stageH + 'px';
+}
+computeStage();
 
 const track = document.getElementById('track');
 const scenes = [...track.querySelectorAll('.scene')];
@@ -250,9 +281,10 @@ function updateWalker(scenePos, vw){
   const perfilOut = gsap.utils.clamp(0, 1, (scenePos-(7-fadeW))/fadeW);
   gsap.set(walkerPerfil, {opacity: perfilIn*(1-perfilOut)});
 
+  // espalda crossfades in as perfil crossfades out, entering scene 8, and then just
+  // stays for the rest of the scroll (through scene 8 and scene 9, the close)
   const espaldaIn = gsap.utils.clamp(0, 1, (scenePos-(7-fadeW))/fadeW);
-  const espaldaOut = gsap.utils.clamp(0, 1, (scenePos-(8-fadeW))/fadeW);
-  gsap.set(walkerEspalda, {opacity: espaldaIn*(1-espaldaOut)});
+  gsap.set(walkerEspalda, {opacity: espaldaIn});
 
   const leftFraction = 0.16;
   const bob = -Math.abs(Math.sin(scenePos*Math.PI*4))*6;
@@ -266,9 +298,9 @@ const s1DawnOverlay = document.getElementById('s1-dawn-overlay');
 function updateDawn(local){
   gsap.set(s1DawnOverlay, {opacity: local});
   gsap.set('#s1-orange', {opacity: local*0.2});
-  // starts at mid-screen (y=450 of the 1600x900 viewBox), 1/8 of the width to the
-  // right of center (cx=1000 instead of 800), and rises straight up from there
-  gsap.set('#s1-sun', {cy: 450 - local*360, r: local*72, opacity: Math.min(local*3,1)});
+  // starts 1/8 of the viewBox height below mid-screen (y=562.5, vs 450 at center) and
+  // 1/8 of the width to the right of center (cx=1000 instead of 800), rising straight up
+  gsap.set('#s1-sun', {attr: {cy: 562.5 - local*360, r: local*72}, opacity: Math.min(local*3,1)});
 }
 
 let scrollTween;
@@ -298,12 +330,22 @@ function buildScroll(){
           // fade-in piggybacks on the previous scene's local instead, which is the same
           // physical transition (one arriving as the other recedes), just read from
           // the other side
-          const arrivalLocal = (i === lastIndex) ? gsap.utils.clamp(0, 1, scenePos-(i-1)) : local;
-          const fadeIn = gsap.utils.clamp(0, 1, arrivalLocal/0.15);
+          const arrivalRaw = (i === lastIndex) ? (scenePos-(i-1)) : (scenePos - i);
+          // captions used to wait until a scene was fully arrived before fading in, which
+          // read as late next to the walking figure already entering the new scene — now
+          // they lead the arrival by `lead` scene-units so they are in place by the time
+          // the photo settles. Scene 1 has nothing before it to lead from, so it just
+          // needs to appear the instant any scroll begins.
+          const lead = 0.3;
+          const fadeIn = (i === 0)
+            ? gsap.utils.clamp(0, 1, scenePos/0.05)
+            : gsap.utils.clamp(0, 1, (arrivalRaw+lead)/(lead+0.15));
           // the last scene has nothing to hand off to either, so it only fades in and
           // stays — fading it out at the end would leave the closing logo/link
-          // invisible with nowhere further to scroll
-          const fadeOut = (i === lastIndex) ? 0 : gsap.utils.clamp(0, 1, (local-0.85)/0.15);
+          // invisible with nowhere further to scroll. Everyone else fades out over the
+          // exact same window the next scene leads its fade-in over, so the handoff is a
+          // clean crossfade instead of leaving both captions on screen at once.
+          const fadeOut = (i === lastIndex) ? 0 : gsap.utils.clamp(0, 1, (scenePos-(i+1-lead))/(lead+0.15));
           const opacity = fadeIn*(1-fadeOut);
           const pinX = local*vw;
           fadeEls[i].forEach(el => gsap.set(el, {opacity}));
@@ -355,7 +397,11 @@ window.addEventListener('keydown', (e) => {
     window.scrollBy({ top: step, behavior: 'smooth' });
   }
 });
-window.addEventListener('resize', () => { ScrollTrigger.refresh(); });
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => { computeStage(); buildScroll(); ScrollTrigger.refresh(); }, 150);
+});
 </script>
 </body>
 </html>
