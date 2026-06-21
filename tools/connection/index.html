@@ -154,8 +154,8 @@ body{position:relative;}
 
       <!-- SCENE 3 — JUNGLE / SHORE, TWO PEOPLE SEATED -->
       <section class="scene" id="s3">
-        <img class="scene-bg" src="img/bg-03-selva.png" alt="" aria-hidden="true">
-        <img class="scene-animal fade-in" src="img/sentados.png" alt="" aria-hidden="true">
+        <img class="scene-bg" data-src="img/bg-03-selva.png" alt="" aria-hidden="true">
+        <img class="scene-animal fade-in" data-src="img/sentados.png" alt="" aria-hidden="true">
         <div class="scene-text">
           <p class="text-es fade-in">En nuestra mirada siempre hay una intención: establecer conexión. La comunicación es una acción.</p>
           <p class="text-en fade-in">In our gaze there is always an intention: to connect. Communication is an act.</p>
@@ -164,8 +164,8 @@ body{position:relative;}
 
       <!-- SCENE 4 — JUNGLE GIVES WAY TO CONCRETE, ADVERTISING -->
       <section class="scene" id="s4">
-        <img class="scene-bg" src="img/bg-04-selva-concreto.png" alt="" aria-hidden="true">
-        <img class="scene-animal fade-in" src="img/publicidad.png" alt="" aria-hidden="true">
+        <img class="scene-bg" data-src="img/bg-04-selva-concreto.png" alt="" aria-hidden="true">
+        <img class="scene-animal fade-in" data-src="img/publicidad.png" alt="" aria-hidden="true">
         <div class="scene-text">
           <p class="text-es fade-in">Pero en algún momento, la acción se volvió transacción.</p>
           <p class="text-en fade-in">But somewhere along the way, the act became a transaction.</p>
@@ -174,8 +174,8 @@ body{position:relative;}
 
       <!-- SCENE 5 — CITY, EVERYONE ON THEIR PHONES -->
       <section class="scene" id="s5">
-        <img class="scene-bg" src="img/bg-05-ciudad.png" alt="" aria-hidden="true">
-        <img class="scene-animal fade-in" src="img/viendo-celulares.png" alt="" aria-hidden="true">
+        <img class="scene-bg" data-src="img/bg-05-ciudad.png" alt="" aria-hidden="true">
+        <img class="scene-animal fade-in" data-src="img/viendo-celulares.png" alt="" aria-hidden="true">
         <div class="scene-text">
           <p class="text-es fade-in">Una aceleración que comenzó mucho antes.</p>
           <p class="text-en fade-in">An acceleration that started long before.</p>
@@ -184,8 +184,8 @@ body{position:relative;}
 
       <!-- SCENE 6 — THE MATRIX, AI SCREEN HEADS -->
       <section class="scene" id="s6">
-        <img class="scene-bg" src="img/bg-06-matrix.png" alt="" aria-hidden="true">
-        <img class="scene-animal fade-in" src="img/pantallas-IA.png" alt="" aria-hidden="true">
+        <img class="scene-bg" data-src="img/bg-06-matrix.png" alt="" aria-hidden="true">
+        <img class="scene-animal fade-in" data-src="img/pantallas-IA.png" alt="" aria-hidden="true">
         <div class="binary-layer" id="s6-binary"></div>
         <div class="scene-text">
           <p class="text-es fade-in">Cuando todos dicen lo mismo, nadie dice nada.</p>
@@ -195,8 +195,8 @@ body{position:relative;}
 
       <!-- SCENE 7 — RUPTURE, RECONNECTING -->
       <section class="scene" id="s7">
-        <img class="scene-bg" src="img/bg-07-ruptura.png" alt="" aria-hidden="true">
-        <img class="scene-animal fade-in" src="img/libro.png" alt="" aria-hidden="true">
+        <img class="scene-bg" data-src="img/bg-07-ruptura.png" alt="" aria-hidden="true">
+        <img class="scene-animal fade-in" data-src="img/libro.png" alt="" aria-hidden="true">
         <div class="scene-text">
           <p class="text-es fade-in">Pero en medio del caos, sigue existiendo la vida.</p>
           <p class="text-en fade-in">But in the middle of the chaos, life goes on.</p>
@@ -205,8 +205,8 @@ body{position:relative;}
 
       <!-- SCENE 8 — CHILDREN -->
       <section class="scene" id="s8">
-        <img class="scene-bg" src="img/bg-08-ninos.png" alt="" aria-hidden="true">
-        <img class="scene-animal fade-in" src="img/reconectando.png" alt="" aria-hidden="true">
+        <img class="scene-bg" data-src="img/bg-08-ninos.png" alt="" aria-hidden="true">
+        <img class="scene-animal fade-in" data-src="img/reconectando.png" alt="" aria-hidden="true">
         <div class="scene-text">
           <p class="text-es fade-in">Porque en lo más profundo, lo que necesitamos es conexión.</p>
           <p class="text-en fade-in">Because at our core, what we need is connection.</p>
@@ -215,7 +215,7 @@ body{position:relative;}
 
       <!-- SCENE 9 — CLOSING BEACH -->
       <section class="scene" id="s9">
-        <img class="scene-bg" src="img/bg-09-playa-cierre.png" alt="" aria-hidden="true">
+        <img class="scene-bg" data-src="img/bg-09-playa-cierre.png" alt="" aria-hidden="true">
         <div class="scene-text">
           <p class="text-es fade-in">¿Cuándo fue la última vez que tu marca sonó a ti?</p>
           <p class="text-en fade-in">When was the last time your brand sounded like you?</p>
@@ -261,6 +261,24 @@ const track = document.getElementById('track');
 const scenes = [...track.querySelectorAll('.scene')];
 const sceneCount = scenes.length;
 const fadeEls = scenes.map(s => [...s.querySelectorAll('.fade-in')]);
+
+// scenes 3+ hold their full-res photos in data-src instead of src — loading all 9 up
+// front (close to 20MB) is what was tripping the broken-image icon on phones under
+// memory pressure. Each scene's images are only swapped in once scroll gets close,
+// and never swapped back out, so the browser only ever has a handful decoded at once.
+const lazyByScene = scenes.map(s => [...s.querySelectorAll('[data-src]')]);
+function loadScene(i){
+  if (i < 0 || i >= sceneCount) return;
+  lazyByScene[i].forEach(img => {
+    if (img.dataset.src) { img.src = img.dataset.src; delete img.dataset.src; }
+  });
+}
+loadScene(0);
+loadScene(1);
+function updateLazyLoad(scenePos){
+  const center = Math.round(scenePos);
+  for (let i = center-1; i <= center+2; i++) loadScene(i);
+}
 // each scene is exactly one viewport wide and keeps sliding the whole time it's
 // active, so its text/overlay layers are pinned against that slide (translated by
 // the same amount, in the opposite direction) to stay centered on screen instead of
@@ -377,6 +395,7 @@ function buildScroll(){
           if (i === 1) updateCoatis(local);
         });
         updateWalker(scenePos, vw);
+        updateLazyLoad(scenePos);
       }
     }
   });
