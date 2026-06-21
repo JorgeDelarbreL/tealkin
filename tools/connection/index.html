@@ -74,7 +74,7 @@ body{position:relative;}
 /* reconectando: centered, at half its previous size */
 #s8 .scene-animal{max-width:20%;max-height:27.5%;}
 /* sentados: centered, lower than the shared default, a third smaller than half size */
-#s3 .scene-animal{bottom:-6.5%;max-width:13.3%;max-height:18.3%;}
+#s3 .scene-animal{bottom:18.5%;max-width:13.3%;max-height:18.3%;}
 /* viendo-celulares: a touch under half the shared size, an eighth up from center */
 #s5 .scene-animal{bottom:18.5%;max-width:18%;max-height:24%;}
 /* pantallas-IA: an eighth smaller than the shared size, an eighth up from center */
@@ -104,11 +104,13 @@ body{position:relative;}
 @media (max-width:760px){
   .text-en{margin-top:12px;}
   .scene-animal{max-width:62%;}
-  /* publicidad sits too high on a phone screen — pull it further down */
-  #s4 .scene-animal{bottom:-20%;}
+  /* publicidad: smaller and higher than the last phone-only pass, which overcorrected */
+  #s4 .scene-animal{bottom:0%;max-width:35%;max-height:48%;}
   /* libro inherits the generic mobile upsize above, which makes it oversized here —
      pin it back down to roughly its desktop size instead */
   #s7 .scene-animal{max-width:40%;max-height:55%;}
+  /* sentados: keep the web version's lower default from sliding down on mobile too */
+  #s3 .scene-animal{bottom:-6.5%;}
 }
 </style>
 </head>
