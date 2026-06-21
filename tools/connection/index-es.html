@@ -105,13 +105,14 @@ body{position:relative;}
 @media (max-width:760px){
   .text-en{margin-top:12px;}
   .scene-animal{max-width:62%;}
-  /* publicidad: smaller and higher than the last phone-only pass, which overcorrected */
-  #s4 .scene-animal{bottom:0%;max-width:35%;max-height:48%;}
+  /* publicidad: a touch higher than the last phone-only pass */
+  #s4 .scene-animal{bottom:8%;max-width:35%;max-height:48%;}
   /* libro inherits the generic mobile upsize above, which makes it oversized here —
      pin it back down to roughly its desktop size instead */
   #s7 .scene-animal{max-width:40%;max-height:55%;}
-  /* sentados: keep the web version's lower default from sliding down on mobile too */
-  #s3 .scene-animal{bottom:-6.5%;}
+  /* sentados: was sitting near the very bottom of the letterboxed strip on a phone —
+     raised well clear of it */
+  #s3 .scene-animal{bottom:15%;}
 }
 </style>
 </head>
