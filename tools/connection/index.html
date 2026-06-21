@@ -92,6 +92,9 @@ body{position:relative;}
    takes over the larger primary-caption size that text-es used to own */
 .text-es{display:none;}
 .text-en{font-size:clamp(24px,4vw,48px);}
+/* selva-concreto's background is pale near the horizon — white caption text disappears
+   into it there, so this one scene gets dark text with a light shadow instead */
+#s4 .text-es, #s4 .text-en{color:#1a1a1a;text-shadow:0 1px 10px rgba(255,255,255,.6),0 1px 2px rgba(255,255,255,.8);}
 
 .binary-layer{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;}
 .binary-row{position:absolute;font-family:'DM Sans',monospace;font-size:14px;letter-spacing:.08em;color:rgba(45,191,173,.55);white-space:nowrap;opacity:0;text-shadow:0 1px 6px rgba(0,0,0,.4);}

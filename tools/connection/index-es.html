@@ -90,6 +90,9 @@ body{position:relative;}
 .text-en{font-family:var(--font-display);font-style:italic;font-weight:300;font-size:clamp(15px,1.8vw,21px);line-height:1.5;color:rgba(245,243,238,.8);text-shadow:0 1px 14px rgba(0,0,0,.5);margin-top:16px;opacity:0;}
 /* this is the Spanish page — only the Spanish line shows, not a bilingual pair */
 .text-en{display:none;}
+/* selva-concreto's background is pale near the horizon — white caption text disappears
+   into it there, so this one scene gets dark text with a light shadow instead */
+#s4 .text-es, #s4 .text-en{color:#1a1a1a;text-shadow:0 1px 10px rgba(255,255,255,.6),0 1px 2px rgba(255,255,255,.8);}
 
 .binary-layer{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;}
 .binary-row{position:absolute;font-family:'DM Sans',monospace;font-size:14px;letter-spacing:.08em;color:rgba(45,191,173,.55);white-space:nowrap;opacity:0;text-shadow:0 1px 6px rgba(0,0,0,.4);}
