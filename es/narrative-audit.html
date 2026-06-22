@@ -178,7 +178,7 @@
   <div class="input-phase" id="input-phase">
     <label class="input-label">Tu contenido</label>
     <p class="input-hint">Pega el texto de tu sitio web, comunicado de prensa, a cerca de nosotros o cualquier texto institucional. Cuanto más contenido proporciones, más preciso será el análisis..</p>
-    <textarea id="content-input" placeholder="Pega tu contenido here — website, a cerca de nosotros, comunicado de prensa o una comunicación institucional..."></textarea>
+    <textarea id="content-input" maxlength="12000" placeholder="Pega tu contenido here — website, a cerca de nosotros, comunicado de prensa o una comunicación institucional..."></textarea>
     <p class="char-hint" id="char-count">0 caracteres</p>
     <p class="error-msg" id="error-msg">Por favor pega por lo menos 200 caracteres de contenido para un análisis significativo.</p>
     <button class="run-btn" id="run-btn" onclick="runAudit()">
@@ -248,6 +248,7 @@
 <script>
 let currentContent = '';
 let currentComparators = [];
+let auditInFlight = false;
 
 const textarea = document.getElementById('content-input');
 textarea.addEventListener('input', () => {
@@ -271,13 +272,24 @@ async function animateLoading() {
 }
 
 async function runAudit(refinement = null) {
+  // guard against double-clicks / rapid resubmits firing concurrent AI requests
+  if (auditInFlight) return;
+
   const content = currentContent || textarea.value.trim();
   if (content.length < 200) {
     document.getElementById('error-msg').style.display = 'block';
     return;
   }
+  if (content.length > 12000) {
+    document.getElementById('error-msg').textContent = 'Por favor pega no más de 12,000 caracteres.';
+    document.getElementById('error-msg').style.display = 'block';
+    return;
+  }
   document.getElementById('error-msg').style.display = 'none';
   currentContent = content;
+
+  auditInFlight = true;
+  document.getElementById('run-btn').disabled = true;
 
   showPhase('loading');
   ['ls-1','ls-2','ls-3','ls-4','ls-5'].forEach(id => {
@@ -378,8 +390,11 @@ headers: { 'Content-Type': 'application/json' },
     console.error(err);
     await loadingAnim;
     showPhase('input');
-    document.getElementById('error-msg').textContent = 'Something went wrong. Please try again.';
+    document.getElementById('error-msg').textContent = 'Algo salió mal. Por favor intenta de nuevo.';
     document.getElementById('error-msg').style.display = 'block';
+  } finally {
+    auditInFlight = false;
+    document.getElementById('run-btn').disabled = false;
   }
 }
 
