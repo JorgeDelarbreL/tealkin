@@ -39,8 +39,8 @@
   </url>
 
   <url>
-    <loc>https://tealkin.com/dzon-01-what-is-the-place-of-communications.html</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/dzon-01-what-is-the-place-of-communications.html"/>
+    <loc>https://tealkin.com/dzon-01-cual-es-el-lugar-de-la-comunicacion.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/dzon-01-cual-es-el-lugar-de-la-comunicacion.html"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/dzon-01-cual-es-el-lugar-de-la-comunicacion.html"/>
     <lastmod>2026-05-15</lastmod>
     <changefreq>never</changefreq>
@@ -50,28 +50,118 @@
   <url>
     <loc>https://tealkin.com/es/dzon-01-cual-es-el-lugar-de-la-comunicacion.html</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/dzon-01-cual-es-el-lugar-de-la-comunicacion.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/dzon-01-what-is-the-place-of-communications.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/dzon-01-cual-es-el-lugar-de-la-comunicacion.html"/>
     <lastmod>2026-05-15</lastmod>
     <changefreq>never</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://tealkin.com/tools.html</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/tools.html"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/tools.html"/>
-    <lastmod>2026-05-15</lastmod>
+    <loc>https://tealkin.com/lab.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/lab.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/lab.html"/>
+    <lastmod>2026-06-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://tealkin.com/es/tools.html</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/tools.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/tools.html"/>
-    <lastmod>2026-05-15</lastmod>
+    <loc>https://tealkin.com/es/lab.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/lab.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/lab.html"/>
+    <lastmod>2026-06-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tealkin.com/narrative-audit.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/narrative-audit.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/narrative-audit.html"/>
+    <lastmod>2026-06-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tealkin.com/es/narrative-audit.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/narrative-audit.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/narrative-audit.html"/>
+    <lastmod>2026-06-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tealkin.com/areas.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/areas.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/areas.html"/>
+    <lastmod>2026-06-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tealkin.com/es/areas.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/areas.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/areas.html"/>
+    <lastmod>2026-06-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tealkin.com/cases.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/cases.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/cases.html"/>
+    <lastmod>2026-06-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tealkin.com/es/cases.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/cases.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/cases.html"/>
+    <lastmod>2026-06-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tealkin.com/cases-adidas-naupan.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/cases-adidas-naupan.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/cases-adidas-naupan.html"/>
+    <lastmod>2026-06-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://tealkin.com/es/cases-adidas-naupan.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/cases-adidas-naupan.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/cases-adidas-naupan.html"/>
+    <lastmod>2026-06-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://tealkin.com/cases-costa-elena.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/cases-costa-elena.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/cases-costa-elena.html"/>
+    <lastmod>2026-06-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://tealkin.com/es/cases-costa-elena.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/cases-costa-elena.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/cases-costa-elena.html"/>
+    <lastmod>2026-06-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 
   <url>
@@ -92,11 +182,40 @@
     <priority>0.7</priority>
   </url>
 
-   <url>
-  <loc>https://tealkin.com/tools/crisis-simulator/</loc>
-  <lastmod>2026-05-15</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.8</priority>
-</url>     
+  <url>
+    <loc>https://tealkin.com/tools/crisis-simulator/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/tools/crisis-simulator/index.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/tools/crisis-simulator/index-es.html"/>
+    <lastmod>2026-06-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tealkin.com/tools/crisis-simulator/index-es.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/tools/crisis-simulator/index-es.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/tools/crisis-simulator/index.html"/>
+    <lastmod>2026-06-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tealkin.com/tools/connection/index.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/tools/connection/index.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/tools/connection/index-es.html"/>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://tealkin.com/tools/connection/index-es.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/tools/connection/index-es.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/tools/connection/index.html"/>
+    <lastmod>2026-06-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 
 </urlset>

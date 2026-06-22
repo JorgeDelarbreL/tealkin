@@ -159,7 +159,7 @@
   <a href="index.html" class="nav-logo">Teal<span>Kin</span></a>
   <ul class="nav-links">
     <li><a href="dzon.html">Dzon</a></li>
-    <li><a href="tools.html" class="active">Tools</a></li>
+    <li><a href="lab.html" class="active">Lab</a></li>
     <li><a href="about.html">About</a></li>
   </ul>
 </nav>
@@ -176,7 +176,7 @@
   <div class="input-phase" id="input-phase">
     <label class="input-label">Your content</label>
     <p class="input-hint">Paste your website copy, press release, about page, or any institutional text. The more you give it, the sharper the analysis.</p>
-    <textarea id="content-input" placeholder="Paste your content here — website, about page, press release, or any institutional communication..."></textarea>
+    <textarea id="content-input" maxlength="12000" placeholder="Paste your content here — website, about page, press release, or any institutional communication..."></textarea>
     <p class="char-hint" id="char-count">0 characters</p>
     <p class="error-msg" id="error-msg">Please paste at least 200 characters of content to get a meaningful analysis.</p>
     <button class="run-btn" id="run-btn" onclick="runAudit()">
@@ -246,6 +246,7 @@
 <script>
 let currentContent = '';
 let currentComparators = [];
+let auditInFlight = false;
 
 const textarea = document.getElementById('content-input');
 textarea.addEventListener('input', () => {
@@ -269,13 +270,24 @@ async function animateLoading() {
 }
 
 async function runAudit(refinement = null) {
+  // guard against double-clicks / rapid resubmits firing concurrent AI requests
+  if (auditInFlight) return;
+
   const content = currentContent || textarea.value.trim();
   if (content.length < 200) {
     document.getElementById('error-msg').style.display = 'block';
     return;
   }
+  if (content.length > 12000) {
+    document.getElementById('error-msg').textContent = 'Please paste no more than 12,000 characters.';
+    document.getElementById('error-msg').style.display = 'block';
+    return;
+  }
   document.getElementById('error-msg').style.display = 'none';
   currentContent = content;
+
+  auditInFlight = true;
+  document.getElementById('run-btn').disabled = true;
 
   showPhase('loading');
   ['ls-1','ls-2','ls-3','ls-4','ls-5'].forEach(id => {
@@ -378,6 +390,9 @@ Respond ONLY with a valid JSON object, no markdown, no explanation, no backticks
     showPhase('input');
     document.getElementById('error-msg').textContent = 'Something went wrong. Please try again.';
     document.getElementById('error-msg').style.display = 'block';
+  } finally {
+    auditInFlight = false;
+    document.getElementById('run-btn').disabled = false;
   }
 }
 

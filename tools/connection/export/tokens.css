@@ -1,0 +1,62 @@
+/* ==========================================================================
+   TealKin — "Connection" scrollytelling — design tokens & core styles
+   Extracted from tools/connection/index.html for reuse outside the project.
+   ========================================================================== */
+
+:root{
+  /* color tokens */
+  --teal:#1a9b8c;
+  --teal-light:#2dbfad;
+  --orange:#e8843a;
+  --dark:#0a1628;
+  --white:#f5f3ee;
+
+  /* font tokens */
+  --font-display:'Cormorant Garamond',Georgia,serif;
+  --font-body:'DM Sans',system-ui,sans-serif;
+}
+
+/* reset */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;background:var(--dark);overflow-x:hidden;font-family:var(--font-body);}
+body{position:relative;}
+::selection{background:var(--teal);color:var(--dark);}
+
+/* nav back-link, fixed top-left, blends with whatever's behind it */
+.back-link{position:fixed;top:22px;left:28px;z-index:200;font-family:var(--font-display);font-size:16px;letter-spacing:.04em;color:var(--white);text-decoration:none;opacity:.85;transition:opacity .3s;mix-blend-mode:difference;}
+.back-link:hover{opacity:1;}
+
+/* scroll-driven horizontal track scaffold */
+.scroll-spacer{position:relative;width:100%;}
+#bg-layer{position:fixed;inset:0;z-index:0;background:var(--dark);transition:none;}
+.pin-wrap{position:relative;width:100%;height:100vh;overflow:hidden;z-index:1;}
+.track{position:absolute;top:0;left:0;height:100vh;display:flex;will-change:transform;}
+.scene{position:relative;width:calc(var(--w,1)*100vw);height:100vh;flex:0 0 calc(var(--w,1)*100vw);display:flex;align-items:center;justify-content:center;overflow:visible;}
+.scene svg{clip-path:inset(0);position:absolute;inset:0;width:100%;height:100%;z-index:0;}
+.scene-inner{position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 6vw;z-index:10;}
+
+/* caption + scene label typography */
+.caption{position:relative;z-index:10;max-width:min(760px,88vw);text-align:center;font-family:var(--font-display);font-weight:300;font-style:italic;font-size:clamp(20px,3.4vw,40px);line-height:1.4;color:var(--white);text-shadow:0 2px 24px rgba(0,0,0,.4);padding:14px 28px;background:rgba(5,8,14,.4);border-radius:14px;backdrop-filter:blur(3px);}
+.caption.caption-light{color:#241a10;text-shadow:none;background:rgba(243,227,196,.55);}
+
+.scene-tag{position:absolute;top:34%;left:50%;transform:translateX(-50%);font-family:var(--font-body);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:rgba(245,243,238,.55);z-index:10;text-shadow:0 1px 6px rgba(0,0,0,.5);background:rgba(5,8,14,.35);padding:4px 12px;border-radius:8px;}
+.scene-tag.scene-tag-light{color:rgba(36,26,16,.65);text-shadow:none;background:rgba(243,227,196,.5);}
+
+/* speech bubble (used for running-kids dialogue) */
+.sbubble{position:absolute;font-family:var(--font-body);font-size:13px;font-weight:500;color:var(--dark);background:var(--white);border-radius:18px;padding:6px 14px;opacity:0;white-space:nowrap;}
+.sbubble::after{content:'';position:absolute;left:50%;bottom:-6px;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:7px solid var(--white);transform:translateX(-50%);}
+
+/* matrix scene binary text columns */
+.matrix-layer{position:absolute;left:0;right:0;top:14%;display:flex;align-items:center;justify-content:flex-start;flex-direction:column;gap:14px;z-index:2;}
+.bin-row{font-family:'DM Sans',monospace;font-size:clamp(11px,1.6vw,18px);letter-spacing:.08em;color:rgba(26,155,140,.85);white-space:nowrap;}
+
+/* closing scene brand mark */
+.brand-mark{font-family:var(--font-body);font-weight:500;font-size:22px;letter-spacing:.06em;color:var(--dark);opacity:0;}
+.brand-mark span{color:var(--teal);}
+.close-sub{font-family:var(--font-body);font-weight:400;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:rgba(10,22,40,.6);margin-top:10px;opacity:0;}
+
+/* breakpoints */
+@media (max-width:760px){
+  .caption{font-size:20px;}
+  .scene-tag{font-size:9px;}
+}

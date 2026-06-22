@@ -1,0 +1,3 @@
+# Permanent redirects for renamed/removed pages (Cloudflare Pages)
+/tools.html       /lab.html       301
+/es/tools.html    /es/lab.html    301
