@@ -528,17 +528,25 @@ async function startPrep() {
 
 async function setupAudio() {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR) { voiceMode = false; }
+  const status = document.getElementById('prep-status');
+  // el modo voz depende SOLO del soporte de SpeechRecognition;
+  // la grabadora es un extra y nunca debe forzar el modo texto
+  voiceMode = !!SR;
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     try {
+      status.innerHTML += '<br>Solicitando acceso al micrófono…';
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaRecorder = new MediaRecorder(stream);
       audioChunks = [];
       mediaRecorder.ondataavailable = e => { if (e.data && e.data.size) audioChunks.push(e.data); };
+      status.innerHTML += ' <span class="ok">✓ micrófono listo</span>';
     } catch (e) {
       mediaRecorder = null;
-      voiceMode = voiceMode && false;
+      status.innerHTML += ' <span class="warn">△ micrófono denegado — el audio de la sesión no se grabará' + (voiceMode ? ', pero responder por voz puede seguir funcionando' : '') + '.</span>';
     }
+  }
+  if (!voiceMode) {
+    status.innerHTML += '<br><span class="warn">△ Este navegador no soporta reconocimiento de voz — cambiamos a respuestas por texto. Para la experiencia completa de voz usa Chrome en escritorio o Android.</span>';
   }
   if (voiceMode && SR) {
     recog = new SR();
@@ -554,13 +562,24 @@ async function setupAudio() {
       }
       document.getElementById('answer-live').innerHTML = escapeHtml(finalText) + '<span class="interim">' + escapeHtml(interimText) + '</span>';
     };
-    recog.onerror = () => {};
+    recog.onerror = (ev) => {
+      if (ev.error === 'not-allowed' || ev.error === 'service-not-allowed' || ev.error === 'audio-capture') {
+        switchToTextMode();
+      }
+    };
     recog.onend = () => { if (recogActive) { try { recog.start(); } catch {} } };
   }
-  if (!voiceMode) {
-    document.getElementById('text-fallback').style.display = 'block';
-    document.getElementById('mic-btn').textContent = '✓ Enviar respuesta';
-  }
+  if (!voiceMode) switchToTextMode();
+}
+
+function switchToTextMode() {
+  voiceMode = false;
+  recogActive = false;
+  try { if (recog) recog.stop(); } catch {}
+  const btn = document.getElementById('mic-btn');
+  btn.classList.remove('recording');
+  btn.textContent = '✓ Enviar respuesta';
+  document.getElementById('text-fallback').style.display = 'block';
 }
 
 /* ── PHASE 2: interview loop ── */
