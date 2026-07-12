@@ -419,6 +419,7 @@ let mediaRecorder = null;
 let audioChunks = [];
 let voiceMode = true;
 let micStream = null;
+let voiceFailReason = '';
 let retryUsed = false;
 let textThisQuestion = false;
 
@@ -513,7 +514,7 @@ async function startPrep() {
     const data = await r.json().catch(() => ({}));
     if (r.ok && data.summary) {
       dossier = data;
-      status.innerHTML = '<span class="ok">✓ Dossier ready</span>' + (data.sources && data.sources.length ? ' — ' + data.sources.length + ' sources on file' : '') + '. Entering the studio…';
+      status.innerHTML = '<span class="ok">✓ Dossier ready</span>' + (data.sources && data.sources.length ? ' — ' + data.sources.length + ' sources on file' : '') + '.';
     } else {
       dossier = null;
       status.innerHTML = '<span class="warn">△ Live research unavailable — the journalist will work from your topic and general knowledge.</span>';
@@ -539,10 +540,11 @@ function showMicConsent() {
   voiceBtn.textContent = '🎙 Enable microphone and voice';
   voiceBtn.onclick = async () => {
     voiceBtn.disabled = true; voiceBtn.textContent = 'Requesting permission…';
+    voiceFailReason = '';
     await setupAudio();
     wrap.remove();
     if (voiceMode && micStream) showMicTest();
-    else enterStudio();
+    else showVoiceFailCard();
   };
   const textBtn = document.createElement('button');
   textBtn.className = 'run-btn ghost-btn';
@@ -576,6 +578,7 @@ async function setupAudio() {
       status.innerHTML += ' <span class="ok">✓ mic ready</span>';
     } catch (e) {
       mediaRecorder = null;
+      voiceFailReason = voiceFailReason || (e && e.name === 'NotAllowedError' ? 'not-allowed' : (e && e.name === 'NotFoundError' ? 'audio-capture' : ''));
       status.innerHTML += ' <span class="warn">△ mic denied — the session audio won\'t be recorded' + (voiceMode ? ', but voice answers may still work' : '') + '.</span>';
     }
   }
@@ -624,13 +627,49 @@ function preflightVoice(SR) {
     let settled = false;
     const done = ok => { if (!settled) { settled = true; try { test.abort(); } catch {} resolve(ok); } };
     let test;
-    try { test = new SR(); } catch { return resolve(false); }
+    try { test = new SR(); } catch { voiceFailReason = voiceFailReason || 'service-not-allowed'; return resolve(false); }
     test.lang = SPEECH_LANG;
-    test.onerror = () => done(false);
+    test.onerror = (ev) => { voiceFailReason = voiceFailReason || (ev && ev.error) || 'service-not-allowed'; done(false); };
     test.onstart = () => setTimeout(() => done(true), 900);
-    try { test.start(); } catch { return done(false); }
-    setTimeout(() => done(false), 4000);
+    try { test.start(); } catch { voiceFailReason = voiceFailReason || 'service-not-allowed'; return done(false); }
+    setTimeout(() => { voiceFailReason = voiceFailReason || 'network'; done(false); }, 4000);
   });
+}
+
+// Voice could not be enabled: STOP and explain — never jump to the studio silently.
+function showVoiceFailCard() {
+  const REASONS = {
+      'not-allowed': 'microphone permission was denied — click the padlock next to the URL → Microphone → Allow, reload, and try again',
+      'service-not-allowed': 'this browser blocks the speech-recognition service (typical of Brave, Edge or Safari without dictation enabled) — use Google Chrome for voice',
+      'audio-capture': 'no working microphone was found',
+      'network': 'the speech service could not be reached (it needs an internet connection)'
+    };
+  const why = (!micStream ? 'Your browser did not grant microphone access' : (REASONS[voiceFailReason] || voiceFailReason || 'unknown reason'));
+  const status = document.getElementById('prep-status');
+  const wrap = document.createElement('div');
+  wrap.id = 'voice-fail';
+  wrap.style.cssText = 'margin-top:1.25rem;border:0.5px solid rgba(212,160,23,0.45);border-radius:6px;padding:1.5rem;background:rgba(212,160,23,0.06);';
+  wrap.innerHTML = '<p style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--amber);margin-bottom:0.75rem;">Voice could not be enabled</p>' +
+    '<p style="font-size:13px;color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:1.1rem;">' + escapeHtml(why.charAt(0).toUpperCase() + why.slice(1)) + '.</p>';
+  const retryBtn = document.createElement('button');
+  retryBtn.className = 'run-btn';
+  retryBtn.textContent = '↻ Try voice again';
+  retryBtn.onclick = async () => {
+    retryBtn.disabled = true;
+    voiceFailReason = '';
+    await setupAudio();
+    wrap.remove();
+    if (voiceMode && micStream) showMicTest();
+    else showVoiceFailCard();
+  };
+  const textBtn = document.createElement('button');
+  textBtn.className = 'run-btn ghost-btn';
+  textBtn.style.marginLeft = '10px';
+  textBtn.textContent = '⌨ Continue by text →';
+  textBtn.onclick = () => { wrap.remove(); voiceMode = false; mediaRecorder = null; switchToTextMode(); enterStudio(); };
+  wrap.appendChild(retryBtn);
+  wrap.appendChild(textBtn);
+  status.after(wrap);
 }
 
 // Google Meet-style mic check: the user must SEE the meter react before entering.
