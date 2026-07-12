@@ -418,6 +418,9 @@ let timeLeft = 0;
 let mediaRecorder = null;
 let audioChunks = [];
 let voiceMode = true;
+let micStream = null;
+let retryUsed = false;
+let textThisQuestion = false;
 
 function escapeHtml(s) {
   return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -530,7 +533,7 @@ function showMicConsent() {
   const wrap = document.createElement('div');
   wrap.id = 'mic-consent';
   wrap.style.cssText = 'margin-top:1.25rem;border:0.5px solid rgba(45,191,173,0.35);border-radius:6px;padding:1.5rem;background:rgba(26,155,140,0.05);';
-  wrap.innerHTML = '<p style="font-size:13px;color:var(--mist);line-height:1.7;margin-bottom:1.1rem;">🎙 Esta entrevista funciona mejor por voz: el periodista habla y tú respondes en voz alta, y tu audio se graba para que puedas revisarlo. <strong style="color:var(--white);font-weight:500;">Tu micrófono solo se activa si lo autorizas ahora</strong> — tu navegador te pedirá permiso. Nada se envía a ningún servidor: la grabación se queda en tu dispositivo.</p>';
+  wrap.innerHTML = '<p style="font-size:13px;color:var(--mist);line-height:1.7;margin-bottom:1.1rem;">🎙 Esta entrevista funciona mejor por voz: el periodista habla y tú respondes en voz alta, y tu audio se graba para que puedas revisarlo. <strong style="color:var(--white);font-weight:500;">Tu micrófono solo se activa si lo autorizas ahora</strong> — tu navegador te pedirá permiso. Nada se envía a ningún servidor: la grabación se queda en tu dispositivo. Habla en español — la entrevista y el micrófono funcionan en español en esta página.</p>';
   const voiceBtn = document.createElement('button');
   voiceBtn.className = 'run-btn';
   voiceBtn.textContent = '🎙 Activar micrófono y voz';
@@ -538,7 +541,8 @@ function showMicConsent() {
     voiceBtn.disabled = true; voiceBtn.textContent = 'Solicitando permiso…';
     await setupAudio();
     wrap.remove();
-    enterStudio();
+    if (voiceMode && micStream) showMicTest();
+    else enterStudio();
   };
   const textBtn = document.createElement('button');
   textBtn.className = 'run-btn ghost-btn';
@@ -565,6 +569,7 @@ async function setupAudio() {
     try {
       status.innerHTML += '<br>Solicitando acceso al micrófono…';
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      micStream = stream;
       mediaRecorder = new MediaRecorder(stream);
       audioChunks = [];
       mediaRecorder.ondataavailable = e => { if (e.data && e.data.size) audioChunks.push(e.data); };
@@ -626,6 +631,68 @@ function preflightVoice(SR) {
     try { test.start(); } catch { return done(false); }
     setTimeout(() => done(false), 4000);
   });
+}
+
+// Google Meet-style mic check: the user must SEE the meter react before entering.
+function showMicTest() {
+  const status = document.getElementById('prep-status');
+  const wrap = document.createElement('div');
+  wrap.id = 'mic-test';
+  wrap.style.cssText = 'margin-top:1.25rem;border:0.5px solid rgba(45,191,173,0.35);border-radius:6px;padding:1.5rem;background:rgba(26,155,140,0.05);';
+  const device = (micStream.getAudioTracks()[0] && micStream.getAudioTracks()[0].label) || '';
+  wrap.innerHTML =
+    '<p style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal-light);margin-bottom:0.75rem;">Prueba de micrófono</p>' +
+    '<p style="font-size:13px;color:var(--mist);line-height:1.7;margin-bottom:1rem;">Di algo en voz alta — por ejemplo "probando, uno dos tres". Cuando veas las barras moverse, te escuchamos.</p>' +
+    (device ? '<p style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:0.75rem;">Micrófono: ' + escapeHtml(device) + '</p>' : '') +
+    '<div id="vu-meter" style="display:flex;gap:4px;align-items:flex-end;height:44px;margin-bottom:0.75rem;">' +
+      Array.from({length:16}, () => '<div style="flex:1;height:4px;background:rgba(255,255,255,0.12);border-radius:2px;transition:height 0.08s, background 0.08s;"></div>').join('') +
+    '</div>' +
+    '<p id="mic-test-state" style="font-size:12px;color:var(--amber);margin-bottom:1.1rem;">Esperando escucharte…</p>';
+  const enterBtn = document.createElement('button');
+  enterBtn.className = 'run-btn';
+  enterBtn.textContent = 'Se escucha bien → Entrar al estudio';
+  enterBtn.disabled = true;
+  const textBtn = document.createElement('button');
+  textBtn.className = 'run-btn ghost-btn';
+  textBtn.style.marginLeft = '10px';
+  textBtn.textContent = 'Prefiero responder por texto';
+  wrap.appendChild(enterBtn);
+  wrap.appendChild(textBtn);
+  status.after(wrap);
+
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  try { ctx.resume(); } catch {}
+  const srcNode = ctx.createMediaStreamSource(micStream);
+  const analyser = ctx.createAnalyser();
+  analyser.fftSize = 512;
+  srcNode.connect(analyser);
+  const data = new Uint8Array(analyser.frequencyBinCount);
+  const bars = wrap.querySelectorAll('#vu-meter div');
+  let heard = false;
+  let raf;
+  const loop = () => {
+    analyser.getByteFrequencyData(data);
+    let sum = 0;
+    for (let i = 0; i < data.length; i++) sum += data[i];
+    const level = sum / data.length / 255; // 0..1
+    bars.forEach((b, i) => {
+      const h = Math.max(4, Math.min(44, level * 44 * (0.6 + Math.sin(i * 1.3 + level * 9) * 0.4 + 0.4)));
+      b.style.height = h + 'px';
+      b.style.background = level > 0.06 ? 'var(--teal-light)' : 'rgba(255,255,255,0.12)';
+    });
+    if (!heard && level > 0.08) {
+      heard = true;
+      enterBtn.disabled = false;
+      const st = document.getElementById('mic-test-state');
+      st.textContent = '✓ Te escuchamos con claridad.';
+      st.style.color = 'var(--teal-light)';
+    }
+    raf = requestAnimationFrame(loop);
+  };
+  loop();
+  const stopMeter = () => { cancelAnimationFrame(raf); try { srcNode.disconnect(); } catch {} try { ctx.close(); } catch {} };
+  enterBtn.onclick = () => { stopMeter(); wrap.remove(); enterStudio(); };
+  textBtn.onclick = () => { stopMeter(); wrap.remove(); voiceMode = false; mediaRecorder = null; switchToTextMode(); enterStudio(); };
 }
 
 function switchToTextMode(reason) {
@@ -714,13 +781,27 @@ async function nextQuestion() {
   document.getElementById('thinking').style.display = 'none';
   document.getElementById('q-text').textContent = question;
   await speak(question);
-  document.getElementById('mic-btn').disabled = false;
-  startTimer();
+  retryUsed = false;
+  if (voiceMode) beginListening(ANSWER_SECONDS);
+  else { document.getElementById('mic-btn').disabled = false; startTimer(); }
 }
 
-function startTimer() {
+// voice mode: listening starts BY ITSELF when the journalist finishes the question
+function beginListening(seconds) {
+  recogActive = true;
+  finalText = ''; interimText = '';
+  document.getElementById('answer-live').innerHTML = '<span class="interim">🔴 Escuchando… habla ahora</span>';
+  try { recog.start(); } catch {}
+  const btn = document.getElementById('mic-btn');
+  btn.disabled = false;
+  btn.classList.add('recording');
+  btn.textContent = '■ Terminé de responder';
+  startTimer(seconds);
+}
+
+function startTimer(seconds) {
   clearInterval(timerId);
-  timeLeft = ANSWER_SECONDS;
+  timeLeft = seconds || ANSWER_SECONDS;
   const el = document.getElementById('timer');
   const paint = () => {
     const m = Math.floor(timeLeft / 60), s = String(timeLeft % 60).padStart(2, '0');
@@ -736,39 +817,71 @@ function startTimer() {
 }
 
 function toggleAnswer() {
-  if (!voiceMode) return submitAnswer();
-  if (!recogActive) {
-    recogActive = true;
-    finalText = ''; interimText = '';
-    try { recog.start(); } catch {}
-    const btn = document.getElementById('mic-btn');
-    btn.classList.add('recording');
-    btn.textContent = '■ Terminé de responder';
-  } else {
-    submitAnswer();
-  }
+  // in voice mode listening is already running — the button only finishes the answer
+  submitAnswer();
 }
 
 function submitAnswer() {
   clearInterval(timerId);
   document.getElementById('timer').textContent = '';
   let answer;
-  if (voiceMode) {
+  const usingText = !voiceMode || textThisQuestion;
+  if (!usingText) {
     recogActive = false;
     try { recog.stop(); } catch {}
     answer = (finalText + ' ' + interimText).trim();
-    const btn = document.getElementById('mic-btn');
-    btn.classList.remove('recording');
-    btn.textContent = '🎙 Responder';
   } else {
     const ta = document.getElementById('text-fallback');
     answer = ta.value.trim();
     ta.value = '';
   }
+  const btn = document.getElementById('mic-btn');
+  btn.classList.remove('recording');
+
+  // voice mode heard nothing → offer a retry instead of recording silence
+  if (!usingText && !answer && !retryUsed) {
+    retryUsed = true;
+    btn.disabled = true;
+    showEmptyGuard();
+    return;
+  }
+
+  if (textThisQuestion) {
+    textThisQuestion = false;
+    if (voiceMode) document.getElementById('text-fallback').style.display = 'none';
+  }
   transcript[transcript.length - 1].a = answer || '(silencio)';
   document.getElementById('answer-live').innerHTML = escapeHtml(answer || '(silencio)');
-  document.getElementById('mic-btn').disabled = true;
+  btn.disabled = true;
   setTimeout(() => nextQuestion(), 700);
+}
+
+function showEmptyGuard() {
+  const guard = document.createElement('div');
+  guard.id = 'empty-guard';
+  guard.style.cssText = 'margin-top:0.9rem;border:0.5px solid rgba(212,160,23,0.4);border-radius:4px;padding:1rem 1.25rem;background:rgba(212,160,23,0.06);';
+  guard.innerHTML = '<p style="font-size:13px;color:var(--amber);line-height:1.6;margin-bottom:0.8rem;">No te escuchamos. Acércate al micrófono e intenta de nuevo — o responde esta pregunta por texto.</p>';
+  const retryBtn = document.createElement('button');
+  retryBtn.className = 'run-btn';
+  retryBtn.style.padding = '10px 22px';
+  retryBtn.textContent = '↻ Reintentar';
+  retryBtn.onclick = () => { guard.remove(); beginListening(45); };
+  const textBtn = document.createElement('button');
+  textBtn.className = 'run-btn ghost-btn';
+  textBtn.style.cssText = 'margin-left:10px;padding:10px 22px;';
+  textBtn.textContent = '⌨ Escribir esta respuesta';
+  textBtn.onclick = () => {
+    guard.remove();
+    textThisQuestion = true;
+    document.getElementById('text-fallback').style.display = 'block';
+    const btn = document.getElementById('mic-btn');
+    btn.disabled = false;
+    btn.textContent = '✓ Enviar respuesta';
+    startTimer(60);
+  };
+  guard.appendChild(retryBtn);
+  guard.appendChild(textBtn);
+  document.querySelector('.studio-bottom').appendChild(guard);
 }
 
 /* ── PHASE 3: evaluation ── */
