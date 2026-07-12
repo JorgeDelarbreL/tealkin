@@ -180,42 +180,80 @@ async function handleResearch(request, env, headers) {
     ? `Investiga en la web qué se dice EN LÍNEA sobre el negocio "${brand}"${location ? ' ubicado en ' + location : ''}${sector ? ' (sector: ' + sector + ')' : ''}. Busca: reseñas de clientes (Google, TripAdvisor, etc.), menciones en redes sociales y noticias, quejas o controversias, y cómo se percibe su reputación en general. Resume tus hallazgos en 3-5 párrafos concretos, citando de dónde viene cada dato. Si encuentras poca o ninguna información, dilo explícitamente — eso también es un hallazgo relevante (invisibilidad digital). No inventes nada. Responde en español.`
     : `Research the web for what is being said ONLINE about the business "${brand}"${location ? ' located in ' + location : ''}${sector ? ' (sector: ' + sector + ')' : ''}. Look for: customer reviews (Google, TripAdvisor, etc.), social media mentions and news, complaints or controversies, and overall reputation perception. Summarize findings in 3-5 concrete paragraphs, citing where each fact comes from. If you find little or no information, say so explicitly — that is itself a relevant finding (digital invisibility). Do not invent anything. Respond in English.`;
 
-  // model availability varies by account/API version — try candidates in order
-  const MODELS = ['gemini-2.5-flash', 'gemini-flash-latest', 'gemini-2.0-flash', 'gemini-1.5-flash'];
-  let resp = null;
-  let lastErr = '';
-  for (const model of MODELS) {
-    try {
-      resp = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-goog-api-key': env.Gemini,
-          },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }],
-            tools: [{ google_search: {} }],
-            generationConfig: { temperature: 0.3, maxOutputTokens: 2048 },
-          }),
-        }
-      );
-    } catch {
-      lastErr = 'unreachable';
-      resp = null;
-      continue;
+  const callModel = async (model) => fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-goog-api-key': env.Gemini,
+      },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        tools: [{ google_search: {} }],
+        generationConfig: { temperature: 0.3, maxOutputTokens: 2048 },
+      }),
     }
-    if (resp.ok) break;
-    // capture Google's actual error message for diagnosis, then try next model
+  );
+
+  // model availability varies by account/API version. Try the model that
+  // worked last time (cached in KV), then known names, then ask Google
+  // directly which models this key can use (ListModels) and cache the pick.
+  const cached = await env.RATE_LIMIT_KV.get('gemini_model');
+  const MODELS = [...new Set([cached, 'gemini-2.5-flash', 'gemini-flash-latest', 'gemini-2.0-flash'].filter(Boolean))];
+  let resp = null;
+  let usedModel = '';
+  let lastErr = '';
+
+  for (const model of MODELS) {
+    try { resp = await callModel(model); } catch { lastErr = 'unreachable'; resp = null; continue; }
+    if (resp.ok) { usedModel = model; break; }
     try {
       const eBody = await resp.json();
       lastErr = resp.status + ' ' + ((eBody.error && eBody.error.message) || '').slice(0, 200);
     } catch { lastErr = String(resp.status); }
     resp = null;
   }
+
+  // self-configure: ask Google what models this key actually has
+  if (!resp) {
+    try {
+      const listResp = await fetch('https://generativelanguage.googleapis.com/v1beta/models?pageSize=100', {
+        headers: { 'x-goog-api-key': env.Gemini },
+      });
+      if (listResp.ok) {
+        const list = await listResp.json();
+        const candidates = (list.models || [])
+          .filter(m => (m.supportedGenerationMethods || []).includes('generateContent'))
+          .map(m => m.name.replace(/^models\//, ''))
+          // prefer flash-class, non-preview, non-thinking variants
+          .sort((a, b) => {
+            const scoreOf = n => (n.includes('flash') ? 0 : 2) + (n.includes('preview') || n.includes('exp') ? 1 : 0) + (n.includes('thinking') || n.includes('tts') || n.includes('image') || n.includes('embed') ? 4 : 0);
+            return scoreOf(a) - scoreOf(b);
+          });
+        for (const model of candidates.slice(0, 4)) {
+          try { resp = await callModel(model); } catch { resp = null; continue; }
+          if (resp.ok) { usedModel = model; break; }
+          try {
+            const eBody = await resp.json();
+            lastErr = resp.status + ' ' + ((eBody.error && eBody.error.message) || '').slice(0, 200);
+          } catch { lastErr = String(resp.status); }
+          resp = null;
+        }
+      } else {
+        try {
+          const eBody = await listResp.json();
+          lastErr = 'ListModels ' + listResp.status + ' ' + ((eBody.error && eBody.error.message) || '').slice(0, 200);
+        } catch { lastErr = 'ListModels ' + listResp.status; }
+      }
+    } catch { lastErr = lastErr || 'ListModels unreachable'; }
+  }
+
   if (!resp) {
     return new Response(JSON.stringify({ error: 'Research failed: ' + (lastErr || 'no model available') }), { status: 502, headers });
+  }
+  if (usedModel && usedModel !== cached) {
+    try { await env.RATE_LIMIT_KV.put('gemini_model', usedModel); } catch {}
   }
   const data = await resp.json();
   const cand = data.candidates && data.candidates[0];
