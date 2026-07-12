@@ -275,6 +275,7 @@
       <div class="studio-top">
         <span class="live-badge"><span class="live-dot"></span>ON AIR</span>
         <span class="q-counter" id="q-counter"></span>
+        <span class="q-counter" id="mode-badge" style="color:var(--amber);"></span>
         <span class="rec-badge" id="rec-badge" style="display:none;"><span class="rec-dot"></span>REC</span>
       </div>
       <div class="studio-stage">
@@ -545,7 +546,15 @@ async function setupAudio() {
       status.innerHTML += ' <span class="warn">△ mic denied — the session audio won\'t be recorded' + (voiceMode ? ', but voice answers may still work' : '') + '.</span>';
     }
   }
+  if (voiceMode) {
+    status.innerHTML += '<br>Testing voice recognition…';
+    voiceMode = await preflightVoice(SR);
+    status.innerHTML += voiceMode ? ' <span class="ok">✓ voice ready</span>' : ' <span class="warn">✕ not available in this browser</span>';
+  }
   if (!voiceMode) {
+    status.innerHTML += '<br><span class="warn" style="font-size:14px;">⌨ IMPORTANT: this interview will be by TEXT — voice is not available here (blocked mic permission or a browser without voice support, like Brave/Edge/Firefox). For the full voice experience, open this page in Google Chrome and allow the microphone.</span>';
+  }
+  if (false) {
     status.innerHTML += '<br><span class="warn">△ This browser doesn\'t support voice recognition — switching to text answers. For the full voice experience use Chrome on desktop or Android.</span>';
   }
   if (voiceMode && SR) {
@@ -577,6 +586,20 @@ async function setupAudio() {
   if (!voiceMode) switchToTextMode();
 }
 
+function preflightVoice(SR) {
+  return new Promise(resolve => {
+    let settled = false;
+    const done = ok => { if (!settled) { settled = true; try { test.abort(); } catch {} resolve(ok); } };
+    let test;
+    try { test = new SR(); } catch { return resolve(false); }
+    test.lang = SPEECH_LANG;
+    test.onerror = () => done(false);
+    test.onstart = () => setTimeout(() => done(true), 900);
+    try { test.start(); } catch { return done(false); }
+    setTimeout(() => done(false), 4000);
+  });
+}
+
 function switchToTextMode(reason) {
   if (reason) {
     const err = document.getElementById('studio-error');
@@ -585,6 +608,8 @@ function switchToTextMode(reason) {
   }
   voiceMode = false;
   recogActive = false;
+  const badge = document.getElementById('mode-badge');
+  if (badge) badge.textContent = '⌨ TEXT MODE';
   try { if (recog) recog.stop(); } catch {}
   const btn = document.getElementById('mic-btn');
   btn.classList.remove('recording');
@@ -595,6 +620,7 @@ function switchToTextMode(reason) {
 /* ── PHASE 2: interview loop ── */
 async function enterStudio() {
   show('phase-studio');
+  document.getElementById('mode-badge').textContent = voiceMode ? '' : '⌨ TEXT MODE';
   if (mediaRecorder) {
     try { mediaRecorder.start(); document.getElementById('rec-badge').style.display = 'inline-flex'; } catch {}
   }
