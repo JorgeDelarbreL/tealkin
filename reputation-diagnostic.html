@@ -330,6 +330,8 @@ const W3F_KEY = '6e5a7742-d969-4688-a2bc-0c4383e1d21a';
 
 let scraped = [];
 let research = null;
+let siteUrlTried = '';
+let scrapeFailReason = '';
 let brandName = '';
 let brandLocation = '';
 let answers = {};
@@ -410,6 +412,8 @@ async function startIntake() {
     paint();
   }));
   // site scrape (recommended but optional)
+  siteUrlTried = main;
+  scrapeFailReason = '';
   if (main) {
     lines.push('Visiting your site…');
     paint();
@@ -419,7 +423,8 @@ async function startIntake() {
       lines[idx] = '<span class="ok">✓ Read:</span> ' + escapeHtml(s.title || main);
       paint();
     }).catch(e => {
-      lines[idx] = '<span class="warn">△ Couldn\'t read your site (' + escapeHtml(e.message) + ') — the web research covers for it.</span>';
+      scrapeFailReason = e.message;
+      lines[idx] = '<span class="warn">△ Your site blocks automated readers — no problem, the web research covers it and this won\'t affect your results.</span>';
       paint();
     }));
   }
@@ -536,7 +541,9 @@ async function runDiagnostic() {
 
   const siteBlock = scraped.length
     ? scraped.map((s, i) => `--- PAGE ${i+1}: ${s.url}\nTITLE: ${s.title}\nMETA: ${s.description}\nCONTENT:\n${s.text}`).join('\n\n')
-    : '(The business website could not be read automatically.)';
+    : (siteUrlTried
+        ? `(NOTE: the business website ${siteUrlTried} EXISTS and works normally for human visitors, but it blocks automated readers, so its content could not be included here. This is a limitation of THIS diagnostic tool, NOT a problem with the business's website. Do NOT report website inaccessibility, downtime, or technical/hosting problems as a finding. Base the brand-voice analysis on the web research and questionnaire instead.)`
+        : '(The business did not provide a website URL. If having no visible website is relevant for their sector, that absence MAY be a legitimate finding.)');
 
   const researchBlock = research && research.summary
     ? research.summary + (research.sources && research.sources.length
@@ -547,7 +554,7 @@ async function runDiagnostic() {
 
   const systemPrompt = `You are a senior strategic communications and marketing consultant specialized in Latin America, with deep knowledge of regional markets like Riviera Maya, Mexico City and LATAM in general. You are performing a "mystery shopper" diagnostic of the business "${brandName}"${brandLocation ? ' in ' + brandLocation : ''}. You have up to three inputs: (1) the REAL content of their public web pages, (2) LIVE WEB RESEARCH about what is being said about them online (reviews, mentions, news, gathered via Google Search), and (3) their answers to a short questionnaire.
 
-The heart of this diagnostic is the CONTRAST between what the brand says about itself (its website) and what others say about it (the web research). Analyze how this business is actually positioned: how it sounds to a first-time visitor, what outsiders say and whether it matches, what it does well, what it's missing in marketing terms, and how vulnerable its reputation is. Cite concrete evidence ("your homepage says X...", "reviews on Y mention Z..."). If the web research found little or nothing about them, treat that digital invisibility as a key finding. Be direct, specific and useful — like a consultant who wants to be hired because the free diagnostic was already valuable. Never invent facts about the business that aren't supported by the provided inputs.
+The heart of this diagnostic is the CONTRAST between what the brand says about itself (its website) and what others say about it (the web research). Analyze how this business is actually positioned: how it sounds to a first-time visitor, what outsiders say and whether it matches, what it does well, what it's missing in marketing terms, and how vulnerable its reputation is. Cite concrete evidence ("your homepage says X...", "reviews on Y mention Z..."). If the web research found little or nothing about them, treat that digital invisibility as a key finding. Be direct, specific and useful — like a consultant who wants to be hired because the free diagnostic was already valuable. Never invent facts about the business that aren't supported by the provided inputs, and never report this tool's own inability to read a page as a business finding — only real, observed evidence counts.
 
 Respond ONLY with a valid JSON object, no markdown, no explanation, no backticks, with exactly this shape:
 {

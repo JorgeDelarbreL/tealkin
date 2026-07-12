@@ -330,6 +330,8 @@ const W3F_KEY = '6e5a7742-d969-4688-a2bc-0c4383e1d21a';
 
 let scraped = [];
 let research = null;
+let siteUrlTried = '';
+let scrapeFailReason = '';
 let brandName = '';
 let brandLocation = '';
 let answers = {};
@@ -410,6 +412,8 @@ async function startIntake() {
     paint();
   }));
   // site scrape (recommended but optional)
+  siteUrlTried = main;
+  scrapeFailReason = '';
   if (main) {
     lines.push('Visitando tu sitio…');
     paint();
@@ -419,7 +423,8 @@ async function startIntake() {
       lines[idx] = '<span class="ok">✓ Leído:</span> ' + escapeHtml(s.title || main);
       paint();
     }).catch(e => {
-      lines[idx] = '<span class="warn">△ No pudimos leer tu sitio (' + escapeHtml(e.message) + ') — la investigación web lo cubre.</span>';
+      scrapeFailReason = e.message;
+      lines[idx] = '<span class="warn">△ Tu sitio bloquea lectores automatizados — no hay problema: la investigación web lo cubre y esto no afecta tu resultado.</span>';
       paint();
     }));
   }
@@ -536,7 +541,9 @@ async function runDiagnostic() {
 
   const siteBlock = scraped.length
     ? scraped.map((s, i) => `--- PÁGINA ${i+1}: ${s.url}\nTITLE: ${s.title}\nMETA: ${s.description}\nCONTENT:\n${s.text}`).join('\n\n')
-    : '(El sitio web del negocio no pudo leerse automáticamente.)';
+    : (siteUrlTried
+        ? `(NOTA: el sitio web del negocio ${siteUrlTried} SÍ EXISTE y funciona normalmente para visitantes humanos, pero bloquea lectores automatizados, por lo que su contenido no pudo incluirse aquí. Esto es una limitación de ESTA herramienta de diagnóstico, NO un problema del sitio del negocio. NO reportes inaccesibilidad del sitio, caídas ni problemas técnicos o de hosting como hallazgo. Basa el análisis de voz de marca en la investigación web y el cuestionario.)`
+        : '(El negocio no proporcionó URL de sitio web. Si no tener sitio visible es relevante para su sector, esa ausencia SÍ puede ser un hallazgo legítimo.)');
 
   const researchBlock = research && research.summary
     ? research.summary + (research.sources && research.sources.length
@@ -547,7 +554,7 @@ async function runDiagnostic() {
 
   const systemPrompt = `Eres un consultor senior de comunicación estratégica y marketing especializado en América Latina, con conocimiento profundo de mercados regionales como la Riviera Maya, CDMX y LATAM en general. Estás realizando un diagnóstico tipo "mystery shopper" del negocio "${brandName}"${brandLocation ? ' en ' + brandLocation : ''}. Tienes hasta tres insumos: (1) el contenido REAL de sus páginas web públicas, (2) INVESTIGACIÓN WEB EN VIVO sobre lo que se dice de ellos en línea (reseñas, menciones, noticias, obtenida vía Google Search), y (3) sus respuestas a un cuestionario corto.
 
-El corazón de este diagnóstico es el CONTRASTE entre lo que la marca dice de sí misma (su sitio web) y lo que otros dicen de ella (la investigación web). Analiza cómo está posicionado realmente este negocio: cómo suena para un visitante nuevo, qué dicen los demás y si coincide, qué hace bien, qué le falta en términos de marketing, y qué tan vulnerable es su reputación. Cita evidencia concreta ("tu página dice X...", "las reseñas en Y mencionan Z..."). Si la investigación web encontró poco o nada, trata esa invisibilidad digital como un hallazgo clave. Sé directo, específico y útil — como un consultor que quiere ser contratado porque el diagnóstico gratuito ya fue valioso. Nunca inventes datos del negocio que no estén respaldados por los insumos. Responde SIEMPRE en español, sin excepción.
+El corazón de este diagnóstico es el CONTRASTE entre lo que la marca dice de sí misma (su sitio web) y lo que otros dicen de ella (la investigación web). Analiza cómo está posicionado realmente este negocio: cómo suena para un visitante nuevo, qué dicen los demás y si coincide, qué hace bien, qué le falta en términos de marketing, y qué tan vulnerable es su reputación. Cita evidencia concreta ("tu página dice X...", "las reseñas en Y mencionan Z..."). Si la investigación web encontró poco o nada, trata esa invisibilidad digital como un hallazgo clave. Sé directo, específico y útil — como un consultor que quiere ser contratado porque el diagnóstico gratuito ya fue valioso. Nunca inventes datos del negocio que no estén respaldados por los insumos, y nunca reportes como hallazgo del negocio la incapacidad de esta herramienta para leer una página — solo cuenta la evidencia real observada. Responde SIEMPRE en español, sin excepción.
 
 Responde SOLO con un objeto JSON válido, sin markdown, sin explicación, sin backticks, exactamente con esta forma:
 {
