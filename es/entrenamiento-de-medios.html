@@ -520,11 +520,39 @@ async function startPrep() {
     status.innerHTML = '<span class="warn">△ Investigación en vivo no disponible — el periodista trabajará con tu tema y conocimiento general.</span>';
   }
 
-  // mic + recording setup (non-blocking)
-  await setupAudio();
-
   inFlight = false;
-  setTimeout(() => { enterStudio(); }, 1200);
+  showMicConsent();
+}
+
+// El micrófono NUNCA se solicita automáticamente — el usuario debe autorizarlo.
+function showMicConsent() {
+  const status = document.getElementById('prep-status');
+  const wrap = document.createElement('div');
+  wrap.id = 'mic-consent';
+  wrap.style.cssText = 'margin-top:1.25rem;border:0.5px solid rgba(45,191,173,0.35);border-radius:6px;padding:1.5rem;background:rgba(26,155,140,0.05);';
+  wrap.innerHTML = '<p style="font-size:13px;color:var(--mist);line-height:1.7;margin-bottom:1.1rem;">🎙 Esta entrevista funciona mejor por voz: el periodista habla y tú respondes en voz alta, y tu audio se graba para que puedas revisarlo. <strong style="color:var(--white);font-weight:500;">Tu micrófono solo se activa si lo autorizas ahora</strong> — tu navegador te pedirá permiso. Nada se envía a ningún servidor: la grabación se queda en tu dispositivo.</p>';
+  const voiceBtn = document.createElement('button');
+  voiceBtn.className = 'run-btn';
+  voiceBtn.textContent = '🎙 Activar micrófono y voz';
+  voiceBtn.onclick = async () => {
+    voiceBtn.disabled = true; voiceBtn.textContent = 'Solicitando permiso…';
+    await setupAudio();
+    wrap.remove();
+    enterStudio();
+  };
+  const textBtn = document.createElement('button');
+  textBtn.className = 'run-btn ghost-btn';
+  textBtn.style.marginLeft = '10px';
+  textBtn.textContent = '⌨ Continuar por texto';
+  textBtn.onclick = () => {
+    voiceMode = false; mediaRecorder = null;
+    wrap.remove();
+    switchToTextMode();
+    enterStudio();
+  };
+  wrap.appendChild(voiceBtn);
+  wrap.appendChild(textBtn);
+  status.after(wrap);
 }
 
 async function setupAudio() {

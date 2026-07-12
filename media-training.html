@@ -520,11 +520,39 @@ async function startPrep() {
     status.innerHTML = '<span class="warn">△ Live research unavailable — the journalist will work from your topic and general knowledge.</span>';
   }
 
-  // mic + recording setup (non-blocking)
-  await setupAudio();
-
   inFlight = false;
-  setTimeout(() => { enterStudio(); }, 1200);
+  showMicConsent();
+}
+
+// The microphone is NEVER requested automatically — the user must opt in.
+function showMicConsent() {
+  const status = document.getElementById('prep-status');
+  const wrap = document.createElement('div');
+  wrap.id = 'mic-consent';
+  wrap.style.cssText = 'margin-top:1.25rem;border:0.5px solid rgba(45,191,173,0.35);border-radius:6px;padding:1.5rem;background:rgba(26,155,140,0.05);';
+  wrap.innerHTML = '<p style="font-size:13px;color:var(--mist);line-height:1.7;margin-bottom:1.1rem;">🎙 This interview works best by voice: the journalist speaks and you answer out loud, and your audio is recorded so you can review it. <strong style="color:var(--white);font-weight:500;">Your microphone is only activated if you authorize it now</strong> — your browser will ask for permission. Nothing is sent to any server: the recording stays on your device.</p>';
+  const voiceBtn = document.createElement('button');
+  voiceBtn.className = 'run-btn';
+  voiceBtn.textContent = '🎙 Enable microphone and voice';
+  voiceBtn.onclick = async () => {
+    voiceBtn.disabled = true; voiceBtn.textContent = 'Requesting permission…';
+    await setupAudio();
+    wrap.remove();
+    enterStudio();
+  };
+  const textBtn = document.createElement('button');
+  textBtn.className = 'run-btn ghost-btn';
+  textBtn.style.marginLeft = '10px';
+  textBtn.textContent = '⌨ Continue by text';
+  textBtn.onclick = () => {
+    voiceMode = false; mediaRecorder = null;
+    wrap.remove();
+    switchToTextMode();
+    enterStudio();
+  };
+  wrap.appendChild(voiceBtn);
+  wrap.appendChild(textBtn);
+  status.after(wrap);
 }
 
 async function setupAudio() {
@@ -635,7 +663,7 @@ function journalistSystemPrompt() {
 RESEARCH DOSSIER (real material gathered from the web minutes ago — use it to make the interview concrete and uncomfortable):
 ${dossier && dossier.summary ? dossier.summary : '(No live dossier available — rely on the topic, the sector, and plausible current context.)'}
 
-Interview arc across ${TOTAL_QUESTIONS} questions: open on the declared topic, then escalate. Somewhere in the middle you MUST ambush: bring up a past crisis, an uncomfortable industry fact, a contrast with something from the dossier, or an out-of-context current event (economy, politics, a major event) and force them to react. Follow up on evasions — if they dodge, say so and ask again differently. One question at a time. Questions must be SHORT (max 2 sentences) and speakable aloud. Never break character. Respond ONLY with a valid JSON object, no markdown: {"question": "<your next question>"}`;
+Interview arc across ${TOTAL_QUESTIONS} questions: open on the declared topic, then escalate. Somewhere in the middle you MUST ambush: bring up a past crisis, an uncomfortable industry fact, a contrast with something from the dossier, or an out-of-context current event (economy, politics, a major event) and force them to react. Follow up on evasions — if they dodge, say so and ask again differently. One question at a time. Questions must be SHORT (max 2 sentences) and speakable aloud. Never break character. Speak ALWAYS in English, without exception. Respond ONLY with a valid JSON object, no markdown: {"question": "<your next question>"}`;
 }
 
 function transcriptText() {
@@ -763,7 +791,7 @@ async function finishInterview() {
   document.getElementById('thinking').style.display = 'inline';
   document.getElementById('thinking').textContent = 'Evaluating your performance…';
 
-  const evalSystem = `You are a senior media trainer and strategic communications consultant in LATAM. You just watched this simulated hostile interview. Evaluate the interviewee's performance with the rigor of a professional debrief. Judge: message control, clarity, evasiveness (dodged questions hurt), composure under the ambush question, and quotes that could be weaponized as headlines. Be direct and specific — quote their actual words. Respond ONLY with a valid JSON object, no markdown:
+  const evalSystem = `You are a senior media trainer and strategic communications consultant in LATAM. You just watched this simulated hostile interview. Evaluate the interviewee's performance with the rigor of a professional debrief. Judge: message control, clarity, evasiveness (dodged questions hurt), composure under the ambush question, and quotes that could be weaponized as headlines. Be direct and specific — quote their actual words. Write everything in English. Respond ONLY with a valid JSON object, no markdown:
 {
  "score": <0-100 integer>,
  "verdict": "<one short line, may use <em>>",
