@@ -564,7 +564,12 @@ async function setupAudio() {
     };
     recog.onerror = (ev) => {
       if (ev.error === 'not-allowed' || ev.error === 'service-not-allowed' || ev.error === 'audio-capture') {
-        switchToTextMode();
+        const reasons = {
+          'not-allowed': 'El permiso de micrófono está bloqueado para este sitio. Haz clic en el candado junto a la URL → Configuración del sitio → Micrófono → Permitir, y recarga.',
+          'service-not-allowed': 'Este navegador bloquea el servicio de reconocimiento de voz (común en Brave/Edge). Usa Google Chrome para responder por voz.',
+          'audio-capture': 'No se encontró micrófono. Revisa que esté conectado y que otra app no lo esté usando.'
+        };
+        switchToTextMode(reasons[ev.error] || ev.error);
       }
     };
     recog.onend = () => { if (recogActive) { try { recog.start(); } catch {} } };
@@ -572,7 +577,12 @@ async function setupAudio() {
   if (!voiceMode) switchToTextMode();
 }
 
-function switchToTextMode() {
+function switchToTextMode(reason) {
+  if (reason) {
+    const err = document.getElementById('studio-error');
+    err.textContent = '🎙 Voz no disponible: ' + reason + ' Mientras tanto, puedes responder por texto abajo.';
+    err.style.display = 'block';
+  }
   voiceMode = false;
   recogActive = false;
   try { if (recog) recog.stop(); } catch {}
