@@ -168,6 +168,9 @@ async function handleResearch(request, env, headers) {
   const brand = String(body.brand || '').trim().slice(0, 120);
   const location = String(body.location || '').trim().slice(0, 120);
   const sector = String(body.sector || '').trim().slice(0, 120);
+  const person = String(body.person || '').trim().slice(0, 120);
+  const topic = String(body.topic || '').trim().slice(0, 200);
+  const mode = body.mode === 'interview' ? 'interview' : 'diagnostic';
   const lang = body.lang === 'en' ? 'en' : 'es';
   if (brand.length < 2) {
     return new Response(JSON.stringify({ error: 'Missing brand name.' }), { status: 400, headers });
@@ -176,9 +179,16 @@ async function handleResearch(request, env, headers) {
     return new Response(JSON.stringify({ error: 'Research is not configured.' }), { status: 503, headers });
   }
 
-  const prompt = lang === 'es'
-    ? `Investiga en la web qué se dice EN LÍNEA sobre el negocio "${brand}"${location ? ' ubicado en ' + location : ''}${sector ? ' (sector: ' + sector + ')' : ''}. Busca: reseñas de clientes (Google, TripAdvisor, etc.), menciones en redes sociales y noticias, quejas o controversias, y cómo se percibe su reputación en general. Resume tus hallazgos en 3-5 párrafos concretos, citando de dónde viene cada dato. Si encuentras poca o ninguna información, dilo explícitamente — eso también es un hallazgo relevante (invisibilidad digital). No inventes nada. Responde en español.`
-    : `Research the web for what is being said ONLINE about the business "${brand}"${location ? ' located in ' + location : ''}${sector ? ' (sector: ' + sector + ')' : ''}. Look for: customer reviews (Google, TripAdvisor, etc.), social media mentions and news, complaints or controversies, and overall reputation perception. Summarize findings in 3-5 concrete paragraphs, citing where each fact comes from. If you find little or no information, say so explicitly — that is itself a relevant finding (digital invisibility). Do not invent anything. Respond in English.`;
+  let prompt;
+  if (mode === 'interview') {
+    prompt = lang === 'es'
+      ? `Eres el investigador de un programa periodístico preparando una entrevista dura. El entrevistado es ${person ? '"' + person + '", ' : ''}de la organización "${brand}"${location ? ' (' + location + ')' : ''}, y el tema declarado de la entrevista es: "${topic}". Investiga en la web y arma un dossier con material que un periodista incisivo usaría para incomodarlo: (1) crisis, controversias o quejas pasadas de la organización o su sector, (2) noticias RECIENTES sobre la organización, sus competidores o su industria, (3) eventos de contexto actual que puedan cruzarse con el tema (coyuntura económica, política, eventos como el Mundial, tendencias), (4) cualquier declaración pública previa de la organización o la persona que pueda contrastarse. Presenta 4-6 puntos concretos y citables, cada uno con su fuente. Si sobre algo no hay información, dilo — no inventes nada. Responde en español.`
+      : `You are the researcher for a journalism program preparing a tough interview. The interviewee is ${person ? '"' + person + '", ' : ''}from the organization "${brand}"${location ? ' (' + location + ')' : ''}, and the declared interview topic is: "${topic}". Research the web and build a dossier with material an incisive journalist would use to make them uncomfortable: (1) past crises, controversies or complaints involving the organization or its sector, (2) RECENT news about the organization, its competitors or its industry, (3) current-context events that could intersect with the topic (economy, politics, events like the World Cup, trends), (4) any prior public statements by the organization or the person that could be contrasted. Present 4-6 concrete, quotable points, each with its source. If information doesn't exist on something, say so — invent nothing. Respond in English.`;
+  } else {
+    prompt = lang === 'es'
+      ? `Investiga en la web qué se dice EN LÍNEA sobre el negocio "${brand}"${location ? ' ubicado en ' + location : ''}${sector ? ' (sector: ' + sector + ')' : ''}. Busca: reseñas de clientes (Google, TripAdvisor, etc.), menciones en redes sociales y noticias, quejas o controversias, y cómo se percibe su reputación en general. Resume tus hallazgos en 3-5 párrafos concretos, citando de dónde viene cada dato. Si encuentras poca o ninguna información, dilo explícitamente — eso también es un hallazgo relevante (invisibilidad digital). No inventes nada. Responde en español.`
+      : `Research the web for what is being said ONLINE about the business "${brand}"${location ? ' located in ' + location : ''}${sector ? ' (sector: ' + sector + ')' : ''}. Look for: customer reviews (Google, TripAdvisor, etc.), social media mentions and news, complaints or controversies, and overall reputation perception. Summarize findings in 3-5 concrete paragraphs, citing where each fact comes from. If you find little or no information, say so explicitly — that is itself a relevant finding (digital invisibility). Do not invent anything. Respond in English.`;
+  }
 
   const callModel = async (model) => fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,

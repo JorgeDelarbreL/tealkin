@@ -236,4 +236,22 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://tealkin.com/media-training.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/media-training.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/entrenamiento-de-medios.html"/>
+    <lastmod>2026-07-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tealkin.com/es/entrenamiento-de-medios.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/entrenamiento-de-medios.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/media-training.html"/>
+    <lastmod>2026-07-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
