@@ -11,7 +11,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Diagnóstico Reputacional — TealKin Lab</title>
-<meta name="description" content="Un diagnóstico tipo mystery shopper en vivo: visitamos tu sitio web real, leemos cómo suenas de verdad y calificamos tu posicionamiento, tus brechas de marketing y tu vulnerabilidad reputacional.">
+<meta name="description" content="Un diagnóstico tipo mystery shopper en vivo: investigamos qué se dice de ti en línea, visitamos tu sitio web real y calificamos tu posicionamiento, tus brechas de marketing y tu vulnerabilidad reputacional.">
 <link rel="canonical" href="https://tealkin.com/es/diagnostico-reputacional.html">
 <link rel="alternate" hreflang="en" href="https://tealkin.com/reputation-diagnostic.html">
 <link rel="alternate" hreflang="es" href="https://tealkin.com/es/diagnostico-reputacional.html">
@@ -21,7 +21,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="TealKin">
 <meta property="og:title" content="Diagnóstico Reputacional — TealKin Lab">
-<meta property="og:description" content="Un diagnóstico tipo mystery shopper en vivo: visitamos tu sitio web real, leemos cómo suenas de verdad y calificamos tu posicionamiento, tus brechas de marketing y tu vulnerabilidad reputacional.">
+<meta property="og:description" content="Un diagnóstico tipo mystery shopper en vivo: investigamos qué se dice de ti en línea, visitamos tu sitio web real y calificamos tu posicionamiento, tus brechas de marketing y tu vulnerabilidad reputacional.">
 <meta property="og:url" content="https://tealkin.com/es/diagnostico-reputacional.html">
 <meta property="og:image" content="https://tealkin.com/img/og-image.jpg">
 <meta property="og:image:width" content="1200">
@@ -30,14 +30,14 @@
 <meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Diagnóstico Reputacional — TealKin Lab">
-<meta name="twitter:description" content="Un diagnóstico tipo mystery shopper en vivo: visitamos tu sitio web real, leemos cómo suenas de verdad y calificamos tu posicionamiento, tus brechas de marketing y tu vulnerabilidad reputacional.">
+<meta name="twitter:description" content="Un diagnóstico tipo mystery shopper en vivo: investigamos qué se dice de ti en línea, visitamos tu sitio web real y calificamos tu posicionamiento, tus brechas de marketing y tu vulnerabilidad reputacional.">
 <meta name="twitter:image" content="https://tealkin.com/img/og-image.jpg">
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
  "@type": "WebApplication",
  "name": "Diagnóstico Reputacional",
- "description": "Diagnóstico en vivo con IA del posicionamiento, las brechas de marketing y la vulnerabilidad reputacional de una marca, basado en el contenido real de su sitio web público.",
+ "description": "Diagnóstico en vivo con IA del posicionamiento, las brechas de marketing y la vulnerabilidad reputacional de una marca, basado en su contenido web real y en lo que se dice de ella en línea.",
  "url": "https://tealkin.com/es/diagnostico-reputacional.html",
  "inLanguage": "es",
  "applicationCategory": "BusinessApplication",
@@ -219,15 +219,24 @@
 <section class="tool-hero">
   <p class="tool-eyebrow">05 · Diagnóstico Reputacional</p>
   <h1 class="tool-title">¿Cómo se ve tu marca<br><em>desde afuera?</em></h1>
-  <p class="tool-desc">Danos tu sitio web. Lo visitamos de verdad — como un mystery shopper — leemos cómo suenas realmente y calificamos tu posicionamiento, tus brechas de marketing y tu vulnerabilidad reputacional. Gratis, en unos dos minutos.</p>
+  <p class="tool-desc">Dinos quién eres. Investigamos qué se dice realmente de ti en línea — reseñas, menciones, noticias — visitamos tu sitio web como un mystery shopper, y calificamos tu posicionamiento, tus brechas de marketing y tu vulnerabilidad reputacional. Gratis, en unos dos minutos.</p>
 </section>
 
 <div class="tool-wrap">
 
-  <!-- PHASE 1: URLs -->
+  <!-- PHASE 1: brand + URLs -->
   <div class="phase active" id="phase-urls">
     <div class="field">
-      <label class="input-label" for="url-main">Tu sitio web</label>
+      <label class="input-label" for="brand-name">El nombre de tu negocio</label>
+      <p class="input-hint">Investigaremos qué se dice realmente de ti en línea — reseñas, menciones, noticias.</p>
+      <input type="text" id="brand-name" placeholder="ej. Hotel Maya Serena" maxlength="120">
+    </div>
+    <div class="field">
+      <label class="input-label" for="brand-location">¿Dónde estás?</label>
+      <input type="text" id="brand-location" placeholder="ej. Tulum, Quintana Roo" maxlength="120">
+    </div>
+    <div class="field">
+      <label class="input-label" for="url-main">Tu sitio web <span style="text-transform:none;letter-spacing:0;color:rgba(255,255,255,0.3);">(recomendado)</span></label>
       <p class="input-hint">Leeremos tu página de inicio real — lo primero que ve un cliente potencial.</p>
       <input type="url" id="url-main" placeholder="https://tunegocio.com" maxlength="300">
     </div>
@@ -236,7 +245,7 @@
       <p class="input-hint">Tu página pública de TripAdvisor, Google Maps o similar.</p>
       <input type="url" id="url-extra" placeholder="https://www.tripadvisor.com/..." maxlength="300">
     </div>
-    <button class="run-btn" id="scrape-btn" onclick="startScrape()">Visita mi sitio <span class="btn-arrow">→</span></button>
+    <button class="run-btn" id="scrape-btn" onclick="startIntake()">Investiga mi marca <span class="btn-arrow">→</span></button>
     <div class="scrape-status" id="scrape-status"></div>
     <p class="error-msg" id="urls-error"></p>
   </div>
@@ -291,7 +300,7 @@
       <div class="lock-overlay" id="lock-overlay">
         <div class="lock-card">
           <h3>Desbloquea tu <em>diagnóstico completo.</em></h3>
-          <p>Lectura de posicionamiento, benchmark de tu sector, el resto de tus hallazgos y 3 recomendaciones concretas — gratis. Solo necesitamos saber a quién estamos diagnosticando.</p>
+          <p>Lectura de posicionamiento, lo que se dice de ti en línea, benchmark de tu sector y 3 recomendaciones concretas — gratis. Solo necesitamos saber a quién estamos diagnosticando.</p>
           <div class="field"><input type="text" id="lead-name" placeholder="Tu nombre" maxlength="100"></div>
           <div class="field"><input type="text" id="lead-company" placeholder="Empresa" maxlength="120"></div>
           <div class="field"><input type="text" id="lead-role" placeholder="Tu puesto" maxlength="100"></div>
@@ -320,9 +329,13 @@ const AI_ENDPOINT = 'https://tealkin-proxy.delarbre-giorgio.workers.dev';
 const W3F_KEY = '6e5a7742-d969-4688-a2bc-0c4383e1d21a';
 
 let scraped = [];
+let research = null;
+let brandName = '';
+let brandLocation = '';
 let answers = {};
 let result = null;
 let diagnosticInFlight = false;
+const PAGE_LANG = 'es';
 
 function escapeHtml(s) {
   return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -345,56 +358,89 @@ async function scrapeOne(url) {
   return data;
 }
 
-async function startScrape() {
+async function researchBrand() {
+  const r = await fetch(AI_ENDPOINT + '/research', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ brand: brandName, location: brandLocation, lang: PAGE_LANG })
+  });
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(data.error || 'Research failed.');
+  return data;
+}
+
+async function startIntake() {
   if (diagnosticInFlight) return;
   const err = document.getElementById('urls-error');
   const status = document.getElementById('scrape-status');
   err.style.display = 'none';
+  brandName = document.getElementById('brand-name').value.trim();
+  brandLocation = document.getElementById('brand-location').value.trim();
   const main = document.getElementById('url-main').value.trim();
   const extra = document.getElementById('url-extra').value.trim();
-  if (!/^https:\/\/.+\..+/.test(main)) {
-    err.textContent = 'Escribe la URL de tu sitio web, empezando con https://';
+  if (brandName.length < 2) {
+    err.textContent = 'Dinos el nombre de tu negocio — es lo que investigamos en línea.';
+    err.style.display = 'block';
+    return;
+  }
+  if (main && !/^https:\/\/.+\..+/.test(main)) {
+    err.textContent = 'La URL de tu sitio debe empezar con https://';
     err.style.display = 'block';
     return;
   }
   diagnosticInFlight = true;
   const btn = document.getElementById('scrape-btn');
-  btn.disabled = true; btn.textContent = 'Visitando…';
+  btn.disabled = true; btn.textContent = 'Investigando…';
   scraped = [];
-  status.innerHTML = '';
-  try {
-    status.innerHTML = 'Visitando tu sitio…';
-    const s1 = await scrapeOne(main);
-    scraped.push(s1);
-    status.innerHTML = '<span class="ok">✓ Leído:</span> ' + escapeHtml(s1.title || main);
-    if (extra && /^https:\/\/.+\..+/.test(extra)) {
-      status.innerHTML += '<br>Visitando tu página de reseñas…';
-      try {
-        const s2 = await scrapeOne(extra);
-        scraped.push(s2);
-        status.innerHTML = '<span class="ok">✓ Leído:</span> ' + escapeHtml(s1.title || main) +
-          '<br><span class="ok">✓ Leído:</span> ' + escapeHtml(s2.title || extra);
-      } catch (e2) {
-        status.innerHTML = '<span class="ok">✓ Leído:</span> ' + escapeHtml(s1.title || main) +
-          '<br><span class="warn">△ No pudimos leer la segunda página (' + escapeHtml(e2.message) + ') — continuamos sin ella.</span>';
-      }
-    }
-    setTimeout(() => { startQuiz(); }, 900);
-  } catch (e) {
-    err.textContent = e.message + ' Si tu sitio bloquea robots, puedes continuar de todos modos.';
-    err.style.display = 'block';
-    status.innerHTML = '';
-    answers._scrapeFailed = true;
-    const skip = document.createElement('button');
-    skip.className = 'run-btn ghost-btn';
-    skip.style.marginLeft = '10px';
-    skip.textContent = 'Continuar de todos modos →';
-    skip.onclick = startQuiz;
-    if (!document.getElementById('skip-scrape')) { skip.id = 'skip-scrape'; btn.after(skip); }
-  } finally {
-    diagnosticInFlight = false;
-    btn.disabled = false; btn.textContent = 'Visita mi sitio →';
+  research = null;
+  const lines = [];
+  const paint = () => { status.innerHTML = lines.join('<br>'); };
+  lines.push('Buscando qué se dice de <strong>' + escapeHtml(brandName) + '</strong> en línea…');
+  paint();
+
+  const jobs = [];
+  // web research (primary — never blocks on site availability)
+  jobs.push(researchBrand().then(res => {
+    research = res;
+    lines[0] = '<span class="ok">✓ Investigación web lista</span>' +
+      (res.sources && res.sources.length ? ' — ' + res.sources.length + ' fuentes encontradas' : '');
+    paint();
+  }).catch(e => {
+    lines[0] = '<span class="warn">△ Investigación web no disponible (' + escapeHtml(e.message) + ') — continuamos con tu sitio y tus respuestas.</span>';
+    paint();
+  }));
+  // site scrape (recommended but optional)
+  if (main) {
+    lines.push('Visitando tu sitio…');
+    paint();
+    const idx = lines.length - 1;
+    jobs.push(scrapeOne(main).then(s => {
+      scraped.push(s);
+      lines[idx] = '<span class="ok">✓ Leído:</span> ' + escapeHtml(s.title || main);
+      paint();
+    }).catch(e => {
+      lines[idx] = '<span class="warn">△ No pudimos leer tu sitio (' + escapeHtml(e.message) + ') — la investigación web lo cubre.</span>';
+      paint();
+    }));
   }
+  if (extra && /^https:\/\/.+\..+/.test(extra)) {
+    lines.push('Visitando tu página de reseñas…');
+    paint();
+    const idx = lines.length - 1;
+    jobs.push(scrapeOne(extra).then(s => {
+      scraped.push(s);
+      lines[idx] = '<span class="ok">✓ Leído:</span> ' + escapeHtml(s.title || extra);
+      paint();
+    }).catch(e => {
+      lines[idx] = '<span class="warn">△ No pudimos leer la página de reseñas (' + escapeHtml(e.message) + ') — continuamos sin ella.</span>';
+      paint();
+    }));
+  }
+
+  await Promise.allSettled(jobs);
+  diagnosticInFlight = false;
+  btn.disabled = false; btn.textContent = 'Investiga mi marca →';
+  setTimeout(() => { startQuiz(); }, 1100);
 }
 
 /* ── PHASE 2: quiz ── */
@@ -492,11 +538,16 @@ async function runDiagnostic() {
     ? scraped.map((s, i) => `--- PÁGINA ${i+1}: ${s.url}\nTITLE: ${s.title}\nMETA: ${s.description}\nCONTENT:\n${s.text}`).join('\n\n')
     : '(El sitio web del negocio no pudo leerse automáticamente.)';
 
+  const researchBlock = research && research.summary
+    ? research.summary + (research.sources && research.sources.length
+        ? '\n\nSOURCES: ' + research.sources.map(s => s.url).join(' | ') : '')
+    : '(No hubo investigación web disponible para este diagnóstico.)';
+
   const answerBlock = QUESTIONS.map(q => `${q.q} → ${answers[q.key] || 'sin responder'}`).join('\n');
 
-  const systemPrompt = `Eres un consultor senior de comunicación estratégica y marketing especializado en América Latina, con conocimiento profundo de mercados regionales como la Riviera Maya, CDMX y LATAM en general. Estás realizando un diagnóstico tipo "mystery shopper": acabas de visitar las páginas web públicas REALES del negocio (contenido incluido abajo) y tienes sus respuestas a un cuestionario corto.
+  const systemPrompt = `Eres un consultor senior de comunicación estratégica y marketing especializado en América Latina, con conocimiento profundo de mercados regionales como la Riviera Maya, CDMX y LATAM en general. Estás realizando un diagnóstico tipo "mystery shopper" del negocio "${brandName}"${brandLocation ? ' en ' + brandLocation : ''}. Tienes hasta tres insumos: (1) el contenido REAL de sus páginas web públicas, (2) INVESTIGACIÓN WEB EN VIVO sobre lo que se dice de ellos en línea (reseñas, menciones, noticias, obtenida vía Google Search), y (3) sus respuestas a un cuestionario corto.
 
-Analiza cómo está posicionado realmente este negocio: cómo suena para un visitante que lo ve por primera vez, qué hace bien, qué le falta en términos de marketing, y qué tan vulnerable es su reputación. Cita evidencia concreta de su contenido real cuando sea posible ("tu página de inicio dice X...", "tu página nunca menciona Y..."). Sé directo, específico y útil — como un consultor que quiere ser contratado porque el diagnóstico gratuito ya fue valioso. Nunca inventes datos del negocio que no estén respaldados por el contenido o las respuestas. Responde SIEMPRE en español, sin excepción.
+El corazón de este diagnóstico es el CONTRASTE entre lo que la marca dice de sí misma (su sitio web) y lo que otros dicen de ella (la investigación web). Analiza cómo está posicionado realmente este negocio: cómo suena para un visitante nuevo, qué dicen los demás y si coincide, qué hace bien, qué le falta en términos de marketing, y qué tan vulnerable es su reputación. Cita evidencia concreta ("tu página dice X...", "las reseñas en Y mencionan Z..."). Si la investigación web encontró poco o nada, trata esa invisibilidad digital como un hallazgo clave. Sé directo, específico y útil — como un consultor que quiere ser contratado porque el diagnóstico gratuito ya fue valioso. Nunca inventes datos del negocio que no estén respaldados por los insumos. Responde SIEMPRE en español, sin excepción.
 
 Responde SOLO con un objeto JSON válido, sin markdown, sin explicación, sin backticks, exactamente con esta forma:
 {
@@ -505,12 +556,13 @@ Responde SOLO con un objeto JSON válido, sin markdown, sin explicación, sin ba
  "summary": "<resumen de 2-3 oraciones en lenguaje claro>",
  "findings": [ {"type": "strength|gap|risk", "title": "<corto>", "detail": "<2-3 oraciones citando evidencia>"} , ... 5 o 6 elementos, al menos 1 strength, ordenados del más importante al menos ],
  "positioning": "<párrafo: cómo se percibe realmente esta marca para un desconocido, según su contenido real>",
+ "outside_view": "<párrafo: qué se dice de esta marca en línea según la investigación web, y cómo se compara con lo que la marca dice de sí misma; si no se encontró nada, describe la invisibilidad digital y sus consecuencias>",
  "benchmark": "<párrafo: cómo se compara con lo que hacen los negocios bien posicionados de su sector y región>",
  "recommendations": [ "<acción concreta 1>", "<acción concreta 2>", "<acción concreta 3>" ],
  "vulnerability": {"level": "low|medium|high", "reason": "<1-2 oraciones>"}
 }`;
 
-  const userContent = `RESPUESTAS DEL CUESTIONARIO:\n${answerBlock}\n\nCONTENIDO REAL DEL SITIO (obtenido en vivo):\n${siteBlock}`;
+  const userContent = `RESPUESTAS DEL CUESTIONARIO:\n${answerBlock}\n\nINVESTIGACIÓN WEB EN VIVO (lo que se dice de ellos en línea):\n${researchBlock}\n\nCONTENIDO REAL DEL SITIO (obtenido en vivo):\n${siteBlock}`;
 
   try {
     const r = await fetch(AI_ENDPOINT, {
@@ -572,6 +624,7 @@ function renderTeaser() {
 
   // locked preview: remaining findings blurred
   const lockedHtml = findings.slice(1).map(findingHtml).join('') +
+    `<p class="section-title">Lo que se dice de ti en línea</p><div class="prose-block">${escapeHtml(result.outside_view || '')}</div>` +
     `<p class="section-title">Lectura de posicionamiento</p><div class="prose-block">${escapeHtml(result.positioning || '')}</div>` +
     `<p class="section-title">Benchmark de tu sector</p><div class="prose-block">${escapeHtml(result.benchmark || '')}</div>`;
   document.getElementById('locked-content').innerHTML = lockedHtml;
@@ -615,9 +668,15 @@ Size: ${answers.size || '—'}
 Goal: ${answers.goal || '—'}
 Crisis history: ${answers.crisis || '—'}
 
+Brand: ${brandName || '—'} (${brandLocation || '—'})
 Score: ${result ? result.score : '—'}/100
 Verdict: ${result ? String(result.verdict).replace(/<[^>]+>/g,'') : '—'}
-Vulnerability: ${result && result.vulnerability ? result.vulnerability.level + ' — ' + result.vulnerability.reason : '—'}`
+Vulnerability: ${result && result.vulnerability ? result.vulnerability.level + ' — ' + result.vulnerability.reason : '—'}
+
+Outside view: ${result && result.outside_view ? result.outside_view : '—'}
+
+Web research summary:
+${research && research.summary ? research.summary.slice(0, 1500) : '(research unavailable)'}`
       })
     });
   } catch (e) {
@@ -634,10 +693,17 @@ function revealFullReport() {
   const vLabel = { low: 'Vulnerabilidad baja', medium: 'Vulnerabilidad media', high: 'Vulnerabilidad alta' }[vlevel];
   const recs = Array.isArray(result.recommendations) ? result.recommendations : [];
 
+  const sourcesHtml = research && research.sources && research.sources.length
+    ? `<p style="font-size:12px;color:var(--mist);margin-top:0.75rem;line-height:1.8;">Fuentes: ` +
+      research.sources.map(s => `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener" style="color:var(--teal-light);text-decoration:none;">${escapeHtml(s.title)}</a>`).join(' · ') +
+      `</p>`
+    : '';
+
   document.getElementById('locked-zone').style.display = 'none';
   const full = document.getElementById('full-report');
   full.innerHTML =
     findings.slice(1).map(findingHtml).join('') +
+    `<p class="section-title">Lo que se dice de ti en línea</p><div class="prose-block">${escapeHtml(result.outside_view || '')}</div>` + sourcesHtml +
     `<p class="section-title">Lectura de posicionamiento</p><div class="prose-block">${escapeHtml(result.positioning || '')}</div>` +
     `<p class="section-title">Benchmark de tu sector</p><div class="prose-block">${escapeHtml(result.benchmark || '')}</div>` +
     `<p class="section-title">Vulnerabilidad reputacional</p>

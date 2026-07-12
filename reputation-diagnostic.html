@@ -219,15 +219,24 @@
 <section class="tool-hero">
   <p class="tool-eyebrow">05 · Reputation Diagnostic</p>
   <h1 class="tool-title">How does your brand look<br><em>from the outside?</em></h1>
-  <p class="tool-desc">Give us your website. We'll actually visit it — like a mystery shopper — read how you really sound, and score your positioning, your marketing gaps, and your reputational vulnerability. Free, in about two minutes.</p>
+  <p class="tool-desc">Tell us who you are. We'll research what's actually being said about you online — reviews, mentions, news — visit your website like a mystery shopper, and score your positioning, your marketing gaps, and your reputational vulnerability. Free, in about two minutes.</p>
 </section>
 
 <div class="tool-wrap">
 
-  <!-- PHASE 1: URLs -->
+  <!-- PHASE 1: brand + URLs -->
   <div class="phase active" id="phase-urls">
     <div class="field">
-      <label class="input-label" for="url-main">Your website</label>
+      <label class="input-label" for="brand-name">Your business name</label>
+      <p class="input-hint">We'll research what's actually being said about you online — reviews, mentions, news.</p>
+      <input type="text" id="brand-name" placeholder="e.g. Hotel Maya Serena" maxlength="120">
+    </div>
+    <div class="field">
+      <label class="input-label" for="brand-location">Where are you?</label>
+      <input type="text" id="brand-location" placeholder="e.g. Tulum, Quintana Roo" maxlength="120">
+    </div>
+    <div class="field">
+      <label class="input-label" for="url-main">Your website <span style="text-transform:none;letter-spacing:0;color:rgba(255,255,255,0.3);">(recommended)</span></label>
       <p class="input-hint">We'll read your actual homepage — what a potential client sees first.</p>
       <input type="url" id="url-main" placeholder="https://yourbusiness.com" maxlength="300">
     </div>
@@ -236,7 +245,7 @@
       <p class="input-hint">A TripAdvisor, Google Maps or similar public page about your business.</p>
       <input type="url" id="url-extra" placeholder="https://www.tripadvisor.com/..." maxlength="300">
     </div>
-    <button class="run-btn" id="scrape-btn" onclick="startScrape()">Visit my site <span class="btn-arrow">→</span></button>
+    <button class="run-btn" id="scrape-btn" onclick="startIntake()">Investigate my brand <span class="btn-arrow">→</span></button>
     <div class="scrape-status" id="scrape-status"></div>
     <p class="error-msg" id="urls-error"></p>
   </div>
@@ -320,9 +329,13 @@ const AI_ENDPOINT = 'https://tealkin-proxy.delarbre-giorgio.workers.dev';
 const W3F_KEY = '6e5a7742-d969-4688-a2bc-0c4383e1d21a';
 
 let scraped = [];
+let research = null;
+let brandName = '';
+let brandLocation = '';
 let answers = {};
 let result = null;
 let diagnosticInFlight = false;
+const PAGE_LANG = 'en';
 
 function escapeHtml(s) {
   return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -345,56 +358,89 @@ async function scrapeOne(url) {
   return data;
 }
 
-async function startScrape() {
+async function researchBrand() {
+  const r = await fetch(AI_ENDPOINT + '/research', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ brand: brandName, location: brandLocation, lang: PAGE_LANG })
+  });
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(data.error || 'Research failed.');
+  return data;
+}
+
+async function startIntake() {
   if (diagnosticInFlight) return;
   const err = document.getElementById('urls-error');
   const status = document.getElementById('scrape-status');
   err.style.display = 'none';
+  brandName = document.getElementById('brand-name').value.trim();
+  brandLocation = document.getElementById('brand-location').value.trim();
   const main = document.getElementById('url-main').value.trim();
   const extra = document.getElementById('url-extra').value.trim();
-  if (!/^https:\/\/.+\..+/.test(main)) {
-    err.textContent = 'Please enter your website URL, starting with https://';
+  if (brandName.length < 2) {
+    err.textContent = 'Please tell us your business name — it\'s what we research online.';
+    err.style.display = 'block';
+    return;
+  }
+  if (main && !/^https:\/\/.+\..+/.test(main)) {
+    err.textContent = 'Your website URL should start with https://';
     err.style.display = 'block';
     return;
   }
   diagnosticInFlight = true;
   const btn = document.getElementById('scrape-btn');
-  btn.disabled = true; btn.textContent = 'Visiting…';
+  btn.disabled = true; btn.textContent = 'Investigating…';
   scraped = [];
-  status.innerHTML = '';
-  try {
-    status.innerHTML = 'Visiting your site…';
-    const s1 = await scrapeOne(main);
-    scraped.push(s1);
-    status.innerHTML = '<span class="ok">✓ Read:</span> ' + escapeHtml(s1.title || main);
-    if (extra && /^https:\/\/.+\..+/.test(extra)) {
-      status.innerHTML += '<br>Visiting your reviews page…';
-      try {
-        const s2 = await scrapeOne(extra);
-        scraped.push(s2);
-        status.innerHTML = '<span class="ok">✓ Read:</span> ' + escapeHtml(s1.title || main) +
-          '<br><span class="ok">✓ Read:</span> ' + escapeHtml(s2.title || extra);
-      } catch (e2) {
-        status.innerHTML = '<span class="ok">✓ Read:</span> ' + escapeHtml(s1.title || main) +
-          '<br><span class="warn">△ Couldn\'t read the second page (' + escapeHtml(e2.message) + ') — continuing without it.</span>';
-      }
-    }
-    setTimeout(() => { startQuiz(); }, 900);
-  } catch (e) {
-    err.textContent = e.message + ' If your site blocks robots, you can still continue — we\'ll ask you to paste your text instead.';
-    err.style.display = 'block';
-    status.innerHTML = '';
-    answers._scrapeFailed = true;
-    const skip = document.createElement('button');
-    skip.className = 'run-btn ghost-btn';
-    skip.style.marginLeft = '10px';
-    skip.textContent = 'Continue anyway →';
-    skip.onclick = startQuiz;
-    if (!document.getElementById('skip-scrape')) { skip.id = 'skip-scrape'; btn.after(skip); }
-  } finally {
-    diagnosticInFlight = false;
-    btn.disabled = false; btn.textContent = 'Visit my site →';
+  research = null;
+  const lines = [];
+  const paint = () => { status.innerHTML = lines.join('<br>'); };
+  lines.push('Searching what\'s being said about <strong>' + escapeHtml(brandName) + '</strong> online…');
+  paint();
+
+  const jobs = [];
+  // web research (primary — never blocks on site availability)
+  jobs.push(researchBrand().then(res => {
+    research = res;
+    lines[0] = '<span class="ok">✓ Web research done</span>' +
+      (res.sources && res.sources.length ? ' — ' + res.sources.length + ' sources found' : '');
+    paint();
+  }).catch(e => {
+    lines[0] = '<span class="warn">△ Web research unavailable (' + escapeHtml(e.message) + ') — continuing with your site and answers.</span>';
+    paint();
+  }));
+  // site scrape (recommended but optional)
+  if (main) {
+    lines.push('Visiting your site…');
+    paint();
+    const idx = lines.length - 1;
+    jobs.push(scrapeOne(main).then(s => {
+      scraped.push(s);
+      lines[idx] = '<span class="ok">✓ Read:</span> ' + escapeHtml(s.title || main);
+      paint();
+    }).catch(e => {
+      lines[idx] = '<span class="warn">△ Couldn\'t read your site (' + escapeHtml(e.message) + ') — the web research covers for it.</span>';
+      paint();
+    }));
   }
+  if (extra && /^https:\/\/.+\..+/.test(extra)) {
+    lines.push('Visiting your reviews page…');
+    paint();
+    const idx = lines.length - 1;
+    jobs.push(scrapeOne(extra).then(s => {
+      scraped.push(s);
+      lines[idx] = '<span class="ok">✓ Read:</span> ' + escapeHtml(s.title || extra);
+      paint();
+    }).catch(e => {
+      lines[idx] = '<span class="warn">△ Couldn\'t read the reviews page (' + escapeHtml(e.message) + ') — continuing without it.</span>';
+      paint();
+    }));
+  }
+
+  await Promise.allSettled(jobs);
+  diagnosticInFlight = false;
+  btn.disabled = false; btn.textContent = 'Investigate my brand →';
+  setTimeout(() => { startQuiz(); }, 1100);
 }
 
 /* ── PHASE 2: quiz ── */
@@ -492,11 +538,16 @@ async function runDiagnostic() {
     ? scraped.map((s, i) => `--- PAGE ${i+1}: ${s.url}\nTITLE: ${s.title}\nMETA: ${s.description}\nCONTENT:\n${s.text}`).join('\n\n')
     : '(The business website could not be read automatically.)';
 
+  const researchBlock = research && research.summary
+    ? research.summary + (research.sources && research.sources.length
+        ? '\n\nSOURCES: ' + research.sources.map(s => s.url).join(' | ') : '')
+    : '(No live web research was available for this diagnostic.)';
+
   const answerBlock = QUESTIONS.map(q => `${q.q} → ${answers[q.key] || 'not answered'}`).join('\n');
 
-  const systemPrompt = `You are a senior strategic communications and marketing consultant specialized in Latin America, with deep knowledge of regional markets like Riviera Maya, Mexico City and LATAM in general. You are performing a "mystery shopper" diagnostic: you have just visited the business's REAL public web pages (content provided below) and you have their answers to a short questionnaire.
+  const systemPrompt = `You are a senior strategic communications and marketing consultant specialized in Latin America, with deep knowledge of regional markets like Riviera Maya, Mexico City and LATAM in general. You are performing a "mystery shopper" diagnostic of the business "${brandName}"${brandLocation ? ' in ' + brandLocation : ''}. You have up to three inputs: (1) the REAL content of their public web pages, (2) LIVE WEB RESEARCH about what is being said about them online (reviews, mentions, news, gathered via Google Search), and (3) their answers to a short questionnaire.
 
-Analyze how this business is actually positioned: how it sounds to a first-time visitor, what it does well, what it's missing in marketing terms, and how vulnerable its reputation is. Cite concrete evidence from their real content when possible ("your homepage says X...", "your page never mentions Y..."). Be direct, specific and useful — like a consultant who wants to be hired because the free diagnostic was already valuable. Never invent facts about the business that aren't supported by the provided content or answers.
+The heart of this diagnostic is the CONTRAST between what the brand says about itself (its website) and what others say about it (the web research). Analyze how this business is actually positioned: how it sounds to a first-time visitor, what outsiders say and whether it matches, what it does well, what it's missing in marketing terms, and how vulnerable its reputation is. Cite concrete evidence ("your homepage says X...", "reviews on Y mention Z..."). If the web research found little or nothing about them, treat that digital invisibility as a key finding. Be direct, specific and useful — like a consultant who wants to be hired because the free diagnostic was already valuable. Never invent facts about the business that aren't supported by the provided inputs.
 
 Respond ONLY with a valid JSON object, no markdown, no explanation, no backticks, with exactly this shape:
 {
@@ -505,12 +556,13 @@ Respond ONLY with a valid JSON object, no markdown, no explanation, no backticks
  "summary": "<2-3 sentence plain-language summary of the diagnostic>",
  "findings": [ {"type": "strength|gap|risk", "title": "<short>", "detail": "<2-3 sentences citing evidence>"} , ... 5 or 6 items, at least 1 strength, ordered most important first ],
  "positioning": "<paragraph: how this brand actually comes across to a stranger, based on its real content>",
+ "outside_view": "<paragraph: what is being said about this brand online according to the web research, and how it compares to what the brand says about itself; if nothing was found, describe the digital invisibility and its consequences>",
  "benchmark": "<paragraph: how this compares to what well-positioned businesses in their sector and region do>",
  "recommendations": [ "<concrete action 1>", "<concrete action 2>", "<concrete action 3>" ],
  "vulnerability": {"level": "low|medium|high", "reason": "<1-2 sentences>"}
 }`;
 
-  const userContent = `QUESTIONNAIRE ANSWERS:\n${answerBlock}\n\nREAL WEBSITE CONTENT (fetched live):\n${siteBlock}`;
+  const userContent = `QUESTIONNAIRE ANSWERS:\n${answerBlock}\n\nLIVE WEB RESEARCH (what is being said about them online):\n${researchBlock}\n\nREAL WEBSITE CONTENT (fetched live):\n${siteBlock}`;
 
   try {
     const r = await fetch(AI_ENDPOINT, {
@@ -572,6 +624,7 @@ function renderTeaser() {
 
   // locked preview: remaining findings blurred
   const lockedHtml = findings.slice(1).map(findingHtml).join('') +
+    `<p class="section-title">What's being said about you online</p><div class="prose-block">${escapeHtml(result.outside_view || '')}</div>` +
     `<p class="section-title">Positioning read</p><div class="prose-block">${escapeHtml(result.positioning || '')}</div>` +
     `<p class="section-title">Sector benchmark</p><div class="prose-block">${escapeHtml(result.benchmark || '')}</div>`;
   document.getElementById('locked-content').innerHTML = lockedHtml;
@@ -615,9 +668,15 @@ Size: ${answers.size || '—'}
 Goal: ${answers.goal || '—'}
 Crisis history: ${answers.crisis || '—'}
 
+Brand: ${brandName || '—'} (${brandLocation || '—'})
 Score: ${result ? result.score : '—'}/100
 Verdict: ${result ? String(result.verdict).replace(/<[^>]+>/g,'') : '—'}
-Vulnerability: ${result && result.vulnerability ? result.vulnerability.level + ' — ' + result.vulnerability.reason : '—'}`
+Vulnerability: ${result && result.vulnerability ? result.vulnerability.level + ' — ' + result.vulnerability.reason : '—'}
+
+Outside view: ${result && result.outside_view ? result.outside_view : '—'}
+
+Web research summary:
+${research && research.summary ? research.summary.slice(0, 1500) : '(research unavailable)'}`
       })
     });
   } catch (e) {
@@ -634,10 +693,17 @@ function revealFullReport() {
   const vLabel = { low: 'Low vulnerability', medium: 'Medium vulnerability', high: 'High vulnerability' }[vlevel];
   const recs = Array.isArray(result.recommendations) ? result.recommendations : [];
 
+  const sourcesHtml = research && research.sources && research.sources.length
+    ? `<p style="font-size:12px;color:var(--mist);margin-top:0.75rem;line-height:1.8;">Sources: ` +
+      research.sources.map(s => `<a href="${escapeHtml(s.url)}" target="_blank" rel="noopener" style="color:var(--teal-light);text-decoration:none;">${escapeHtml(s.title)}</a>`).join(' · ') +
+      `</p>`
+    : '';
+
   document.getElementById('locked-zone').style.display = 'none';
   const full = document.getElementById('full-report');
   full.innerHTML =
     findings.slice(1).map(findingHtml).join('') +
+    `<p class="section-title">What's being said about you online</p><div class="prose-block">${escapeHtml(result.outside_view || '')}</div>` + sourcesHtml +
     `<p class="section-title">Positioning read</p><div class="prose-block">${escapeHtml(result.positioning || '')}</div>` +
     `<p class="section-title">Sector benchmark</p><div class="prose-block">${escapeHtml(result.benchmark || '')}</div>` +
     `<p class="section-title">Reputational vulnerability</p>
