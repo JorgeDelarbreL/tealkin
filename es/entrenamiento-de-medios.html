@@ -517,11 +517,11 @@ async function startPrep() {
       status.innerHTML = '<span class="ok">✓ Dossier listo</span>' + (data.sources && data.sources.length ? ' — ' + data.sources.length + ' fuentes en archivo' : '') + '.';
     } else {
       dossier = null;
-      status.innerHTML = '<span class="warn">△ Investigación en vivo no disponible — el periodista trabajará con tu tema y conocimiento general.</span>';
+      status.innerHTML = '<span class="warn">△ Investigación en vivo no disponible (' + escapeHtml((data && data.error) || ('HTTP ' + r.status)) + ') — el periodista trabajará con tu tema y conocimiento general.</span>';
     }
   } catch (e) {
     dossier = null;
-    status.innerHTML = '<span class="warn">△ Investigación en vivo no disponible — el periodista trabajará con tu tema y conocimiento general.</span>';
+    status.innerHTML = '<span class="warn">△ Investigación en vivo no disponible (' + escapeHtml((e && e.message) || 'error de red') + ') — el periodista trabajará con tu tema y conocimiento general.</span>';
   }
 
   inFlight = false;

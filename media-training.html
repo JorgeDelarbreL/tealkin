@@ -517,11 +517,11 @@ async function startPrep() {
       status.innerHTML = '<span class="ok">✓ Dossier ready</span>' + (data.sources && data.sources.length ? ' — ' + data.sources.length + ' sources on file' : '') + '.';
     } else {
       dossier = null;
-      status.innerHTML = '<span class="warn">△ Live research unavailable — the journalist will work from your topic and general knowledge.</span>';
+      status.innerHTML = '<span class="warn">△ Live research unavailable (' + escapeHtml((data && data.error) || ('HTTP ' + r.status)) + ') — the journalist will work from your topic and general knowledge.</span>';
     }
   } catch (e) {
     dossier = null;
-    status.innerHTML = '<span class="warn">△ Live research unavailable — the journalist will work from your topic and general knowledge.</span>';
+    status.innerHTML = '<span class="warn">△ Live research unavailable (' + escapeHtml((e && e.message) || 'network error') + ') — the journalist will work from your topic and general knowledge.</span>';
   }
 
   inFlight = false;
