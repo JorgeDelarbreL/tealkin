@@ -210,20 +210,26 @@ async function handleResearch(request, env, headers) {
   // worked last time (cached in KV), then known names, then ask Google
   // directly which models this key can use (ListModels) and cache the pick.
   const cached = await env.RATE_LIMIT_KV.get('gemini_model');
-  const MODELS = [...new Set([cached, 'gemini-2.5-flash', 'gemini-flash-latest', 'gemini-2.0-flash'].filter(Boolean))];
+  // prefer the 'latest' aliases (Google keeps them pointing at live models);
+  // pinned versions get retired and start returning 404
+  const MODELS = [...new Set([cached, 'gemini-flash-latest', 'gemini-2.5-flash', 'gemini-2.0-flash'].filter(Boolean))];
   let resp = null;
   let usedModel = '';
   let lastErr = '';
+  let cachedFailed = false;
 
   for (const model of MODELS) {
     try { resp = await callModel(model); } catch { lastErr = 'unreachable'; resp = null; continue; }
     if (resp.ok) { usedModel = model; break; }
+    if (model === cached) cachedFailed = true;
     try {
       const eBody = await resp.json();
       lastErr = resp.status + ' ' + ((eBody.error && eBody.error.message) || '').slice(0, 200);
     } catch { lastErr = String(resp.status); }
     resp = null;
   }
+  // the cached model was retired by Google — forget it so it's never tried again
+  if (cachedFailed) { try { await env.RATE_LIMIT_KV.delete('gemini_model'); } catch {} }
 
   // self-configure: ask Google what models this key actually has
   if (!resp) {
@@ -236,12 +242,19 @@ async function handleResearch(request, env, headers) {
         const candidates = (list.models || [])
           .filter(m => (m.supportedGenerationMethods || []).includes('generateContent'))
           .map(m => m.name.replace(/^models\//, ''))
-          // prefer flash-class, non-preview, non-thinking variants
+          // prefer flash-class 'latest' aliases; penalize pinned -00X versions
+          // and lite variants (both get retired and 404), previews, and non-chat models
           .sort((a, b) => {
-            const scoreOf = n => (n.includes('flash') ? 0 : 2) + (n.includes('preview') || n.includes('exp') ? 1 : 0) + (n.includes('thinking') || n.includes('tts') || n.includes('image') || n.includes('embed') ? 4 : 0);
+            const scoreOf = n =>
+              (n.includes('flash') ? 0 : 3) +
+              (n.includes('latest') ? -2 : 0) +
+              (/-\d{3}$/.test(n) ? 2 : 0) +
+              (n.includes('lite') ? 1 : 0) +
+              (n.includes('preview') || n.includes('exp') ? 1 : 0) +
+              (n.includes('thinking') || n.includes('tts') || n.includes('image') || n.includes('embed') || n.includes('audio') || n.includes('live') ? 8 : 0);
             return scoreOf(a) - scoreOf(b);
           });
-        for (const model of candidates.slice(0, 4)) {
+        for (const model of candidates.slice(0, 6)) {
           try { resp = await callModel(model); } catch { resp = null; continue; }
           if (resp.ok) { usedModel = model; break; }
           try {
