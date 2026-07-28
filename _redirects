@@ -2,3 +2,6 @@
 /tools.html       /lab.html       301
 /es/tools.html    /es/lab.html    301
 /dzon-01-cual-es-el-lugar-de-la-comunicacion.html  /dzon-01-what-is-the-place-of-communications.html  301
+
+# Old structure: English pages moved from /en/ to the site root
+/en/*   /:splat   301
