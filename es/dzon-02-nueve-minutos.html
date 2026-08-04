@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4Y4JT3R4WK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-4Y4JT3R4WK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nueve minutos — Dzon · TealKin</title>
+<meta name="description" content="Nueve minutos bastaron para crear un sitio web con IA. Adaptar a las personas a esa nueva realidad parece tomar más de seis meses. El verdadero reto de la IA es cultural, no técnico.">
+<link rel="canonical" href="https://tealkin.com/es/dzon-02-nueve-minutos.html">
+<link rel="alternate" hreflang="en" href="https://tealkin.com/dzon-02-nine-minutes.html">
+<link rel="alternate" hreflang="es" href="https://tealkin.com/es/dzon-02-nueve-minutos.html">
+<link rel="alternate" hreflang="x-default" href="https://tealkin.com/dzon-02-nine-minutes.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #1a9b8c; --teal-light: #2dbfad; --teal-deep: #0d6b60;
+    --ink: #0f1410; --ink-soft: #0a1210; --mist: #8a9e98; --white: #fdfcfa;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--ink); color: var(--white); overflow-x: hidden; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; padding: 1.5rem 4rem; display: flex; align-items: center; justify-content: space-between; background: rgba(15,20,16,0.9); backdrop-filter: blur(12px); border-bottom: 0.5px solid rgba(255,255,255,0.06); transition: background 0.4s; }
+  .nav-logo { font-family: var(--font-display); font-size: 22px; font-weight: 300; letter-spacing: 0.12em; color: var(--white); text-decoration: none; flex-shrink: 0; }
+  .nav-logo span { color: var(--teal-light); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+  .nav-links a { font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; transition: color 0.3s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--white); }
+  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+  .lang-toggle { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; border: 0.5px solid rgba(255,255,255,0.15); padding: 4px 10px; border-radius: 2px; transition: all 0.3s; }
+  .lang-toggle:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+  .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--mist); transition: all 0.3s; }
+  .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
+  .nav-mobile { display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 190; background: rgba(10,18,12,0.98); backdrop-filter: blur(16px); padding: 2rem; flex-direction: column; gap: 0; border-bottom: 0.5px solid rgba(255,255,255,0.06); }
+  .nav-mobile.open { display: flex; }
+  .nav-mobile a { display: block; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; padding: 1rem 0; border-bottom: 0.5px solid rgba(255,255,255,0.05); transition: color 0.3s; }
+  .nav-mobile a:hover { color: var(--white); }
+
+  .article-hero { padding: 9rem 4rem 4rem; border-bottom: 0.5px solid rgba(255,255,255,0.06); max-width: 860px; }
+  .article-back { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mist); text-decoration: none; margin-bottom: 2.5rem; transition: color 0.3s; }
+  .article-back:hover { color: var(--white); }
+  .article-back::before { content: '←'; font-size: 14px; }
+  .article-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 12px; }
+  .article-eyebrow::before { content: ''; width: 24px; height: 0.5px; background: var(--teal-light); }
+  .article-title { font-family: var(--font-display); font-size: clamp(40px, 6vw, 72px); font-weight: 300; line-height: 1.05; color: var(--white); margin-bottom: 2rem; }
+  .article-title em { font-style: italic; color: var(--teal-light); }
+  .article-meta { display: flex; align-items: center; gap: 2rem; }
+  .meta-author { font-size: 13px; color: var(--white); font-weight: 400; }
+  .meta-date { font-size: 12px; color: var(--mist); }
+  .meta-sep { width: 1px; height: 14px; background: rgba(255,255,255,0.15); }
+
+  .article-body { padding: 5rem 4rem; display: grid; grid-template-columns: 1fr 320px; gap: 6rem; align-items: start; max-width: 1100px; }
+  .prose { font-size: 16px; font-weight: 300; line-height: 1.95; color: rgba(255,255,255,0.82); }
+  .prose p { margin-bottom: 1.5rem; }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose .lede { font-family: var(--font-display); font-size: 22px; font-style: italic; color: var(--white); line-height: 1.5; margin-bottom: 2rem; }
+  .prose em { color: rgba(255,255,255,0.95); font-style: italic; }
+  .prose a { color: var(--teal-light); text-decoration: none; border-bottom: 0.5px solid rgba(45,191,173,0.4); transition: border-color 0.2s; }
+  .prose a:hover { border-bottom-color: var(--teal-light); }
+  .article-sidebar { position: sticky; top: 7rem; }
+  .sidebar-block { border-top: 0.5px solid rgba(255,255,255,0.08); padding-top: 1.5rem; margin-bottom: 2.5rem; }
+  .sidebar-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mist); margin-bottom: 1rem; }
+  .sidebar-author-name { font-family: var(--font-display); font-size: 20px; font-weight: 300; color: var(--white); margin-bottom: 4px; }
+  .sidebar-author-name em { font-style: italic; color: var(--teal-light); }
+  .sidebar-author-role { font-size: 12px; color: var(--mist); margin-bottom: 1rem; line-height: 1.5; }
+  .sidebar-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .sidebar-tag { font-size: 11px; color: var(--mist); border: 0.5px solid rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 2px; }
+  .sidebar-back { display: block; margin-top: 2rem; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; transition: color 0.3s; border-top: 0.5px solid rgba(255,255,255,0.08); padding-top: 1.5rem; }
+  .sidebar-back:hover { color: var(--white); }
+
+  .article-footer { padding: 4rem; border-top: 0.5px solid rgba(255,255,255,0.06); background: var(--ink-soft); }
+  .af-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 1rem; display: flex; align-items: center; gap: 12px; }
+  .af-label::before { content: ''; width: 24px; height: 0.5px; background: var(--teal-light); }
+  .af-title { font-family: var(--font-display); font-size: 28px; font-weight: 300; color: var(--white); margin-bottom: 2rem; }
+  .af-title em { font-style: italic; color: var(--teal-light); }
+  .af-back { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--mist); text-decoration: none; border: 0.5px solid rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 2px; transition: all 0.3s; }
+  .af-back:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
+
+  footer { background: var(--ink); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; border-top: 0.5px solid rgba(255,255,255,0.06); }
+  .footer-logo { font-family: var(--font-display); font-size: 18px; font-weight: 300; letter-spacing: 0.1em; color: var(--white); text-decoration: none; }
+  .footer-logo span { color: var(--teal-light); }
+  .footer-copy { font-size: 12px; color: var(--mist); }
+  .footer-tagline { font-size: 11px; color: var(--mist); font-family: var(--font-display); font-style: italic; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    .article-hero { padding: 7rem 2rem 3rem; }
+    .article-body { grid-template-columns: 1fr; padding: 3rem 2rem; gap: 3rem; }
+    .article-sidebar { position: static; }
+    .article-footer { padding: 3rem 2rem; }
+    footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+    .footer-tagline { display: none; }
+  }
+</style>
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="TealKin">
+<meta property="og:title" content="Nueve minutos — Dzon · TealKin">
+<meta property="og:description" content="Nueve minutos bastaron para crear un sitio web con IA. Adaptar a las personas a esa nueva realidad parece tomar más de seis meses. El verdadero reto de la IA es cultural, no técnico.">
+<meta property="og:url" content="https://tealkin.com/es/dzon-02-nueve-minutos.html">
+<meta property="og:image" content="https://tealkin.com/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_MX">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nueve minutos — Dzon · TealKin">
+<meta name="twitter:description" content="Nueve minutos bastaron para crear un sitio web con IA. Adaptar a las personas a esa nueva realidad parece tomar más de seis meses. El verdadero reto de la IA es cultural, no técnico.">
+<meta name="twitter:image" content="https://tealkin.com/img/og-image.jpg">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Nueve minutos",
+ "inLanguage": "es",
+ "datePublished": "2026-07-21",
+ "author": { "@type": "Person", "name": "Jorge Delarbre", "jobTitle": "Founder, TealKin" },
+ "publisher": { "@type": "Organization", "name": "TealKin", "logo": { "@type": "ImageObject", "url": "https://tealkin.com/img/og-image.jpg" } },
+ "image": "https://tealkin.com/img/og-image.jpg",
+ "mainEntityOfPage": "https://tealkin.com/es/dzon-02-nueve-minutos.html",
+ "about": ["inteligencia artificial", "cultura organizacional", "liderazgo", "gestión del cambio"]
+}
+</script>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="main-nav">
+  <a href="/es/index.html" class="nav-logo">Teal<span>Kin</span></a>
+  <ul class="nav-links">
+    <li><a href="/es/dzon.html" class="active">Dzon</a></li>
+    <li><a href="/es/lab.html">Lab</a></li>
+    <li><a href="/es/areas.html">Áreas</a></li>
+    <li><a href="/es/cases.html">Casos</a></li>
+    <li><a href="/es/about.html">Nosotros</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="/dzon-02-nine-minutes.html" class="lang-toggle" onclick="localStorage.setItem('tk-lang','en')">EN</a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="nav-mobile" id="nav-mobile">
+  <a href="/es/dzon.html">Dzon</a>
+  <a href="/es/lab.html">Lab</a>
+  <a href="/es/areas.html">Áreas</a>
+  <a href="/es/cases.html">Casos</a>
+  <a href="/es/about.html">Nosotros</a>
+  <a href="/dzon-02-nine-minutes.html" style="color:var(--teal-light)" onclick="localStorage.setItem('tk-lang','en')">EN →</a>
+</div>
+
+<!-- ── ARTICLE HERO ── -->
+<section class="article-hero">
+  <a href="/es/dzon.html" class="article-back">Dzon</a>
+  <p class="article-eyebrow">Entrada 02 · IA y cultura organizacional</p>
+  <h1 class="article-title">Nueve <em>minutos.</em></h1>
+  <div class="article-meta">
+    <span class="meta-author">Jorge Delarbre</span>
+    <span class="meta-sep"></span>
+    <span class="meta-date">Julio 2026</span>
+  </div>
+</section>
+
+<!-- ── ARTICLE BODY ── -->
+<div class="article-body">
+  <article class="prose">
+    <p class="lede">Nueve minutos: el tiempo que le tomó a Jesús Guzmán, mejor conocido como <a href="https://www.instagram.com/p/DblZuO9uuTw/" target="_blank" rel="noopener">Brujería Tech</a>, preparar un capuchino en una cafetera de expreso fue suficiente para armar una página web completa con apoyo de inteligencia artificial.</p>
+
+    <p>Mediante el uso de lenguaje cotidiano en lugar de código convencional, práctica conocida como vibe coding, Jesús logró en nueve minutos lo que antes requería semanas o meses de programación especializada. Este tipo de agilidad es cada vez más común; lo insólito fue que le dio un número a mi frustración.</p>
+
+    <p>Esa frustración surgió en una reunión con el equipo digital para mejorar la página web actual, para la cual ya había diseñado y enviado una propuesta en código HTML alojada en GitHub, lista para desplegar. La respuesta fue que no: era necesario esperar los más de cinco meses que el equipo ya tenía considerados para mejorar la página, incluyendo un presupuesto bastante amplio.</p>
+
+    <p>Queriendo entender mejor esta situación, me lancé a indagar las razones. Si bien es cierto que existen procesos técnicos y de cumplimiento que desconozco, la página ya estaba diseñada a un 90%, así que ¿qué era lo que nos impedía tener su ayuda para dejarla al 100%, con el look corporativo y lista para operar? La respuesta fue que no, porque usan otro sistema. No satisfecho, solicité una conversación con los programadores. Lo único que requería era entender su entregable para ver si podíamos hacer algo para acortar los tiempos, adaptar lo que ya teníamos y salir pronto. De nueva cuenta, la respuesta fue no, pero ahora el argumento fue que el plan ya estaba aprobado por el CEO, así como el presupuesto, así que no.</p>
+
+    <p>La respuesta me dejó en shock. Es algo que podría esperar al trabajar en gobierno, en una institución muy tradicional o algo así, pero ¿en una empresa? ¿Especialmente en una empresa que está buscando eficiencias? ¿En una empresa que incluso está fomentando el uso de la IA pagando licencias de Copilot y cursos para capacitar a sus colaboradores?</p>
+
+    <p>Ahí entran esos nueve minutos. Si bien hoy son nueve minutos, y probablemente en dos meses ya sean cinco, toma muchísimo más tiempo abatir las inseguridades, las barreras y las telarañas mentales de las personas. Esta es la gran paradoja de la IA: permite que personas sin formación técnica cuestionen procesos que antes se daban por sentados. Esta democratización del conocimiento tiene sus riesgos, pues puede alimentar una falsa sensación de experticia e ignorar el valor de las áreas especializadas. No obstante, también representa una oportunidad invaluable para optimizar la organización y aumentar la competencia del personal.</p>
+
+    <p>Aquí es donde las soft skills cobran una relevancia crítica, y no precisamente para "llevarse bien" con los colegas. En la era de la IA, estas habilidades deben enfocarse en la objetividad, la curiosidad y la capacidad de entender nuevas lógicas sin imponer criterios obsoletos. Lamentablemente, este es el aspecto que menos se fomenta en las empresas.</p>
+
+    <p>A las organizaciones les encanta proyectar una imagen de vanguardia tecnológica, pero ¿están sus líderes realmente preparados para la IA? ¿Están dispuestos a que se cuestione su autoridad con evidencia y a construir de manera conjunta, rompiendo los silos jerárquicos?</p>
+
+    <p>Yo no soy programador como Jesús; él tiene una comprensión del sistema que yo no tengo. Sin embargo, su conocimiento debería ser el puente para verificar, mejorar e innovar sobre lo que la tecnología nos permite prototipar rápidamente. El reto real de la IA es cultural, no técnico. Requiere que el experto vea en la agilidad del usuario una oportunidad de elevación y no un riesgo de reemplazo.</p>
+
+    <p>Los líderes deben comprender que estas herramientas están diseñadas para potenciar el trabajo colectivo. El miedo al desplazamiento es natural, pero la tecnología no dejará de avanzar. Lo que sí puede evolucionar es nuestra capacidad de adaptación: dejar de temer a la automatización de nuestras tareas actuales para convertirnos en los expertos que dirigen esa potencia tecnológica.</p>
+
+    <p>Nueve minutos bastaron para crear un sitio web. Adaptarse a esta nueva realidad, despojarse del ego y las inseguridades para priorizar la capacidad colectiva, parece tomar más de seis meses y miles de euros. No sé si el equipo humano estará listo para esta transformación. El sitio web, sin duda, podría estarlo en una fracción de ese tiempo.</p>
+  </article>
+
+  <aside class="article-sidebar">
+    <div class="sidebar-block">
+      <p class="sidebar-label">Autor</p>
+      <p class="sidebar-author-name">Jorge<br><em>Delarbre</em></p>
+      <p class="sidebar-author-role">Fundador de TealKin. 14+ años en comunicación corporativa en LATAM.</p>
+    </div>
+    <div class="sidebar-block">
+      <p class="sidebar-label">Temas</p>
+      <div class="sidebar-tags">
+        <span class="sidebar-tag">Inteligencia Artificial</span>
+        <span class="sidebar-tag">Cultura Organizacional</span>
+        <span class="sidebar-tag">Liderazgo</span>
+        <span class="sidebar-tag">Gestión del Cambio</span>
+      </div>
+    </div>
+    <a href="/es/dzon.html" class="sidebar-back">← Volver a Dzon</a>
+  </aside>
+</div>
+
+<!-- ── ARTICLE FOOTER ── -->
+<section class="article-footer">
+  <p class="af-label">Dzon</p>
+  <p class="af-title">Más análisis <em>muy pronto.</em></p>
+  <a href="/es/dzon.html" class="af-back">← Volver a Dzon</a>
+</section>
+
+<footer>
+  <a href="/es/index.html" class="footer-logo">Teal<span>Kin</span></a>
+  <p class="footer-copy">© 2026 TealKin. Tulum, Riviera Maya.</p>
+  <p class="footer-tagline">Dzon — the Maya word for cenote · Kin — sun</p>
+</footer>
+
+<script>
+const hamburger = document.getElementById('hamburger');
+const navMobile = document.getElementById('nav-mobile');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  navMobile.classList.toggle('open');
+});
+document.querySelectorAll('.nav-mobile a').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    navMobile.classList.remove('open');
+  });
+});
+window.addEventListener('scroll', () => {
+  document.getElementById('main-nav').style.background =
+    window.scrollY > 60 ? 'rgba(10,18,12,0.97)' : 'rgba(15,20,16,0.9)';
+});
+</script>
+
+</body>
+</html>

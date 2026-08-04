@@ -57,6 +57,24 @@
   </url>
 
   <url>
+    <loc>https://tealkin.com/dzon-02-nine-minutes.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/dzon-02-nine-minutes.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/dzon-02-nueve-minutos.html"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tealkin.com/es/dzon-02-nueve-minutos.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/dzon-02-nueve-minutos.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/dzon-02-nine-minutes.html"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://tealkin.com/lab.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://tealkin.com/lab.html"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tealkin.com/es/lab.html"/>
