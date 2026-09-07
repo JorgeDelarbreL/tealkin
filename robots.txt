@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
 
+# Cloudflare internal + API/worker paths that are not real pages
+# (Google was discovering these and reporting phantom 404s)
+Disallow: /cdn-cgi/
+Disallow: /scrape
+Disallow: /research
+
 Sitemap: https://tealkin.com/sitemap.xml
