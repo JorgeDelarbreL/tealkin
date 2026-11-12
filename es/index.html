@@ -10,811 +10,458 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TealKin — Comunicación Estratégica</title>
-<meta name="description" content="Herramientas, análisis y perspectiva para organizaciones que navegan un mundo más ruidoso. Con raíces en Riviera Maya, pensando en todo LATAM.">
 <link rel="canonical" href="https://tealkin.com/es/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="alternate" hreflang="en" href="https://tealkin.com/">
 <link rel="alternate" hreflang="es" href="https://tealkin.com/es/">
 <link rel="alternate" hreflang="x-default" href="https://tealkin.com/">
-<style>
-  :root {
-    --teal: #1a9b8c; --teal-light: #2dbfad; --teal-deep: #0d6b60;
-    --ink: #0f1410; --ink-soft: #0a1210; --mist: #8a9e98; --white: #fdfcfa;
-    --font-display: 'Cormorant Garamond', Georgia, serif;
-    --font-body: 'DM Sans', system-ui, sans-serif;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: var(--font-body); background: var(--ink); color: var(--white); overflow-x: hidden; }
-
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; padding: 1.5rem 4rem; display: flex; align-items: center; justify-content: space-between; background: rgba(15,20,16,0.85); backdrop-filter: blur(12px); border-bottom: 0.5px solid rgba(255,255,255,0.06); transition: background 0.4s; }
-  .nav-logo { font-family: var(--font-display); font-size: 22px; font-weight: 300; letter-spacing: 0.12em; color: var(--white); text-decoration: none; flex-shrink: 0; }
-  .nav-logo span { color: var(--teal-light); }
-  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
-  .nav-links a { font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; transition: color 0.3s; }
-  .nav-links a:hover { color: var(--white); }
-  .nav-soon { font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); cursor: default; display: flex; align-items: center; gap: 5px; }
-  .nav-soon-badge { font-size: 7px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(45,191,173,0.4); border: 0.5px solid rgba(45,191,173,0.2); padding: 2px 5px; border-radius: 1px; }
-  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
-  .lang-toggle { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; border: 0.5px solid rgba(255,255,255,0.15); padding: 4px 10px; border-radius: 2px; transition: all 0.3s; }
-  .lang-toggle:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
-  .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
-  .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--mist); transition: all 0.3s; }
-  .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
-  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-  .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
-  .nav-mobile { display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 190; background: rgba(10,18,12,0.98); backdrop-filter: blur(16px); padding: 2rem; flex-direction: column; gap: 0; border-bottom: 0.5px solid rgba(255,255,255,0.06); }
-  .nav-mobile.open { display: flex; }
-  .nav-mobile a, .nav-mobile .nav-mobile-soon { display: block; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; padding: 1rem 0; border-bottom: 0.5px solid rgba(255,255,255,0.05); transition: color 0.3s; }
-  .nav-mobile a:hover { color: var(--white); }
-  .nav-mobile .nav-mobile-soon { color: rgba(255,255,255,0.2); cursor: default; display: flex; align-items: center; gap: 8px; }
-
-  .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; padding: 8rem 2rem 6rem; text-align: center; }
-  .hero-video-wrap { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
-  .hero-video-wrap video { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); min-width: 100%; min-height: 100%; width: auto; height: auto; object-fit: cover; }
-  .hero-grid { position: absolute; inset: 0; z-index: 1; background-image: linear-gradient(rgba(26,155,140,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(26,155,140,0.025) 1px, transparent 1px); background-size: 80px 80px; }
-  .hero-overlay { position: absolute; inset: 0; z-index: 2; background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(5,12,8,0.55) 0%, rgba(5,12,8,0.2) 100%), linear-gradient(to bottom, rgba(10,18,12,0.4) 0%, rgba(10,18,12,0.15) 40%, rgba(10,18,12,0.6) 100%); }
-  .hero-content { position: relative; z-index: 3; max-width: 900px; display: flex; flex-direction: column; align-items: center; }
-  .hero-eyebrow { font-size: 11px; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 2rem; display: flex; align-items: center; gap: 12px; animation: fadeUp 0.8s ease 0.2s both; }
-  .hero-eyebrow::before, .hero-eyebrow::after { content: ''; width: 24px; height: 0.5px; background: var(--teal-light); }
-  .hero-title { font-family: var(--font-display); font-size: clamp(52px, 8vw, 104px); font-weight: 300; line-height: 1.0; margin-bottom: 2rem; color: var(--white); animation: fadeUp 0.8s ease 0.4s both; }
-  .hero-title em { font-style: italic; color: var(--teal-light); }
-  .hero-subtitle { font-size: clamp(14px, 1.6vw, 16px); font-weight: 300; color: var(--mist); max-width: 580px; line-height: 1.85; margin-bottom: 3.5rem; animation: fadeUp 0.8s ease 0.6s both; }
-  .hero-subtitle strong { color: var(--white); font-weight: 400; }
-  .hero-scroll-hint { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; animation: fadeUp 0.8s ease 1.2s both; z-index: 3; }
-  .hero-scroll-hint span { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.2); }
-  .scroll-line { width: 1px; height: 36px; background: linear-gradient(to bottom, rgba(45,191,173,0.5), transparent); animation: scrollPulse 2s ease-in-out infinite; }
-  .hero-location { position: absolute; bottom: 2.5rem; right: 4rem; z-index: 3; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.25); text-align: right; }
-  .hero-location span { display: block; color: rgba(45,191,173,0.5); margin-bottom: 3px; }
-
-  .section-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 12px; }
-  .section-eyebrow::before { content: ''; width: 24px; height: 0.5px; background: var(--teal-light); }
-
-  .argument-section { padding: 8rem 4rem; position: relative; overflow: hidden; }
-  .argument-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(26,155,140,0.04) 0%, transparent 70%); pointer-events: none; }
-  .argument-inner { max-width: 1100px; margin: 0 auto; }
-  .argument-headline { font-family: var(--font-display); font-size: clamp(32px, 5vw, 64px); font-weight: 300; line-height: 1.1; color: var(--white); margin-bottom: 4rem; max-width: 800px; }
-  .argument-headline em { font-style: italic; color: var(--teal-light); }
-  .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.05); }
-  .stat-block { background: var(--ink); padding: 2.5rem; opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
-  .stat-block.visible { opacity: 1; transform: translateY(0); }
-  .stat-block:nth-child(2) { transition-delay: 0.15s; }
-  .stat-block:nth-child(3) { transition-delay: 0.3s; }
-  .stat-number { font-family: var(--font-display); font-size: clamp(44px, 6vw, 80px); font-weight: 300; line-height: 1; color: var(--teal-light); margin-bottom: 8px; }
-  .stat-source { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mist); margin-bottom: 12px; }
-  .stat-desc { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.5); line-height: 1.75; }
-
-  .video-context-section { position: relative; width: 100%; background: #000; overflow: hidden; }
-  .video-ratio { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; }
-  .video-ratio video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .video-overlay-text { position: absolute; top: 0; left: 0; padding: 2rem 2.5rem; background: linear-gradient(135deg, rgba(0,0,0,0.75) 0%, transparent 100%); z-index: 2; pointer-events: none; max-width: 420px; }
-  .video-overlay-text p { font-family: var(--font-display); font-size: clamp(14px, 1.8vw, 22px); font-weight: 300; font-style: italic; color: rgba(255,255,255,0.9); line-height: 1.4; text-shadow: 0 2px 8px rgba(0,0,0,0.7); }
-
-  .disruption-section { padding: 8rem 4rem; background: var(--ink-soft); border-top: 0.5px solid rgba(255,255,255,0.04); }
-  .disruption-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
-  .disruption-text { display: flex; flex-direction: column; gap: 1.5rem; }
-  .disruption-headline { font-family: var(--font-display); font-size: clamp(26px, 3.5vw, 46px); font-weight: 300; line-height: 1.15; color: var(--white); }
-  .disruption-headline em { font-style: italic; color: var(--teal-light); }
-  .disruption-body { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.9; }
-  .disruption-body strong { color: var(--white); font-weight: 400; }
-  .disruption-data { display: flex; flex-direction: column; gap: 16px; }
-  .disruption-data-item { border-left: 2px solid rgba(45,191,173,0.25); padding-left: 20px; opacity: 0; transform: translateX(-12px); transition: opacity 0.6s ease, transform 0.6s ease; }
-  .disruption-data-item.visible { opacity: 1; transform: translateX(0); }
-  .disruption-data-item:nth-child(2) { transition-delay: 0.15s; border-left-color: rgba(45,191,173,0.15); }
-  .disruption-data-item:nth-child(3) { transition-delay: 0.3s; border-left-color: rgba(45,191,173,0.08); }
-  .d-num { font-family: var(--font-display); font-size: 32px; font-weight: 300; color: var(--teal-light); margin-bottom: 4px; }
-  .d-label { font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.5); line-height: 1.65; }
-  .d-source { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-top: 4px; }
-
-  .pullquote-section { padding: 7rem 4rem; position: relative; overflow: hidden; background: #000; }
-  .pullquote-section::before { content: '"'; position: absolute; top: -40px; left: 3rem; font-family: var(--font-display); font-size: 300px; font-weight: 300; color: rgba(255,255,255,0.04); line-height: 1; pointer-events: none; z-index: 3; }
-  .pullquote-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 4; }
-  .pullquote-text { font-family: var(--font-display); font-size: clamp(20px, 3.2vw, 44px); font-weight: 300; line-height: 1.3; color: var(--white); }
-  .pullquote-text em { font-style: italic; color: rgba(255,255,255,0.5); }
-  .pullquote-source { margin-top: 2rem; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
-
-  .areas-section { padding: 8rem 4rem; background: var(--ink); }
-  .areas-inner { max-width: 1100px; margin: 0 auto; }
-  .areas-header { margin-bottom: 4rem; }
-  .areas-title { font-family: var(--font-display); font-size: clamp(28px, 4vw, 52px); font-weight: 300; color: var(--white); margin-top: 1rem; }
-  .areas-title em { font-style: italic; color: var(--teal-light); }
-  .areas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.04); }
-  .area-card { background: var(--ink); padding: 3rem; text-decoration: none; display: block; position: relative; overflow: hidden; opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease, background 0.4s; }
-  .area-card.visible { opacity: 1; transform: translateY(0); }
-  .area-card:nth-child(2) { transition-delay: 0.1s; }
-  .area-card:nth-child(3) { transition-delay: 0.2s; }
-  .area-card:nth-child(4) { transition-delay: 0.3s; }
-  .area-card::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--teal-light); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; }
-  .area-card:hover { background: rgba(26,155,140,0.04); }
-  .area-card:hover::before { transform: scaleX(1); }
-  .area-num { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(45,191,173,0.5); margin-bottom: 6px; }
-  .area-maya { font-family: var(--font-display); font-size: clamp(26px, 3vw, 40px); font-weight: 300; color: var(--white); line-height: 1; margin-bottom: 4px; }
-  .area-name { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mist); margin-bottom: 1.25rem; }
-  .area-desc { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.45); line-height: 1.8; margin-bottom: 1.5rem; }
-  .area-link { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal-light); display: flex; align-items: center; gap: 8px; opacity: 0; transition: opacity 0.3s; }
-  .area-card:hover .area-link { opacity: 1; }
-  .area-link::after { content: '→'; }
-
-  .rep-game-section { padding: 8rem 4rem; background: var(--ink-soft); border-top: 0.5px solid rgba(255,255,255,0.04); }
-  .rep-game-inner { max-width: 1000px; margin: 0 auto; }
-  .rep-game-header { margin-bottom: 3rem; }
-  .rep-game-title { font-family: var(--font-display); font-size: clamp(28px, 4vw, 52px); font-weight: 300; color: var(--white); margin-top: 1rem; line-height: 1.1; }
-  .rep-game-title em { font-style: italic; color: var(--teal-light); }
-  .rep-game-subtitle { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.45); margin-top: 1rem; line-height: 1.7; }
-  .rep-progress { display: flex; gap: 10px; margin-bottom: 2.5rem; }
-  .rep-dot { width: 28px; height: 2px; background: rgba(255,255,255,0.12); border-radius: 2px; transition: background 0.4s; }
-  .rep-dot.active { background: var(--teal-light); }
-  .rep-dot.done { background: rgba(45,191,173,0.35); }
-  .rep-round { display: none; }
-  .rep-round.active { display: block; }
-  .rep-round-cat { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(45,191,173,0.5); margin-bottom: 0.75rem; }
-  .rep-round-q { font-family: var(--font-display); font-size: clamp(20px, 2.8vw, 32px); font-weight: 300; color: var(--white); margin-bottom: 2rem; line-height: 1.2; }
-  .rep-split { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center; }
-  .rep-vs { font-family: var(--font-display); font-size: 18px; color: rgba(255,255,255,0.2); text-align: center; }
-  .rep-side { cursor: pointer; display: flex; flex-direction: column; gap: 12px; transition: transform 0.2s; }
-  .rep-side:hover { transform: translateY(-3px); }
-  .rep-side.chosen .rep-img-wrap { border-color: var(--teal-light); }
-  .rep-side.chosen .rep-img-wrap img { filter: brightness(0.9) saturate(1.1); }
-  .rep-side.unchosen { opacity: 0.25; }
-  .rep-side.chosen, .rep-side.unchosen { pointer-events: none; }
-  .rep-img-wrap { position: relative; width: 100%; padding-bottom: 62%; overflow: hidden; border: 0.5px solid rgba(255,255,255,0.08); border-radius: 2px; }
-  .rep-img-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; filter: brightness(0.75) saturate(0.8); transition: filter 0.4s, transform 0.4s; }
-  .rep-side:hover .rep-img-wrap img { filter: brightness(0.9) saturate(1); transform: scale(1.03); }
-  .rep-img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%); }
-  .rep-side-label { font-family: var(--font-display); font-size: clamp(16px, 2vw, 22px); font-weight: 300; color: var(--white); }
-  .rep-btn { background: none; border: 0.5px solid rgba(255,255,255,0.15); border-radius: 2px; padding: 8px 20px; font-family: var(--font-body); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s; width: fit-content; }
-  .rep-side:hover .rep-btn { border-color: var(--teal-light); color: var(--teal-light); }
-  .rep-side.chosen .rep-btn { border-color: var(--teal-light); color: var(--teal-light); background: rgba(45,191,173,0.08); }
-  .rep-reveal { display: none; margin-top: 2rem; padding: 2rem; border-left: 2px solid var(--teal-light); background: rgba(45,191,173,0.04); animation: fadeUp 0.5s ease both; }
-  .rep-reveal.visible { display: block; }
-  .rep-reveal-text { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.7); line-height: 1.85; }
-  .rep-reveal-text strong { color: var(--white); font-weight: 400; }
-  .rep-next-btn { margin-top: 1.25rem; background: var(--white); color: var(--ink); border: none; border-radius: 2px; padding: 10px 24px; font-family: var(--font-body); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; cursor: pointer; transition: background 0.2s; }
-  .rep-next-btn:hover { background: var(--teal-light); }
-  .rep-final-wrap { text-align: center; padding: 3rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
-  .rep-final-icon svg { width: 48px; height: 48px; stroke: var(--teal-light); opacity: 0.6; }
-  .rep-final-title { font-family: var(--font-display); font-size: clamp(24px, 3.5vw, 42px); font-weight: 300; color: var(--white); line-height: 1.2; }
-  .rep-final-title em { font-style: italic; color: var(--teal-light); }
-  .rep-final-body { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.85; max-width: 600px; }
-  .rep-restart-btn { background: none; border: 0.5px solid rgba(255,255,255,0.15); border-radius: 2px; padding: 9px 22px; font-family: var(--font-body); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); cursor: pointer; transition: all 0.2s; margin-top: 1rem; }
-  .rep-restart-btn:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
-
-  .lab-cta-section { padding: 8rem 4rem; background: var(--ink); position: relative; overflow: hidden; }
-  .lab-cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 70% at 50% 100%, rgba(26,155,140,0.06) 0%, transparent 60%); pointer-events: none; }
-  .lab-cta-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
-  .lab-cta-text { display: flex; flex-direction: column; gap: 1.5rem; }
-  .lab-cta-title { font-family: var(--font-display); font-size: clamp(26px, 3.8vw, 52px); font-weight: 300; line-height: 1.1; color: var(--white); margin-top: 1rem; }
-  .lab-cta-title em { font-style: italic; color: var(--teal-light); }
-  .lab-cta-body { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.5); line-height: 1.9; }
-  .lab-cta-body strong { color: var(--white); font-weight: 400; }
-  .lab-cta-link { display: inline-flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal-light); text-decoration: none; transition: gap 0.3s; }
-  .lab-cta-link:hover { gap: 16px; }
-  .lab-tools { display: flex; flex-direction: column; gap: 10px; }
-  .lab-tool-card { border: 0.5px solid rgba(255,255,255,0.08); border-radius: 3px; padding: 1.25rem 1.5rem; text-decoration: none; display: flex; align-items: center; justify-content: space-between; position: relative; overflow: hidden; transition: all 0.3s; }
-  .lab-tool-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--teal-light); transform: scaleY(0); transform-origin: bottom; transition: transform 0.3s; }
-  .lab-tool-card:hover { border-color: rgba(45,191,173,0.25); background: rgba(26,155,140,0.04); }
-  .lab-tool-card:hover::before { transform: scaleY(1); }
-  .lab-tool-card.disabled { opacity: 0.35; pointer-events: none; }
-  .lab-tool-left { display: flex; flex-direction: column; gap: 3px; }
-  .lab-tool-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-light); }
-  .lab-tool-name { font-family: var(--font-display); font-size: 17px; font-weight: 300; color: var(--white); }
-  .lab-tool-desc { font-size: 11px; color: rgba(255,255,255,0.28); margin-top: 2px; }
-  .lab-tool-arrow { font-size: 15px; color: rgba(45,191,173,0.3); transition: transform 0.3s, color 0.3s; flex-shrink: 0; }
-  .lab-tool-card:hover .lab-tool-arrow { transform: translateX(4px); color: var(--teal-light); }
-
-  .coaties-section { position: relative; width: 100%; min-height: 60vh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #000; }
-  .coaties-section video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.55; filter: brightness(0.6) saturate(0.8); z-index: 0; }
-  .coaties-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(10,18,12,0.4) 0%, rgba(10,18,12,0.2) 50%, rgba(10,18,12,0.7) 100%); z-index: 1; }
-  .coaties-content { position: relative; z-index: 2; text-align: center; padding: 4rem 2rem; max-width: 700px; }
-  .coaties-eyebrow { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(45,191,173,0.7); margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 12px; }
-  .coaties-eyebrow::before, .coaties-eyebrow::after { content: ''; width: 20px; height: 0.5px; background: rgba(45,191,173,0.5); }
-  .coaties-title { font-family: var(--font-display); font-size: clamp(36px, 5vw, 68px); font-weight: 300; color: var(--white); line-height: 1.05; margin-bottom: 1.25rem; }
-  .coaties-title em { font-style: italic; color: var(--teal-light); }
-  .coaties-sub { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.8; max-width: 480px; margin: 0 auto; }
-
-  .hub-section { padding: 8rem 4rem; background: var(--ink-soft); border-top: 0.5px solid rgba(255,255,255,0.04); }
-  .hub-inner { max-width: 1100px; margin: 0 auto; }
-  .hub-header { margin-bottom: 4rem; }
-  .hub-title { font-family: var(--font-display); font-size: clamp(26px, 3.5vw, 44px); font-weight: 300; color: var(--white); margin-top: 1rem; }
-  .hub-title em { font-style: italic; color: var(--teal-light); }
-  .hub-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.04); }
-  .hub-card { background: var(--ink-soft); padding: 2.5rem; text-decoration: none; display: block; position: relative; opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s; }
-  .hub-card.visible { opacity: 1; transform: translateY(0); }
-  .hub-card:nth-child(2) { transition-delay: 0.08s; }
-  .hub-card:nth-child(3) { transition-delay: 0.16s; }
-  .hub-card:nth-child(4) { transition-delay: 0.24s; }
-  .hub-card:nth-child(5) { transition-delay: 0.32s; }
-  .hub-card:hover { background: rgba(26,155,140,0.04); }
-  .hub-card.soon { pointer-events: none; }
-  .hub-card.soon.visible { opacity: 0.38; }
-  .hub-card-num { font-size: 10px; letter-spacing: 0.2em; color: rgba(45,191,173,0.35); margin-bottom: 1rem; }
-  .hub-card-name { font-family: var(--font-display); font-size: clamp(17px, 2vw, 24px); font-weight: 300; color: var(--white); margin-bottom: 6px; line-height: 1.1; }
-  .hub-card-tag { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mist); margin-bottom: 1rem; }
-  .hub-card-desc { font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.38); line-height: 1.7; }
-  .hub-card-status { margin-top: 1.25rem; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; }
-  .status-live { color: rgba(45,191,173,0.5); }
-  .status-soon { color: rgba(255,255,255,0.18); }
-
-  footer { background: var(--ink); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; border-top: 0.5px solid rgba(255,255,255,0.06); }
-  .footer-logo { font-family: var(--font-display); font-size: 18px; font-weight: 300; letter-spacing: 0.1em; color: var(--white); text-decoration: none; }
-  .footer-logo span { color: var(--teal-light); }
-  .footer-copy { font-size: 12px; color: var(--mist); }
-  .footer-tagline { font-size: 11px; color: var(--mist); font-family: var(--font-display); font-style: italic; }
-
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes scrollPulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-
-  @media (max-width: 1024px) {
-    nav { padding: 1.25rem 2.5rem; }
-    .nav-links { gap: 1.5rem; }
-    .argument-section, .disruption-section, .areas-section, .rep-game-section, .lab-cta-section, .hub-section { padding: 6rem 2.5rem; }
-    .pullquote-section { padding: 5rem 2.5rem; }
-    .disruption-inner, .lab-cta-inner { gap: 4rem; }
-    .hub-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  @media (max-width: 768px) {
-    nav { padding: 1.25rem 1.5rem; }
-    .nav-links { display: none; }
-    .nav-hamburger { display: flex; }
-    .hero { padding: 7rem 1.5rem 5rem; }
-    .hero-eyebrow { font-size: 10px; justify-content: center; }
-    .hero-location { display: none; }
-    .argument-section, .disruption-section, .areas-section, .rep-game-section, .lab-cta-section, .hub-section { padding: 5rem 1.5rem; }
-    .pullquote-section { padding: 4rem 1.5rem; }
-    .stats-row { grid-template-columns: 1fr; }
-    .stat-block { padding: 2rem 1.5rem; }
-    .disruption-inner, .lab-cta-inner { grid-template-columns: 1fr; gap: 3rem; }
-    .areas-grid { grid-template-columns: 1fr; }
-    .area-card { padding: 2rem 1.5rem; }
-    .area-link { opacity: 1; }
-    .rep-game-section { padding: 5rem 1.5rem; }
-    .rep-split { grid-template-columns: 1fr; gap: 12px; }
-    .rep-vs { display: none; }
-    .rep-side { flex-direction: row; align-items: center; gap: 16px; }
-    .rep-img-wrap { width: 100px; padding-bottom: 0; height: 70px; flex-shrink: 0; }
-    .rep-side-label { font-size: 16px; }
-    .rep-btn { font-size: 10px; padding: 6px 14px; }
-    .hub-grid { grid-template-columns: 1fr; }
-    .hub-card { padding: 2rem 1.5rem; }
-    .video-overlay-text { padding: 1.5rem; }
-    .coaties-section { min-height: 40vh; }
-    footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; text-align: center; }
-    .footer-tagline { display: none; }
-  }
-
-  @media (max-width: 480px) {
-    .hero-title { font-size: clamp(40px, 11vw, 56px); }
-    .argument-headline { font-size: clamp(28px, 7vw, 40px); }
-  }
-</style>
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="TealKin">
-<meta property="og:title" content="TealKin — Comunicación Estratégica">
-<meta property="og:description" content="Herramientas, análisis y perspectiva para organizaciones que navegan un mundo más ruidoso. Con raíces en Riviera Maya, pensando en todo LATAM.">
 <meta property="og:url" content="https://tealkin.com/es/">
 <meta property="og:image" content="https://tealkin.com/img/og-image.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:locale" content="es_MX">
-<meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="TealKin — Comunicación Estratégica">
-<meta name="twitter:description" content="Herramientas, análisis y perspectiva para organizaciones que navegan un mundo más ruidoso. Con raíces en Riviera Maya, pensando en todo LATAM.">
-<meta name="twitter:image" content="https://tealkin.com/img/og-image.jpg">
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "ProfessionalService",
- "name": "TealKin",
- "url": "https://tealkin.com/es/",
- "image": "https://tealkin.com/img/og-image.jpg",
- "description": "Consultoría en comunicación estratégica — herramientas, análisis y perspectiva para organizaciones que navegan reputación, crisis y diferenciación en América Latina.",
- "areaServed": "Latin America",
- "address": {
-  "@type": "PostalAddress",
-  "addressLocality": "Tulum",
-  "addressRegion": "Quintana Roo",
-  "addressCountry": "MX"
- },
- "sameAs": []
+<title>TealKin — Comunicación estratégica y reputación</title>
+<meta name="description" content="Herramientas con IA, análisis y casos para decidir cómo comunicar cuando la reputación está en juego. Un proyecto personal, con raíces en Riviera Maya, pensando para toda LATAM.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#2dbfad; --teal-d:#1a9b8c; --orange:#e8843a;
+  --ink:#0a0f0e; --ink-2:#0d1311; --paper:#f3efe6; --paper-2:#ece6d8;
+  --white:#f3efe6; --mist:#aab2ac; --ink-soft:#6a665d;
+  --line-d:rgba(255,255,255,.14); --line-l:#d8d0bf;
+  --fg:'Space Grotesk',system-ui,sans-serif; --fb:'Inter',system-ui,sans-serif; --fm:'Space Mono',monospace;
 }
-</script>
+*{margin:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--ink);color:var(--white);-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
+a{color:inherit}
+.k{font-family:var(--fm);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.wrap{max-width:1180px;margin:0 auto}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;background:rgba(10,15,14,.72);backdrop-filter:blur(10px);border-bottom:1px solid var(--line-d)}
+.logo{font-family:var(--fg);font-size:21px;font-weight:700;letter-spacing:-.01em;text-decoration:none}.logo b{color:var(--teal)}
+.nav-l{display:flex;gap:26px;list-style:none}
+.nav-l a{font-family:var(--fm);font-size:12px;letter-spacing:.04em;text-transform:uppercase;opacity:.6;text-decoration:none}.nav-l a:hover{opacity:1}
+.nav-r{display:flex;align-items:center;gap:16px}
+.lang{font-family:var(--fm);font-size:12px;border:1px solid rgba(255,255,255,.22);padding:5px 11px;border-radius:3px;text-decoration:none}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.burger span{width:22px;height:1.5px;background:var(--mist);display:block;transition:.3s}
+.burger.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
+.mobile{display:none;position:fixed;top:57px;left:0;right:0;z-index:40;background:rgba(10,15,14,.98);backdrop-filter:blur(14px);padding:1.5rem 2rem;flex-direction:column;border-bottom:1px solid var(--line-d)}
+.mobile.open{display:flex}
+.mobile a{font-family:var(--fm);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--mist);text-decoration:none;padding:.9rem 0;border-bottom:1px solid rgba(255,255,255,.06)}
+
+/* HERO */
+.hero{position:relative;min-height:calc(100vh - 57px);display:flex;flex-direction:column}
+.hero-media{position:absolute;inset:0;z-index:0;overflow:hidden;background:#071311}
+.hero-media video,.hero-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-media::after{content:"";position:absolute;inset:0;background:radial-gradient(70% 60% at 30% 45%,rgba(8,14,12,.35),rgba(8,14,12,.8))}
+#net{position:absolute;inset:0;z-index:1}
+.veil{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(10,15,14,.35),rgba(10,15,14,.2) 40%,rgba(10,15,14,.82))}
+.hero-grid{position:relative;z-index:3;flex:1;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;padding:30px 40px 46px;max-width:1180px;margin:0 auto;width:100%}
+.hero-k{color:var(--teal);margin-bottom:22px;display:flex;align-items:center;gap:12px}.hero-k::before{content:'';width:34px;height:2px;background:var(--orange)}
+h1{font-family:var(--fg);font-weight:600;font-size:clamp(40px,5vw,70px);line-height:1.0;letter-spacing:-.025em}
+h1 em{font-style:normal;color:var(--teal)}
+.sub{margin-top:22px;font-size:17px;line-height:1.6;max-width:46ch;color:#d6dcd6}
+.sub b{color:var(--white);font-weight:600}
+.cta{margin-top:32px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.btn{font-family:var(--fg);font-size:15px;font-weight:600;background:var(--teal);color:#05100e;padding:15px 26px;border-radius:4px;text-decoration:none;transition:background .2s}.btn:hover{background:var(--white)}
+.btn-2{font-family:var(--fg);font-size:15px;font-weight:500;text-decoration:none;opacity:.9;border-bottom:2px solid var(--teal-d);padding-bottom:3px}
+.idx{display:flex;flex-direction:column;border-top:1px solid var(--line-d)}
+.idx a{padding:18px 2px;border-bottom:1px solid var(--line-d);text-decoration:none;display:flex;align-items:baseline;gap:16px;transition:padding-left .2s}.idx a:hover{padding-left:12px}
+.idx .n{font-family:var(--fm);font-size:11px;color:var(--teal);width:30px;flex:none}
+.idx .t{font-family:var(--fg);font-size:18px;font-weight:600}
+.idx .d{font-size:13px;color:var(--mist);margin-top:3px}
+.idx .ar{margin-left:auto;color:var(--orange);align-self:center}
+.hero-foot{position:relative;z-index:3;display:flex;justify-content:space-between;padding:14px 40px;color:#6a726c;max-width:1180px;margin:0 auto;width:100%}
+.hero-foot span{font-family:var(--fm);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+
+/* SECTIONS */
+section{padding:92px 40px}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:40px;max-width:1180px;margin-left:auto;margin-right:auto}
+.sec-head .num{color:var(--teal);flex:none}
+.sec-head h2{font-family:var(--fg);font-weight:600;font-size:clamp(28px,3.4vw,44px);letter-spacing:-.02em;line-height:1.05}
+.sec-head h2 em{font-style:normal;color:var(--teal)}
+.sec-head .note{margin-left:auto;font-size:14px;color:var(--mist);max-width:32ch;text-align:right}
+
+/* POR QUÉ IMPORTA */
+.why{background:var(--ink-2);border-top:1px solid var(--line-d);border-bottom:1px solid var(--line-d)}
+.why-lead{font-family:var(--fg);font-weight:500;font-size:clamp(22px,2.8vw,34px);line-height:1.25;letter-spacing:-.01em;max-width:24ch}
+.why-lead em{color:var(--teal);font-style:normal}
+.why-body{font-size:16px;color:var(--mist);max-width:60ch;margin-top:20px;line-height:1.7}
+.why-body b{color:var(--white);font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.stat{border:1px solid var(--line-d);border-radius:8px;padding:28px;background:var(--ink)}
+.stat .num{font-family:var(--fg);font-weight:600;font-size:clamp(40px,5vw,60px);line-height:1;color:var(--teal);letter-spacing:-.02em}
+.stat .num sup{font-size:.4em;vertical-align:.5em;font-weight:500}
+.stat .src{font-family:var(--fm);font-size:10px;letter-spacing:.06em;color:var(--ink-soft);margin:14px 0 10px;text-transform:uppercase}
+.stat .desc{font-size:13px;color:var(--mist);line-height:1.65}
+
+/* GAME */
+.game{background:var(--ink)}
+.game-wrap{max-width:980px;margin:0 auto}
+.prog{display:flex;gap:10px;margin:28px 0}
+.pdot{width:28px;height:3px;background:rgba(255,255,255,.12);border-radius:2px;transition:.4s}
+.pdot.active{background:var(--teal)}.pdot.done{background:rgba(45,191,173,.4)}
+.round{display:none}.round.active{display:block}
+.round-cat{font-family:var(--fm);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+.round-q{font-family:var(--fg);font-weight:600;font-size:clamp(20px,2.6vw,30px);letter-spacing:-.01em;margin-bottom:24px}
+.split{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center}
+.vs{font-family:var(--fm);font-size:13px;color:rgba(255,255,255,.3);text-align:center}
+.side{cursor:pointer;display:flex;flex-direction:column;gap:12px;transition:transform .2s}
+.side:hover{transform:translateY(-3px)}
+.side.chosen .imgw{border-color:var(--teal)}
+.side.unchosen{opacity:.25;pointer-events:none}
+.side.chosen{pointer-events:none}
+.imgw{position:relative;width:100%;padding-bottom:60%;overflow:hidden;border:1px solid var(--line-d);border-radius:6px}
+.imgw img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;filter:brightness(.78) saturate(.85);transition:.4s}
+.side:hover .imgw img{filter:brightness(.95) saturate(1);transform:scale(1.03)}
+.imgw::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.55),transparent 60%)}
+.side-l{font-family:var(--fg);font-size:clamp(15px,1.8vw,20px);font-weight:600}
+.gbtn{background:none;border:1px solid var(--line-d);border-radius:4px;padding:9px 18px;font-family:var(--fm);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mist);cursor:pointer;transition:.3s;width:fit-content}
+.side:hover .gbtn{border-color:var(--teal);color:var(--teal)}
+.side.chosen .gbtn{border-color:var(--teal);color:var(--teal);background:rgba(45,191,173,.08)}
+.reveal{display:none;margin-top:28px;padding:24px;border-left:3px solid var(--teal);background:rgba(45,191,173,.05);border-radius:0 6px 6px 0}
+.reveal.visible{display:block}
+.reveal p{font-size:15px;color:#d6dcd6;line-height:1.8}.reveal b{color:var(--white);font-weight:600}
+.nextb{margin-top:18px;background:var(--white);color:var(--ink);border:none;border-radius:4px;padding:11px 24px;font-family:var(--fg);font-weight:600;font-size:13px;cursor:pointer;transition:.2s}
+.nextb:hover{background:var(--teal)}
+.final{text-align:center;padding:40px 20px;display:flex;flex-direction:column;align-items:center;gap:18px}
+.final svg{width:46px;height:46px;stroke:var(--teal);opacity:.7}
+.final h3{font-family:var(--fg);font-weight:600;font-size:clamp(24px,3.4vw,38px);letter-spacing:-.02em;line-height:1.1}
+.final h3 em{color:var(--teal);font-style:normal}
+.final p{font-size:15px;color:var(--mist);line-height:1.8;max-width:600px}
+.restart{background:none;border:1px solid var(--line-d);border-radius:4px;padding:9px 20px;font-family:var(--fm);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mist);cursor:pointer;margin-top:8px}
+
+/* AREAS */
+.areas{background:var(--ink-2);border-top:1px solid var(--line-d)}
+.areas-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-d);border:1px solid var(--line-d);border-radius:8px;overflow:hidden;max-width:1180px;margin:0 auto}
+.area{background:var(--ink-2);padding:30px 26px;text-decoration:none;display:block;position:relative;transition:background .3s}
+.area::after{content:'';position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--teal);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.area:hover{background:rgba(45,191,173,.05)}.area:hover::after{transform:scaleX(1)}
+.area .n{font-family:var(--fm);font-size:10px;letter-spacing:.14em;color:var(--teal);margin-bottom:12px}
+.area .maya{font-family:var(--fg);font-size:clamp(22px,2.2vw,30px);font-weight:600;letter-spacing:-.01em;line-height:1}
+.area .name{font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mist);margin:8px 0 14px}
+.area .d{font-size:12.5px;color:var(--mist);line-height:1.65}
+
+/* LAB */
+.lab{background:var(--ink)}
+.lab-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;max-width:1180px;margin:0 auto}
+.lab-title{font-family:var(--fg);font-weight:600;font-size:clamp(26px,3.4vw,44px);letter-spacing:-.02em;line-height:1.08}
+.lab-title em{color:var(--teal);font-style:normal}
+.lab-body{font-size:15px;color:var(--mist);line-height:1.8;margin-top:18px;max-width:46ch}.lab-body b{color:var(--white);font-weight:600}
+.lab-link{display:inline-flex;align-items:center;gap:10px;font-family:var(--fg);font-weight:600;font-size:14px;color:var(--teal);text-decoration:none;margin-top:22px;transition:gap .3s}.lab-link:hover{gap:16px}
+.tools{display:flex;flex-direction:column;gap:12px}
+.tool{border:1px solid var(--line-d);border-radius:6px;padding:18px 20px;text-decoration:none;display:flex;align-items:center;justify-content:space-between;transition:.3s;position:relative;overflow:hidden}
+.tool::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--teal);transform:scaleY(0);transform-origin:bottom;transition:transform .3s}
+.tool:hover{border-color:rgba(45,191,173,.3);background:rgba(45,191,173,.04)}.tool:hover::before{transform:scaleY(1)}
+.tool.soon{opacity:.4;pointer-events:none}
+.tool .lbl{font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+.tool .nm{font-family:var(--fg);font-size:17px;font-weight:600;margin:3px 0 2px}
+.tool .ds{font-size:12px;color:var(--mist)}
+.tool .ar{color:var(--teal);font-size:16px;flex:none;margin-left:14px;transition:transform .3s}.tool:hover .ar{transform:translateX(4px)}
+
+/* ROOTED (coaties) */
+.rooted{position:relative;min-height:56vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#000;padding:0}
+.rooted img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;filter:brightness(.65) saturate(.85);z-index:0}
+.rooted::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,15,14,.4),rgba(10,15,14,.2) 50%,rgba(10,15,14,.75));z-index:1}
+.rooted-in{position:relative;z-index:2;text-align:center;padding:4rem 2rem;max-width:620px}
+.rooted-k{font-family:var(--fm);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:18px}
+.rooted h2{font-family:var(--fg);font-weight:600;font-size:clamp(34px,5vw,60px);letter-spacing:-.025em;line-height:1.0}
+.rooted h2 em{color:var(--teal);font-style:normal}
+.rooted p{font-size:15px;color:#d6dcd6;line-height:1.75;max-width:440px;margin:18px auto 0}
+
+/* ECOSISTEMA */
+.eco{background:var(--ink-2);border-top:1px solid var(--line-d)}
+.eco-grid{display:flex;flex-direction:column;border-top:1px solid var(--line-d);max-width:1180px;margin:0 auto}
+.eco-row{display:grid;grid-template-columns:40px 180px 1fr auto;gap:24px;align-items:baseline;padding:22px 4px;border-bottom:1px solid var(--line-d);text-decoration:none;transition:padding-left .2s}
+.eco-row:hover{padding-left:12px}
+.eco-row .n{font-family:var(--fm);font-size:11px;color:var(--teal)}
+.eco-row .nm{font-family:var(--fg);font-size:20px;font-weight:600;letter-spacing:-.01em}
+.eco-row .d{font-size:13px;color:var(--mist);max-width:60ch}
+.eco-row .st{font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);align-self:center;white-space:nowrap}
+.eco-row .st.soon{color:rgba(255,255,255,.3)}
+
+/* FINAL CTA */
+.fcta{text-align:center;padding:110px 40px;background:var(--ink)}
+.fcta h2{font-family:var(--fg);font-weight:600;font-size:clamp(32px,4.6vw,58px);letter-spacing:-.025em;line-height:1.0}
+.fcta h2 em{color:var(--teal);font-style:normal}
+.fcta p{font-size:17px;color:var(--mist);margin:22px auto 0;max-width:46ch}
+.fcta .btn{margin-top:36px;display:inline-block;font-size:16px;padding:17px 34px}
+
+/* FOOTER */
+footer{border-top:1px solid var(--line-d);padding:38px 40px;display:flex;justify-content:space-between;align-items:flex-start;gap:28px;flex-wrap:wrap;max-width:1180px;margin:0 auto}
+.f-l a{display:block;font-family:var(--fm);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mist);text-decoration:none;margin-bottom:8px}
+.f-r{text-align:right;color:#6a726c;font-size:12px;font-family:var(--fm);line-height:1.9}
+.f-r b{color:var(--mist);font-weight:400}
+
+@media(max-width:980px){
+  .hero-grid{grid-template-columns:1fr;gap:34px;padding:24px 24px 38px}
+  .stats{grid-template-columns:1fr}
+  .areas-grid{grid-template-columns:1fr 1fr}
+  .lab-grid{grid-template-columns:1fr;gap:34px}
+}
+@media(max-width:760px){
+  nav{padding:14px 20px}.nav-l{display:none}.burger{display:flex}
+  section{padding:60px 20px}
+  .sec-head{flex-wrap:wrap;gap:8px;margin-bottom:28px}.sec-head .note{margin-left:0;text-align:left}
+  .hero-foot{padding:12px 20px}
+  .split{grid-template-columns:1fr;gap:12px}.vs{display:none}
+  .side{flex-direction:row;align-items:center;gap:14px}
+  .imgw{width:110px;padding-bottom:0;height:74px;flex:none}
+  .areas-grid{grid-template-columns:1fr}
+  .eco-row{grid-template-columns:30px 1fr;gap:6px 14px}.eco-row .d,.eco-row .st{grid-column:2}
+  footer{padding:30px 20px}
+}
+</style>
 </head>
 <body>
 
-<nav id="main-nav">
-  <a href="/es/" class="nav-logo">Teal<span>Kin</span></a>
-  <ul class="nav-links">
-    <li><a href="/es/dzon">Dzon</a></li>
+<nav>
+  <a href="/es/" class="logo">Teal<b>Kin</b></a>
+  <ul class="nav-l">
     <li><a href="/es/lab">Lab</a></li>
+    <li><a href="/es/dzon">Dzon</a></li>
+    <li><a href="/es/cases">Casos</a></li>
     <li><a href="/es/areas">Áreas</a></li>
-<li><a href="/es/cases">Casos</a></li>
     <li><a href="/es/about">Nosotros</a></li>
   </ul>
-  <div class="nav-right">
-    <a href="/" class="lang-toggle" onclick="localStorage.setItem('tk-lang','en')">EN</a>
-    <button class="nav-hamburger" id="hamburger" aria-label="Menú">
-      <span></span><span></span><span></span>
-    </button>
+  <div class="nav-r">
+    <a href="/" class="lang">EN</a>
+    <button class="burger" id="burger" aria-label="Menú"><span></span><span></span><span></span></button>
   </div>
 </nav>
-
-<div class="nav-mobile" id="nav-mobile">
-  <a href="/es/dzon">Dzon</a>
-  <a href="/es/lab">Lab</a>
-  <a href="/es/areas">Áreas</a>
-<a href="/es/cases">Casos</a>
-  <a href="/es/about">Nosotros</a>
-  <a href="/" style="color:var(--teal-light)" onclick="localStorage.setItem('tk-lang','en')">EN →</a>
+<div class="mobile" id="mobile">
+  <a href="/es/lab">Lab</a><a href="/es/dzon">Dzon</a><a href="/es/cases">Casos</a><a href="/es/areas">Áreas</a><a href="/es/about">Nosotros</a><a href="/" style="color:var(--teal)">EN →</a>
 </div>
 
-<section class="hero">
-  <div class="hero-video-wrap">
-    <video autoplay muted loop playsinline>
-      <source src="/img/hero-bg.mp4" type="video/mp4">
-    </video>
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-media"><video id="herovid" poster="/assets/cenote-poster.jpg" autoplay muted loop playsinline preload="metadata"><source src="/assets/cenote-hero.mp4" type="video/mp4"></video></div>
+  <canvas id="net"></canvas><div class="veil"></div>
+  <div class="hero-grid">
+    <div>
+      <div class="hero-k k">Comunicación estratégica y reputación · LATAM</div>
+      <h1>Comunicación estratégica,<br><em>descifrada.</em></h1>
+      <p class="sub">Herramientas con IA, análisis y casos para decidir cómo comunicar cuando <b>la reputación está en juego</b>. Un proyecto personal, no una agencia.</p>
+      <div class="cta"><a class="btn" href="/es/lab">Ver las herramientas</a><a class="btn-2" href="#por-que">Por qué importa</a></div>
+    </div>
+    <div class="idx">
+      <a href="/es/lab#crisis-simulator"><span class="n">01</span><span><span class="t">Simulador de crisis</span><div class="d">Simula cómo respondería tu organización a una crisis real.</div></span><span class="ar">→</span></a>
+      <a href="/es/narrative-audit"><span class="n">02</span><span><span class="t">Narrative Audit</span><div class="d">¿Qué tan diferente suenas? Pega tu contenido y descúbrelo.</div></span><span class="ar">→</span></a>
+      <a href="/es/lab#crisis-diagnostic"><span class="n">03</span><span><span class="t">Diagnóstico de crisis y riesgo</span><div class="d">Tu exposición en el contexto LATAM, en 4 preguntas.</div></span><span class="ar">→</span></a>
+    </div>
   </div>
-  <div class="hero-grid"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <p class="hero-eyebrow">Con raíces en Riviera Maya · Pensando en todo LATAM</p>
-    <h1 class="hero-title">Comunicación estratégica,<br><em>descifrada.</em></h1>
-    <p class="hero-subtitle">
-      Herramientas, análisis y perspectiva para organizaciones que navegan un <strong>mundo más ruidoso</strong> —
-      donde la IA homogeniza el contenido más rápido de lo que la mayoría puede diferenciarse,
-      y donde <strong>la reputación se ha convertido en el único activo que no se puede replicar.</strong>
-    </p>
-  </div>
-  <div class="hero-scroll-hint">
-    <div class="scroll-line"></div>
-    <span>scroll</span>
-  </div>
-  <div class="hero-location">
-    <span>Con base en</span>
-    Tulum, Riviera Maya<br>Disponible en todo LATAM
-  </div>
-</section>
+  <div class="hero-foot"><span>Tulum, Riviera Maya</span><span>Pensando para toda LATAM</span></div>
+</header>
 
-<section class="argument-section" id="argument">
-  <div class="argument-inner">
-    <p class="section-eyebrow">Por qué importa la reputación</p>
-    <h2 class="argument-headline">
-      Las empresas más valiosas del mundo <em>no venden productos.</em><br>
-      Venden confianza.
-    </h2>
-    <div class="stats-row">
-      <div class="stat-block">
-        <div class="stat-number">92<span style="font-size:0.45em;vertical-align:0.15em">%</span></div>
-        <div class="stat-source">Ocean Tomo · Intangible Asset Market Value Study · Feb 2026</div>
-        <div class="stat-desc">Del valor total del S&P 500 corresponde a activos intangibles. En 1975 era el 17%. El valor migró de lo que se puede tocar a lo que se puede creer.</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-number">50<span style="font-size:0.45em;vertical-align:0.15em">%</span></div>
-        <div class="stat-source">CEO Reputation Index 2026 · CEOWORLD</div>
-        <div class="stat-desc">De la reputación corporativa se atribuye directamente a la reputación del CEO. La persona y la organización ya no son separables ante los públicos que importan.</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-number">74<span style="font-size:0.45em;vertical-align:0.15em">%</span></div>
-        <div class="stat-source">SSRN · Generative AI and Content Homogenization · 2025</div>
-        <div class="stat-desc">De las páginas web nuevas contienen contenido generado por IA detectable. Cuando todos suenan igual, diferenciarse se vuelve una ventaja estructural.</div>
-      </div>
+<!-- POR QUÉ IMPORTA -->
+<section class="why" id="por-que">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:28px"><span class="num k">01</span><h2>Por qué importa<br>la reputación</h2></div>
+    <p class="why-lead">Las empresas más valiosas del mundo no venden productos. <em>Venden confianza.</em></p>
+    <p class="why-body">En menos de dos años, la IA generativa pasó de novedad a infraestructura: el mismo modelo redacta tu comunicado y el de tu competidor. <b>El resultado son organizaciones que invierten más en comunicación y se parecen más entre sí.</b> En ese entorno, la reputación es el único activo que la IA no puede replicar, porque se construye en el tiempo, en las decisiones reales, en la consistencia entre lo que se dice y lo que se hace.</p>
+    <div class="stats">
+      <div class="stat"><div class="num">92<sup>%</sup></div><div class="src">Ocean Tomo · Intangible Asset Market Value Study · 2026</div><div class="desc">Del valor total del S&P 500 corresponde a activos intangibles. En 1975 era el 17%. El valor migró de lo que se puede tocar a lo que se puede creer.</div></div>
+      <div class="stat"><div class="num">50<sup>%</sup></div><div class="src">CEO Reputation Index 2026 · CEOWORLD</div><div class="desc">De la reputación corporativa se atribuye directamente a la del CEO. La persona y la organización ya no son separables ante los públicos que importan.</div></div>
+      <div class="stat"><div class="num">74<sup>%</sup></div><div class="src">SSRN · Generative AI and Content Homogenization · 2025</div><div class="desc">De las páginas web nuevas contienen contenido generado por IA detectable. Cuando todos suenan igual, diferenciarse se vuelve una ventaja estructural.</div></div>
     </div>
   </div>
 </section>
 
-<div class="video-context-section">
-  <div class="video-ratio">
-    <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-      <source src="/img/news-bg.mp4" type="video/mp4">
-    </video>
-    <div class="video-overlay-text">
-      <p>El mundo cambió más en los últimos 18 meses que en la década anterior.</p>
-    </div>
-  </div>
-</div>
-
-<section class="disruption-section" id="disruption">
-  <div class="disruption-inner">
-    <div class="disruption-text">
-      <p class="section-eyebrow">El contexto que cambia todo</p>
-      <h2 class="disruption-headline">
-        La IA no es una herramienta.<br>
-        Es un <em>acelerador de indiferenciación.</em>
-      </h2>
-      <p class="disruption-body">
-        En menos de dos años, la inteligencia artificial generativa pasó de novedad a infraestructura.
-        Hoy, el mismo modelo redacta el comunicado de tu empresa y el de tu competidor.
-        <strong>El resultado: organizaciones que invierten más en comunicación y se parecen más entre sí.</strong>
-      </p>
-      <p class="disruption-body">
-        En ese entorno, la reputación no es una consecuencia de la estrategia.
-        Es el único activo que la IA no puede replicar — porque se construye en el tiempo,
-        en las decisiones reales, en la consistencia entre lo que se dice y lo que se hace.
-      </p>
-    </div>
-    <div class="disruption-data">
-      <div class="disruption-data-item">
-        <div class="d-num">30%</div>
-        <div class="d-label">de los CEOs globales confía en el crecimiento de ingresos en los próximos 12 meses. El mínimo de los últimos cinco años.</div>
-        <div class="d-source">PwC 29th Global CEO Survey · Davos 2026 · 4,454 CEOs · 95 países</div>
+<!-- JUEGO DE REPUTACIÓN -->
+<section class="game" id="rep-game">
+  <div class="sec-head"><span class="num k">02</span><h2>Cuatro decisiones.<br><em>Un patrón.</em></h2><div class="note">Elige entre cada par. Luego descubre qué guió tu decisión.</div></div>
+  <div class="game-wrap">
+    <div class="prog"><div class="pdot active" id="dot-0"></div><div class="pdot" id="dot-1"></div><div class="pdot" id="dot-2"></div><div class="pdot" id="dot-3"></div></div>
+    <div class="round active" id="round-0">
+      <div class="round-cat">Fútbol · Real Madrid</div>
+      <div class="round-q">¿A cuál echarías del equipo?</div>
+      <div class="split">
+        <div class="side" id="side-0-A" onclick="choose(0,'A')"><div class="imgw"><img src="/img/mbappe.jpg" alt="Mbappé"></div><div class="side-l">Mbappé</div><button class="gbtn">Echar a Mbappé</button></div>
+        <div class="vs">VS</div>
+        <div class="side" id="side-0-B" onclick="choose(0,'B')"><div class="imgw"><img src="/img/bellingham.jpg" alt="Bellingham"></div><div class="side-l">Bellingham</div><button class="gbtn">Echar a Bellingham</button></div>
       </div>
-      <div class="disruption-data-item">
-        <div class="d-num">46%</div>
-        <div class="d-label">de las reputaciones corporativas cayeron en 2025. Solo el 37% mejoró.</div>
-        <div class="d-source">Axios-Harris Poll 100 · 27ª edición anual · 25,000 encuestados</div>
+      <div class="reveal" id="reveal-0"><p>Mbappé sigue siendo el goleador más eficiente del equipo. Sin embargo, su reputación reciente lo coloca primero en la lista de la mayoría. <b>La reputación superó al rendimiento.</b></p><button class="nextb" onclick="nextRound(1)">Siguiente →</button></div>
+    </div>
+    <div class="round" id="round-1">
+      <div class="round-cat">Tecnología · Mismo precio</div>
+      <div class="round-q">¿Cuál compras?</div>
+      <div class="split">
+        <div class="side" id="side-1-A" onclick="choose(1,'A')"><div class="imgw"><img src="/img/iphone.jpg" alt="iPhone 17 Pro Max"></div><div class="side-l">iPhone 17 Pro Max</div><button class="gbtn">Elegir iPhone</button></div>
+        <div class="vs">VS</div>
+        <div class="side" id="side-1-B" onclick="choose(1,'B')"><div class="imgw"><img src="/img/xiaomi.jpg" alt="Xiaomi 15 Ultra"></div><div class="side-l">Xiaomi 15 Ultra</div><button class="gbtn">Elegir Xiaomi</button></div>
       </div>
-      <div class="disruption-data-item">
-        <div class="d-num">$80T</div>
-        <div class="d-label">en activos intangibles corporativos a nivel global en 2024. Máximo histórico. Crecimiento del 28% en un solo año.</div>
-        <div class="d-source">WIPO · Brand Finance GIFT 2024</div>
+      <div class="reveal" id="reveal-1"><p>El Xiaomi 15 Ultra supera en especificaciones y autonomía al mismo precio. La mayoría sigue eligiendo el iPhone. <b>No compran el dispositivo. Compran la reputación.</b></p><button class="nextb" onclick="nextRound(2)">Siguiente →</button></div>
+    </div>
+    <div class="round" id="round-2">
+      <div class="round-cat">Golf · Mismo green fee</div>
+      <div class="round-q">¿Dónde preferirías jugar?</div>
+      <div class="split">
+        <div class="side" id="side-2-A" onclick="choose(2,'A')"><div class="imgw"><img src="/img/augusta.jpg" alt="Augusta National"></div><div class="side-l">Augusta National</div><button class="gbtn">Elegir Augusta</button></div>
+        <div class="vs">VS</div>
+        <div class="side" id="side-2-B" onclick="choose(2,'B')"><div class="imgw"><img src="/img/jumeirah.jpg" alt="Jumeirah Golf Estates"></div><div class="side-l">Jumeirah Golf Estates</div><button class="gbtn">Elegir Jumeirah</button></div>
+      </div>
+      <div class="reveal" id="reveal-2"><p>Jumeirah es sede del DP World Tour Finals, diseñado por Greg Norman y sin lista de espera de años. La mayoría sigue eligiendo Augusta. <b>El nombre y el legado valen más que el campo.</b></p><button class="nextb" onclick="nextRound(3)">Siguiente →</button></div>
+    </div>
+    <div class="round" id="round-3">
+      <div class="round-cat">Inversión · 5 millones de dólares</div>
+      <div class="round-q">¿Dónde va tu dinero?</div>
+      <div class="split">
+        <div class="side" id="side-3-A" onclick="choose(3,'A')"><div class="imgw"><img src="/img/blackrock.jpg" alt="BlackRock"></div><div class="side-l">BlackRock Global Allocation</div><button class="gbtn">Elegir BlackRock</button></div>
+        <div class="vs">VS</div>
+        <div class="side" id="side-3-B" onclick="choose(3,'B')"><div class="imgw"><img src="/img/akre.jpg" alt="Akre Focus Fund"></div><div class="side-l">Akre Focus Fund</div><button class="gbtn">Elegir Akre</button></div>
+      </div>
+      <div class="reveal" id="reveal-3"><p>Akre demuestra rendimiento neto superior con track record verificado de 8 años. La mayoría del capital sigue yendo al gigante de Wall Street. <b>Ante decisiones críticas, la reputación es el escudo definitivo frente al riesgo percibido.</b></p><button class="nextb" onclick="showFinal()">Ver el patrón →</button></div>
+    </div>
+    <div class="round" id="round-final">
+      <div class="final">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        <h3>Cada decisión que tomaste<br><em>fue impulsada por la reputación.</em></h3>
+        <p>No por datos. No por especificaciones. No por rendimientos. El patrón es siempre el mismo: cuando las personas eligen entre dos opciones comparables, la reputación rompe el empate. Siempre.</p>
+        <p>Así funciona la confianza, y por eso construirla deliberadamente es la inversión más estratégica que puede hacer una organización.</p>
+        <button class="restart" onclick="restartGame()">← Jugar de nuevo</button>
       </div>
     </div>
   </div>
 </section>
 
-<section class="pullquote-section">
-  <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.3;filter:brightness(0.35) saturate(0.5);z-index:0;">
-    <source src="/img/quote-bg.mp4" type="video/mp4">
-  </video>
-  <div style="position:absolute;inset:0;background:rgba(13,107,96,0.25);z-index:1;"></div>
-  <div class="pullquote-inner">
-    <p class="pullquote-text">
-      "El área de comunicación traduce la estrategia de negocio en confianza pública,
-      convirtiendo la identidad de la empresa en su
-      <em>ventaja competitiva más duradera."</em>
-    </p>
-    <p class="pullquote-source">Harvard Business Review</p>
+<!-- ÁREAS -->
+<section class="areas" id="areas">
+  <div class="sec-head"><span class="num k">03</span><h2>Dónde vive <em>la reputación</em></h2><div class="note">Las cuatro vertientes de la comunicación, con raíz maya.</div></div>
+  <div class="areas-grid">
+    <a class="area" href="/es/areas.html#corporativa"><div class="n">01</div><div class="maya">Pek'Kin</div><div class="name">Comunicación corporativa</div><div class="d">La huella que deja una organización cuando habla, decide y actúa con consistencia. Credibilidad ante autoridades, aliados e inversores antes de que nadie la pida.</div></a>
+    <a class="area" href="/es/areas.html#marca"><div class="n">02</div><div class="maya">A'Kin</div><div class="name">Comunicación de marca</div><div class="d">Tu luz propia. La voz que ningún modelo de IA puede generar porque nace de quién eres. En la era de la homogenización, el diferenciador más escaso.</div></a>
+    <a class="area" href="/es/areas.html#interna"><div class="n">03</div><div class="maya">Ha'</div><div class="name">Comunicación interna</div><div class="d">El agua que nutre desde adentro. La reputación externa se sostiene sobre la convicción interna: los equipos creen el mensaje antes de proyectarlo.</div></a>
+    <a class="area" href="/es/areas.html#crisis"><div class="n">04</div><div class="maya">Sak Ha'</div><div class="name">Riesgos y crisis</div><div class="d">Agua clara. La calma que solo existe cuando hay preparación real debajo. Anticipa, monitorea y neutraliza escenarios antes de que definan la narrativa.</div></a>
   </div>
 </section>
 
-<section class="areas-section" id="areas">
-  <div class="areas-inner">
-    <div class="areas-header">
-      <p class="section-eyebrow">Las cuatro vertientes</p>
-      <h2 class="areas-title">Dónde vive <em>la reputación.</em></h2>
+<!-- LAB -->
+<section class="lab" id="lab">
+  <div class="lab-grid">
+    <div>
+      <div class="k" style="color:var(--teal);margin-bottom:16px">TealKin Lab</div>
+      <h2 class="lab-title">Comunicación estratégica<br><em>construida con tecnología.</em></h2>
+      <p class="lab-body">No es una promesa. <b>Son herramientas que ya puedes usar.</b> El Lab es donde junto comunicación estratégica e inteligencia artificial para pensar la reputación de otra forma: experimentos reales, abiertos y gratuitos.</p>
+      <a class="lab-link" href="/es/lab">Explorar el Lab →</a>
     </div>
-    <div class="areas-grid">
-      <a href="/es/areas#corporativa" class="area-card">
-        <p class="area-num">01</p>
-        <h3 class="area-maya">Pek'Kin</h3>
-        <p class="area-name">Comunicación Corporativa</p>
-        <p class="area-desc">La huella que deja una organización cuando habla, decide y actúa con consistencia. Construye credibilidad ante autoridades, aliados e inversores antes de que nadie la pida.</p>
-        <span class="area-link">Explorar</span>
-      </a>
-      <a href="/es/areas#marca" class="area-card">
-        <p class="area-num">02</p>
-        <h3 class="area-maya">A'Kin</h3>
-        <p class="area-name">Comunicación de Marca</p>
-        <p class="area-desc">Tu luz propia. La voz que ningún modelo de IA puede generar porque nace de quién eres realmente. En la era de la homogenización, la voz auténtica es el diferenciador más escaso.</p>
-        <span class="area-link">Explorar</span>
-      </a>
-      <a href="/es/areas#interna" class="area-card">
-        <p class="area-num">03</p>
-        <h3 class="area-maya">Ha'</h3>
-        <p class="area-name">Comunicación Interna</p>
-        <p class="area-desc">El agua que nutre desde adentro. La reputación externa se sostiene sobre la convicción interna. Los equipos deben creer el mensaje antes de proyectarlo hacia afuera.</p>
-        <span class="area-link">Explorar</span>
-      </a>
-      <a href="/es/areas#crisis" class="area-card">
-        <p class="area-num">04</p>
-        <h3 class="area-maya">Sak Ha'</h3>
-        <p class="area-name">Gestión de Riesgos y Crisis</p>
-        <p class="area-desc">Agua clara. La calma que solo existe cuando hay preparación real debajo de la superficie. Anticipa, monitoriza y neutraliza escenarios adversos antes de que definan la narrativa.</p>
-        <span class="area-link">Explorar</span>
-      </a>
+    <div class="tools">
+      <a class="tool" href="/es/lab#crisis-diagnostic"><div><div class="lbl">En vivo</div><div class="nm">Diagnóstico de crisis y riesgo</div><div class="ds">Exposición al contexto LATAM · 4 preguntas · 2 minutos</div></div><span class="ar">→</span></a>
+      <a class="tool" href="/es/narrative-audit"><div><div class="lbl">En vivo</div><div class="nm">Narrative Audit</div><div class="ds">¿Qué tan diferente suenas? Pega tu contenido y descúbrelo</div></div><span class="ar">→</span></a>
+      <a class="tool" href="/es/lab#crisis-simulator"><div><div class="lbl">En vivo</div><div class="nm">Simulador de crisis</div><div class="ds">Simula cómo respondería tu organización ante una crisis real</div></div><span class="ar">→</span></a>
+      <a class="tool" href="/es/entrenamiento-de-medios"><div><div class="lbl">En vivo</div><div class="nm">Simulador de media training</div><div class="ds">Un periodista IA te entrevista por voz y califica tu desempeño</div></div><span class="ar">→</span></a>
     </div>
   </div>
 </section>
 
-<section class="rep-game-section" id="rep-game">
-  <div class="rep-game-inner">
-    <div class="rep-game-header">
-      <p class="section-eyebrow">El argumento en acción</p>
-      <h2 class="rep-game-title">Cuatro decisiones.<br><em>Un patrón.</em></h2>
-      <p class="rep-game-subtitle">Elige entre cada par. Luego descubre qué guió realmente tu decisión.</p>
-    </div>
-    <div class="rep-game-wrap">
-      <div class="rep-progress">
-        <div class="rep-dot active" id="dot-0"></div>
-        <div class="rep-dot" id="dot-1"></div>
-        <div class="rep-dot" id="dot-2"></div>
-        <div class="rep-dot" id="dot-3"></div>
-      </div>
-      <div class="rep-round active" id="round-0">
-        <div class="rep-round-cat">⚽ Fútbol · Real Madrid</div>
-        <div class="rep-round-q">¿A cuál echarías del equipo?</div>
-        <div class="rep-split">
-          <div class="rep-side" id="side-0-A" onclick="choose(0,'A')">
-            <div class="rep-img-wrap"><img src="/img/mbappe.jpg" alt="Mbappé"><div class="rep-img-overlay"></div></div>
-            <div class="rep-side-label">Mbappé</div>
-            <button class="rep-btn">Echar a Mbappé</button>
-          </div>
-          <div class="rep-vs">VS</div>
-          <div class="rep-side" id="side-0-B" onclick="choose(0,'B')">
-            <div class="rep-img-wrap"><img src="/img/bellingham.jpg" alt="Bellingham"><div class="rep-img-overlay"></div></div>
-            <div class="rep-side-label">Bellingham</div>
-            <button class="rep-btn">Echar a Bellingham</button>
-          </div>
-        </div>
-        <div class="rep-reveal" id="reveal-0">
-          <p class="rep-reveal-text">Mbappé sigue siendo el goleador más eficiente del equipo. Sin embargo, su reputación reciente lo coloca primero en la lista de la mayoría. <strong>La reputación superó al rendimiento.</strong></p>
-          <button class="rep-next-btn" onclick="nextRound(1)">Siguiente →</button>
-        </div>
-      </div>
-      <div class="rep-round" id="round-1">
-        <div class="rep-round-cat">📱 Tecnología · Mismo precio</div>
-        <div class="rep-round-q">¿Cuál compras?</div>
-        <div class="rep-split">
-          <div class="rep-side" id="side-1-A" onclick="choose(1,'A')">
-            <div class="rep-img-wrap"><img src="/img/iphone.jpg" alt="iPhone 17 Pro Max"><div class="rep-img-overlay"></div></div>
-            <div class="rep-side-label">iPhone 17 Pro Max</div>
-            <button class="rep-btn">Elegir iPhone</button>
-          </div>
-          <div class="rep-vs">VS</div>
-          <div class="rep-side" id="side-1-B" onclick="choose(1,'B')">
-            <div class="rep-img-wrap"><img src="/img/xiaomi.jpg" alt="Xiaomi 15 Ultra"><div class="rep-img-overlay"></div></div>
-            <div class="rep-side-label">Xiaomi 15 Ultra</div>
-            <button class="rep-btn">Elegir Xiaomi</button>
-          </div>
-        </div>
-        <div class="rep-reveal" id="reveal-1">
-          <p class="rep-reveal-text">El Xiaomi 15 Ultra supera en especificaciones y autonomía al mismo precio. La mayoría sigue eligiendo el iPhone. <strong>No compran el dispositivo. Compran la reputación.</strong></p>
-          <button class="rep-next-btn" onclick="nextRound(2)">Siguiente →</button>
-        </div>
-      </div>
-      <div class="rep-round" id="round-2">
-        <div class="rep-round-cat">⛳ Golf · ¿Dónde preferirías jugar?</div>
-        <div class="rep-round-q">Mismo green fee. ¿Cuál eliges?</div>
-        <div class="rep-split">
-          <div class="rep-side" id="side-2-A" onclick="choose(2,'A')">
-            <div class="rep-img-wrap"><img src="/img/augusta.jpg" alt="Augusta National"><div class="rep-img-overlay"></div></div>
-            <div class="rep-side-label">Augusta National</div>
-            <button class="rep-btn">Elegir Augusta</button>
-          </div>
-          <div class="rep-vs">VS</div>
-          <div class="rep-side" id="side-2-B" onclick="choose(2,'B')">
-            <div class="rep-img-wrap"><img src="/img/jumeirah.jpg" alt="Jumeirah Golf Estates"><div class="rep-img-overlay"></div></div>
-            <div class="rep-side-label">Jumeirah Golf Estates</div>
-            <button class="rep-btn">Elegir Jumeirah</button>
-          </div>
-        </div>
-        <div class="rep-reveal" id="reveal-2">
-          <p class="rep-reveal-text">Jumeirah es sede del DP World Tour Finals, diseñado por Greg Norman y sin lista de espera de años. La mayoría sigue eligiendo Augusta. <strong>El nombre y el legado valen más que el campo.</strong></p>
-          <button class="rep-next-btn" onclick="nextRound(3)">Siguiente →</button>
-        </div>
-      </div>
-      <div class="rep-round" id="round-3">
-        <div class="rep-round-cat">💰 Inversión · 5 millones de dólares</div>
-        <div class="rep-round-q">¿Dónde va tu dinero?</div>
-        <div class="rep-split">
-          <div class="rep-side" id="side-3-A" onclick="choose(3,'A')">
-            <div class="rep-img-wrap"><img src="/img/blackrock.jpg" alt="BlackRock"><div class="rep-img-overlay"></div></div>
-            <div class="rep-side-label">BlackRock Global Allocation</div>
-            <button class="rep-btn">Elegir BlackRock</button>
-          </div>
-          <div class="rep-vs">VS</div>
-          <div class="rep-side" id="side-3-B" onclick="choose(3,'B')">
-            <div class="rep-img-wrap"><img src="/img/akre.jpg" alt="Akre Focus Fund"><div class="rep-img-overlay"></div></div>
-            <div class="rep-side-label">Akre Focus Fund</div>
-            <button class="rep-btn">Elegir Akre</button>
-          </div>
-        </div>
-        <div class="rep-reveal" id="reveal-3">
-          <p class="rep-reveal-text">Akre demuestra rendimiento neto superior con track record verificado de 8 años. La mayoría del capital sigue yendo al gigante de Wall Street. <strong>Ante decisiones críticas, la reputación es el escudo definitivo frente al riesgo percibido.</strong></p>
-          <button class="rep-next-btn" onclick="showFinal()">Ver el patrón →</button>
-        </div>
-      </div>
-      <div class="rep-round" id="round-final">
-        <div class="rep-final-wrap">
-          <div class="rep-final-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-          </div>
-          <h3 class="rep-final-title">Cada decisión que tomaste<br><em>fue impulsada por la reputación.</em></h3>
-          <p class="rep-final-body">No por datos. No por especificaciones. No por rendimientos. El patrón es siempre el mismo: cuando las personas eligen entre dos opciones comparables, la reputación rompe el empate. Siempre.</p>
-          <p class="rep-final-body">Eso no es irracional. Así funciona la confianza — y por eso construirla deliberadamente es la inversión más estratégica que puede hacer una organización.</p>
-          <button class="rep-restart-btn" onclick="restartGame()">← Jugar de nuevo</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="lab-cta-section" id="lab">
-  <div class="lab-cta-inner">
-    <div class="lab-cta-text">
-      <p class="section-eyebrow">TealKin Lab</p>
-      <h2 class="lab-cta-title">
-        Comunicación estratégica<br><em>construida con tecnología.</em>
-      </h2>
-      <p class="lab-cta-body">
-        Las agencias te dicen que pueden hacerlo.
-        <strong>Aquí te lo demostramos desde ahora.</strong>
-        El Lab es donde la comunicación estratégica y la inteligencia artificial se intersectan —
-        herramientas reales, construidas para pensar el problema de forma diferente.
-      </p>
-      <a href="/es/lab" class="lab-cta-link">Explorar el Lab →</a>
-    </div>
-    <div class="lab-tools">
-      <a href="/es/lab#crisis-diagnostic" class="lab-tool-card">
-        <div class="lab-tool-left">
-          <span class="lab-tool-label">En vivo</span>
-          <span class="lab-tool-name">Crisis & Risk Diagnostic</span>
-          <span class="lab-tool-desc">Exposición al contexto LATAM · 4 preguntas · 2 minutos</span>
-        </div>
-        <span class="lab-tool-arrow">→</span>
-      </a>
-      <a href="/es/narrative-audit" class="lab-tool-card">
-        <div class="lab-tool-left">
-          <span class="lab-tool-label">En vivo</span>
-          <span class="lab-tool-name">Narrative Audit</span>
-          <span class="lab-tool-desc">¿Qué tan diferente suenas? Pega tu contenido y descúbrelo</span>
-        </div>
-        <span class="lab-tool-arrow">→</span>
-      </a>
-      <a href="/es/lab#crisis-simulator" class="lab-tool-card">
-        <div class="lab-tool-left">
-          <span class="lab-tool-label">En vivo</span>
-          <span class="lab-tool-name">Crisis Simulator</span>
-          <span class="lab-tool-desc">Simula cómo respondería tu organización ante una crisis real</span>
-        </div>
-        <span class="lab-tool-arrow">→</span>
-      </a>
-      <a href="/es/diagnostico-reputacional" class="lab-tool-card">
-        <div class="lab-tool-left">
-          <span class="lab-tool-label">En vivo</span>
-          <span class="lab-tool-name">Diagnóstico Reputacional</span>
-          <span class="lab-tool-desc">¿Cómo se ve tu marca desde afuera? Investigación en vivo + puntaje</span>
-        </div>
-        <span class="lab-tool-arrow">→</span>
-      </a>
-      <a href="/es/entrenamiento-de-medios" class="lab-tool-card">
-        <div class="lab-tool-left">
-          <span class="lab-tool-label">En vivo</span>
-          <span class="lab-tool-name">Simulador de Media Training</span>
-          <span class="lab-tool-desc">Enfrenta a un periodista IA hostil por voz — grabado y calificado</span>
-        </div>
-        <span class="lab-tool-arrow">→</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ── COATIES ── -->
-<div class="coaties-section">
-  <video autoplay muted loop playsinline>
-    <source src="/img/coaties.mp4" type="video/mp4">
-  </video>
-  <div class="coaties-overlay"></div>
-  <div class="coaties-content">
-    <p class="coaties-eyebrow">Tulum, Riviera Maya</p>
-    <h2 class="coaties-title">Con raíces <em>aquí.</em></h2>
-    <p class="coaties-sub">Construido desde este lugar. Pensando en todo LATAM. Cinco formas de ir más adentro en lo que TealKin está construyendo.</p>
+<!-- RAÍCES (coaties) -->
+<div class="rooted">
+  <img src="/assets/coaties.jpg" alt="Selva de Tulum, Riviera Maya">
+  <div class="rooted-in">
+    <div class="rooted-k">Tulum, Riviera Maya</div>
+    <h2>Con raíces <em>aquí.</em></h2>
+    <p>Construido desde este lugar, pensando para toda LATAM.</p>
   </div>
 </div>
 
-<!-- ── HUB ── -->
-<section class="hub-section" id="hub">
-  <div class="hub-inner">
-    <div class="hub-header">
-      <p class="section-eyebrow">El ecosistema TealKin</p>
-      <h2 class="hub-title">Cinco formas de ir <em>más adentro.</em></h2>
-    </div>
-    <div class="hub-grid">
-      <a href="/es/dzon" class="hub-card">
-        <p class="hub-card-num">01</p>
-        <h3 class="hub-card-name">Dzon</h3>
-        <p class="hub-card-tag">Blog · Análisis · Contexto</p>
-        <p class="hub-card-desc">Artículos de fondo sobre comunicación corporativa, crisis, reputación y el contexto político y económico de LATAM.</p>
-        <p class="hub-card-status status-live">● En vivo</p>
-      </a>
-      <a href="/es/lab" class="hub-card">
-        <p class="hub-card-num">02</p>
-        <h3 class="hub-card-name">Lab</h3>
-        <p class="hub-card-tag">IA · Diagnósticos · Simulación</p>
-        <p class="hub-card-desc">El laboratorio donde la comunicación estratégica y la tecnología se intersectan. Herramientas reales para pensar el problema diferente.</p>
-        <p class="hub-card-status status-live">● En vivo — más en desarrollo</p>
-      </a>
-      <a href="/es/areas" class="hub-card soon">
-        <p class="hub-card-num">03</p>
-        <h3 class="hub-card-name">Áreas</h3>
-        <p class="hub-card-tag">Pek'Kin · A'Kin · Ha' · Sak Ha'</p>
-        <p class="hub-card-desc">Las cuatro vertientes de la comunicación. Cómo piensa y trabaja TealKin cada una de ellas.</p>
-        <p class="hub-card-status status-soon">○ Próximamente</p>
-      </a>
-<a href="/es/cases" class="hub-card">
-          <p class="hub-card-num">04</p>
-        <h3 class="hub-card-name">Casos</h3>
-        <p class="hub-card-tag">Pek'Kin · A'Kin · Ha' · Sak Ha'</p>
-        <p class="hub-card-desc">Casos reales de comunicación estratégica analizados en profundidad. Decisiones, contexto y resultado.</p>
-        <p class="hub-card-status status-live">● En vivo</p>
-      </a>
-      <a href="/es/about" class="hub-card">
-        <p class="hub-card-num">05</p>
-        <h3 class="hub-card-name">Nosotros</h3>
-        <p class="hub-card-tag">Jorge Delarbre · TealKin</p>
-        <p class="hub-card-desc">14 años en comunicación corporativa a través de LATAM. La experiencia y el criterio detrás de todo esto.</p>
-        <p class="hub-card-status status-live">● En vivo</p>
-      </a>
-    </div>
+<!-- ECOSISTEMA -->
+<section class="eco" id="eco">
+  <div class="sec-head"><span class="num k">04</span><h2>El ecosistema</h2><div class="note">Cinco formas de ir más adentro.</div></div>
+  <div class="eco-grid">
+    <a class="eco-row" href="/es/dzon"><span class="n">01</span><span class="nm">Dzon</span><span class="d">Artículos de fondo sobre comunicación corporativa, crisis, reputación y el contexto de LATAM.</span><span class="st">En vivo</span></a>
+    <a class="eco-row" href="/es/lab"><span class="n">02</span><span class="nm">Lab</span><span class="d">El laboratorio donde la comunicación estratégica y la tecnología se intersectan.</span><span class="st">En vivo</span></a>
+    <a class="eco-row" href="/es/cases"><span class="n">03</span><span class="nm">Casos</span><span class="d">Casos reales analizados en profundidad: decisiones, contexto y resultado.</span><span class="st">En vivo</span></a>
+    <a class="eco-row" href="/es/areas"><span class="n">04</span><span class="nm">Áreas</span><span class="d">Las cuatro vertientes de la comunicación y cómo se trabaja cada una.</span><span class="st soon">Próximamente</span></a>
+    <a class="eco-row" href="/es/about"><span class="n">05</span><span class="nm">Nosotros</span><span class="d">La experiencia y el criterio detrás de todo esto.</span><span class="st">En vivo</span></a>
   </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="fcta">
+  <h2>Ponte en el <em>peor día</em><br>antes de que llegue.</h2>
+  <p>El simulador te mete en una crisis y te deja decidir. Mira cómo respondería tu organización.</p>
+  <a class="btn" href="/es/lab#crisis-simulator">Entrar al simulador</a>
 </section>
 
 <footer>
-  <a href="/es/" class="footer-logo">Teal<span>Kin</span></a>
-  <p class="footer-copy">© 2026 TealKin. Tulum, Riviera Maya.</p>
-  <p class="footer-tagline">Dzon — palabra maya para cenote · Kin — sol</p>
+  <div class="f-l">
+    <a href="/es/lab">Lab</a><a href="/es/dzon">Dzon</a><a href="/es/cases">Casos</a><a href="/es/about">Nosotros</a>
+  </div>
+  <div class="f-r">
+    TealKin · Proyecto personal<br>
+    Tulum, Riviera Maya · LATAM<br>
+    <b>© 2026 · Jorge Delarbre</b>
+  </div>
 </footer>
 
 <script>
-const hamburger = document.getElementById('hamburger');
-const navMobile = document.getElementById('nav-mobile');
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('open');
-  navMobile.classList.toggle('open');
-});
-document.querySelectorAll('.nav-mobile a').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('open');
-    navMobile.classList.remove('open');
-  });
-});
+const bg=document.getElementById('burger'),mb=document.getElementById('mobile');
+bg.addEventListener('click',()=>{bg.classList.toggle('open');mb.classList.toggle('open')});
+mb.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{bg.classList.remove('open');mb.classList.remove('open')}));
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('visible');
-  });
-}, { threshold: 0.1 });
-document.querySelectorAll('.stat-block, .area-card, .hub-card, .disruption-data-item').forEach(el => observer.observe(el));
+(function(){
+ const v=document.getElementById('herovid');if(!v)return;
+ const conn=navigator.connection||{};
+ if(window.matchMedia('(max-width:760px)').matches||conn.saveData===true||/2g/.test(conn.effectiveType||'')){
+   const img=new Image();img.src=v.getAttribute('poster');img.alt='';
+   img.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover';
+   v.replaceWith(img);
+ } else { v.play&&v.play().catch(()=>{}); }
+})();
 
-window.addEventListener('scroll', () => {
-  document.getElementById('main-nav').style.background =
-    window.scrollY > 60 ? 'rgba(10,18,12,0.97)' : 'rgba(15,20,16,0.85)';
-});
-
-function choose(round, side) {
-  const chosen = document.getElementById('side-' + round + '-' + side);
-  const other = document.getElementById('side-' + round + '-' + (side === 'A' ? 'B' : 'A'));
-  chosen.classList.add('chosen');
-  other.classList.add('unchosen');
-  const reveal = document.getElementById('reveal-' + round);
-  reveal.classList.add('visible');
-  reveal.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+function choose(r,s){
+  document.getElementById('side-'+r+'-'+s).classList.add('chosen');
+  document.getElementById('side-'+r+'-'+(s==='A'?'B':'A')).classList.add('unchosen');
+  const rv=document.getElementById('reveal-'+r);rv.classList.add('visible');
+  rv.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
-
-function nextRound(next) {
-  document.getElementById('round-' + (next - 1)).classList.remove('active');
-  document.getElementById('round-' + next).classList.add('active');
-  document.getElementById('dot-' + (next - 1)).classList.remove('active');
-  document.getElementById('dot-' + (next - 1)).classList.add('done');
-  if (next < 4) document.getElementById('dot-' + next).classList.add('active');
-  document.getElementById('rep-game').scrollIntoView({ behavior: 'smooth', block: 'start' });
+function nextRound(n){
+  document.getElementById('round-'+(n-1)).classList.remove('active');
+  document.getElementById('round-'+n).classList.add('active');
+  document.getElementById('dot-'+(n-1)).classList.remove('active');
+  document.getElementById('dot-'+(n-1)).classList.add('done');
+  if(n<4)document.getElementById('dot-'+n).classList.add('active');
+  document.getElementById('rep-game').scrollIntoView({behavior:'smooth',block:'start'});
 }
-
-function showFinal() {
+function showFinal(){
   document.getElementById('round-3').classList.remove('active');
   document.getElementById('round-final').classList.add('active');
-  document.querySelectorAll('.rep-dot').forEach(d => { d.classList.remove('active'); d.classList.add('done'); });
-  document.getElementById('rep-game').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.pdot').forEach(d=>{d.classList.remove('active');d.classList.add('done')});
+  document.getElementById('rep-game').scrollIntoView({behavior:'smooth',block:'start'});
 }
-
-function restartGame() {
-  for (let i = 0; i < 4; i++) {
-    document.getElementById('round-' + i).classList.remove('active');
-    document.getElementById('reveal-' + i).classList.remove('visible');
-    ['A','B'].forEach(s => {
-      document.getElementById('side-' + i + '-' + s).classList.remove('chosen','unchosen');
-    });
-    document.getElementById('dot-' + i).classList.remove('active','done');
+function restartGame(){
+  for(let i=0;i<4;i++){
+    document.getElementById('round-'+i).classList.remove('active');
+    document.getElementById('reveal-'+i).classList.remove('visible');
+    ['A','B'].forEach(s=>document.getElementById('side-'+i+'-'+s).classList.remove('chosen','unchosen'));
+    document.getElementById('dot-'+i).classList.remove('active','done');
   }
   document.getElementById('round-final').classList.remove('active');
   document.getElementById('round-0').classList.add('active');
   document.getElementById('dot-0').classList.add('active');
-  document.getElementById('rep-game').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById('rep-game').scrollIntoView({behavior:'smooth',block:'start'});
 }
-</script>
 
+const c=document.getElementById('net'),x=c.getContext('2d');let W,H,DPR;
+function size(){DPR=Math.min(devicePixelRatio||1,2);const r=c.parentElement.getBoundingClientRect();W=c.width=r.width*DPR;H=c.height=r.height*DPR;c.style.width=r.width+'px';c.style.height=r.height+'px';}
+size();addEventListener('resize',size);
+const N=52,nodes=[];
+for(let i=0;i<N;i++)nodes.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.16*DPR,vy:(Math.random()-.5)*.16*DPR,r:(Math.random()*1.5+1)*DPR});
+const LINK=160*DPR;let waves=[];
+c.parentElement.addEventListener('pointerdown',e=>{const r=c.getBoundingClientRect();waves.push({x:(e.clientX-r.left)*DPR,y:(e.clientY-r.top)*DPR,r:0,a:1})});
+function tick(){
+ x.clearRect(0,0,W,H);
+ for(const n of nodes){n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1;}
+ for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){const a=nodes[i],b=nodes[j],d=Math.hypot(a.x-b.x,a.y-b.y);if(d<LINK){x.strokeStyle='rgba(45,191,173,'+(0.13*(1-d/LINK))+')';x.lineWidth=DPR;x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.stroke();}}
+ for(const n of nodes){x.fillStyle='rgba(45,191,173,.85)';x.beginPath();x.arc(n.x,n.y,n.r,0,7);x.fill();}
+ waves=waves.filter(w=>w.a>0);for(const w of waves){w.r+=6*DPR;w.a-=.012;x.strokeStyle='rgba(232,132,58,'+w.a+')';x.lineWidth=1.5*DPR;x.beginPath();x.arc(w.x,w.y,w.r,0,7);x.stroke();}
+ requestAnimationFrame(tick);
+}
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches)tick();else{for(const n of nodes){x.fillStyle='rgba(45,191,173,.8)';x.beginPath();x.arc(n.x,n.y,n.r,0,7);x.fill();}}
+</script>
 </body>
 </html>

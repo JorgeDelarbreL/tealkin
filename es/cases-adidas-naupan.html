@@ -10,386 +10,150 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adidas en Naupan: cuando la historia rebasa los hechos — Casos · TealKin</title>
-<meta name="description" content="Adidas, Someone Somewhere y 150 artesanas nahuas de Naupan: una crisis reputacional viral que reveló los límites del activismo digital sin verificación y el peso que sigue teniendo el periodismo de largo aliento.">
 <link rel="canonical" href="https://tealkin.com/es/cases-adidas-naupan">
-<link rel="alternate" hreflang="es" href="https://tealkin.com/es/cases-adidas-naupan">
 <link rel="alternate" hreflang="en" href="https://tealkin.com/cases-adidas-naupan">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --teal: #1a9b8c; --teal-light: #2dbfad; --teal-deep: #0d6b60;
-    --ink: #0f1410; --ink-soft: #0a1210; --mist: #8a9e98; --white: #fdfcfa;
-    --font-display: 'Cormorant Garamond', Georgia, serif;
-    --font-body: 'DM Sans', system-ui, sans-serif;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: var(--font-body); background: var(--ink); color: var(--white); overflow-x: hidden; }
-
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; padding: 1.5rem 4rem; display: flex; align-items: center; justify-content: space-between; background: rgba(15,20,16,0.9); backdrop-filter: blur(12px); border-bottom: 0.5px solid rgba(255,255,255,0.06); transition: background 0.4s; }
-  .nav-logo { font-family: var(--font-display); font-size: 22px; font-weight: 300; letter-spacing: 0.12em; color: var(--white); text-decoration: none; flex-shrink: 0; }
-  .nav-logo span { color: var(--teal-light); }
-  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
-  .nav-links a { font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; transition: color 0.3s; }
-  .nav-links a:hover, .nav-links a.active { color: var(--white); }
-  .nav-soon { font-size: 12px; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2); cursor: default; display: flex; align-items: center; gap: 5px; }
-  .nav-soon-badge { font-size: 7px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(45,191,173,0.4); border: 0.5px solid rgba(45,191,173,0.2); padding: 2px 5px; border-radius: 1px; }
-  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
-  .lang-toggle { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; border: 0.5px solid rgba(255,255,255,0.15); padding: 4px 10px; border-radius: 2px; transition: all 0.3s; }
-  .lang-toggle:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
-  .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
-  .nav-hamburger span { display: block; width: 22px; height: 1px; background: var(--mist); transition: all 0.3s; }
-  .nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 4px); }
-  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
-  .nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -4px); }
-  .nav-mobile { display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 190; background: rgba(10,18,12,0.98); backdrop-filter: blur(16px); padding: 2rem; flex-direction: column; gap: 0; border-bottom: 0.5px solid rgba(255,255,255,0.06); }
-  .nav-mobile.open { display: flex; }
-  .nav-mobile a, .nav-mobile .nav-mobile-soon { display: block; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); text-decoration: none; padding: 1rem 0; border-bottom: 0.5px solid rgba(255,255,255,0.05); transition: color 0.3s; }
-  .nav-mobile a:hover { color: var(--white); }
-
-  /* ── CASE HERO ── */
-  .case-hero { min-height: 70vh; display: flex; align-items: flex-end; position: relative; overflow: hidden; background: #000; padding: 8rem 4rem 4rem; }
-  .case-hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; filter: brightness(0.6) saturate(0.85); z-index: 0; }
-  .case-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,18,12,0.9) 0%, rgba(10,18,12,0.3) 60%, rgba(10,18,12,0.1) 100%); z-index: 1; }
-  .case-hero-content { position: relative; z-index: 2; max-width: 820px; }
-  .case-back { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mist); text-decoration: none; margin-bottom: 2rem; transition: color 0.3s; }
-  .case-back:hover { color: var(--white); }
-  .case-back::before { content: '←'; font-size: 14px; }
-  .case-tags { display: flex; gap: 8px; margin-bottom: 1.25rem; flex-wrap: wrap; }
-  .case-tag { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 12px; border-radius: 1px; font-weight: 500; }
-  .case-tag.pekkin { background: rgba(26,155,140,0.85); color: var(--white); }
-  .case-tag.sakha { background: rgba(200,60,60,0.85); color: var(--white); }
-  .case-title { font-family: var(--font-display); font-size: clamp(36px, 5vw, 68px); font-weight: 300; line-height: 1.05; color: var(--white); margin-bottom: 1.5rem; }
-  .case-title em { font-style: italic; color: var(--teal-light); }
-  .case-meta-row { display: flex; gap: 2rem; align-items: center; flex-wrap: wrap; }
-  .case-meta-item { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
-  .case-meta-item span { color: rgba(255,255,255,0.7); }
-
-  /* ── CASE BODY ── */
-  .case-body { max-width: 1100px; margin: 0 auto; padding: 5rem 4rem; display: grid; grid-template-columns: 1fr 300px; gap: 6rem; align-items: start; }
-  .case-content { }
-  .case-section { margin-bottom: 4rem; }
-  .case-section-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 1rem; display: flex; align-items: center; gap: 12px; }
-  .case-section-label::before { content: ''; width: 20px; height: 0.5px; background: var(--teal-light); }
-  .case-section-title { font-family: var(--font-display); font-size: clamp(22px, 2.5vw, 30px); font-weight: 300; color: var(--white); margin-bottom: 1.25rem; line-height: 1.2; }
-  .case-section-title em { font-style: italic; color: var(--teal-light); }
-  .case-prose { font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.72); line-height: 1.95; }
-  .case-prose p { margin-bottom: 1.25rem; }
-  .case-prose p:last-child { margin-bottom: 0; }
-  .case-prose strong { color: var(--white); font-weight: 400; }
-  .case-prose a { color: var(--teal-light); text-decoration: none; border-bottom: 0.5px solid rgba(45,191,173,0.4); transition: border-color 0.2s; }
-  .case-prose a:hover { border-bottom-color: var(--teal-light); }
-  .case-pull { font-family: var(--font-display); font-size: 20px; font-weight: 300; font-style: italic; color: rgba(255,255,255,0.45); line-height: 1.55; margin: 2.5rem 0; padding-left: 1.5rem; border-left: 2px solid var(--teal); }
-  .case-pull cite { display: block; margin-top: 0.75rem; font-size: 13px; font-style: normal; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mist); }
-
-  /* ── SIDEBAR ── */
-  .case-sidebar { position: sticky; top: 7rem; display: flex; flex-direction: column; gap: 2rem; }
-  .sidebar-block { border-top: 0.5px solid rgba(255,255,255,0.08); padding-top: 1.5rem; }
-  .sidebar-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mist); margin-bottom: 1rem; }
-  .sidebar-stat { font-family: var(--font-display); font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 8px; }
-  .sidebar-stat strong { color: var(--teal-light); font-weight: 300; font-size: 15px; }
-  .sidebar-pending { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber, #d4a017); border: 0.5px solid rgba(212,160,23,0.35); padding: 6px 10px; border-radius: 1px; width: fit-content; }
-
-  /* ── REACTIONS ── */
-  .reactions-section { max-width: 1100px; margin: 0 auto; padding: 3rem 4rem 5rem; }
-  .reactions-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--mist); margin-bottom: 1.5rem; }
-  .reactions-row { display: flex; gap: 12px; flex-wrap: wrap; }
-  .reaction-btn { display: flex; align-items: center; gap: 7px; background: rgba(255,255,255,0.04); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 8px 16px; cursor: pointer; transition: all 0.2s; font-family: var(--font-body); }
-  .reaction-btn:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.08); }
-  .reaction-btn.reacted { border-color: var(--teal); background: rgba(26,155,140,0.1); }
-  .reaction-emoji { font-size: 18px; }
-  .reaction-count { font-size: 13px; color: rgba(255,255,255,0.55); transition: color 0.2s; }
-  .reaction-btn.reacted .reaction-count { color: var(--teal-light); }
-
-  /* ── CASE FOOTER ── */
-  .case-footer-nav { background: var(--ink-soft); border-top: 0.5px solid rgba(255,255,255,0.06); padding: 3rem 4rem; }
-  .case-footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-  .cf-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 6px; }
-  .cf-link { font-family: var(--font-display); font-size: 18px; font-weight: 300; color: var(--white); text-decoration: none; transition: color 0.3s; }
-  .cf-link:hover { color: var(--teal-light); }
-
-  footer { background: var(--ink); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; border-top: 0.5px solid rgba(255,255,255,0.06); }
-  .footer-logo { font-family: var(--font-display); font-size: 18px; font-weight: 300; letter-spacing: 0.1em; color: var(--white); text-decoration: none; }
-  .footer-logo span { color: var(--teal-light); }
-  .footer-copy { font-size: 12px; color: var(--mist); }
-  .footer-tagline { font-size: 11px; color: var(--mist); font-family: var(--font-display); font-style: italic; }
-
-  @media (max-width: 900px) {
-    nav { padding: 1.25rem 1.5rem; }
-    .nav-links { display: none; }
-    .nav-hamburger { display: flex; }
-    .case-hero { padding: 7rem 2rem 3rem; min-height: 50vh; }
-    .case-body { grid-template-columns: 1fr; padding: 3rem 2rem; gap: 3rem; }
-    .case-sidebar { position: static; }
-    .reactions-section { padding: 2rem 2rem 4rem; }
-    .case-footer-nav { padding: 2rem; }
-    .case-footer-inner { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
-    footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
-    .footer-tagline { display: none; }
-  }
-</style>
+<link rel="alternate" hreflang="es" href="https://tealkin.com/es/cases-adidas-naupan">
+<link rel="alternate" hreflang="x-default" href="https://tealkin.com/cases-adidas-naupan">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="TealKin">
-<meta property="og:title" content="Adidas en Naupan: cuando la historia rebasa los hechos — Casos · TealKin">
-<meta property="og:description" content="Adidas, Someone Somewhere y 150 artesanas nahuas de Naupan: una crisis reputacional viral que reveló los límites del activismo digital sin verificación y el peso que sigue teniendo el periodismo de largo aliento.">
 <meta property="og:url" content="https://tealkin.com/es/cases-adidas-naupan">
 <meta property="og:image" content="https://tealkin.com/img/og-image.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:locale" content="es_MX">
-<meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Adidas en Naupan: cuando la historia rebasa los hechos — Casos · TealKin">
-<meta name="twitter:description" content="Adidas, Someone Somewhere y 150 artesanas nahuas de Naupan: una crisis reputacional viral que reveló los límites del activismo digital sin verificación y el peso que sigue teniendo el periodismo de largo aliento.">
-<meta name="twitter:image" content="https://tealkin.com/img/og-image.jpg">
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "Article",
- "headline": "Adidas en Naupan: cuando la historia rebasa los hechos",
- "inLanguage": "es",
- "datePublished": "2026-06-11",
- "dateModified": "2026-07-21",
- "author": {
-  "@type": "Person",
-  "name": "Jorge Delarbre",
-  "jobTitle": "Founder, TealKin"
- },
- "publisher": {
-  "@type": "Organization",
-  "name": "TealKin",
-  "logo": {
-   "@type": "ImageObject",
-   "url": "https://tealkin.com/img/og-image.jpg"
-  }
- },
- "image": "https://tealkin.com/img/og-image.jpg",
- "mainEntityOfPage": "https://tealkin.com/es/cases-adidas-naupan",
- "about": [
-  "comunicación de crisis",
-  "gestión de reputación",
-  "apropiación cultural",
-  "Adidas",
-  "México"
- ]
-}
-</script>
+<title>Adidas en Naupan — Casos — TealKin</title>
+<meta name="description" content="Adidas en Naupan: qué pasa cuando el activismo digital reemplaza al periodismo de verificación, y el silencio corporativo deja el relato en manos de otros.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/read.css">
+<style>
+.pullq cite{display:block;font-family:var(--fm);font-size:11px;font-weight:400;color:var(--mist);letter-spacing:.04em;margin-top:14px;font-style:normal}
+.react{max-width:820px;margin:0 auto;padding:10px 40px 20px}
+.react .l{font-family:var(--fm);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mist);margin-bottom:12px}
+.react-row{display:flex;gap:10px;flex-wrap:wrap}
+.rbtn{background:var(--ink-2);border:1px solid var(--line-d);border-radius:40px;padding:8px 16px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:.2s;color:var(--white)}
+.rbtn:hover{border-color:var(--teal)}.rbtn.reacted{border-color:var(--teal);background:rgba(45,191,173,.1)}
+.rbtn .c{font-family:var(--fm);font-size:12px;color:var(--mist)}
+@media(max-width:900px){.react{padding-left:20px;padding-right:20px}}
+</style>
 </head>
 <body>
-
-<nav id="main-nav">
-  <a href="/es/" class="nav-logo">Teal<span>Kin</span></a>
-  <ul class="nav-links">
-    <li><a href="/es/dzon">Dzon</a></li>
+<nav>
+  <a href="/es/" class="logo">Teal<b>Kin</b></a>
+  <ul class="nav-l">
     <li><a href="/es/lab">Lab</a></li>
-    <li><a href="/es/areas">Áreas</a></li>
+    <li><a href="/es/dzon">Dzon</a></li>
     <li><a href="/es/cases" class="active">Casos</a></li>
+    <li><a href="/es/areas">Áreas</a></li>
     <li><a href="/es/about">Nosotros</a></li>
   </ul>
-  <div class="nav-right">
-    <a href="/cases-adidas-naupan" class="lang-toggle" onclick="localStorage.setItem('tk-lang','en')">EN</a>
-    <button class="nav-hamburger" id="hamburger" aria-label="Menú">
-      <span></span><span></span><span></span>
-    </button>
+  <div class="nav-r">
+    <a href="/cases-adidas-naupan" class="lang">EN</a>
+    <button class="burger" id="burger" aria-label="Menú"><span></span><span></span><span></span></button>
   </div>
 </nav>
-
-<div class="nav-mobile" id="nav-mobile">
-  <a href="/es/dzon">Dzon</a>
-  <a href="/es/lab">Lab</a>
-  <a href="/es/areas">Áreas</a>
-  <a href="/es/cases">Casos</a>
-  <a href="/es/about">Nosotros</a>
-  <a href="/cases-adidas-naupan" style="color:var(--teal-light)" onclick="localStorage.setItem('tk-lang','en')">EN →</a>
+<div class="mobile" id="mobile">
+  <a href="/es/lab">Lab</a><a href="/es/dzon">Dzon</a><a href="/es/cases">Casos</a><a href="/es/areas">Áreas</a><a href="/es/about">Nosotros</a><a href="/cases-adidas-naupan" style="color:var(--teal)">EN →</a>
 </div>
 
-<!-- ── CASE HERO ── -->
-<section class="case-hero">
-  <video autoplay muted loop playsinline class="case-hero-video">
-    <source src="/img/cases-adidas-naupan.mp4" type="video/mp4">
-  </video>
-  <div class="case-hero-overlay"></div>
-  <div class="case-hero-content">
-    <a href="/es/cases" class="case-back">Casos</a>
-    <div class="case-tags">
-      <span class="case-tag pekkin">Pek'Kin · Corporativa</span>
-      <span class="case-tag sakha">Sak Ha' · Riesgo</span>
-    </div>
-    <h1 class="case-title">Adidas en Naupan: cuando la historia<br><em>rebasa los hechos.</em></h1>
-    <div class="case-meta-row">
-      <p class="case-meta-item">Empresa <span>Adidas / Someone Somewhere</span></p>
-      <p class="case-meta-item">País <span>México · Puebla</span></p>
-      <p class="case-meta-item">Período <span>2026</span></p>
-    </div>
+<header class="hero">
+  <div class="hero-photo" style="background-image:url(/assets/case-adidas-naupan.jpg)"></div>
+  <canvas id="net"></canvas>
+  <div class="hero-in">
+    <div class="hero-tags"><span class="htag pekkin">Pek'Kin · Corporativa</span><span class="htag sakha">Sak Ha' · Riesgo</span></div>
+    <div class="hero-meta">México · Sierra Norte de Puebla · 2026</div>
+    <h1>Adidas en Naupan: cuando<br>la historia rebasa los hechos.</h1>
+    <p class="lede">Qué pasa cuando el activismo digital reemplaza al periodismo de verificación, y el silencio corporativo deja el relato en manos de otros.</p>
+  </div>
+</header>
+
+<article class="article">
+  <div class="kv">
+    <div class="cell"><div class="l">Marcas</div><div class="v">Adidas / Someone Somewhere</div></div>
+    <div class="cell"><div class="l">Lugar</div><div class="v">Naupan, Sierra Norte de Puebla</div></div>
+    <div class="cell"><div class="l">Escala</div><div class="v">2,026 jerseys · 150 artesanas</div></div>
+    <div class="cell"><div class="l">Estado</div><div class="v">En desarrollo · 2026</div></div>
+  </div>
+
+  <div class="eyebrow">Contexto</div>
+  <h2>Una historia entrañable en <span style="color:var(--teal)">un terreno volátil.</span></h2>
+  <p>Para el Mundial 2026, Adidas se asoció con la empresa social mexicana Someone Somewhere para producir una jersey bordada a mano en edición limitada. El lienzo: 150 mujeres nahuas de Naupan, una comunidad de montaña en la Sierra Norte de Puebla. El producto: 2,026 piezas numeradas con un precio de hasta $285 USD cada una, cada una con un código QR que remite a la artesana que la elaboró. Dos mujeres viajaron a la sede de Adidas en Alemania para que su trabajo fuera archivado. Otras salieron a la cancha durante un amistoso previo al torneo.</p>
+  <p>El proyecto tenía todo lo que una historia de marca necesita: oficio, identidad, propósito, escasez. Se agotó rápido.</p>
+
+  <div class="eyebrow">El reto</div>
+  <h2>Una acusación viral con <span style="color:var(--teal)">48 horas de ventaja.</span></h2>
+  <p>Antes de que existiera cualquier respuesta corporativa, la promotora cultural Luz Valdez publicó un video dirigido a sus 1.3 millones de seguidores combinados en TikTok e Instagram. Su acusación: a las mujeres se les pagaba 36 pesos (cerca de $2 USD) por hora de bordado para jerseys que se vendían en miles de pesos. Sin seguridad social. Técnicas no tradicionales impuestas por control de calidad desde Hong Kong. Un centro cultural público convertido en maquila privada. Acuerdos de confidencialidad que silenciaban a las trabajadoras.</p>
+  <p>El video alcanzó 83,000 likes antes de que las empresas dijeran una palabra. Los medios lo retomaron. Los políticos respondieron. La narrativa quedó establecida.</p>
+  <p>El problema de comunicación no era solo la acusación. Era la asimetría: una historia verificada y cargada de emoción de un lado, y silencio del otro.</p>
+
+  <div class="eyebrow">La respuesta</div>
+  <h2>Dos decisiones muy distintas <span style="color:var(--teal)">bajo presión.</span></h2>
+  <p>Someone Somewhere emitió un comunicado formal el 27 de mayo de 2026. Argumentó que el colectivo de artesanas operaba de forma autónoma, que los salarios superaban el mínimo, que la Casa de Cultura fue elegida por el propio colectivo por su accesibilidad, y que un seguro médico privado complementaba la cobertura existente del IMSS Bienestar de la comunidad.</p>
+  <p>El comunicado también confirmó, sin parecer que esa fuera la intención, tres de las acusaciones centrales: las artesanas carecían de registro patronal formal ante el IMSS, las técnicas tradicionales de bordado habían sido reemplazadas por puntadas comerciales para cumplir los estándares de calidad de Adidas, y un edificio público había sido usado como taller privado. El intento de transparencia se convirtió en confirmación parcial.</p>
+  <p>Adidas eligió un camino distinto: exposición mínima. Un comunicado de dos líneas que citaba "apego a estándares globales" y "fortalecimiento de las condiciones laborales". Sin conferencia de prensa. Sin un ejecutivo a cara descubierta. Sin visita de campo.</p>
+  <p>Entonces el New York Times fue a Naupan.</p>
+  <p class="pullq">"Si toda esa gente que hace esos comentarios se tomara el tiempo de venir a hablar con nosotras, se daría cuenta de que no estamos siendo explotadas."<cite>Betty Alonso, artesana, Naupan · The New York Times, junio 2026</cite></p>
+
+  <div class="eyebrow">El análisis</div>
+  <h2>La brecha entre <span style="color:var(--teal)">alcance y rigor.</span></h2>
+  <p>El New York Times envió a un reportero a Naupan. Habló con más de dos docenas de mujeres, revisó recibos de pago, contrastó las cifras con los referentes de salario digno para el México rural, y documentó tanto lo que se sostenía como lo que no. Su conclusión: las artesanas contradijeron la narrativa central de explotación, los salarios estaban por encima de los 36 pesos por hora, y el trabajo era valorado por quienes lo realizaban. También documentó fricciones reales (ingresos inconsistentes, técnicas no tradicionales, la clasificación como proveedoras y no como empleadas) sin confundir lo imperfecto con el abuso.</p>
+  <p>Las fuentes de Valdez fueron artesanas que habían declinado participar y exempleadas anónimas. Ese es un detalle metodológicamente significativo que ninguno de sus tres videos virales abordó.</p>
+  <p>El caso ilustra una tensión estructural de la comunicación moderna: las redes sociales premian la velocidad y la claridad moral; el periodismo premia la verificación y la complejidad. Cuando una historia es emocionalmente legible (marca de lujo, mujeres indígenas, salarios de pobreza), la versión viral viaja más rápido que la versión matizada, y llega primero a quienes toman las decisiones.</p>
+  <p>Lo que les faltó a las empresas no era una operación impecable que defender. Les faltaba una arquitectura de comunicación construida antes de la crisis: documentación pública de salarios, metodología y consentimiento comunitario a la que pudieran remitir de inmediato. En cambio, la primera defensa detallada del proyecto vino de un tercero (un periódico) y no de las marcas mismas.</p>
+  <p>Los acuerdos de confidencialidad firmados por las artesanas, legítimos en términos comerciales y legales, se convirtieron en el elemento más dañino ante la opinión pública. No porque implicaran una falta, sino porque crearon un silencio donde debía haber una respuesta.</p>
+
+  <div class="eyebrow">Resultado</div>
+  <h2>Pendiente, y <span style="color:var(--teal)">eso es parte de la lección.</span></h2>
+  <p>Las jerseys de edición limitada se agotaron. La colaboración de marca continúa: Someone Somewhere y Adidas anunciaron una segunda colección para el ciclo del Mundial 2026, y los materiales promocionales mantuvieron la misma narrativa cultural hasta junio de 2026.</p>
+  <p>En términos reputacionales, el desenlace sigue sin resolverse. El déficit de comunicación de Someone Somewhere (un comunicado que confirmó lo que buscaba negar) mantuvo viva la controversia en los medios mexicanos. Adidas absorbió la historia sin daño visible de largo plazo a nivel global, protegida en parte por la diferencia de escala entre los medios activistas mexicanos y sus mercados de consumo principales.</p>
+  <p>El reportaje del New York Times no exoneró la operación. Complicó una narrativa que se había simplificado artificialmente. Si esa complejidad llega a las audiencias que más dañaron a las marcas sigue siendo una pregunta abierta.</p>
+  <div class="callout"><div class="l">Nota</div><p>Este caso se actualizará conforme la historia se desarrolle.</p></div>
+
+  <div class="callout"><div class="l">Análisis por</div><p><b>Jorge Delarbre</b> · TealKin. Más de 14 años en comunicación corporativa en LATAM. Basado en fuentes públicas citadas (The New York Times, comunicados oficiales y publicaciones en redes).</p></div>
+</article>
+
+<section class="react">
+  <div class="l">Reacciones</div>
+  <div class="react-row" id="reactions">
+    <button class="rbtn" onclick="react('like')">👍 <span class="c" id="count-like">0</span></button>
+    <button class="rbtn" onclick="react('love')">❤️ <span class="c" id="count-love">0</span></button>
+    <button class="rbtn" onclick="react('insightful')">💡 <span class="c" id="count-insightful">0</span></button>
+    <button class="rbtn" onclick="react('celebrate')">🎉 <span class="c" id="count-celebrate">0</span></button>
+    <button class="rbtn" onclick="react('warning')">⚠️ <span class="c" id="count-warning">0</span></button>
   </div>
 </section>
 
-<!-- ── CASE BODY ── -->
-<div class="case-body">
-  <div class="case-content">
-
-    <div class="case-section">
-      <p class="case-section-label">Contexto</p>
-      <h2 class="case-section-title">Una idea controversial <em>desde el comienzo.</em></h2>
-      <div class="case-prose">
-        <p>Para el Mundial 2026, Adidas se asoció con la empresa social mexicana Someone Somewhere para producir una colección de jerseys de la Selección Mexicana con arte indígena bordado a mano en edición limitada. La colección constaba de 2,026 piezas numeradas —en alusión al año del torneo—, con un precio de hasta $285 USD cada una y un código QR que remitía a la artesana que la elaboró. Detrás de cada pieza había 150 mujeres nahuas de Naupan, una comunidad de montaña en la Sierra Norte de Puebla, cuyo trabajo fue presentado en un evento cerrado en la colonia Roma con influencers y figuras del espectáculo. Para el lanzamiento, dos de las artesanas viajaron a la sede de Adidas en Alemania para que su trabajo fuera archivado, y otras salieron a la cancha durante un amistoso previo al torneo.</p>
-        <p>El proyecto sonaba como una apuesta por reconocer la identidad mexicana en el escenario deportivo más visto del mundo. Sin embargo, desde el inicio se trataba de un terreno sinuoso, con antecedentes de empresas trasnacionales apropiándose de manera desleal del arte indígena — la propia Adidas incluida.</p>
-      </div>
-    </div>
-
-    <div class="case-section">
-      <p class="case-section-label">El reto</p>
-      <h2 class="case-section-title">Una crisis previsible, <em>una respuesta sin preparación.</em></h2>
-      <div class="case-prose">
-        <p>La controversia no tardó en estallar. El 17 de mayo, <a href="https://www.proceso.com.mx/cultura/2026/5/18/pese-denuncia-de-abuso-laboral-adidas-presenta-coleccion-de-playera-para-la-seleccion-mexicana-372087.html" target="_blank" rel="noopener">Proceso</a> —revista de análisis e investigación periodística con más de cinco décadas de presencia en México— publicó una entrevista con Tatiana Bernaldez, semióloga con 18 años de especialización en el simbolismo textil de Naupan. Bernaldez denunció condiciones que consideraba abusivas: un pago de 36 pesos por hora a las bordadoras, el uso de técnicas ajenas a la tradición de la comunidad y un seguro médico prometido que nunca se materializó.</p>
-        <p>La historia reunía ingredientes que la hacían fácilmente viral: una marca global, comunidades indígenas, el Mundial como contexto y una brecha de precio visible. Distintas voces se sumaron a la denuncia en redes sociales, entre ellas la de Luz Valdez, promotora cultural e influencer con 1.3 millones de seguidores combinados en TikTok e Instagram, quien se había posicionado previamente como una voz crítica frente a colaboraciones entre marcas globales y artesanos mexicanos.</p>
-        <p>La presión sobre Adidas era particularmente incómoda porque no era la primera vez. En 2025, la marca había enfrentado una controversia por unas sandalias diseñadas por Willy Chavarria con iconografía oaxaqueña tomada sin permiso ni compensación a los artesanos locales. Adidas se disculpó y visitó a la comunidad afectada. Menos de un año después, la colaboración con Someone Somewhere en Naupan reactivaba exactamente las mismas preguntas. Una marca que ya había pasado por ese escrutinio debió llegar a este proyecto con documentación previa, procesos transparentes y una narrativa preventiva. No lo hizo, y cuando <a href="https://www.tiktok.com/@luzvaldezmx/video/7644079763673468180" target="_blank" rel="noopener">el primer video</a> de Valdez alcanzó 83,000 likes antes de que las empresas dijeran una palabra, la asimetría fue inmediata. Las artesanas que trabajaron en el proyecto habían firmado acuerdos de confidencialidad y no podían responder públicamente. La narrativa quedó establecida antes de que existiera réplica alguna.</p>
-      </div>
-    </div>
-
-    <div class="case-section">
-      <p class="case-section-label">La respuesta</p>
-      <h2 class="case-section-title">Dos decisiones muy distintas <em>bajo la misma presión.</em></h2>
-      <div class="case-prose">
-        <p>Adidas emitió una respuesta institucional breve a través de su agencia de comunicación, señalando que había trabajado con Someone Somewhere para mejorar las condiciones laborales de las artesanas y que la colaboración cumplía con sus estándares globales. La defensa operativa quedó del lado de su intermediario.</p>
-        <p>Someone Somewhere emitió un <a href="https://24-horas.mx/vida/someone-somewhere-se-defiende-ante-adidas-por-polemica-con-bordadoras/" target="_blank" rel="noopener">comunicado detallado el 27 de mayo</a> intentando contextualizar las acusaciones. En él confirmó que las artesanas operaban bajo un esquema de proveeduría externa, que el uso de la Casa de Cultura fue propuesta del propio colectivo y que los pagos superaban el salario mínimo. Sin embargo, el documento también confirmó tres de las acusaciones centrales: la falta de registro patronal formal ante el IMSS, la modificación de técnicas tradicionales y el uso de un edificio público como taller privado.</p>
-        <p>La conversación pública señalaba principalmente a Adidas, porque era el nombre en la playera. En crisis, la visibilidad define la responsabilidad percibida, independientemente de cómo estén distribuidas las obligaciones contractuales. Ninguna de las dos respuestas cerró el debate. El tema no cedió por la vía de las declaraciones, sino que fue perdiendo oxígeno conforme el Mundial avanzaba y el ciclo noticioso seguía su curso — aunque nunca se apagó del todo.</p>
-      </div>
-    </div>
-
-    <div class="case-section">
-      <p class="case-section-label">Resultado</p>
-      <h2 class="case-section-title">Comercialmente intacto, <em>reputacionalmente sin resolver.</em></h2>
-      <div class="case-prose">
-        <p>Las 2,026 piezas se agotaron. El jersey verde Piedra del Sol fue confirmado por Adidas como la camiseta más vendida del Mundial 2026 a nivel mundial. Comercialmente, el episodio no dejó marca visible.</p>
-        <p>Reputacionalmente, el tema se mantuvo activo. En junio, <a href="https://www.nytimes.com/2026/06/08/world/americas/adidas-mexico-indigenous-women-world-cup.html" target="_blank" rel="noopener">el New York Times</a> publicó un reportaje sobre el caso que reavivó la conversación. Lo que distingue esa cobertura del resto es un detalle que parece menor pero no lo es: fue el único actor, entre todos los que se pronunciaron sobre el caso, que viajó físicamente a Naupan. Habló con más de dos docenas de mujeres que trabajaron en el proyecto, revisó recibos de pago y cruzó cifras contra referentes de salario digno para zonas rurales en México. Como es práctica habitual del medio, el Times notificó a las partes antes de publicar, por lo que Adidas y Someone Somewhere sabían que la nota saldría.</p>
-        <p>Lo que encontró no absolvió a las marcas —documentó fricciones reales— pero aportó un testimonio directo de las propias artesanas que matizó de manera significativa la narrativa que había dominado la conversación pública. Las mujeres que trabajaron en el proyecto contradijeron directamente a Valdez. Varias expresaron enojo hacia los influencers que, en sus palabras, se estaban ayudando a sí mismos, no a la comunidad.</p>
-      </div>
-      <p class="case-pull">"Si toda esa gente que hace esos comentarios se tomara el tiempo de venir a hablar con nosotras, se daría cuenta de que no estamos siendo explotadas."<cite>Betty Alonso, artesana, Naupan · The New York Times, junio 2026</cite></p>
-      <div class="case-prose">
-        <p>Con el Mundial concluido y el ciclo noticioso siguiendo su curso, el caso fue perdiendo presencia en la conversación pública. El expediente no se cerró formalmente, pero el testimonio recogido por el Times quedó como el documento más completo sobre lo que ocurrió en Naupan, en un debate que, hasta ese momento, se había librado casi enteramente sin ir a la comunidad.</p>
-      </div>
-    </div>
-
-    <div class="case-section">
-      <p class="case-section-label">El análisis</p>
-      <h2 class="case-section-title">Lecciones de una crisis <em>que no terminó de cerrarse.</em></h2>
-      <div class="case-prose">
-        <p>El caso deja varios aprendizajes para cualquier marca que opere en este tipo de colaboraciones.</p>
-        <p>El primero tiene que ver con la coordinación interna. En proyectos que involucran comunidades indígenas, patrimonio cultural o condiciones laborales sensibles, la conversación entre el equipo de marca y el equipo de comunicación corporativa no puede darse después de que estalla la crisis. Corporativo existe, entre otras cosas, para visualizar este tipo de riesgos con anticipación. Cuando esa conversación no ocurre antes, la marca llega sin narrativa preventiva y sin documentación lista —exactamente como ocurrió aquí, y con antecedentes que hacían previsible el escenario.</p>
-        <p>El segundo aprendizaje es sobre cómo se mueve la información hoy. El caso mostró con claridad cómo medios e influencers pueden complementarse para hacer viral una historia en poco tiempo, pero también evidenció una diferencia fundamental entre ambos. Los influencers no son periodistas. Operan bajo otras lógicas, con otras fuentes y otros estándares de verificación. Eso no los hace irrelevantes; al contrario, su alcance es real y su velocidad es mayor. Pero la información que generan corre por líneas distintas a las del periodismo de verificación, y las marcas deben entender esa diferencia para saber cómo responder a cada una.</p>
-        <p>El tercero es quizás el más contraintuitivo. Lo que muchas marcas temen —una investigación del New York Times— resultó ser en este caso el elemento que más equilibró la conversación. El Times no absolvió a Adidas ni a Someone Somewhere; señaló irregularidades reales. Pero atendió la acusación central, la de explotación, con el único recurso que ningún otro actor había usado: ir a Naupan y hablar con las mujeres que trabajaron en el proyecto. Ese testimonio directo cambió el peso de la narrativa. Una marca que confía en lo que hace puede, en una situación así, facilitar ese tipo de escrutinio en lugar de temerlo.</p>
-        <p>El cuarto aprendizaje es sobre lo que queda después. El caso no se cerró. Por el contrario, dejó un terreno más fértil para que el tema vuelva a activarse. Los influencers que habían construido su narrativa no recibieron bien la nota del Times, no porque la refutaran en su totalidad, sino porque el foco quedó en que contradijo a sus fuentes. Eso habla de algo que trasciende este caso: cuando una crisis opera en el terreno de la percepción cultural y la identidad, los hechos no necesariamente clausuran el debate. Otras marcas que consideren colaboraciones similares en México deberían tenerlo en cuenta desde el inicio, no como señal para evitar este tipo de proyectos, sino para llegar a ellos con la solidez que exigen.</p>
-      </div>
-    </div>
-
-  </div>
-
-  <aside class="case-sidebar">
-    <div class="sidebar-block">
-      <p class="sidebar-label">Datos clave</p>
-      <p class="sidebar-stat"><strong>2,026</strong> jerseys numeradas</p>
-      <p class="sidebar-stat"><strong>Sierra Norte</strong> de Puebla, México</p>
-      <p class="sidebar-stat"><strong>150</strong> artesanas involucradas</p>
-      <p class="sidebar-stat"><strong>2026</strong> caso cerrado</p>
-    </div>
-    <div class="sidebar-block">
-      <p class="sidebar-label">Áreas</p>
-      <div style="display:flex;flex-direction:column;gap:6px;margin-top:4px;">
-        <span style="font-size:11px;color:rgba(255,255,255,0.5);padding:4px 10px;border:0.5px solid rgba(26,155,140,0.3);border-radius:1px;width:fit-content;">Pek'Kin · Corporativa</span>
-        <span style="font-size:11px;color:rgba(255,255,255,0.5);padding:4px 10px;border:0.5px solid rgba(200,60,60,0.3);border-radius:1px;width:fit-content;">Sak Ha' · Riesgo</span>
-      </div>
-    </div>
-    <div class="sidebar-block">
-      <p class="sidebar-label">Estado</p>
-      <p class="sidebar-pending" style="color:var(--teal-light);border-color:rgba(45,191,173,0.35);">● Cerrado — análisis completo</p>
-    </div>
-    <div class="sidebar-block">
-      <p class="sidebar-label">Análisis por</p>
-      <p style="font-family:var(--font-display);font-size:18px;font-weight:300;color:var(--white);margin-bottom:4px;">Jorge <em style="font-style:italic;color:var(--teal-light);">Delarbre</em></p>
-      <p style="font-size:11px;color:var(--mist);line-height:1.5;">Fundador de TealKin. 14+ años en comunicación corporativa en LATAM.</p>
-    </div>
-    <div class="sidebar-block">
-      <a href="/es/cases" style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--mist);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='white'" onmouseout="this.style.color=''">← Volver a Casos</a>
-    </div>
-  </aside>
-</div>
-
-<!-- ── REACTIONS ── -->
-<section class="reactions-section">
-  <p class="reactions-label">Reacciones</p>
-  <div class="reactions-row" id="reactions">
-    <button class="reaction-btn" onclick="react('like')"><span class="reaction-emoji">👍</span><span class="reaction-count" id="count-like">0</span></button>
-    <button class="reaction-btn" onclick="react('love')"><span class="reaction-emoji">❤️</span><span class="reaction-count" id="count-love">0</span></button>
-    <button class="reaction-btn" onclick="react('insightful')"><span class="reaction-emoji">💡</span><span class="reaction-count" id="count-insightful">0</span></button>
-    <button class="reaction-btn" onclick="react('celebrate')"><span class="reaction-emoji">🎉</span><span class="reaction-count" id="count-celebrate">0</span></button>
-    <button class="reaction-btn" onclick="react('warning')"><span class="reaction-emoji">⚠️</span><span class="reaction-count" id="count-warning">0</span></button>
-  </div>
-</section>
-
-<!-- ── CASE FOOTER NAV ── -->
-<div class="case-footer-nav">
-  <div class="case-footer-inner">
-    <div>
-      <p class="cf-label">Todos los casos</p>
-      <a href="/es/cases" class="cf-link">← Volver a Casos</a>
-    </div>
-  </div>
-</div>
+<div class="backrow"><a href="/es/cases">← Volver a Casos</a></div>
 
 <footer>
-  <a href="/es/" class="footer-logo">Teal<span>Kin</span></a>
-  <p class="footer-copy">© 2026 TealKin. Tulum, Riviera Maya.</p>
-  <p class="footer-tagline">Dzon — palabra maya para cenote · Kin — sol</p>
+  <div class="f-l"><a href="/es/lab">Lab</a><a href="/es/dzon">Dzon</a><a href="/es/cases">Casos</a><a href="/es/about">Nosotros</a></div>
+  <div class="f-r">TealKin · Proyecto personal<br>Tulum, Riviera Maya · LATAM<br><b>© 2026 · Jorge Delarbre</b></div>
 </footer>
 
 <script>
-const hamburger = document.getElementById('hamburger');
-const navMobile = document.getElementById('nav-mobile');
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('open');
-  navMobile.classList.toggle('open');
-});
-document.querySelectorAll('.nav-mobile a').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('open');
-    navMobile.classList.remove('open');
-  });
-});
-window.addEventListener('scroll', () => {
-  document.getElementById('main-nav').style.background =
-    window.scrollY > 60 ? 'rgba(10,18,12,0.97)' : 'rgba(15,20,16,0.9)';
-});
-
-const CASE_KEY = 'tealkin-reactions-adidas-naupan';
-const reactions = JSON.parse(localStorage.getItem(CASE_KEY) || '{"like":0,"love":0,"insightful":0,"celebrate":0,"warning":0}');
-const userReacted = JSON.parse(localStorage.getItem(CASE_KEY + '-user') || '{}');
-
-function renderReactions() {
-  ['like','love','insightful','celebrate','warning'].forEach(type => {
-    document.getElementById('count-' + type).textContent = reactions[type] || 0;
-    const btn = document.querySelector(`[onclick="react('${type}')"]`);
-    if (userReacted[type]) btn.classList.add('reacted');
-    else btn.classList.remove('reacted');
-  });
-}
-
-function react(type) {
-  if (userReacted[type]) {
-    reactions[type] = Math.max(0, (reactions[type] || 0) - 1);
-    delete userReacted[type];
-  } else {
-    reactions[type] = (reactions[type] || 0) + 1;
-    userReacted[type] = true;
-  }
-  localStorage.setItem(CASE_KEY, JSON.stringify(reactions));
-  localStorage.setItem(CASE_KEY + '-user', JSON.stringify(userReacted));
-  renderReactions();
-}
-
+const bg=document.getElementById('burger'),mb=document.getElementById('mobile');
+bg.addEventListener('click',()=>{bg.classList.toggle('open');mb.classList.toggle('open')});
+mb.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{bg.classList.remove('open');mb.classList.remove('open')}));
+const CASE_KEY='tealkin-reactions-adidas-naupan';
+const reactions=JSON.parse(localStorage.getItem(CASE_KEY)||'{}');
+const userReacted=JSON.parse(localStorage.getItem(CASE_KEY+'-user')||'{}');
+function renderReactions(){['like','love','insightful','celebrate','warning'].forEach(t=>{const el=document.getElementById('count-'+t);if(el)el.textContent=reactions[t]||0;const btn=document.querySelector(`[onclick="react('${t}')"]`);if(btn)btn.classList.toggle('reacted',!!userReacted[t]);});}
+function react(t){if(userReacted[t]){reactions[t]=Math.max(0,(reactions[t]||0)-1);delete userReacted[t];}else{reactions[t]=(reactions[t]||0)+1;userReacted[t]=true;}localStorage.setItem(CASE_KEY,JSON.stringify(reactions));localStorage.setItem(CASE_KEY+'-user',JSON.stringify(userReacted));renderReactions();}
 renderReactions();
+const c=document.getElementById('net'),x=c.getContext('2d');let W,H,DPR;
+function size(){DPR=Math.min(devicePixelRatio||1,2);const r=c.parentElement.getBoundingClientRect();W=c.width=r.width*DPR;H=c.height=r.height*DPR;c.style.width=r.width+'px';c.style.height=r.height+'px';}
+size();addEventListener('resize',size);
+const N=38,nodes=[];
+for(let i=0;i<N;i++)nodes.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.16*DPR,vy:(Math.random()-.5)*.16*DPR,r:(Math.random()*1.5+1)*DPR});
+const LINK=160*DPR;let waves=[];
+c.parentElement.addEventListener('pointerdown',e=>{const r=c.getBoundingClientRect();waves.push({x:(e.clientX-r.left)*DPR,y:(e.clientY-r.top)*DPR,r:0,a:1})});
+function tick(){
+ x.clearRect(0,0,W,H);
+ for(const n of nodes){n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1;}
+ for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){const a=nodes[i],b=nodes[j],d=Math.hypot(a.x-b.x,a.y-b.y);if(d<LINK){x.strokeStyle='rgba(45,191,173,'+(0.12*(1-d/LINK))+')';x.lineWidth=DPR;x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.stroke();}}
+ for(const n of nodes){x.fillStyle='rgba(45,191,173,.8)';x.beginPath();x.arc(n.x,n.y,n.r,0,7);x.fill();}
+ waves=waves.filter(w=>w.a>0);for(const w of waves){w.r+=6*DPR;w.a-=.012;x.strokeStyle='rgba(232,132,58,'+w.a+')';x.lineWidth=1.5*DPR;x.beginPath();x.arc(w.x,w.y,w.r,0,7);x.stroke();}
+ requestAnimationFrame(tick);
+}
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches)tick();else{for(const n of nodes){x.fillStyle='rgba(45,191,173,.8)';x.beginPath();x.arc(n.x,n.y,n.r,0,7);x.fill();}}
 </script>
 </body>
 </html>
