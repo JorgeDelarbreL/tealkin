@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nosotros — TealKin</title>
+<meta name="description" content="La experiencia detrás de TealKin. Más de 14 años de comunicación corporativa, crisis y reputación en América Latina.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#2dbfad; --teal-d:#1a9b8c; --orange:#e8843a;
+  --ink:#0a0f0e; --ink-2:#0d1311; --white:#f3efe6; --mist:#aab2ac; --ink-soft:#6a665d;
+  --line-d:rgba(255,255,255,.14);
+  --fg:'Space Grotesk',system-ui,sans-serif; --fb:'Inter',system-ui,sans-serif; --fm:'Space Mono',monospace;
+}
+*{margin:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--ink);color:var(--white);-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
+a{color:inherit}
+.k{font-family:var(--fm);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;background:rgba(10,15,14,.72);backdrop-filter:blur(10px);border-bottom:1px solid var(--line-d)}
+.logo{font-family:var(--fg);font-size:21px;font-weight:700;letter-spacing:-.01em;text-decoration:none}.logo b{color:var(--teal)}
+.nav-l{display:flex;gap:26px;list-style:none}
+.nav-l a{font-family:var(--fm);font-size:12px;letter-spacing:.04em;text-transform:uppercase;opacity:.6;text-decoration:none}.nav-l a:hover,.nav-l a.active{opacity:1}
+.nav-r{display:flex;align-items:center;gap:16px}
+.lang{font-family:var(--fm);font-size:12px;border:1px solid rgba(255,255,255,.22);padding:5px 11px;border-radius:3px;text-decoration:none}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.burger span{width:22px;height:1.5px;background:var(--mist);display:block;transition:.3s}
+.burger.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}.burger.open span:nth-child(2){opacity:0}.burger.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
+.mobile{display:none;position:fixed;top:57px;left:0;right:0;z-index:40;background:rgba(10,15,14,.98);backdrop-filter:blur(14px);padding:1.5rem 2rem;flex-direction:column;border-bottom:1px solid var(--line-d)}
+.mobile.open{display:flex}
+.mobile a{font-family:var(--fm);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--mist);text-decoration:none;padding:.9rem 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.hero{position:relative;min-height:52vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;border-bottom:1px solid var(--line-d);background:#060b0a}
+.hero-photo{position:absolute;inset:0;z-index:0;background:url(about-poster.jpg) center/cover;opacity:.5}
+.hero-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(115deg,rgba(26,155,140,.16),transparent 55%)}
+#net{position:absolute;inset:0;z-index:1}
+.hero::after{content:'';position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(6,11,10,.55),rgba(6,11,10,.35) 45%,rgba(6,11,10,.92))}
+.hero-in{position:relative;z-index:3;max-width:1180px;margin:0 auto;width:100%;padding:60px 40px 50px}
+.hero-k{color:var(--teal);margin-bottom:18px;display:flex;align-items:center;gap:12px}.hero-k::before{content:'';width:34px;height:2px;background:var(--orange)}
+h1{font-family:var(--fg);font-weight:600;font-size:clamp(38px,5.4vw,72px);line-height:1.0;letter-spacing:-.025em}
+h1 em{font-style:normal;color:var(--teal)}
+.main{max-width:1180px;margin:0 auto;padding:72px 40px;display:grid;grid-template-columns:.8fr 1.6fr;gap:64px;align-items:start}
+.left{position:sticky;top:90px}
+.name{font-family:var(--fg);font-weight:600;font-size:clamp(32px,3.6vw,48px);line-height:1.02;letter-spacing:-.02em;margin-bottom:8px}
+.name em{font-style:normal;color:var(--teal)}
+.role{font-family:var(--fm);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mist);margin-bottom:34px}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.stat{border-top:1px solid var(--line-d);padding-top:12px}
+.stat-num{font-family:var(--fg);font-weight:600;font-size:28px;color:var(--teal);line-height:1;margin-bottom:6px;letter-spacing:-.01em}
+.stat-num.sm{font-size:16px}
+.stat-label{font-size:11.5px;color:var(--mist);line-height:1.45}
+.body-text{font-size:15px;color:#d6dcd6;line-height:1.9;margin-bottom:18px}
+.body-text b{color:var(--white);font-weight:600}
+.pull{font-family:var(--fg);font-weight:500;font-size:19px;color:var(--white);line-height:1.5;margin:32px 0;padding-left:20px;border-left:3px solid var(--teal)}
+.clients{margin-top:36px;border-top:1px solid var(--line-d);padding-top:26px}
+.clients-k{font-family:var(--fm);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mist);margin-bottom:16px}
+.clients-list{display:flex;flex-wrap:wrap;gap:8px}
+.client{font-family:var(--fm);font-size:11px;color:var(--mist);border:1px solid var(--line-d);padding:6px 13px;border-radius:3px;text-decoration:none;transition:.3s}
+.client:hover{color:var(--white);border-color:rgba(255,255,255,.3)}
+.edu{background:var(--ink-2);border-top:1px solid var(--line-d)}
+.edu-in{max-width:1180px;margin:0 auto;padding:72px 40px}
+.sec-title{font-family:var(--fg);font-weight:600;font-size:clamp(26px,3vw,40px);letter-spacing:-.02em;margin:12px 0}
+.sec-title em{color:var(--teal);font-style:normal}
+.edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+.edu-card{border:1px solid var(--line-d);border-radius:8px;padding:26px;background:var(--ink)}
+.edu-degree{font-family:var(--fg);font-size:18px;font-weight:600;margin-bottom:8px}
+.edu-school{font-family:var(--fm);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+.edu-year{font-family:var(--fm);font-size:12px;color:var(--mist)}
+.contact{border-top:1px solid var(--line-d)}
+.contact-in{max-width:1180px;margin:0 auto;padding:72px 40px}
+.contact-intro{font-size:15px;color:#d6dcd6;line-height:1.8;max-width:560px;margin-top:12px}
+.contact-grid{display:grid;grid-template-columns:.9fr 1.3fr;gap:48px;margin-top:40px;align-items:start}
+.methods{display:flex;flex-direction:column;gap:12px}
+.method{display:flex;align-items:center;gap:16px;border:1px solid var(--line-d);border-radius:8px;padding:18px 20px;text-decoration:none;transition:.3s}
+.method:hover{border-color:var(--teal);background:rgba(45,191,173,.05)}
+.method-ic{flex:none;width:42px;height:42px;border:1px solid var(--line-d);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--teal)}
+.method-ic svg{width:18px;height:18px}
+.method-l{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mist);margin-bottom:4px}
+.method-v{display:block;font-family:var(--fg);font-size:16px;font-weight:600}
+.form{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;flex-direction:column;gap:7px}
+.row label{font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mist)}
+.row input,.row textarea{font-family:var(--fb);font-size:14px;color:var(--white);background:rgba(255,255,255,.02);border:1px solid var(--line-d);border-radius:6px;padding:12px 14px;transition:border-color .3s;resize:vertical}
+.row input:focus,.row textarea:focus{outline:none;border-color:var(--teal)}
+.row input::placeholder,.row textarea::placeholder{color:rgba(255,255,255,.28)}
+.submit{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;font-family:var(--fg);font-weight:600;font-size:14px;color:#05100e;background:var(--teal);border:none;border-radius:4px;padding:13px 26px;cursor:pointer;transition:background .2s}
+.submit:hover{background:var(--white)}
+.submit:disabled{opacity:.6;cursor:default}
+.submit svg{width:16px;height:16px}
+.note{font-size:12px;color:var(--mist)}.note.success{color:var(--teal)}.note.error{color:#ef8f78}
+footer{border-top:1px solid var(--line-d);padding:38px 40px;display:flex;justify-content:space-between;align-items:flex-start;gap:28px;flex-wrap:wrap;max-width:1180px;margin:0 auto}
+.f-l a{display:block;font-family:var(--fm);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mist);text-decoration:none;margin-bottom:8px}
+.f-r{text-align:right;color:#6a726c;font-size:12px;font-family:var(--fm);line-height:1.9}.f-r b{color:var(--mist);font-weight:400}
+@media(max-width:900px){
+  nav{padding:14px 20px}.nav-l{display:none}.burger{display:flex}
+  .hero-in{padding:48px 20px 36px}
+  .main{grid-template-columns:1fr;gap:40px;padding:48px 20px}.left{position:static}
+  .edu-in,.contact-in{padding:52px 20px}.edu-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr;gap:32px}
+  footer{padding:30px 20px}
+}
+</style>
+</head>
+<body>
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <symbol id="ic-ext" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></symbol>
+  <symbol id="ic-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></symbol>
+  <symbol id="ic-send" viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9z"/></symbol>
+</svg>
+
+<nav>
+  <a href="./" class="logo">Teal<b>Kin</b></a>
+  <ul class="nav-l">
+    <li><a href="/es/lab.html">Lab</a></li>
+    <li><a href="/es/dzon.html">Dzon</a></li>
+    <li><a href="/es/cases.html">Casos</a></li>
+    <li><a href="/es/areas.html">Áreas</a></li>
+    <li><a href="about.html" class="active">Nosotros</a></li>
+  </ul>
+  <div class="nav-r">
+    <a href="en/about.html" class="lang">EN</a>
+    <button class="burger" id="burger" aria-label="Menú"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile" id="mobile">
+  <a href="/es/lab.html">Lab</a><a href="/es/dzon.html">Dzon</a><a href="/es/cases.html">Casos</a><a href="/es/areas.html">Áreas</a><a href="about.html">Nosotros</a><a href="en/about.html" style="color:var(--teal)">EN →</a>
+</div>
+
+<header class="hero">
+  <div class="hero-photo"></div>
+  <canvas id="net"></canvas>
+  <div class="hero-in">
+    <div class="hero-k k">Detrás de TealKin</div>
+    <h1>La experiencia<br>detrás del <em>criterio.</em></h1>
+  </div>
+</header>
+
+<section class="main">
+  <div class="left">
+    <h2 class="name">Jorge<br><em>Delarbre</em></h2>
+    <div class="role">Estratega de comunicación</div>
+    <div class="stat-grid">
+      <div class="stat"><div class="stat-num">14+</div><div class="stat-label">Años en comunicación corporativa en Latinoamérica</div></div>
+      <div class="stat"><div class="stat-num">5</div><div class="stat-label">Mercados gestionados a la vez a nivel regional</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label">Grados UNAM: Comunicación, Psicología y Maestría</div></div>
+      <div class="stat"><div class="stat-num sm">MX·CO·PA·PE·CL</div><div class="stat-label">Países con liderazgo directo de comunicación</div></div>
+    </div>
+  </div>
+  <div class="right">
+    <p class="body-text">Soy Jorge Alejandro Delarbre López, estratega de comunicación con más de 14 años de experiencia construyendo reputación corporativa, gestionando crisis e impulsando la visibilidad de marcas en América Latina. Mi trayectoria abarca roles tanto en agencia como in-house, desde liderar la comunicación para multinacionales globales hasta estructurar funciones completas de comunicación desde cero en algunos de los entornos más exigentes de la región.</p>
+    <p class="body-text">En <b>JeffreyGroup</b>, una de las agencias de comunicación corporativa líderes en América Latina, me desempeñé como Director de Comunicación Corporativa, brindando asesoría senior a cuentas como <b>Nestlé México, American Airlines, PepsiCo, Rappi, Aon y ROADIS</b>. Antes de eso, consolidé mi experiencia en <b>LLYC</b>, donde gestioné la comunicación estratégica para Walmart, Autlán, Carvajal, Marathon Petroleum y Volvo Trucks en frentes de crisis, relación con medios y vinculación con tomadores de decisión.</p>
+    <p class="body-text">Mi alcance regional se expandió significativamente en <b>vivo</b>, donde como Senior PR Manager para América Latina lideré la comunicación en Colombia, México, Panamá, Perú y Chile, fungiendo como vocero regional oficial y gestionando la alineación con HQ. Durante mi gestión, lideré lanzamientos de productos y esfuerzos de expansión de marca en la región, incluyendo la entrada de vivo al mercado panameño.</p>
+    <p class="body-text">Actualmente me desempeño como <b>Director de Comunicación en Tulum Country Club y PGA Riviera Maya</b>, donde profesionalicé la infraestructura de comunicación durante la transición hacia un modelo federado e in-house. Institucionalicé el marco estratégico: narrativa de marca, planeación anual, benchmarking competitivo, estrategias de voceros y relación con medios, además de un modelo de gobernanza que separa los flujos de contenido editorial, operativo y comercial. Operando como único profesional de comunicación, también lideré la estrategia para un evento de golf de un importante circuito internacional, con resultados en medios previos al torneo que casi triplicaron la producción total del año anterior.</p>
+    <p class="pull">Lo que diferencia mi enfoque es la combinación de las Ciencias de la Comunicación y la Psicología, ambas por la UNAM, además de una Maestría en Comunicación. Esa formación me permite leer no solo lo que dice una narrativa, sino lo que produce en las audiencias, los tomadores de decisión y la cultura organizacional.</p>
+    <p class="body-text">TealKin es mi proyecto personal para compartir el pensamiento, las herramientas y las perspectivas construidas a lo largo de más de una década en la intersección de la reputación corporativa, la gestión de crisis y la comunicación estratégica.</p>
+    <div class="clients">
+      <div class="clients-k">Experiencia con clientes seleccionados</div>
+      <div class="clients-list">
+        <a class="client" href="https://www.pepsico.com" target="_blank" rel="noopener">PepsiCo</a>
+        <a class="client" href="https://www.nestle.com" target="_blank" rel="noopener">Nestlé</a>
+        <a class="client" href="https://corporate.walmart.com" target="_blank" rel="noopener">Walmart</a>
+        <a class="client" href="https://www.aa.com" target="_blank" rel="noopener">American Airlines</a>
+        <a class="client" href="https://www.diageo.com" target="_blank" rel="noopener">Diageo</a>
+        <a class="client" href="https://www.pmi.com" target="_blank" rel="noopener">Philip Morris</a>
+        <a class="client" href="https://www.banorte.com" target="_blank" rel="noopener">Banorte</a>
+        <a class="client" href="https://www.aon.com" target="_blank" rel="noopener">Aon</a>
+        <a class="client" href="https://www.enel.com" target="_blank" rel="noopener">ENEL</a>
+        <a class="client" href="https://www.naturgy.com" target="_blank" rel="noopener">Naturgy</a>
+        <a class="client" href="https://www.rappi.com" target="_blank" rel="noopener">Rappi</a>
+        <a class="client" href="https://www.volvotrucks.com" target="_blank" rel="noopener">Volvo</a>
+        <a class="client" href="https://www.airbus.com" target="_blank" rel="noopener">Airbus</a>
+        <a class="client" href="https://www.roadis.com" target="_blank" rel="noopener">ROADIS</a>
+        <a class="client" href="https://www.reckitt.com" target="_blank" rel="noopener">Reckitt</a>
+        <a class="client" href="https://www.kenvue.com" target="_blank" rel="noopener">Kenvue</a>
+        <a class="client" href="https://www.astrazeneca.com" target="_blank" rel="noopener">AstraZeneca</a>
+        <a class="client" href="https://www.swift.com" target="_blank" rel="noopener">SWIFT</a>
+        <a class="client" href="https://www.berrymex.net" target="_blank" rel="noopener">BerryMex</a>
+        <a class="client" href="https://www.ine.mx" target="_blank" rel="noopener">INE</a>
+        <a class="client" href="https://asolmex.org" target="_blank" rel="noopener">Asolmex</a>
+        <a class="client" href="https://www.autlan.com.mx" target="_blank" rel="noopener">Autlán</a>
+        <a class="client" href="https://corporate.wwe.com" target="_blank" rel="noopener">WWE</a>
+        <a class="client" href="https://littlecaesars.com" target="_blank" rel="noopener">Little Caesars</a>
+        <a class="client" href="https://www.infonavit.org.mx" target="_blank" rel="noopener">Infonavit</a>
+        <a class="client" href="https://www.elpalaciodehierro.com" target="_blank" rel="noopener">Palacio de Hierro</a>
+        <a class="client" href="https://www.jaguar-ep.com" target="_blank" rel="noopener">Jaguar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="edu">
+  <div class="edu-in">
+    <div class="k" style="color:var(--teal)">Educación</div>
+    <h2 class="sec-title">Formado en la <em>UNAM.</em></h2>
+    <div class="edu-grid">
+      <div class="edu-card"><div class="edu-degree">Maestría en Comunicación</div><div class="edu-school">UNAM</div><div class="edu-year">2015 – 2017</div></div>
+      <div class="edu-card"><div class="edu-degree">Licenciatura en Psicología</div><div class="edu-school">UNAM</div><div class="edu-year">2020 – 2025</div></div>
+      <div class="edu-card"><div class="edu-degree">Lic. en Ciencias de la Comunicación</div><div class="edu-school">UNAM</div><div class="edu-year">2008 – 2012</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact">
+  <div class="contact-in">
+    <div class="k" style="color:var(--teal)">Contacto</div>
+    <h2 class="sec-title">Empecemos una <em>conversación.</em></h2>
+    <p class="contact-intro">Para un proyecto, una colaboración o una pregunta sobre algo de TealKin: estas son las formas más directas de contactarme, o escríbeme desde el formulario.</p>
+    <div class="contact-grid">
+      <div class="methods">
+        <a href="https://www.linkedin.com/in/jorge-alejandro-delarbre" target="_blank" rel="noopener" class="method">
+          <span class="method-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-ext"></use></svg></span>
+          <span><span class="method-l">Conecta en LinkedIn</span><span class="method-v">/in/jorge-alejandro-delarbre</span></span>
+        </a>
+        <a href="mailto:jdelarbrel@gmail.com" class="method">
+          <span class="method-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-mail"></use></svg></span>
+          <span><span class="method-l">Correo</span><span class="method-v">jdelarbrel@gmail.com</span></span>
+        </a>
+      </div>
+      <form class="form" id="contactForm">
+        <input type="hidden" name="access_key" value="6e5a7742-d969-4688-a2bc-0c4383e1d21a">
+        <input type="hidden" name="subject" value="Nuevo mensaje desde el sitio de TealKin">
+        <input type="hidden" name="from_name" value="Formulario de contacto TealKin">
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+        <div class="row"><label for="cn">Nombre</label><input type="text" id="cn" name="name" placeholder="Tu nombre" maxlength="100" required></div>
+        <div class="row"><label for="ce">Correo</label><input type="email" id="ce" name="email" placeholder="tu@empresa.com" maxlength="254" required></div>
+        <div class="row"><label for="cm">Mensaje</label><textarea id="cm" name="message" rows="5" placeholder="¿De qué te gustaría hablar?" maxlength="5000" required></textarea></div>
+        <button type="submit" class="submit" id="cs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><use href="#ic-send"></use></svg><span id="csl">Enviar mensaje</span></button>
+        <p class="note" id="cst" role="status">Tu mensaje llega directo a mi bandeja.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-l"><a href="/es/lab.html">Lab</a><a href="/es/dzon.html">Dzon</a><a href="/es/cases.html">Casos</a><a href="about.html">Nosotros</a></div>
+  <div class="f-r">TealKin · Proyecto personal<br>Tulum, Riviera Maya · LATAM<br><b>© 2026 · Jorge Delarbre</b></div>
+</footer>
+
+<script>
+const bg=document.getElementById('burger'),mb=document.getElementById('mobile');
+bg.addEventListener('click',()=>{bg.classList.toggle('open');mb.classList.toggle('open')});
+mb.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{bg.classList.remove('open');mb.classList.remove('open')}));
+
+document.getElementById('contactForm').addEventListener('submit',async e=>{
+  e.preventDefault();const form=e.target,b=document.getElementById('cs'),l=document.getElementById('csl'),s=document.getElementById('cst');
+  b.disabled=true;l.textContent='Enviando...';s.textContent='Enviando tu mensaje...';s.classList.remove('success','error');
+  try{
+    const r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Accept':'application/json'},body:new FormData(form)});
+    const j=await r.json();
+    if(j.success){form.reset();s.textContent='Gracias, tu mensaje va en camino. Te respondo pronto.';s.classList.add('success');}
+    else throw new Error(j.message||'Error al enviar');
+  }catch(err){s.textContent='Algo salió mal. Escríbeme directo a jdelarbrel@gmail.com.';s.classList.add('error');}
+  finally{b.disabled=false;l.textContent='Enviar mensaje';}
+});
+
+const c=document.getElementById('net'),x=c.getContext('2d');let W,H,DPR;
+function size(){DPR=Math.min(devicePixelRatio||1,2);const r=c.parentElement.getBoundingClientRect();W=c.width=r.width*DPR;H=c.height=r.height*DPR;c.style.width=r.width+'px';c.style.height=r.height+'px';}
+size();addEventListener('resize',size);
+const N=42,nodes=[];
+for(let i=0;i<N;i++)nodes.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.16*DPR,vy:(Math.random()-.5)*.16*DPR,r:(Math.random()*1.5+1)*DPR});
+const LINK=160*DPR;let waves=[];
+c.parentElement.addEventListener('pointerdown',e=>{const r=c.getBoundingClientRect();waves.push({x:(e.clientX-r.left)*DPR,y:(e.clientY-r.top)*DPR,r:0,a:1})});
+function tick(){
+ x.clearRect(0,0,W,H);
+ for(const n of nodes){n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1;}
+ for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){const a=nodes[i],b=nodes[j],d=Math.hypot(a.x-b.x,a.y-b.y);if(d<LINK){x.strokeStyle='rgba(45,191,173,'+(0.12*(1-d/LINK))+')';x.lineWidth=DPR;x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.stroke();}}
+ for(const n of nodes){x.fillStyle='rgba(45,191,173,.8)';x.beginPath();x.arc(n.x,n.y,n.r,0,7);x.fill();}
+ waves=waves.filter(w=>w.a>0);for(const w of waves){w.r+=6*DPR;w.a-=.012;x.strokeStyle='rgba(232,132,58,'+w.a+')';x.lineWidth=1.5*DPR;x.beginPath();x.arc(w.x,w.y,w.r,0,7);x.stroke();}
+ requestAnimationFrame(tick);
+}
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches)tick();else{for(const n of nodes){x.fillStyle='rgba(45,191,173,.8)';x.beginPath();x.arc(n.x,n.y,n.r,0,7);x.fill();}}
+</script>
+</body>
+</html>

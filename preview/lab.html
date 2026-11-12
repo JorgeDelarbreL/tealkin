@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab — TealKin</title>
+<meta name="description" content="Donde la comunicación estratégica y la IA se intersectan. Herramientas reales que ya puedes usar, para pensar la reputación de otra forma.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#2dbfad; --teal-d:#1a9b8c; --orange:#e8843a;
+  --ink:#0a0f0e; --ink-2:#0d1311; --white:#f3efe6; --mist:#aab2ac; --ink-soft:#6a665d;
+  --line-d:rgba(255,255,255,.14);
+  --fg:'Space Grotesk',system-ui,sans-serif; --fb:'Inter',system-ui,sans-serif; --fm:'Space Mono',monospace;
+  --red:#ef6a52; --amber:#e8a13a; --green:#43c278;
+}
+*{margin:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--ink);color:var(--white);-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
+a{color:inherit}
+.k{font-family:var(--fm);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;background:rgba(10,15,14,.72);backdrop-filter:blur(10px);border-bottom:1px solid var(--line-d)}
+.logo{font-family:var(--fg);font-size:21px;font-weight:700;letter-spacing:-.01em;text-decoration:none}.logo b{color:var(--teal)}
+.nav-l{display:flex;gap:26px;list-style:none}
+.nav-l a{font-family:var(--fm);font-size:12px;letter-spacing:.04em;text-transform:uppercase;opacity:.6;text-decoration:none}.nav-l a:hover,.nav-l a.active{opacity:1}
+.nav-r{display:flex;align-items:center;gap:16px}
+.lang{font-family:var(--fm);font-size:12px;border:1px solid rgba(255,255,255,.22);padding:5px 11px;border-radius:3px;text-decoration:none}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.burger span{width:22px;height:1.5px;background:var(--mist);display:block;transition:.3s}
+.burger.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}.burger.open span:nth-child(2){opacity:0}.burger.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
+.mobile{display:none;position:fixed;top:57px;left:0;right:0;z-index:40;background:rgba(10,15,14,.98);backdrop-filter:blur(14px);padding:1.5rem 2rem;flex-direction:column;border-bottom:1px solid var(--line-d)}
+.mobile.open{display:flex}
+.mobile a{font-family:var(--fm);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--mist);text-decoration:none;padding:.9rem 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.hero{position:relative;min-height:62vh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;border-bottom:1px solid var(--line-d);background:#060b0a}
+.hero-photo{position:absolute;inset:0;z-index:0;background:url(lab-poster.jpg) center/cover;opacity:.3;filter:saturate(.7)}
+.hero-photo::after{content:'';position:absolute;inset:0;background:radial-gradient(70% 80% at 30% 55%,rgba(26,155,140,.22),transparent 60%)}
+#net{position:absolute;inset:0;z-index:1}
+.hero::after{content:'';position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(6,11,10,.6),rgba(6,11,10,.4) 45%,rgba(6,11,10,.92))}
+.hero-in{position:relative;z-index:3;max-width:1180px;margin:0 auto;width:100%;padding:60px 40px 56px}
+.hero-k{color:var(--teal);margin-bottom:20px;display:flex;align-items:center;gap:12px}.hero-k::before{content:'';width:34px;height:2px;background:var(--orange)}
+h1{font-family:var(--fg);font-weight:600;font-size:clamp(40px,6vw,78px);line-height:1.0;letter-spacing:-.025em}
+h1 em{font-style:normal;color:var(--teal)}
+.hero-desc{margin-top:22px;font-size:16px;line-height:1.7;max-width:60ch;color:#d6dcd6}
+.hero-desc b{color:var(--white);font-weight:600}
+.tools-wrap{max-width:1180px;margin:0 auto}
+.tool{padding:72px 40px;border-bottom:1px solid var(--line-d)}
+.tool.alt{background:var(--ink-2)}
+.tool-head{display:grid;grid-template-columns:1.3fr .7fr;gap:48px;align-items:start}
+.tool-num{font-family:var(--fm);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+.tool-name{font-family:var(--fg);font-weight:600;font-size:clamp(26px,3.2vw,38px);letter-spacing:-.02em;line-height:1.05}
+.tool-sub{font-family:var(--fm);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mist);margin:10px 0 16px}
+.tool-desc{font-size:14.5px;color:var(--mist);line-height:1.8;max-width:62ch}
+.tool-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.tag{font-family:var(--fm);font-size:10px;letter-spacing:.04em;color:var(--teal);border:1px solid rgba(45,191,173,.3);padding:5px 12px;border-radius:3px}
+.tool-cta p{font-size:13px;color:var(--mist);line-height:1.7;margin-bottom:18px}
+.tbtn{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#05100e;border-radius:4px;padding:13px 24px;font-family:var(--fg);font-weight:600;font-size:14px;text-decoration:none;transition:background .2s}
+.tbtn:hover{background:var(--white)}
+.diag{margin-top:40px;background:var(--ink);border:1px solid var(--line-d);border-radius:10px;padding:40px}
+.tool.alt .diag{background:#0b100e}
+.step{display:none}.step.active{display:block}
+.step-label{font-family:var(--fm);font-size:11px;color:var(--mist);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+.step-question{font-family:var(--fg);font-weight:600;font-size:clamp(19px,2.2vw,24px);letter-spacing:-.01em;margin-bottom:26px;line-height:1.3}
+.progress-bar{height:3px;background:rgba(255,255,255,.1);border-radius:3px;margin-bottom:32px;overflow:hidden}
+.progress-fill{height:100%;background:var(--teal);border-radius:3px;transition:width .4s}
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px}
+.option-btn{background:rgba(255,255,255,.03);border:1px solid var(--line-d);border-radius:6px;padding:16px 18px;text-align:left;cursor:pointer;transition:.2s;width:100%;font-family:var(--fb)}
+.option-btn:hover{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.06)}
+.option-btn.selected{border-color:var(--teal);background:rgba(45,191,173,.1)}
+.opt-title{font-family:var(--fg);font-size:15px;font-weight:600;color:var(--white);margin-bottom:4px}
+.option-btn.selected .opt-title{color:var(--teal)}
+.opt-desc{font-size:12.5px;color:var(--mist);line-height:1.5}
+.next-btn{background:var(--teal);color:#05100e;border:none;border-radius:4px;padding:13px 28px;font-family:var(--fg);font-weight:600;font-size:14px;cursor:pointer;transition:.2s}
+.next-btn:hover{background:var(--white)}
+.next-btn:disabled{background:rgba(255,255,255,.1);color:rgba(255,255,255,.3);cursor:not-allowed}
+.result-header{font-family:var(--fg);font-weight:600;font-size:24px;letter-spacing:-.01em;margin-bottom:8px}
+.result-sub{font-size:14px;color:var(--mist);margin-bottom:26px;line-height:1.6}
+.result-card{background:rgba(255,255,255,.03);border:1px solid var(--line-d);border-radius:6px;padding:18px 20px;margin-bottom:12px}
+.result-card.high{border-left:3px solid var(--red)}
+.result-card.medium{border-left:3px solid var(--amber)}
+.result-card.low{border-left:3px solid var(--green)}
+.result-level{font-family:var(--fm);font-size:10px;font-weight:400;text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+.high .result-level{color:var(--red)}.medium .result-level{color:var(--amber)}.low .result-level{color:var(--green)}
+.result-title{font-family:var(--fg);font-size:17px;font-weight:600;margin-bottom:8px}
+.result-desc{font-size:13.5px;color:var(--mist);line-height:1.7;margin-bottom:12px}
+.result-action{font-size:13.5px;color:#d6dcd6;line-height:1.7;padding-top:12px;border-top:1px solid var(--line-d)}
+.result-action strong{color:var(--white);font-weight:600}
+.restart-btn{background:none;border:1px solid var(--line-d);border-radius:4px;padding:10px 20px;font-family:var(--fm);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mist);cursor:pointer;margin-top:20px}
+.soon-sec{padding:72px 40px;background:var(--ink-2)}
+.soon-in{max-width:1180px;margin:0 auto}
+.soon-title{font-family:var(--fg);font-weight:600;font-size:clamp(24px,3vw,36px);letter-spacing:-.02em;margin:14px 0 14px}
+.soon-title em{color:var(--teal);font-style:normal}
+.soon-intro{font-size:14px;color:var(--mist);line-height:1.8;max-width:56ch;margin-bottom:36px}
+.soon-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.soon-card{background:var(--ink);border:1px solid var(--line-d);border-radius:8px;padding:28px}
+.soon-name{font-family:var(--fg);font-size:19px;font-weight:600;color:rgba(255,255,255,.55);margin-bottom:8px}
+.soon-desc{font-size:12.5px;color:var(--ink-soft);line-height:1.65}
+.soon-badge{display:inline-block;font-family:var(--fm);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);border:1px solid rgba(45,191,173,.3);padding:4px 10px;border-radius:3px;margin-top:16px}
+footer{border-top:1px solid var(--line-d);padding:38px 40px;display:flex;justify-content:space-between;align-items:flex-start;gap:28px;flex-wrap:wrap;max-width:1180px;margin:0 auto}
+.f-l a{display:block;font-family:var(--fm);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mist);text-decoration:none;margin-bottom:8px}
+.f-r{text-align:right;color:#6a726c;font-size:12px;font-family:var(--fm);line-height:1.9}.f-r b{color:var(--mist);font-weight:400}
+@media(max-width:900px){
+  nav{padding:14px 20px}.nav-l{display:none}.burger{display:flex}
+  .hero-in{padding:48px 20px 40px}
+  .tool{padding:52px 20px}.tool-head{grid-template-columns:1fr;gap:24px}
+  .diag{padding:24px}.options-grid{grid-template-columns:1fr}
+  .soon-sec{padding:52px 20px}.soon-grid{grid-template-columns:1fr}
+  footer{padding:30px 20px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="./" class="logo">Teal<b>Kin</b></a>
+  <ul class="nav-l">
+    <li><a href="/es/lab.html" class="active">Lab</a></li>
+    <li><a href="/es/dzon.html">Dzon</a></li>
+    <li><a href="/es/cases.html">Casos</a></li>
+    <li><a href="/es/areas.html">Áreas</a></li>
+    <li><a href="/es/about.html">Nosotros</a></li>
+  </ul>
+  <div class="nav-r">
+    <a href="en/lab.html" class="lang">EN</a>
+    <button class="burger" id="burger" aria-label="Menú"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile" id="mobile">
+  <a href="/es/lab.html">Lab</a><a href="/es/dzon.html">Dzon</a><a href="/es/cases.html">Casos</a><a href="/es/areas.html">Áreas</a><a href="/es/about.html">Nosotros</a><a href="en/lab.html" style="color:var(--teal)">EN →</a>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-photo"></div>
+  <canvas id="net"></canvas>
+  <div class="hero-in">
+    <div class="hero-k k">IA · Diagnóstico · Simulación</div>
+    <h1>Donde la comunicación<br>se construye con <em>tecnología.</em></h1>
+    <p class="hero-desc">No es una promesa. <b>Son herramientas que ya puedes usar.</b> El Lab es donde junto comunicación estratégica e inteligencia artificial para pensar la reputación de otra forma. Empieza con lo que está activo. Más en desarrollo.</p>
+  </div>
+</header>
+
+<div class="tools-wrap">
+
+<!-- TOOL 01 · DIAGNÓSTICO -->
+<section class="tool" id="crisis-diagnostic">
+  <div class="tool-head">
+    <div>
+      <div class="tool-num">01 · Activo</div>
+      <h2 class="tool-name">Diagnóstico de crisis y riesgo</h2>
+      <div class="tool-sub">LATAM · 2026</div>
+      <p class="tool-desc">Tres fuerzas están reconfigurando el entorno operativo de las organizaciones en México: el conflicto en el Estrecho de Ormuz, la desaceleración económica y la creciente presión de EE.UU. sobre el país. Esta herramienta te ayuda a entender tu exposición real y qué acciones de comunicación tomar antes de que alguien más defina la narrativa por ti.</p>
+      <div class="tool-tags"><span class="tag">Evaluación de riesgo</span><span class="tag">Preparación para crisis</span><span class="tag">Stakeholders</span><span class="tag">Contexto LATAM</span></div>
+    </div>
+    <div class="tool-cta"><p>Cuatro preguntas · Dos minutos · Un diagnóstico por modelo de negocio y exposición sectorial.</p></div>
+  </div>
+  <div class="diag">
+    <div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+    <div class="step active" id="step-0">
+      <div class="step-label">Pregunta 1 de 4</div>
+      <div class="step-question">¿Cómo describirías mejor el modelo de negocio de tu organización?</div>
+      <div class="options-grid">
+        <button class="option-btn" onclick="select(0,0)"><div class="opt-title">Manufactura o industria</div><div class="opt-desc">Producción, ensamble, insumos importados o exportaciones</div></button>
+        <button class="option-btn" onclick="select(0,1)"><div class="opt-title">Comercio o retail</div><div class="opt-desc">Ventas al consumidor, cadenas de suministro</div></button>
+        <button class="option-btn" onclick="select(0,2)"><div class="opt-title">Servicios o consultoría</div><div class="opt-desc">Servicios profesionales, tecnología, finanzas, salud</div></button>
+        <button class="option-btn" onclick="select(0,3)"><div class="opt-title">Gobierno o sector público</div><div class="opt-desc">Instituciones, dependencias, organismos regulatorios</div></button>
+      </div>
+      <button class="next-btn" id="next-0" disabled onclick="nextStep(1)">Siguiente →</button>
+    </div>
+    <div class="step" id="step-1">
+      <div class="step-label">Pregunta 2 de 4</div>
+      <div class="step-question">¿Depende tu organización de logística internacional, importaciones o exportaciones para operar?</div>
+      <div class="options-grid">
+        <button class="option-btn" onclick="select(1,0)"><div class="opt-title">Sí, es central</div><div class="opt-desc">Sin importaciones o exportaciones, el negocio se detiene</div></button>
+        <button class="option-btn" onclick="select(1,1)"><div class="opt-title">Parcialmente</div><div class="opt-desc">Algunos insumos o clientes son internacionales, pero no todos</div></button>
+        <button class="option-btn" onclick="select(1,2)"><div class="opt-title">Poco</div><div class="opt-desc">Operamos principalmente con proveedores y clientes locales</div></button>
+        <button class="option-btn" onclick="select(1,3)"><div class="opt-title">No aplica</div><div class="opt-desc">Nuestro modelo no involucra movimiento de bienes físicos</div></button>
+      </div>
+      <button class="next-btn" id="next-1" disabled onclick="nextStep(2)">Siguiente →</button>
+    </div>
+    <div class="step" id="step-2">
+      <div class="step-label">Pregunta 3 de 4</div>
+      <div class="step-question">¿Tiene tu organización vínculos directos con el sector público o depende de decisiones gubernamentales para operar?</div>
+      <div class="options-grid">
+        <button class="option-btn" onclick="select(2,0)"><div class="opt-title">Sí, trabajamos con gobierno</div><div class="opt-desc">Contratos, proyectos o servicios con instituciones federales o estatales</div></button>
+        <button class="option-btn" onclick="select(2,1)"><div class="opt-title">Dependemos de permisos o regulación</div><div class="opt-desc">Las decisiones gubernamentales afectan directamente nuestra operación</div></button>
+        <button class="option-btn" onclick="select(2,2)"><div class="opt-title">Exposición indirecta</div><div class="opt-desc">Clientes o proveedores vinculados al gobierno, pero no nosotros directamente</div></button>
+        <button class="option-btn" onclick="select(2,3)"><div class="opt-title">Sin vínculos con el sector público</div><div class="opt-desc">Nuestra operación es completamente privada e independiente</div></button>
+      </div>
+      <button class="next-btn" id="next-2" disabled onclick="nextStep(3)">Siguiente →</button>
+    </div>
+    <div class="step" id="step-3">
+      <div class="step-label">Pregunta 4 de 4</div>
+      <div class="step-question">¿Depende tu organización del consumo interno, la inversión privada o el gasto público para generar ingresos?</div>
+      <div class="options-grid">
+        <button class="option-btn" onclick="select(3,0)"><div class="opt-title">Consumo interno</div><div class="opt-desc">Nuestros ingresos dependen de que la gente compre más</div></button>
+        <button class="option-btn" onclick="select(3,1)"><div class="opt-title">Inversión privada</div><div class="opt-desc">Dependemos de que otras empresas inviertan o contraten</div></button>
+        <button class="option-btn" onclick="select(3,2)"><div class="opt-title">Gasto público</div><div class="opt-desc">Contratos, licitaciones o programas públicos son clave</div></button>
+        <button class="option-btn" onclick="select(3,3)"><div class="opt-title">Exportaciones</div><div class="opt-desc">Nuestros ingresos principales vienen de clientes fuera de México</div></button>
+      </div>
+      <button class="next-btn" id="next-3" disabled onclick="showResult()">Ver mi diagnóstico →</button>
+    </div>
+    <div class="step" id="step-result">
+      <div class="result-header">Tu diagnóstico de riesgo reputacional</div>
+      <div class="result-sub" id="result-intro"></div>
+      <div id="results-container"></div>
+      <button class="restart-btn" onclick="restart()">← Empezar de nuevo</button>
+    </div>
+  </div>
+</section>
+
+<!-- TOOL 02 -->
+<section class="tool alt" id="narrative-audit">
+  <div class="tool-head">
+    <div>
+      <div class="tool-num">02 · Activo</div>
+      <h2 class="tool-name">Auditoría de narrativa</h2>
+      <div class="tool-sub">Diferenciación · Voz · Posicionamiento</div>
+      <p class="tool-desc">Pega cualquier contenido institucional, tu sitio web, un comunicado, tu página de "acerca de", y descubre qué tan distintiva es tu narrativa frente a otros en tu sector. Sin configuración. Identifica tu sector, encuentra comparadores reales y te dice dónde suenas igual que todos.</p>
+      <div class="tool-tags"><span class="tag">Análisis narrativo</span><span class="tag">Diferenciación</span><span class="tag">Voz de marca</span><span class="tag">Posicionamiento</span></div>
+    </div>
+    <div class="tool-cta"><p>Pega tu contenido · Dos minutos · Score, comparadores y pistas.</p><a href="/es/narrative-audit.html" class="tbtn">Iniciar auditoría →</a></div>
+  </div>
+</section>
+
+<!-- TOOL 03 -->
+<section class="tool" id="crisis-simulator">
+  <div class="tool-head">
+    <div>
+      <div class="tool-num">03 · Activo</div>
+      <h2 class="tool-name">Simulador de crisis</h2>
+      <div class="tool-sub">Reputación · Toma de decisiones · B2C · B2B</div>
+      <p class="tool-desc">Tres escándalos corporativos reales ficcionalizados. Cinco decisiones por caso. Las consecuencias cambian con cada elección. No te dice qué está bien, te muestra qué pierdes cuando te equivocas. Para quien quiera entender la lógica de una crisis antes de vivirla.</p>
+      <div class="tool-tags"><span class="tag">Gestión de crisis</span><span class="tag">Reputación</span><span class="tag">Toma de decisiones</span><span class="tag">Formación</span></div>
+    </div>
+    <div class="tool-cta"><p>Tres casos · Cinco decisiones · Sin respuestas correctas hasta el final.</p><a href="/tools/crisis-simulator/index-es.html" class="tbtn">Entrar al simulador →</a></div>
+  </div>
+</section>
+
+<!-- TOOL 04 -->
+<section class="tool alt" id="origins">
+  <div class="tool-head">
+    <div>
+      <div class="tool-num">04 · Activo</div>
+      <h2 class="tool-name">Origins</h2>
+      <div class="tool-sub">Voz de marca · Autenticidad · Conexión</div>
+      <p class="tool-desc">Un recorrido visual guiado por scroll a través de la historia de la conexión humana, desde los primeros gestos sin palabras hasta el ruido algorítmico que ahoga hoy la voz de las marcas. Sin texto, sin formularios. Solo una historia que termina con una pregunta: ¿cuándo fue la última vez que tu marca sonó a ti?</p>
+      <div class="tool-tags"><span class="tag">Voz de marca</span><span class="tag">Storytelling</span><span class="tag">Autenticidad</span></div>
+    </div>
+    <div class="tool-cta"><p>Nueve escenas · Un solo scroll · Sin respuestas correctas, solo un espejo.</p><a href="/tools/connection/index-es.html" class="tbtn">Comenzar el recorrido →</a></div>
+  </div>
+</section>
+
+<!-- TOOL 05 -->
+<section class="tool" id="reputation-diagnostic">
+  <div class="tool-head">
+    <div>
+      <div class="tool-num">05 · Activo</div>
+      <h2 class="tool-name">Diagnóstico reputacional</h2>
+      <div class="tool-sub">Posicionamiento · Brechas de marketing · Vulnerabilidad</div>
+      <p class="tool-desc">Danos tu sitio web y lo visitamos de verdad, como un mystery shopper. La IA lee cómo suenas realmente para un visitante nuevo, te compara contra tu sector y tu región, y califica tu posicionamiento, tus brechas de marketing y tu vulnerabilidad reputacional. Para negocios que quieren la mirada desde afuera antes de que una crisis la exija.</p>
+      <div class="tool-tags"><span class="tag">Posicionamiento</span><span class="tag">Auditoría de marketing</span><span class="tag">Riesgo reputacional</span><span class="tag">Análisis en vivo</span></div>
+    </div>
+    <div class="tool-cta"><p>Tu sitio real · Ocho preguntas · Puntaje, hallazgos y un plan para empezar.</p><a href="/es/diagnostico-reputacional.html" class="tbtn">Generar mi diagnóstico →</a></div>
+  </div>
+</section>
+
+<!-- TOOL 06 -->
+<section class="tool alt" id="media-training">
+  <div class="tool-head">
+    <div>
+      <div class="tool-num">06 · Activo</div>
+      <h2 class="tool-name">Simulador de media training</h2>
+      <div class="tool-sub">Entrevistas hostiles · Voz · Entrenamiento bajo presión</div>
+      <p class="tool-desc">Un periodista IA investiga a tu empresa y las noticias de hoy en tiempo real, y te entrevista por voz, escalando de lo amable a la emboscada, como hacen los reporteros de verdad. Todo se graba, y el análisis final califica tu control del mensaje, tu temple, y la frase exacta que se habría convertido en el titular de mañana.</p>
+      <div class="tool-tags"><span class="tag">Media training</span><span class="tag">Respuesta a crisis</span><span class="tag">IA de voz</span><span class="tag">Entrenamiento ejecutivo</span></div>
+    </div>
+    <div class="tool-cta"><p>Seis preguntas · Investigación en vivo · Tu voz, grabada y calificada.</p><a href="/es/entrenamiento-de-medios.html" class="tbtn">Entra al estudio →</a></div>
+  </div>
+</section>
+
+</div>
+
+<!-- EN DESARROLLO -->
+<section class="soon-sec">
+  <div class="soon-in">
+    <div class="k" style="color:var(--teal)">En desarrollo</div>
+    <h2 class="soon-title">Más herramientas <em>en camino.</em></h2>
+    <p class="soon-intro">La lógica es la misma: directa, para quien no tiene tiempo que perder. Cada una muestra lo que la comunicación estratégica puede hacer cuando corre sobre IA.</p>
+    <div class="soon-grid">
+      <div class="soon-card"><div class="soon-name">Autodiagnóstico de reputación</div><div class="soon-desc">Pek'Kin, A'Kin, Ha' o Sak Ha': responde cinco preguntas y el modelo te dice cuál de las cuatro áreas es tu brecha reputacional más urgente ahora mismo.</div><div class="soon-badge">Próximamente</div></div>
+      <div class="soon-card"><div class="soon-name">Marcos de mensajes</div><div class="soon-desc">Estructuras para construir mensajes diferenciados por audiencia, prensa, empleados, inversionistas, gobierno, desde un solo brief. Sin plantillas. Pensamiento real.</div><div class="soon-badge">Próximamente</div></div>
+      <div class="soon-card"><div class="soon-name">Simulaciones de escenario</div><div class="soon-desc">Más casos, más contextos, más variables. La lógica del Simulador de Crisis aplicada a otras decisiones bajo presión en LATAM.</div><div class="soon-badge">Próximamente</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-l"><a href="/es/lab.html">Lab</a><a href="/es/dzon.html">Dzon</a><a href="/es/cases.html">Casos</a><a href="/es/about.html">Nosotros</a></div>
+  <div class="f-r">TealKin · Proyecto personal<br>Tulum, Riviera Maya · LATAM<br><b>© 2026 · Jorge Delarbre</b></div>
+</footer>
+
+<script>
+const bg=document.getElementById('burger'),mb=document.getElementById('mobile');
+bg.addEventListener('click',()=>{bg.classList.toggle('open');mb.classList.toggle('open')});
+mb.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{bg.classList.remove('open');mb.classList.remove('open')}));
+
+const answers=[null,null,null,null];
+const riskData={
+  ormuz:{
+    high:{desc:"Tu organización depende directamente de rutas de comercio internacional bajo presión por el conflicto en el Estrecho de Ormuz. El alza en precios del petróleo y las disrupciones logísticas ya están afectando tus operaciones.",action:"Activa tu protocolo de comunicación con proveedores y clientes sobre posibles retrasos o alzas de precio. Prepara un mensaje institucional que anticipe la situación antes de que te pregunten."},
+    medium:{desc:"Tienes exposición indirecta al conflicto en Ormuz. Aunque no dependes completamente de rutas internacionales, el alza en energía y costos de insumos te afecta.",action:"Evalúa tu cadena de suministro en los próximos 30 días. Comunica proactivamente a clientes clave si anticipas cambios en precios o tiempos de entrega."},
+    low:{desc:"Tu exposición directa al Estrecho de Ormuz es limitada, pero el alza en precios de energía y logística ya está afectando costos operativos en toda la cadena.",action:"Monitorea el precio del combustible y anticipa conversaciones con stakeholders sobre márgenes. Prepara mensajes para clientes si los costos suben."}
+  },
+  bilateral:{
+    high:{desc:"Tu organización trabaja directamente con gobierno federal o estatal. La presión creciente de EE.UU. sobre México está generando escrutinio internacional sobre instituciones públicas y sus socios privados. El riesgo reputacional se materializa por asociación, investigación o cobertura mediática.",action:"No esperes a que llegue la crisis. Realiza una auditoría inmediata de tu exposición reputacional. Prepara una posición institucional clara que separe la integridad de tu organización del ruido político a tu alrededor."},
+    medium:{desc:"Dependes de permisos, regulación o política pública para operar. Las decisiones regulatorias, y la percepción de esas decisiones, pueden afectar tus tiempos, costos y credibilidad con socios internacionales.",action:"Mapea qué decisiones de gobierno afectan tu operación y quién las toma. Prepara mensajes para clientes o inversionistas internacionales que refuercen tu postura de cumplimiento."},
+    low:{desc:"Tienes exposición indirecta a través de clientes o proveedores vinculados al gobierno. El riesgo es reputacional por proximidad, no por acción directa, sino por asociación.",action:"Revisa tu posicionamiento público. Asegúrate de que tus comunicaciones reflejen claramente los valores y estándares de cumplimiento de tu organización."}
+  },
+  economia:{
+    high:{desc:"El PIB de México contrajo en el primer trimestre de 2026. Tu dependencia del consumo interno o la inversión privada te coloca como uno de los más expuestos. Menor gasto, mayor cautela y costos operativos altos.",action:"Construye narrativa de resiliencia, no de optimismo vacío. Comunica con claridad tu posición financiera, tu visión de mediano plazo y tu plan ante el entorno."},
+    medium:{desc:"La desaceleración económica afecta el presupuesto público y puede retrasar licitaciones o contratos. La confianza institucional en México está bajo presión.",action:"Refuerza tus relaciones con tomadores de decisión en el sector público. La comunicación proactiva sobre el valor de tu propuesta es clave en entornos de recorte."},
+    low:{desc:"Tu modelo tiene cierto blindaje ante la contracción económica interna. Sin embargo, el entorno de estanflación y baja confianza empresarial afecta el ecosistema donde operas.",action:"Ajusta tu narrativa hacia propuestas de valor claras y tangibles. En entornos de incertidumbre, las organizaciones que comunican certeza y solidez ganan reputación."}
+  }
+};
+function select(step,opt){
+  document.querySelectorAll('#step-'+step+' .option-btn').forEach(b=>b.classList.remove('selected'));
+  document.querySelectorAll('#step-'+step+' .option-btn')[opt].classList.add('selected');
+  answers[step]=opt;
+  document.getElementById('next-'+step).disabled=false;
+}
+function nextStep(n){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step-'+n).classList.add('active');
+  document.getElementById('progress').style.width=(n*25)+'%';
+}
+function getLevel(key){
+  const [sector,logistica,gobierno,economia]=answers;
+  if(key==='ormuz'){if(logistica===0)return'high';if(logistica===1||sector===0||sector===1)return'medium';return'low';}
+  if(key==='bilateral'){if(gobierno===0)return'high';if(gobierno===1||gobierno===2||sector===3)return'medium';return'low';}
+  if(key==='economia'){if(economia===0||economia===1)return'high';if(economia===2)return'medium';return'low';}
+}
+function showResult(){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step-result').classList.add('active');
+  document.getElementById('progress').style.width='100%';
+  const titles={ormuz:'Conflicto en el Estrecho de Ormuz',bilateral:'Presión bilateral EE.UU.-México',economia:'Desaceleración económica en México'};
+  const levelOrder={high:0,medium:1,low:2};
+  const risks=['ormuz','bilateral','economia'].map(k=>{const level=getLevel(k);return{key:k,title:titles[k],level,...riskData[k][level]};}).sort((a,b)=>levelOrder[a.level]-levelOrder[b.level]);
+  const highCount=risks.filter(r=>r.level==='high').length;
+  document.getElementById('result-intro').textContent=highCount===0?'Tu exposición directa es moderada, pero ninguna organización opera en una burbuja. Estos son los riesgos que debes monitorear:':highCount===1?'Tienes un riesgo de alta prioridad que requiere atención inmediata en comunicación y reputación:':'Tu organización tiene alta exposición en múltiples frentes. La gestión de narrativa no puede esperar:';
+  const levelLabel={high:'Riesgo alto',medium:'Riesgo medio',low:'Riesgo bajo'};
+  document.getElementById('results-container').innerHTML=risks.map(r=>'<div class="result-card '+r.level+'"><div class="result-level">'+levelLabel[r.level]+'</div><div class="result-title">'+r.title+'</div><div class="result-desc">'+r.desc+'</div><div class="result-action"><strong>¿Qué hacer?</strong> '+r.action+'</div></div>').join('');
+}
+function restart(){
+  answers.fill(null);
+  document.querySelectorAll('.option-btn').forEach(b=>b.classList.remove('selected'));
+  document.querySelectorAll('.next-btn').forEach(b=>b.disabled=true);
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step-0').classList.add('active');
+  document.getElementById('progress').style.width='0%';
+}
+const c=document.getElementById('net'),x=c.getContext('2d');let W,H,DPR;
+function size(){DPR=Math.min(devicePixelRatio||1,2);const r=c.parentElement.getBoundingClientRect();W=c.width=r.width*DPR;H=c.height=r.height*DPR;c.style.width=r.width+'px';c.style.height=r.height+'px';}
+size();addEventListener('resize',size);
+const N=46,nodes=[];
+for(let i=0;i<N;i++)nodes.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.16*DPR,vy:(Math.random()-.5)*.16*DPR,r:(Math.random()*1.5+1)*DPR});
+const LINK=160*DPR;let waves=[];
+c.parentElement.addEventListener('pointerdown',e=>{const r=c.getBoundingClientRect();waves.push({x:(e.clientX-r.left)*DPR,y:(e.clientY-r.top)*DPR,r:0,a:1})});
+function tick(){
+ x.clearRect(0,0,W,H);
+ for(const n of nodes){n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1;}
+ for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){const a=nodes[i],b=nodes[j],d=Math.hypot(a.x-b.x,a.y-b.y);if(d<LINK){x.strokeStyle='rgba(45,191,173,'+(0.12*(1-d/LINK))+')';x.lineWidth=DPR;x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.stroke();}}
+ for(const n of nodes){x.fillStyle='rgba(45,191,173,.8)';x.beginPath();x.arc(n.x,n.y,n.r,0,7);x.fill();}
+ waves=waves.filter(w=>w.a>0);for(const w of waves){w.r+=6*DPR;w.a-=.012;x.strokeStyle='rgba(232,132,58,'+w.a+')';x.lineWidth=1.5*DPR;x.beginPath();x.arc(w.x,w.y,w.r,0,7);x.stroke();}
+ requestAnimationFrame(tick);
+}
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches)tick();else{for(const n of nodes){x.fillStyle='rgba(45,191,173,.8)';x.beginPath();x.arc(n.x,n.y,n.r,0,7);x.fill();}}
+</script>
+</body>
+</html>
